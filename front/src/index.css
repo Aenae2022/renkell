@@ -1,68 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --color-francais: oklch(0.75 0.183 55.934);
+  --color-francais-dark: oklch(0.646 0.222 41.116);
+  --color-francais-25: oklch(0.75 0.183 55.934 / 0.25);
+  --color-mathematiques: oklch(0.591 0.293 322.896);
+  --color-mathematiques-dark: oklch(0.452 0.211 324.591);
+  --color-mathematiques-25: oklch(0.591 0.293 322.896 /0.25);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --color-lexique: oklch(0.712 0.194 13.428);
+  --color-lexique-dark: oklch(0.586 0.253 17.585);
+  --color-grammaire: oklch(0.511 0.262 276.966);
+  --color-grammaire-light: oklch(0.64 0.262 276.966);
+  --color-grammaire-dark: oklch(0.398 0.195 277.366);
+  --color-grammaire-50: oklch(0.511 0.262 276.966 /0.5);
+  --color-grammaire-25: oklch(0.511 0.262 276.966 /0.25);
+  --color-conjugaison: oklch(0.685 0.169 237.323);
+  --color-conjugaison-dark: oklch(0.5 0.134 242.749);
+  --color-conjugaison-25: oklch(0.685 0.169 237.323 /0.25);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  --color-orthographe: oklch(0.627 0.194 149.214);
+  --color-orthographe-dark: oklch(0.448 0.119 151.328);
+  --color-orthographe-25: oklch(0.627 0.194 149.214 /0.25);
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+  --color-dictee: oklch(0.448 0.119 151.328);
+  --color-dictee-dark: oklch(0.266 0.065 152.934);
+  --color-dictee-25: oklch(0.448 0.119 151.328 /0.25);
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+  --color-nombre: oklch(0.627 0.194 149.214);
+  --color-nombre-dark: oklch(0.448 0.119 151.328);
+  --color-calcul: oklch(0.712 0.194 13.428);
+  --color-calcul-dark: oklch(0.586 0.253 17.585);
+  --color-calculmental: oklch(0.718 0.202 349.761);
+  --color-calculmental-dark: oklch(0.592 0.249 0.584);
+  --color-calculmental-25: oklch(0.718 0.202 349.761 /0.25);
+  --color-geometrie: oklch(0.558 0.288 302.321);
+  --color-geometrie-dark: oklch(0.438 0.218 303.724);
+  --color-mesure: oklch(0.685 0.169 237.323);
+  --color-mesure-light: oklch(0.72 0.0977 237.323);
+  --color-mesure-dark: oklch(0.5 0.134 242.749);
+  --color-mesure-50: oklch(0.685 0.169 237.323 /0.5);
+  --color-mesure-25: oklch(0.685 0.169 237.323 /0.25);
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+  --color-resolution: oklch(0.837 0.128 66.29);
+  --color-resolution-light: oklch(0.91 0.128 66.29);
+  --color-resolution-50: oklch(0.837 0.128 66.29 /0.5);
+  --color-resolution-25: oklch(0.837 0.128 66.29 /0.25);
+  --color-resolution-dark: oklch(0.705 0.213 47.604);
 }
