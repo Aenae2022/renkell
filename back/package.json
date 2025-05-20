@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "create:school": "tsx prisma/seed/createSchool.ts",
-    "create:classroom": "tsx prisma/seed/createClassroom.ts"
+    "create:classroom": "tsx prisma/seed/createClassroom.ts",
+    "cli": "tsx prisma/seed/cli/main.ts"
   },
   "keywords": [],
   "author": "",

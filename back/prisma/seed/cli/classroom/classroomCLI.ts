@@ -1,13 +1,10 @@
 // prisma/seed/cli.ts
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { createSchool } from './models/school/createSchool';
-import { createClassroom } from './models/classroom/createClassroom';
+import { createClassroom } from '../../models/classroom/createClassroom';
 
+export function runClassroomCLI() {
 yargs(hideBin(process.argv))
-  .command('create-school <name>', 'Create a new school', {}, (argv) => {
-    createSchool(argv.name as string);
-  })
   .command('create-classroom', 'Create a new classroom', {
     classroomNumber: { type: 'number', demandOption: true },
     classroomBorderColor: { type: 'string', demandOption: true },
@@ -27,8 +24,6 @@ yargs(hideBin(process.argv))
   })
   .demandCommand(1, 'You need at least one command before moving on')
   .parse();
+}
 
 
-  // Usage:
-//   npx ts-node prisma/seed/cli.ts create-school "Nom École"
-// npx ts-node prisma/seed/cli.ts create-classroom --classroomNumber=101 --classroomBorderColor=#000 --classroomBackgroundColor=#fff --classroomColor=#111 --schoolId=1

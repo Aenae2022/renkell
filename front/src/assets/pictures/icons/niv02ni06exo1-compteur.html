@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Les nombres jusqu'à 1000</title>
+    <link rel="stylesheet" type="text/css" href="../../css/carte-exercice.css" media="all"/>
+    <style>
+    #ardoiseElt{
+            width: 75%;
+            margin: auto;
+        }
+        
+img{
+    display: inline-block;
+    position: relative;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    }
+        
+#fin {
+    margin: auto;
+    }    </style>
+</head>
+
+<body> 
+    
+    <div id="fenetreExercice">
+        <form autocomplete="off">
+            <h3></h3>
+            <div id="ardoise">
+                
+            </div>
+            <input type="" name="reponse" id="reponse" required="">
+            
+            <input type="submit" id="btn" name="btn" value=""><br/>
+            <p id="correction"></p><input type="button" id="btn2" name="btn2" value="">
+            
+        </form>
+
+        
+        <p id="fin"></p>
+        <p id="donnee">1</p>
+        <p id="score">0</p>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="maBibliotheque.js"></script>
+        <script type="text/javascript" src="../../js/niv03ni05exo2-fonction.js"></script>
+
+    <script type="text/javascript" src="../../js/niv02ni06exo1.js"></script>
+    
+    
+    <script>
+        //Le nombre d'exercice à faire
+        var nombreExo = 5;
+
+        $('#btn2').hide();
+        
+        genereLangue = entierAleatoire(1,2);
+
+        var exo = new ReferenceExercice(genereLangue);    
+       
+        afficheUnExercice(exo);
+    
+        
+   
+    </script>
+
+</body>    
+</html>
