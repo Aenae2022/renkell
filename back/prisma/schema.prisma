@@ -29,39 +29,51 @@ model Classroom {
   classroomBackgroundColor String @db.VarChar(255)
   classroomColor String @db.VarChar(255)
 
-  schoolId        Int?    // clé étrangère optionnelle
+  schoolId        Int?    // clé étrangère optionnelle donc NULL si pas d'association avec une école
   school          School? @relation(fields: [schoolId], references: [schoolId], onDelete: SetNull)
 
-  LinkClassrooms  LinkClassroom[] // Relation 1-n avec LinkClassroom
+  groupId Int?      @unique  // clé étrangère optionnelle vers Group
+  group   Group?     @relation(fields: [groupId], references: [groupId], onDelete: SetNull)
+}
+
+model Group {
+  groupId Int     @id @default(autoincrement())
+  groupName String @db.VarChar(255)
+  groupLanguage String @db.VarChar(50)
+  groupPrincipal Boolean
+
+  classroom Classroom?  // relation 1-1 inverse
+  groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
 }
 
 model Link {
   linkId             Int     @id @default(autoincrement())
   linkName           String  @db.VarChar(500)
 
-  linkTitleFr        String? @db.VarChar(500) @default("")
-  linkTitleBr        String? @db.VarChar(500) @default("")
-  linkFullNameFr     String? @db.VarChar(500) @default("")
-  linkFullNameBr     String? @db.VarChar(500) @default("")
+  linkTitleFr        String @db.VarChar(500) @default("")
+  linkTitleBr        String @db.VarChar(500) @default("")
+  linkFullNameFr     String @db.VarChar(500) @default("")
+  linkFullNameBr     String @db.VarChar(500) @default("")
 
   linkRedirection    String
   linkIcon           String  @db.VarChar(255)
   linkMatter         String  @db.VarChar(50)
 
-  linkDescriptionFr  String? @db.Text @default("")
-  linkDescriptionBr  String? @db.Text @default("")
+  linkDescriptionFr  String @db.Text @default("")
+  linkDescriptionBr  String @db.Text @default("")
 
   linkType           String  @db.VarChar(50) @default("all")
 
-  LinkClassroom LinkClassroom[] // Relation 1-n avec LinkClassroom
+  groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
 }
 
-model LinkClassroom {
-  classroom   Classroom  @relation(fields: [classroomId], references: [classroomId], onDelete: Cascade)
-  classroomId Int
+model GroupLink {
+  group   Group  @relation(fields: [groupId], references: [groupId], onDelete: Cascade)
+  groupId Int
 
   link        Link       @relation(fields: [linkId], references: [linkId], onDelete: Cascade)
   linkId      Int
 
-  @@id([classroomId, linkId]) // clé composite
+  @@id([groupId, linkId]) // clé composite
 }
+

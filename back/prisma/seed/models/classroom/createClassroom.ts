@@ -3,6 +3,7 @@ import { prisma } from '../../../../src/lib/prisma/client'
 
 interface ClassroomParams {
   classroomNumber: number;
+  classroomName : string
   classroomBorderColor: string;
   classroomBackgroundColor: string;
   classroomColor: string;
@@ -13,6 +14,7 @@ interface ClassroomParams {
 export async function createClassroom(params: ClassroomParams) {
   const classroomData: any = {
     classroomNumber: params.classroomNumber,
+    classroomName : params.classroomName,
     classroomBorderColor: params.classroomBorderColor,
     classroomBackgroundColor: params.classroomBackgroundColor,
     classroomColor: params.classroomColor,

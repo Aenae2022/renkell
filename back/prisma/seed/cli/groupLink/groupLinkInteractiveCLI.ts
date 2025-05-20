@@ -1,18 +1,18 @@
-//prisma/seed/cli/linkClassroom/linkClassroomInteractiveCLI.ts
+//prisma/seed/cli/classroomLink/classroomLinkInteractiveCLI.ts
 import inquirer from 'inquirer'
-import { createAssociation } from '../../models/linkClassroom/createAssociation';
+import { createAssociation } from '../../models/groupLink/createAssociation';
 
-interface LinkClassroomAnswers {
-  classroomId: string;
+interface GroupLinkAnswers {
+  groupId: string;
   linkId: string;
 }
 
-export async function runLinkClassroomInteractiveCLI() {
- const answers = await inquirer.prompt<LinkClassroomAnswers>([
+export async function runGroupLinkInteractiveCLI() {
+ const answers = await inquirer.prompt<GroupLinkAnswers>([
       {
         type: 'input',
-        name: 'classroomId',
-        message: 'id de la classroom',
+        name: 'groupId',
+        message: 'id du groupe',
         validate: (input) => !isNaN(parseInt(input)) || 'Veuillez entrer un nombre valide',
       },
       {
@@ -24,7 +24,7 @@ export async function runLinkClassroomInteractiveCLI() {
     ])
 
     await createAssociation({
-      classroomId: parseInt(answers.classroomId),
+      groupId: parseInt(answers.groupId),
       linkId: parseInt(answers.linkId)
     })
 

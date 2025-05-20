@@ -4,6 +4,7 @@ import { createClassroom } from '../../models/classroom/createClassroom'
 
 interface ClassroomAnswers {
   classroomNumber: string
+  classroomName: string
   classroomBorderColor: string
   classroomBackgroundColor: string
   classroomColor: string
@@ -56,6 +57,7 @@ export async function runClassroomInteractiveCLI() {
 
     await createClassroom({
       classroomNumber: parseInt(answers.classroomNumber),
+      classroomName: answers.classroomName,
       classroomBorderColor: answers.classroomBorderColor,
       classroomBackgroundColor: answers.classroomBackgroundColor,
       classroomColor: answers.classroomColor,
