@@ -1,8 +1,8 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-// import axios from 'axios';
-// import { AxiosError } from 'axios';
+import axios from "axios";
+import { AxiosError } from "axios";
 // import HeaderSkol from '../../components/core/HeaderSkol';
 // import LinkItem from '../../components/links/LinkItem';
 
@@ -54,35 +54,33 @@ export function DegemerSkol() {
         }
       }
     };
-
-    const getClassroomLinksList = async () => {
-      setMessage("Chargement...");
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/api/degemer/classroomLinksList",
-          {
-            classroom,
-          }
-        );
-
-        setClassroomGroupName(response.data.groupName);
-        setClassroomLinks(response.data.listLinks);
-        setMessage(response.data.message);
-      } catch (error: unknown) {
-        // Utilisation de `unknown` pour éviter `any`
-        if (error instanceof AxiosError && error.response) {
-          setMessage(error.response.data.message); // Message d'erreur du backend
-        } else {
-          setMessage("Erreur serveur !");
-        }
-      }
-    };
-    if (classroom === undefined) {
-      //affichage des classes de l'école
-      getClassroomsList();
-    } else {
-      getClassroomLinksList();
-    }
+    // const getClassroomLinksList = async () => {
+    //   setMessage("Chargement...");
+    //   try {
+    //     const response = await axios.post(
+    //       "http://localhost:5000/api/degemer/classroomLinksList",
+    //       {
+    //         classroom,
+    //       }
+    //     );
+    //     setClassroomGroupName(response.data.groupName);
+    //     setClassroomLinks(response.data.listLinks);
+    //     setMessage(response.data.message);
+    //   } catch (error: unknown) {
+    //     // Utilisation de `unknown` pour éviter `any`
+    //     if (error instanceof AxiosError && error.response) {
+    //       setMessage(error.response.data.message); // Message d'erreur du backend
+    //     } else {
+    //       setMessage("Erreur serveur !");
+    //     }
+    //   }
+    // };
+    // if (classroom === undefined) {
+    //   //affichage des classes de l'école
+    //   getClassroomsList();
+    // } else {
+    //   getClassroomLinksList();
+    // }
   }, [skol, type, idft]);
 
   const handleClick = (room_id: number) => {

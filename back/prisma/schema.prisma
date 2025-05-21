@@ -17,7 +17,7 @@ datasource db {
 model School {
   schoolId   Int    @id @default(autoincrement())
   schoolName String @db.VarChar(500)
-
+  schoolRef  String @unique
   classrooms  Classroom[] // Relation 1-n avec Classroom
 }
 
@@ -28,10 +28,11 @@ model Classroom {
   classroomBorderColor String @db.VarChar(255)
   classroomBackgroundColor String @db.VarChar(255)
   classroomColor String @db.VarChar(255)
-
+  classroomRef String @unique
   schoolId        Int?    // clé étrangère optionnelle donc NULL si pas d'association avec une école
   school          School? @relation(fields: [schoolId], references: [schoolId], onDelete: SetNull)
 
+  @@unique([classroomRef, schoolId])
   groupId Int?      @unique  // clé étrangère optionnelle vers Group
   group   Group?     @relation(fields: [groupId], references: [groupId], onDelete: SetNull)
 }

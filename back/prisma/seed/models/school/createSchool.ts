@@ -1,11 +1,20 @@
-// prisma/seed/createSchool.ts
 import { prisma } from '../../../../src/lib/prisma/client'
 
-export async function createSchool(name: string) {
+
+interface SchoolParams {
+  schoolName: string;
+  schoolRef: string;
+}
+
+export async function createSchool(params: SchoolParams) {
+  const schoolData: any = {
+    schoolName: params.schoolName,
+    schoolRef: params.schoolRef,
+  };
+
   const newSchool = await prisma.school.create({
-    data: {
-      schoolName:name,
-    },
+    data: schoolData,
   });
-  console.log('Created school:', newSchool);
+
+  console.log('Created schhol:', newSchool);
 }

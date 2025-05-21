@@ -4,7 +4,7 @@ import { createClassroom } from '../../models/classroom/createClassroom'
 
 interface ClassroomAnswers {
   classroomNumber: string
-  classroomName: string
+  classroomRef: string
   classroomBorderColor: string
   classroomBackgroundColor: string
   classroomColor: string
@@ -22,6 +22,12 @@ export async function runClassroomInteractiveCLI() {
         validate: (input) => !isNaN(parseInt(input)) || 'Veuillez entrer un nombre valide',
       },
       {
+        type: 'input',
+        name: 'classroomRef',
+        message: 'Entrez la référence de la salle de classe pour la barre d\'adresse :',
+        validate: (input) => input.trim() !== '' || 'ce champ ne peut pas être vide',
+
+      },{
         type: 'input',
         name: 'classroomBorderColor',
         message: 'Entrez la couleur de bordure de la salle de classe :',
@@ -57,7 +63,7 @@ export async function runClassroomInteractiveCLI() {
 
     await createClassroom({
       classroomNumber: parseInt(answers.classroomNumber),
-      classroomName: answers.classroomName,
+      classroomRef: answers.classroomRef,
       classroomBorderColor: answers.classroomBorderColor,
       classroomBackgroundColor: answers.classroomBackgroundColor,
       classroomColor: answers.classroomColor,
