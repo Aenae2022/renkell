@@ -12,7 +12,7 @@ type Classroom = {
   classroomOrder: number;
   classroomBackgroundColor: string;
   classroomBorderColor: string;
-  classoomColor: string;
+  classroomColor: string;
   classroomRef: string;
   group: {
     groupName: string;
@@ -26,12 +26,12 @@ type Link = {
   linkTitleFr: string;
 };
 export function DegemerSkol() {
-  const navigate = useNavigate();
-  const { i18n } = useTranslation();
-  const actualUrl = useLocation();
+  // const navigate = useNavigate();
+  // const { i18n } = useTranslation();
+  // const actualUrl = useLocation();
   const { skol, type, idft } = useParams();
 
-  const actualLng = i18n.resolvedLanguage;
+  // const actualLng = i18n.resolvedLanguage;
   const [classrooms, setClassrooms] = useState<Classroom[]>([]);
   const [classroomLinks, setClassroomLinks] = useState<Link[]>([]);
   const [classroomGroupName, setClassroomGroupName] = useState<string>("");
@@ -58,15 +58,15 @@ export function DegemerSkol() {
         }
       }
     };
-    // const getClassroomLinksList = async () => {
-    //   setMessage("Chargement...");
-    //   try {
-    //     const response = await axios.post(
-    //       "http://localhost:5000/api/degemer/classroomLinksList",
-    //       {
-    //         classroom,
-    //       }
-    //     );
+    const getClassroomLinksList = async () => {
+      setMessage("Chargement...");
+      try {
+        const linksListSearched = await axios.post(
+          "http://localhost:5000/api/degemer/classroomLinksList",
+          {
+            classroomRef: idft,
+          }
+        );
     //     setClassroomGroupName(response.data.groupName);
     //     setClassroomLinks(response.data.listLinks);
     //     setMessage(response.data.message);
@@ -79,10 +79,11 @@ export function DegemerSkol() {
     //     }
     //   }
     // };
-    // if (classroom === undefined) {
-    //   //affichage des classes de l'école
-    getClassroomsList();
-    // } else {
+    if (skol !== undefined && skol !== "" && type === undefined) {
+      //affichage des classes de l'école indiquée
+      getClassroomsList();
+    }
+    //  else {
     //   getClassroomLinksList();
     // }
   }, [skol, type, idft]);
@@ -111,7 +112,7 @@ export function DegemerSkol() {
                     flex justify-center items-center`}
               style={{
                 backgroundColor: classe.classroomBackgroundColor, // Couleur de fond
-                color: classe.classoomColor, // Couleur du texte
+                color: classe.classroomColor, // Couleur du texte
                 borderColor: classe.classroomBorderColor, // Couleur de la bordure
               }}
               key={classe.classroomId}
