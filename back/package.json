@@ -4,18 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon --watch src --exec tsx src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "create:school": "tsx prisma/seed/createSchool.ts",
     "create:classroom": "tsx prisma/seed/createClassroom.ts",
-    "cli": "tsx prisma/seed/cli/main.ts"
+    "seed": "tsx prisma/seed/cli/main.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
     "@types/node": "^22.15.18",
     "@types/yargs": "^17.0.33",
+    "nodemon": "^3.1.10",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },

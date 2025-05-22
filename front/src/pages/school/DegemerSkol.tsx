@@ -8,12 +8,15 @@ import { AxiosError } from "axios";
 
 type Classroom = {
   classroomId: number;
+  classroomNumber: number;
   classroomOrder: number;
   classroomBackgroundColor: string;
   classroomBorderColor: string;
   classoomColor: string;
-  groupId: number;
-  groupName: string;
+  classroomRef: string;
+  group: {
+    groupName: string;
+  } | null;
 };
 type Link = {
   linkId: number;
@@ -35,14 +38,15 @@ export function DegemerSkol() {
   const [message, setMessage] = useState<string>("Chargement...");
 
   useEffect(() => {
+    //si une école est définie, obtenir la liste des classes
     const getClassroomsList = async () => {
       setMessage("Chargement...");
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/degemer/classrooms"
+        const classroomsListSearched = await axios.post(
+          "http://localhost:5000/api/degemer/classrooms",
+          { schoolRef: skol }
         );
-        setClassrooms(response.data.listClassrooms);
-        setMessage(response.data.message);
+        setClassrooms(classroomsListSearched.data.result.classrooms);
         setClassroomGroupName("");
         setClassroomLinks([]);
       } catch (error: unknown) {
@@ -77,27 +81,28 @@ export function DegemerSkol() {
     // };
     // if (classroom === undefined) {
     //   //affichage des classes de l'école
-    //   getClassroomsList();
+    getClassroomsList();
     // } else {
     //   getClassroomLinksList();
     // }
   }, [skol, type, idft]);
 
-  const handleClick = (room_id: number) => {
-    const redirection = actualUrl.pathname + "/" + room_id;
-    setMessage("Chargement...");
-    // setClassroomId(room_id);
-    navigate(redirection);
-  };
-  const handleClickLink = (redirection: string) => {
-    window.open(redirection, "_blank", "noreferrer");
-  };
+  // const handleClick = (room_id: number) => {
+  //   const redirection = actualUrl.pathname + "/" + room_id;
+  //   setMessage("Chargement...");
+  //   // setClassroomId(room_id);
+  //   navigate(redirection);
+  // };
+  // const handleClickLink = (redirection: string) => {
+  //   window.open(redirection, "_blank", "noreferrer");
+  // };
 
   let myComponent = <p>{message}</p>;
   if (classrooms.length > 0) {
     myComponent = (
       <div className="flex flex-wrap justify-around ">
         {classrooms.map((classe) => {
+          console.log("classe", classe);
           return (
             <button
               className={`min-w-50 h-17 m-5 p-2 cursor-pointer
@@ -105,40 +110,40 @@ export function DegemerSkol() {
                     border-2  rounded-[10px] shadow-lg 
                     flex justify-center items-center`}
               style={{
-                backgroundColor: classe.background_color, // Couleur de fond
-                color: classe.color, // Couleur du texte
-                borderColor: classe.border_color, // Couleur de la bordure
+                backgroundColor: classe.classroomBackgroundColor, // Couleur de fond
+                color: classe.classoomColor, // Couleur du texte
+                borderColor: classe.classroomBorderColor, // Couleur de la bordure
               }}
-              key={classe.room_id}
-              onClick={() => handleClick(classe.room_id)}
+              key={classe.classroomId}
+              // onClick={() => handleClick(classe.clas)}
             >
-              {classe.group_name}
+              {classe.group ? classe.group.groupName : classe.classroomNumber}{" "}
             </button>
           );
         })}
       </div>
     );
   }
-  if (classroomLinks.length > 0) {
-    myComponent = (
-      <div className="flex flex-wrap justify-around ">
-        {classroomLinks.map((link) => {
-          return (
-            <LinkItem
-              key={link.link_id}
-              link={link}
-              actualLng={actualLng}
-              handleClick={handleClickLink}
-            />
-          );
-        })}
-      </div>
-    );
-  }
+  // if (classroomLinks.length > 0) {
+  //   myComponent = (
+  //     <div className="flex flex-wrap justify-around ">
+  //       {classroomLinks.map((link) => {
+  //         return (
+  //           <LinkItem
+  //             key={link.link_id}
+  //             link={link}
+  //             actualLng={actualLng}
+  //             handleClick={handleClickLink}
+  //           />
+  //         );
+  //       })}
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
-      <HeaderSkol classroom={classroomGroupName} />
+      {/* <HeaderSkol classroom={classroomGroupName} /> */}
       {myComponent}
     </>
   );

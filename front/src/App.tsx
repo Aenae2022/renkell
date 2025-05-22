@@ -11,10 +11,15 @@ import DegemerSkol from "./pages/school/DegemerSkol";
 function App() {
   return (
     <>
-      <Routes>
-        {/*Routes publiques*/}
-        <Route path="/degemer/:skol/:type?/:idft?" element={<DegemerSkol />} />
-      </Routes>
+      <Router>
+        <Routes>
+          {/*Routes publiques*/}
+          <Route
+            path="/degemer/:skol/:type?/:idft?"
+            element={<DegemerSkol />}
+          />
+        </Routes>
+      </Router>
     </>
   );
 }

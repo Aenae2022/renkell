@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 // import authRoute from "./routes/authRoute.mjs";
-import degemerRoutes from "./routes/degemerRoutes.ts"
+import degemerRoutes from "./routes/degemerRoutes"
 // import userRoutes from "./routes/userRoutes.mjs"
 // import linksRoutes from "./routes/linksRoutes.mjs"
 // import emailRoutes from "./routes/emailRoutes.mjs"
@@ -27,7 +27,7 @@ app.get("/test", (req, res) => {
 });
 // Utilisation des routes
 // app.use("/api/auth", authRoute);// Route d'inscription
-// app.use("/api/degemer", degemerRoutes);// Route page d'accueil classes/école
+app.use("/api/degemer", degemerRoutes);// Route page d'accueil classes/école
 // app.use("/api/user", userRoutes);// Route page d'accueil classes/école
 // app.use("/api/links", linksRoutes);// Route page de gestion des raccourcis liens et applications
 // app.use("/api/email", emailRoutes);// Route page de gestion des mails

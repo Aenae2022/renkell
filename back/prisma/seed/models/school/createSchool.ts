@@ -16,5 +16,5 @@ export async function createSchool(params: SchoolParams) {
     data: schoolData,
   });
 
-  console.log('Created schhol:', newSchool);
+  console.log('Created school:', newSchool);
 }
