@@ -1,0 +1,31 @@
+{
+    "pTag" : {
+        "teacher":"enseignant"
+    },
+    "sTag" : {
+        "link":"Liens internet",
+        "appli":"Applications"
+    },
+    "textExplication":{
+        "principal": "Gestion de liens affichés sur la page d'accueil.",
+        "secondary": "Cochez les liens. Pour visiter un site, cliquez sur l'image."
+    },
+    "matter":{
+        "mathematiques": "Mathématiques",
+        "francais": "Langue",
+        "multidomaine":"Multidomaine",
+        "autre":"Autres"
+    },
+    "linksMany": "Liens partagés",
+    "linksOne":"Liens personnels",
+    "linksAll":"Liens publics",
+    "linkPlaceholder": "Copier le lien ici",
+    "ask":{
+        "title":"Le lien que vous recherchez n'est pas dans la liste ? Demandez-le !",
+        "src" : "adresse du lien :",
+        "send" : "Envoyer !",
+        "noLink" : "Vous devez proposer le lien avant d'envoyer la demande.",
+        "success":"Demande envoyée !",
+        "error":"La demande n'a pu être envoyée. Essayez à nouveau !"
+    }
+}

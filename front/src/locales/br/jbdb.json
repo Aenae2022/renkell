@@ -1,0 +1,111 @@
+{
+    "home" : {
+        "title":"Jed buan dre benn",
+        "description":"ul listenn jedoù d'ober e 3 munutenn. \n Ar poelladennoù-mañ a zo bet savet diwar menozh <1>Charivari</1>.",
+        "level": "Evit an holl",
+        "domaines":
+        {
+            "add":"Sammañ ha dilemel",
+            "multi":"Liesaat ha rannañ"
+        },
+        "categories":
+        {
+            "tableAdd":"Taolioù sammañ",
+            "others":"Traoù all",
+            "tableMulti":"Taolioù liesaat",
+            "tablediv":"Taolioù rannañ"
+        },
+        "subCategories":{
+            "memory":"envoriñ",
+            "practice":"pleustriñ",
+            "master":"mestroniañ",
+            "addition":"sammañ",
+            "subtraction":"dilemel",
+            "decompositionNumber":"disrannadenn un niver"
+        },
+        "buttons":{
+            "jbdb-add-all" :"an holl",
+            "jbdb-add-toull-all":"an holl",
+            "jbdb-dec-cdu" :"betek 999",
+            "jbdb-dec-cdu-unite" :"betek 999 -1",
+            "jbdb-dec-cdu-unite-2" : "bBetek 999 -2",
+            "jbdb-dec-mcdu" :"betek 9 999" ,
+            "jbdb-multi-all" :"an holl",
+            "jbdb-multi-toull-all":"an holl",
+            "jbdb-div-all":"an holl"
+        },
+        "questions": {
+            "jbdb-dec-cdu-unite" :"7 kantad + 2 zedag + 5 unanenn = ",
+            "jbdb-dec-cdu-unite-2" : "5 unanenn + 7 kantad + 2 zedag = ",
+            "jbdb-div-rest-2-3-4-5": "24 : 5 ? k=? r=?",
+            "jbdb-div-rest-6-7-8-9": "24 : 9 ? k=? r=?",
+            "jbdb-div-rest-all": "19 : 6 ? k=? r=?"
+        }
+        
+    },
+    "exercise" : {
+        "title":"Jed buan dre benn",
+        "startButton":"Prest ?",
+        "nextButton":"Da heul",
+        "endButton": "Echu",
+        "againButton":"Adkregiñ",
+        "exitButton":"Kuitaat",
+        "timer": "Jedoù graet e",
+        "description": {
+            "jbdb-add-2":"Taol sammañ 2",
+            "jbdb-add-3":"Taol sammañ 3",
+            "jbdb-add-4":"Taol sammañ 4",
+            "jbdb-add-5":"Taol sammañ 5",
+            "jbdb-add-6":"Taol sammañ 6",
+            "jbdb-add-7":"Taol sammañ 7",
+            "jbdb-add-8":"Taol sammañ 8",
+            "jbdb-add-9":"Taol sammañ 9",
+            "jbdb-add-all" : "Taolioù sammañ",
+            "jbdb-add-toull-2":"Taol sammañ 2 gant toulloù",
+            "jbdb-add-toull-3":"Taol sammañ 3 gant toulloù",
+            "jbdb-add-toull-4":"Taol sammañ 4 gant toulloù",
+            "jbdb-add-toull-5":"Taol sammañ 5 gant toulloù",
+            "jbdb-add-toull-6":"Taol sammañ 6 gant toulloù",
+            "jbdb-add-toull-7":"Taol sammañ 7 gant toulloù",
+            "jbdb-add-toull-8":"Taol sammañ 8 gant toulloù",
+            "jbdb-add-toull-9":"Taol sammañ 9 gant toulloù",
+            "jbdb-add-toull-all" : "Taolioù sammañ gant toulloù",
+            "jbdb-add-degad" : "Sammañ degadoù",
+            "jbdb-add-kantad" : "Sammañ kantadoù",
+            "jbdb-dec-cdu":"Disrannadenn an niveroù betek 999",
+            "jbdb-dec-cdu-unite":"Disrannadenn an niveroù betek 999",
+            "jbdb-dec-cdu-unite-2":"Disrannadenn an niveroù betek 999",
+            "jbdb-dec-mcdu":"Disrannadenn an niveroù betek 9 999",
+            "jbdb-sous-taol":"Dilemel",
+            "jbdb-multi-2":"Taol liesaat 2",
+            "jbdb-multi-3":"Taol liesaat 3",
+            "jbdb-multi-4":"Taol liesaat 4",
+            "jbdb-multi-5":"Taol liesaat 5",
+            "jbdb-multi-2-3-4-5": "Taolioù liesaat 2, 3, 4 ha 5",
+            "jbdb-multi-6":"Taol liesaat 6",
+            "jbdb-multi-7":"Taol liesaat 7",
+            "jbdb-multi-8":"Taol liesaat 8",
+            "jbdb-multi-9":"Taol liesaat 9",
+            "jbdb-multi-6-7-8-9": "Taolioù liesaat 6, 7, 8 ha 9",
+            "jbdb-multi-all":"Taolioù liesaat",
+            "jbdb-multi-toull-2":"Taol liesaat 2 gant toulloù",
+            "jbdb-multi-toull-3":"Taol liesaat 3 gant toulloù",
+            "jbdb-multi-toull-4":"Taol liesaat 4 gant toulloù",
+            "jbdb-multi-toull-5":"Taol liesaat 5 gant toulloù",
+            "jbdb-multi-toull-2-3-4-5": "Taolioù liesaat 2, 3, 4 ha 5 gant toulloù",
+            "jbdb-multi-toull-6":"Taol liesaat 6 gant toulloù",
+            "jbdb-multi-toull-7":"Taol liesaat 7 gant toulloù",
+            "jbdb-multi-toull-8":"Taol liesaat 8 gant toulloù",
+            "jbdb-multi-toull-9":"Taol liesaat 9 gant toulloù",
+            "jbdb-multi-toull-6-7-8-9": "Taolioù liesaat 6, 7, 8 ha 9 gant toulloù",
+            "jbdb-multi-toull-all":"Taolioù liesaat gant toulloù",
+            "jbdb-div-2-3-4-5": "Taolioù rannañ dre 2, 3, 4 et 5",
+            "jbdb-div-6-7-8-9": "Taolioù rannañ dre 6, 7, 8 et 9",
+            "jbdb-div-all":"Taolioù rannañ",
+            "jbdb-div-rest-2-3-4-5": "taolioù rannañ dre 2, 3, 4 ha 5 gant ur rest",
+            "jbdb-div-rest-6-7-8-9": "taolioù rannañ dre 6, 7, 8 ha 9 gant ur rest",
+            "jbdb-div-rest-all": "taolioù rannañ gant ur rest"
+        }                 
+    }
+        
+  }

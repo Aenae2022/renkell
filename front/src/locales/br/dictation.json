@@ -1,0 +1,31 @@
+{
+    "button":{
+            "download": "Ar sekañs",
+            "test": "Testiñ",
+            "learn": "Deskiñ ar gerioù"
+        },
+    "1fr_dic-ce2-br-jv" :{
+        "title":"Skrivadennoù Jakez Vras",
+        "description":"Skrivadennoù savet diwar al levrioù Jakez Vras."        
+    },
+    "exercise": {
+        "test" : "Skrivadenn ar gerioù da zeskiñ",
+        "write": "Skriv",
+        "validation": "Gwiriaat",
+        "next": "Da heul",
+        "stop": "Harzañ",
+        "restart": "Adkregiñ",
+        "exit": "Kuitaat",
+        "learn": "Deskiñ",
+        "end": "Echu",
+        "titleLearnExercise" : "Deskiñ ur ger",  
+        "subTitleLearnExercise" : "pazenn",
+        "learn1": "Adkopi ar ger da zeskiñ.",
+        "learn2": "Skriv ar ger da zeskiñ oc'h implijout al lizherennoù kinniget.",
+        "learn2-1" :"Lizherennoù kinniget",
+        "learn2-2" :"Respont",
+        "learn3": "Skriv ar ger da zeskiñ.",
+        "learn3-1": "Klik war ar c'hreion evit skrivañ, klik war al lagag evit sell ouzh ar ger.",
+        "learn4": "Skriv ar ger da zeskiñ."  
+    }
+  }

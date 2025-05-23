@@ -1,0 +1,29 @@
+{
+    "welcome" : "Page d'accueil",
+    "0gen" :{
+        "title":"Présentation",
+        "description":"Je suis enseignante en classe bilingue français/breton. Je vous propose ici mes outils : séquences, documents, exercices en ligne, etc. \n Ces documents ont été créés au fil de mes besoins en classe. Je les ai construits en m'inspirant de nombreuses ressources. J'essaie de citer mes inspirations mais si vous reconnaissez votre travail et que j'ai omis de vous citer 😳​ (ou que vous ne souhaitez pas que je l'utilise) n'hésitez pas à me contacter. 😀 \n Ce sont des documents que j'utilise donc vous comprendrez que je ne souhaite pas que mes élèves aient accès à tout (comme les corrigés ou les évaluations 🤪​) vous aurez donc besoin d'un mot de passe pour les ouvrir. Contactez-moi avec une adresse académique et je vous mettrai dans le secret 🤫​. "
+        
+    },
+    "generalTags": {
+        "welcome": "Bienvenue sur la page de ",
+        "1fr": "Français",
+        "2ma" : "Mathématique"
+    },
+    "specificTags": {
+        "welcome": "Domaine : ",
+            "1fr_lex": "Lexique",
+            "1fr_gra":"Grammaire",
+            "1fr_con": "Conjugaison",
+            "1fr_ort": "Orthographe",
+            "1fr_dic": "Dictée",
+            "2ma_calm": "Calcul mental",
+            "2ma_nbr": "Nombres",
+            "2ma_cal": "Calcul",
+            "2ma_geo": "Géométrie",
+            "2ma_mes": "Mesures",
+            "2ma_res": "Résolution"
+        
+    },
+    "download": "Chargement ..."  
+  }

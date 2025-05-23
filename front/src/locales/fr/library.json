@@ -1,0 +1,45 @@
+{
+    "pTag": {
+        "students": "Les élèves",
+        "books": "Les livres",
+        "stats": "Les stats",
+        "params": "Paramètres"
+    },
+    "degemer" : {
+        "title": "Bibliothèque des"
+    },
+    "bookBox": {
+        "bookReading": "Livre emrpunté",
+        "bookWaiting": "Livre réservé",
+        "bookNoReading": "Emprunter un livre",
+        "bookNoWaiting": "Réserver un livre",
+        "location": {
+            "med":"Médiathèque",
+            "roo": "Classe",
+            "sch": "Ecole",
+            "per": "Personnel"
+        },
+        "numberRead": "Livre déjà lu",
+        "waiters": "Elèves en attente",
+        "disponibility": "Livre disponible",
+        "yes" : "Oui",
+        "no" : "Non",
+        "renk": "Place dans la liste d'attente",
+        "reader": "Lecteur actuel",
+        "numberWaiters": "Nombre d'élèves en attente"
+    },
+    "readingBookBox": {
+        "returnRead" : "Lu.",
+        "returnNotRead" : "Non lu.",
+        "returnBook": "Retour",
+        "deleteBook": "Annuler l'emprunt",
+        "reserved": "Livre réservé",
+        "borrowBook": "Emprunter",
+        "bookReservedToBorrow": "Livre réservé à emprunter"
+
+    },
+    "reserveBookBox": {
+        
+        "reserveBook": "Réserver"
+    }
+}

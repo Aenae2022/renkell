@@ -1,0 +1,109 @@
+{
+    "home" : {
+        "title":"Calculs contre la montre",
+        "description":"Calculs à réaliser en 3 minutes\n J'ai créé ces exercices en m'inspirant du travail de <1>Charivari</1>.",
+        "level":"pour tous",
+        "domaines":
+        {
+            "add":"Additionner et soustraire",
+            "multi":"Multiplier et diviser"
+        },
+        "categories":
+        {
+            "tableAdd":"Tables d'addition",
+            "others":"Autres",
+            "tableMulti":"Tables de multiplication",
+            "tablediv":"Tables de division"
+        },
+        "subCategories":{
+            "memory":"mémoriser",
+            "practice":"s'entrainer",
+            "master":"maitriser",
+            "addition":"addition",
+            "subtraction":"soustraction",
+            "decompositionNumber":"décomposition d'un nombre"
+        },
+        "buttons":{
+            "jbdb-add-all" :"toutes",
+            "jbdb-add-toull-all":"toutes",
+            "jbdb-dec-cdu" :"jusqu'à 999",
+            "jbdb-dec-cdu-unite" :"jusqu'à 999 -1",
+            "jbdb-dec-cdu-unite-2" : "jusqu'à 999 -2",
+            "jbdb-dec-mcdu" :"jusqu'à 9 999",
+            "jbdb-multi-all" :"toutes",
+            "jbdb-multi-toull-all":"toutes",
+            "jbdb-div-all" :"toutes"
+        },
+        "questions": {
+            "jbdb-dec-cdu-unite" :"7 centaines + 2 dizaines + 5 unités = ",
+            "jbdb-dec-cdu-unite-2" : "5 unités + 7 centaines + 2 dizaines = ",
+            "jbdb-div-rest-2-3-4-5": "24 : 5 ? q=? r=?",
+            "jbdb-div-rest-6-7-8-9": "24 : 9 ? q=? r=?",
+            "jbdb-div-rest-all": "19 : 6 ? q=? r=?"
+        }
+    },
+    "exercise" : {
+        "title":"Calculs contre la montre",
+        "startButton":"Prêt ?",
+        "nextButton":"Suivant",
+        "endButton": "Fin",
+        "againButton":"Recommencer",
+        "exitButton":"Quitter",
+        "timer": "Calculs réalisés en ",
+        "description": {
+            "jbdb-add-2":"Table d'addition 2",
+            "jbdb-add-3":"Table d'addition 3",
+            "jbdb-add-4":"Table d'addition 4",
+            "jbdb-add-5":"Table d'addition 5",
+            "jbdb-add-6":"Table d'addition 6",
+            "jbdb-add-7":"Table d'addition 7",
+            "jbdb-add-8":"Table d'addition 8",
+            "jbdb-add-9":"Table d'addition 9",
+            "jbdb-add-all" : "Tables d'addition",
+            "jbdb-add-toull-2":"Table d'addition 2 à trous",
+            "jbdb-add-toull-3":"Table d'addition 3 à trous",
+            "jbdb-add-toull-4":"Table d'addition 4 à trous",
+            "jbdb-add-toull-5":"Table d'addition 5 à trous",
+            "jbdb-add-toull-6":"Table d'addition 6 à trous",
+            "jbdb-add-toull-7":"Table d'addition 7 à trous",
+            "jbdb-add-toull-8":"Table d'addition 8 à trous",
+            "jbdb-add-toull-9":"Table d'addition 9 à trous",
+            "jbdb-add-toull-all" : "Tables d'addition à trous",
+            "jbdb-add-degad" : "Additionner des dizaines",
+            "jbdb-add-kantad" : "Additioner des centaines",
+            "jbdb-dec-cdu":"Décomposition d'un nombre jusqu'à 999",
+            "jbdb-dec-cdu-unite":"Décomposition d'un nombre jusqu'à 999",
+            "jbdb-dec-cdu-unite-2":"Décomposition d'un nombre jusqu'à 999",
+            "jbdb-dec-mcdu":"Décomposition d'un nombre jusqu'à 9 999",
+            "jbdb-sous-taol":"Soustraction",
+            "jbdb-multi-2":"Table de multiplication par 2",
+            "jbdb-multi-3":"Table de multiplication par 3",
+            "jbdb-multi-4":"Table de multiplication par 4",
+            "jbdb-multi-5":"Table de multiplication par 5",
+            "jbdb-multi-2-3-4-5": "Tables de multiplication par 2, 3, 4 et 5",
+            "jbdb-multi-6":"Table de multiplication par 6",
+            "jbdb-multi-7":"Table de multiplication par 7",
+            "jbdb-multi-8":"Table de multiplication par 8",
+            "jbdb-multi-9":"Table de multiplication par 9",
+            "jbdb-multi-6-7-8-9": "Tables de multiplication par 6, 7, 8 et 9",
+            "jbdb-multi-all":"Tables de multiplication",
+            "jbdb-multi-toull-2":"Table de multiplication par 2 à trous",
+            "jbdb-multi-toull-3":"Table de multiplication par 3 à trous",
+            "jbdb-multi-toull-4":"Table de multiplication par 4 à trous",
+            "jbdb-multi-toull-5":"Table de multiplication par 5 à trous",
+            "jbdb-multi-toull-2-3-4-5": "Tables de multiplication par 2, 3, 4 et 5 à trous",
+            "jbdb-multi-toull-6":"Table de multiplication par 6 à trous",
+            "jbdb-multi-toull-7":"Table de multiplication par 7 à trous",
+            "jbdb-multi-toull-8":"Table de multiplication par 8 à trous",
+            "jbdb-multi-toull-9":"Table de multiplication par 9 à trous",
+            "jbdb-multi-toull-6-7-8-9": "Tables de multiplication par 6, 7, 8 et 9 à trous",
+            "jbdb-multi-toull-all":"Tables de multiplication par à trous",
+            "jbdb-div-2-3-4-5": "Tables de division par 2, 3, 4 et 5",
+            "jbdb-div-6-7-8-9": "Tables de division par 6, 7, 8 et 9",
+            "jbdb-div-all":"Tables de division",
+            "jbdb-div-rest-2-3-4-5": "Tables de division par 2, 3, 4 et 5 avec reste",
+            "jbdb-div-rest-6-7-8-9": "Tables de division par 6, 7, 8 et 9 avec reste",
+            "jbdb-div-rest-all": "Tables de division par 6, 7, 8 et 9 avec reste"
+        }                 
+    }    
+  }

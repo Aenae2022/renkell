@@ -27,6 +27,8 @@
   --color-conjugaison: oklch(0.685 0.169 237.323);
   --color-conjugaison-dark: oklch(0.5 0.134 242.749);
   --color-conjugaison-25: oklch(0.685 0.169 237.323 /0.25);
+  --color-conjugaison-50: oklch(0.685 0.169 237.323 /0.5);
+
 
   --color-orthographe: oklch(0.627 0.194 149.214);
   --color-orthographe-dark: oklch(0.448 0.119 151.328);

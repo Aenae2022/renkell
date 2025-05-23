@@ -1,0 +1,29 @@
+{
+    "welcome" : "Degemer",
+    "0gen" :{
+        "title":"Kinnig",
+        "description":" Kelennerez on er c’hlas divyezhek galleg/brezhoneg. Kinnig a ran amañ ma ostilhoù deoc'h : sekañsoù, dielloù, poelladennoù en linenn, h.a. \n Krouet eo bet an teulioù-se diouzh ma ezhommoù er c'hlas.  Savet em eus anezho awenet gant kalz a dafar. Klask a ran menegiñ ma awen met ma anavezit ho labour ha ma'm eus disoñjet menegiñ ac'hanoc'h 😳​ (pe ma n'hoc'h eus ket c'hoant e vez implijet amañ) Deuit e darempred ganin.😀 \n Teulioù emaon o implijout, kompren a reot neuze ne faot ket din ma c'hallfe ma skolidi sell ouzh an holl (evel ar reizhadurioù pe ar priziadennoù 🤪). Neuze ho po ezhomm da gaout ur ger-tremen evit digeriñ anezho. Deuit e darempred ganin gant ur chomlec'h akademiek ha lakaat a rin ac'hanoc'h er sekred. 🤫 "    
+        
+    },
+    "generalTags": {
+        "welcome": "Degemer mat e pajenn ar ",
+        "1fr": "Yezh",
+        "2ma" : "Matematik"
+    },
+    "specificTags": {
+        "welcome": "Danvez : ",
+        "1fr_lex": "Geriadur",
+        "1fr_gra":"Yezhadur",
+        "1fr_con": "Displegadur",
+        "1fr_ort": "Reizhadur",
+        "1fr_dic": "Skrivadenn",
+        "2ma_calm": "Jediñ dre benn",
+        "2ma_nbr": "Niveriñ",
+        "2ma_cal": "Jediñ",
+        "2ma_geo": "Geometriezh",
+        "2ma_mes": "Muzuliañ",
+        "2ma_res": "Diskoulmañ"
+    },
+    "download": "O kargañ..."
+        
+  }

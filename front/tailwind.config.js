@@ -24,6 +24,8 @@ export const theme = {
       conjugaison: 'var(--color-conjugaison)',
       'conjugaison-dark': 'var(--color-conjugaison-dark)',
       'conjugaison-25': 'var(--color-conjugaison-25)',
+      'conjugaison-50': 'var(--color-conjugaison-50)',
+
       orthographe: 'var(--color-orthographe)',
       'orthographe-dark': 'var(--color-orthographe-dark)',
       'orthographe-25': 'var(--color-orthographe-25)',

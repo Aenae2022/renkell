@@ -7,6 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import DegemerSkol from "./pages/school/DegemerSkol";
+import DegemerSkolWithKey from "./wrappers/DegemerSkolWithKey";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           {/*Routes publiques*/}
           <Route
             path="/degemer/:skol/:type?/:idft?"
-            element={<DegemerSkol />}
+            element={<DegemerSkolWithKey />}
           />
         </Routes>
       </Router>

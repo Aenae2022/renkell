@@ -9,6 +9,16 @@ class ClassroomModel {
     return !!classroom;
   }
 
+  static async doesClassroomRefExistInSchool(classroomRef: string, schoolId : number | null): Promise<boolean> {
+    const classroom = await prisma.classroom.findFirst({
+      where: { classroomRef : classroomRef ,
+        schoolId: schoolId,
+       },
+      select: { classroomRef: true },
+    });
+    return !!classroom;
+  }
+
   static async getClassroomLinksListByRef(classroomRef: string) {
     try {
       const classroomWithLinks = await prisma.classroom.findUnique({
@@ -51,9 +61,9 @@ class ClassroomModel {
     }
     if(classroomWithLinks.group?.groupLinks.length === 0) {
          return {
-        message: "Pas de liens trouvés pour cette salle de classe",
+        message: "noLink",
         reponse: false,
-        result: [],
+        result: classroomWithLinks,
       };
     }
     return {

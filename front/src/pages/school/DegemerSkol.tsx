@@ -1,54 +1,67 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
+import { Utilitaires } from "../../utils/Utilitaires";
 // import HeaderSkol from '../../components/core/HeaderSkol';
 // import LinkItem from '../../components/links/LinkItem';
+import { SchoolRefSchema, type SchoolType } from "@shared/schema/school.schema";
+import { TypeCTSchema } from "@shared/schema/typeUser.schema";
+import {
+  ClassroomRefSchema,
+  type ClassroomWithLinksType,
+  type ClassroomType,
+} from "@shared/schema/classroom.schema";
+import HeaderDegemer from "../../components/degemer/HeaderDegemer";
+import LinkItem from "../../components/core/LinkItem";
 
-type Classroom = {
-  classroomId: number;
-  classroomNumber: number;
-  classroomOrder: number;
-  classroomBackgroundColor: string;
-  classroomBorderColor: string;
-  classroomColor: string;
-  classroomRef: string;
-  group: {
-    groupName: string;
-  } | null;
-};
-type Link = {
-  linkId: number;
-  linkRedirection: string;
-  linkIcon: string;
-  linkTitleBr: string;
-  linkTitleFr: string;
-};
 export function DegemerSkol() {
-  // const navigate = useNavigate();
-  // const { i18n } = useTranslation();
-  // const actualUrl = useLocation();
+  const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const actualUrl = useLocation();
   const { skol, type, idft } = useParams();
+  //on nettoie les données de l'url
+  const skolCleaned = skol
+    ? Utilitaires.validateStringWithZodSchema(skol, SchoolRefSchema)
+    : null;
+  const typeCleaned = type
+    ? Utilitaires.validateStringWithZodSchema(type, TypeCTSchema)
+    : null;
+  const idftCleaned = idft
+    ? Utilitaires.validateStringWithZodSchema(idft, ClassroomRefSchema)
+    : null;
+  // const [classroomId, setClassroomId] = useState<number]
 
-  // const actualLng = i18n.resolvedLanguage;
-  const [classrooms, setClassrooms] = useState<Classroom[]>([]);
-  const [classroomLinks, setClassroomLinks] = useState<Link[]>([]);
-  const [classroomGroupName, setClassroomGroupName] = useState<string>("");
+  const actualLng = i18n.resolvedLanguage;
+  const [school, setSchool] = useState<SchoolType | null>(null);
+  const [classroom, setClassroom] = useState<ClassroomWithLinksType | null>(
+    null
+  );
+  const [classrooms, setClassrooms] = useState<ClassroomType[]>([]);
   const [message, setMessage] = useState<string>("Chargement...");
+  const [compToShow, setCompToShow] = useState<string>("message");
 
+  //gestion de l'école
   useEffect(() => {
-    //si une école est définie, obtenir la liste des classes
-    const getClassroomsList = async () => {
+    //si une école est définie, obtenir les infos écoles et la liste des classes
+    const getClassroomsList = async (skolCleaned: string) => {
       setMessage("Chargement...");
+
       try {
         const classroomsListSearched = await axios.post(
           "http://localhost:5000/api/degemer/classrooms",
-          { schoolRef: skol }
+          { schoolRef: skolCleaned }
         );
+
+        setSchool({
+          schoolId: classroomsListSearched.data.result.schoolId,
+          schoolName: classroomsListSearched.data.result.schoolName,
+          schoolRef: classroomsListSearched.data.result.schoolRef,
+        });
+
         setClassrooms(classroomsListSearched.data.result.classrooms);
-        setClassroomGroupName("");
-        setClassroomLinks([]);
+
+        setCompToShow("school");
       } catch (error: unknown) {
         // Utilisation de `unknown` pour éviter `any`
         if (error instanceof AxiosError && error.response) {
@@ -58,52 +71,76 @@ export function DegemerSkol() {
         }
       }
     };
+
+    if (skolCleaned) {
+      if (skolCleaned === "0") {
+        console.log("Aucune école définie");
+        setSchool({ schoolId: 0, schoolName: "-", schoolRef: "-" });
+        setMessage("Aucune école définie");
+      } else {
+        getClassroomsList(skolCleaned);
+      }
+    }
+  }, [skolCleaned]);
+
+  useEffect(() => {
     const getClassroomLinksList = async () => {
+      console.log("school dans getClassroomLinksList", school);
+      console.log("identifiant de la classe", idftCleaned);
       setMessage("Chargement...");
+      setCompToShow("message");
       try {
         const linksListSearched = await axios.post(
           "http://localhost:5000/api/degemer/classroomLinksList",
           {
-            classroomRef: idft,
+            classroomRef: idftCleaned,
+            school: school,
           }
         );
-    //     setClassroomGroupName(response.data.groupName);
-    //     setClassroomLinks(response.data.listLinks);
-    //     setMessage(response.data.message);
-    //   } catch (error: unknown) {
-    //     // Utilisation de `unknown` pour éviter `any`
-    //     if (error instanceof AxiosError && error.response) {
-    //       setMessage(error.response.data.message); // Message d'erreur du backend
-    //     } else {
-    //       setMessage("Erreur serveur !");
-    //     }
-    //   }
-    // };
-    if (skol !== undefined && skol !== "" && type === undefined) {
-      //affichage des classes de l'école indiquée
-      getClassroomsList();
-    }
-    //  else {
-    //   getClassroomLinksList();
-    // }
-  }, [skol, type, idft]);
+        setClassroom(linksListSearched.data.result);
+        setMessage(linksListSearched.data.message);
+        setCompToShow("classroom");
+      } catch (error: unknown) {
+        if (error instanceof AxiosError && error.response) {
+          setMessage(error.response.data.message); // Message d'erreur du backend
+          setSchool(null);
+          setClassrooms([]);
+        } else {
+          setSchool(null);
+          setClassrooms([]);
+          setMessage("Erreur maudit serveur  dans getClassroomLinksList!");
+        }
+      }
+    };
 
-  // const handleClick = (room_id: number) => {
-  //   const redirection = actualUrl.pathname + "/" + room_id;
-  //   setMessage("Chargement...");
-  //   // setClassroomId(room_id);
-  //   navigate(redirection);
-  // };
-  // const handleClickLink = (redirection: string) => {
-  //   window.open(redirection, "_blank", "noreferrer");
-  // };
+    if (typeCleaned && idftCleaned && school) {
+      console.log("typeCleaned", typeCleaned);
+      getClassroomLinksList();
+    }
+    if (type !== undefined && typeCleaned === null) {
+      setMessage("Type non valide");
+      setSchool(null);
+      setClassrooms([]);
+    }
+  }, [school, typeCleaned, idftCleaned, type]);
+
+  const handleClick = (classroomRef: string) => {
+    const redirection = actualUrl.pathname + "/c/" + classroomRef;
+    setMessage("Chargement...");
+    navigate(redirection);
+  };
+  const handleClickLink = (redirection: string) => {
+    window.open(redirection, "_blank", "noreferrer");
+  };
 
   let myComponent = <p>{message}</p>;
-  if (classrooms.length > 0) {
+  if (compToShow === "message") {
+    myComponent = <p>{message}</p>;
+  }
+  if (compToShow === "school") {
     myComponent = (
       <div className="flex flex-wrap justify-around ">
         {classrooms.map((classe) => {
-          console.log("classe", classe);
           return (
             <button
               className={`min-w-50 h-17 m-5 p-2 cursor-pointer
@@ -116,7 +153,7 @@ export function DegemerSkol() {
                 borderColor: classe.classroomBorderColor, // Couleur de la bordure
               }}
               key={classe.classroomId}
-              // onClick={() => handleClick(classe.clas)}
+              onClick={() => handleClick(classe.classroomRef)}
             >
               {classe.group ? classe.group.groupName : classe.classroomNumber}{" "}
             </button>
@@ -125,26 +162,36 @@ export function DegemerSkol() {
       </div>
     );
   }
-  // if (classroomLinks.length > 0) {
-  //   myComponent = (
-  //     <div className="flex flex-wrap justify-around ">
-  //       {classroomLinks.map((link) => {
-  //         return (
-  //           <LinkItem
-  //             key={link.link_id}
-  //             link={link}
-  //             actualLng={actualLng}
-  //             handleClick={handleClickLink}
-  //           />
-  //         );
-  //       })}
-  //     </div>
-  //   );
-  // }
+  if (compToShow === "classroom") {
+    if (message === "noLink") {
+      myComponent = (
+        <div className="flex flex-wrap justify-around ">
+          <p>{t("header.skol.noLink")}</p>
+        </div>
+      );
+    } else {
+      myComponent = (
+        <div className="flex flex-wrap justify-around ">
+          {classroom?.group.groupLinks.map((link) => {
+            return (
+              <LinkItem
+                key={link.link.linkId}
+                link={link.link}
+                actualLng={actualLng}
+                handleClick={handleClickLink}
+              />
+            );
+          })}
+        </div>
+      );
+    }
+  }
 
   return (
     <>
-      {/* <HeaderSkol classroom={classroomGroupName} /> */}
+      {compToShow !== "message" && (
+        <HeaderDegemer school={school} classroom={classroom} />
+      )}
       {myComponent}
     </>
   );

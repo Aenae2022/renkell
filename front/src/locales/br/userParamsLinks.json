@@ -1,0 +1,31 @@
+{
+    "pTag" : {
+        "teacher":"skolaer"
+    },
+    "sTag" : {
+        "link":"Liammoù internet",
+        "appli":"Aplikadennoù"
+    },
+    "textExplication":{
+        "principal": "Merañ al liammoù kinniget war pajenn degemer.",
+        "secondary": "Merkit al liammoù. Tu'zo gwelladenniñ al lec'hienn o klikañ war ar skeudenn."
+    },
+    "matter":{
+        "mathematiques": "Matematik",
+        "francais": "Yezh",
+        "multidomaine":"Liestachenn",
+        "autre":"Traoù all"
+    },
+    "linksMany": "Liammoù lodet",
+    "linksOne":"Liammoù personel",
+    "linksAll":"Liammoù publik",
+    "linkPlaceholder": "Kopiit al liamm amañ",
+    "ask":{
+        "title":"N'emañ ket al liamm a glaskit el listenn ? Goulennit anezhañ !",
+        "src" : "chomlec'h al liamm :",
+        "send" : "Kasit !",
+        "noLink" : "Ret eo deoc'h kinnig al liamm a-raok kas ar goulenn.",
+        "success":"Kaset eo ar goulenn !",
+        "error":"N'omp ket deuet a-benn da gas ar goulenn. Klaskit en-dro !"
+    }
+}

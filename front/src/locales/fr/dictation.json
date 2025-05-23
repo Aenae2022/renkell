@@ -1,0 +1,32 @@
+{
+    "button":{
+            "download": "la séquence",
+            "test": "Se tester",
+            "learn": "apprendre les mots"
+        },
+        "1fr_dic-ce2-br-jv" :{
+        "title":"Dictées Jakez Vras",
+        "description":"Dictées créées à partir des livres Jakez Vras."
+        
+    },
+    "exercise": {
+        "test" : "Dictée des mots à apprendre",
+        "write": "Ecris",
+        "validation": "Vérifier",
+        "next": "Suivant",
+        "stop": "Arrêter",
+        "exit": "Quitter",
+        "restart": "Recommencer",
+        "learn": "Apprendre",
+        "end": "Fini",
+        "titleLearnExercise" : "Apprendre un mot",  
+        "subTitleLearnExercise" : "étape",
+        "learn1": "Recopie le mot à apprendre.",
+        "learn2": "Ecris le mot à apprendre à l'aide des lettres proposées.",
+        "learn2-1" :"Lettres proposées",
+        "learn2-2" :"Réponse",
+        "learn3": "Ecris le mot à apprendre.",
+        "learn3-1": "Clique sur le crayon pour écrire, clique sur l'oeil pour voir le mot.",
+        "learn4": "Ecris le mot à apprendre."  
+    }
+  }

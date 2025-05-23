@@ -1,0 +1,18 @@
+{
+  "header": {
+            "subTitle" : "Outils pour la classe"
+        },
+  "login": {
+            "title":"Connexion",
+            "pseudo":"Identifiant",
+            "password":"Mot de passe"
+        },
+  "buttonConnect":"Se connecter",
+  "buttonDisconnect" : "Déconnexion",
+  "skol": {
+    "title": "école",
+    "classroom" : "Classe des",
+    "noLink": "Cette classe n'a pas de lien"
+  }
+      }
+  

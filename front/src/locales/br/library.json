@@ -1,0 +1,114 @@
+{
+    "pTag": {
+        "students": "Ar skolidi",
+        "books": "Al levrioù",
+        "stats": "Ar stadegoù",
+        "params": "An arventennoù"
+    },
+    "degemer" : {
+        "title": "Levraoueg ar re"
+    },
+    "bookBox": {
+        "bookReading": "Levr amprestet",
+        "bookWaiting": "Levr miret",
+        "bookNoReading": "Amprestañ ul levr",
+        "bookNoWaiting": "Mirout ul levr",
+        "location": {
+            "med":"Mediaoueg",
+            "roo": "Klas",
+            "sch": "Skol",
+            "per": "hiniennel"
+        },
+        "numberRead": "Niver a lenn al levr-mañ",
+        "waiters": "Skolidi o c'hortoz al levr-mañ",
+        "disponibility": "Levr vak",
+        "yes" : "Ya",
+        "no" : "ket",
+        "renk": "Plas gortoz",
+        "reader": "Skoliad o lenn",
+        "numberWaiters": "Niver a skoliad o c'hortoz"
+    },
+    "readingBookBox": {
+        "returnRead" : "Lennet eo.",
+        "returnNotRead" : "N'eo ket bet Lennet.",
+        "returnBook": "Kas en-dro",
+        "deleteBook": "Nullañ an amprest",
+        "reserved": "Levr miret",
+        "borrowBook": "Amprestañ",
+        "borrowBookPersonal": "Amprestañ ul levr hiniennel",
+        "bookReservedToBorrow": "Levr miret da amprestañ"
+
+    },
+    "reserveBookBox": {
+        "reserveBook": "Mirout",
+        "deleteBook":"Nullañ"
+    },
+    "libraryBox": {
+        "welcomeMyLibrary" : "Levraoueg ar re",
+        "addBookInLibrary" : "Ouzhpennañ ul levr e levraoueg ar c'hlas",
+        "title" : "Titl",
+        "author" : "Skrivagner",
+            "editor" : "Ti embann",
+            "ISBN" : "ISBN",
+        "location": {
+            "title":"Perc'henn",
+            "med":"Mediaoueg",
+            "roo": "Klas",
+            "sch": "Skol",
+            "per": "hiniennel"
+        },
+        "alert": "Diwallit !",
+        "alertBorrowed": "Levr amprestet gant ",
+        "error1" : "Ret eo deoc\"h skrivañ un titl evit ouzhpennañ ul levr el levraoueg.",
+        "error2" : "Levr ouzhpennet ! ",
+        "error4" : "Ur skoulm a zo. N\"eo ket posupl enrollañ al levr.",
+        "chooseNewBook" : "Setu levrioù a c\"hellfe kevred gant ho koulenn. Dibabit unan pe krouiit ul levr nevez."
+    },
+    "ficheBox":{
+        "title":"Ouzhpennañ ul levr",
+        "nbBook" : "niver a skouerenn",
+        "inDbYet" : "An titl-mañ a zo dija el levraoueg.",
+        "chooseStudent" :"Levr gant",
+        "abort" : "Nullañ",
+        "save" : "Enrollañ"
+    },
+    "statsBox" : {
+        "library" : "Levrioù",
+        "student" : "Skolidi",
+        "bookLocation_roo" : "Klas",
+        "bookLocation_med" : "Mediaoueg",
+        "bookLocation_sch" : "Skol",
+        "bookLocation_per" : "Hiniennel",
+        "period" : "Dibabit ur prantad : ",
+        "selectedAllPeriod" : "an holl",
+        "selectedBloazPeriod" : "bloazvezh",
+        "selectedPeriod" : "prantad ",
+        "chooseBooks" : "Dibabit al levrioù implijet er stadegoù.",
+        "booksTopBorrowed" : "Titloù ar muiañ amprestet :",
+        "booksTopReaded" : "Titloù ar muiañ lennet :",
+        "topReaders" : "Skolidi en deus lennet ar muiañ a levr ",
+        "topDistinctReaders" : "Skolidi en deus lennet ar muiañ a levr disheñvel",
+        "topNoReaders" : "Skolidi en deus kaset en-dro lervioù hep lenn anezho",
+        "noStats": "N'eus stadeg ebet a glot gant an arventennoù dibabet"
+    },
+    "paramsBox":{
+        "globalTitle":"Prantadoù defot",
+        "yearPeriod":"bloazvezh",
+        "shortPeriod":"Prantad",
+        "groupTitle":"Prantadoù ar strollad",
+        "addTitle": "Ouzhpennañ ur prantad nevez.",
+        "periodName":"Anv ar prantad :",
+        "periodStart":"Deiziad penn ar prantad :",
+        "periodEnd":"Deiziad dibenn ar prantad :",
+        "save":"krouiñ",
+        "deleteConfirm":"Dilemel ar prantad",
+        "confirm":"Dilemel",
+        "abort":"Nullañ",
+        "error1Title":"Skoulm !",
+        "error1Msg":"N'eo ket bet dilamet ar prantad. Klaskit en-dro pe kit e darempred gant ar merour.",
+        "error2Title":"Skoulm !",
+        "error2Msg":"Anv ar prantad a zo ret !",
+        "errorStart":"N'oe ket reizh penn ar prantad.",
+        "errorEnd":"N'oe ket reizh dibenn ar prantad"
+    }
+}

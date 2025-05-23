@@ -1,0 +1,19 @@
+{
+  "header": {
+      "subTitle" : "Beñvegoù evit ar c'hlas"
+        },
+  "login": {
+      "title":"Pajenn kevreañ",
+      "pseudo":"Anaouder",
+      "password":"Ger-tremen"
+  },
+  "buttonConnect" : "Kevreañ",
+  "buttonDisconnect" : "Digevreañ",
+  "skol": {
+    "title": "skol",
+    "classroom" : "klas ar re",
+    "noLink": "N'eus liamm ebet gant ar c'hlas"
+  }
+      
+}
+  

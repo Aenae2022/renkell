@@ -15,6 +15,7 @@ class SchoolModel {
     });
   }
 
+  
 
   static async getClassroomsListByRef(schoolRef: string) {
     try {
@@ -23,6 +24,7 @@ class SchoolModel {
             schoolRef: schoolRef,
         },
         select: {
+            schoolId: true,
             schoolName: true,
             schoolRef: true,
             classrooms: {
@@ -58,7 +60,7 @@ class SchoolModel {
          return {
         message: "Pas de classes trouvées pour cette école",
         reponse: false,
-        result: [],
+        result: schoolWithClasses,
       };
     }
     return {
