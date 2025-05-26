@@ -41,18 +41,19 @@ console.log("Req body brut :", req.body);
         }
 
         // Vérifier le mot de passe
-        bcrypt.compare(userPsswd, myUser.userPsswd, (err, isMatch) => {
-            if (err) {
-                console.error("Erreur de comparaison :", err);
-                res.status(500).json({ message: "Erreur du serveur motdepasse" });
-                return 
-            }
-    
-            if (!isMatch) {
-                res.status(400).json({ message: "header.login.badIdentification3" });
-                return
-            }
-        })
+         let isMatch: boolean;
+        try {
+            isMatch = await bcrypt.compare(userPsswd, myUser.userPsswd);
+        } catch (err) {
+            console.error("Erreur de comparaison :", err);
+            res.status(500).json({ message: "Erreur du serveur motdepasse" });
+            return;
+        }
+
+        if (!isMatch) {
+            res.status(400).json({ message: "header.login.badIdentification3" });
+            return;
+        }           
 
         // Générer un JWT pour l'utilisateur
         const token = generateToken(myUser.userId);
