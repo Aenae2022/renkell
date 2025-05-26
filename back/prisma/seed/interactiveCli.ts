@@ -7,6 +7,7 @@ import { prisma } from '../../src/lib/prisma/client'
 
 interface ClassroomAnswers {
   classroomNumber: string
+  classroomRef: string
   classroomBorderColor: string
   classroomBackgroundColor: string
   classroomColor: string
@@ -38,16 +39,24 @@ async function main() {
   ])
 
   if (action === 'Créer une école') {
-    const { name } = await inquirer.prompt<{ name: string }>([
+    const answers = await inquirer.prompt<{ schoolName: string, schoolRef : string }>([
       {
         type: 'input',
-        name: 'name',
+        name: 'schoolName',
         message: "Entrez le nom de l'école :",
+        validate: (input) => input.trim() !== '' || 'Le nom ne peut pas être vide',
+      },
+      {
+        type: 'input',
+        name: 'schoolRef',
+        message: "Entrez la ref de l'école :",
         validate: (input) => input.trim() !== '' || 'Le nom ne peut pas être vide',
       },
     ])
 
-    await createSchool(name)
+    await createSchool({
+      schoolName: answers.schoolName,
+      schoolRef: answers.schoolRef,})
 
   } else if (action === 'Créer une salle de classe') {
     const answers = await inquirer.prompt<ClassroomAnswers>([
@@ -59,18 +68,29 @@ async function main() {
       },
       {
         type: 'input',
+        name: 'classroomRef',
+        message: 'Entrez la ref de la salle dans barre adresse :',
+        validate: (input) => input.trim() !== '' || 'Le champ ne peut pas être vide',
+
+      },
+      {
+        type: 'input',
         name: 'classroomBorderColor',
         message: 'Entrez la couleur de bordure de la salle de classe :',
+        validate: (input) => input.trim() !== '' || 'Le champ ne peut pas être vide',
+
       },
       {
         type: 'input',
         name: 'classroomBackgroundColor',
         message: 'Entrez la couleur de fond de la salle de classe :',
+        validate: (input) => input.trim() !== '' || 'Le champ ne peut pas être vide',
       },
       {
         type: 'input',
         name: 'classroomColor',
         message: 'Entrez la couleur de la salle de classe :',
+        validate: (input) => input.trim() !== '' || 'Le champ ne peut pas être vide',
       },
       {
         type: 'input',
@@ -89,6 +109,7 @@ async function main() {
 
     await createClassroom({
       classroomNumber: parseInt(answers.classroomNumber),
+      classroomRef: answers.classroomRef,
       classroomBorderColor: answers.classroomBorderColor,
       classroomBackgroundColor: answers.classroomBackgroundColor,
       classroomColor: answers.classroomColor,

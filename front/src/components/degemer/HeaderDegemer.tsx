@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "@pictures/icons/classeur.png";
 import logoFR from "@pictures/icons/francais.png";
 import logoBR from "@pictures/icons/breton.png";
+import type { UserWithLinksType } from "@shared/schema/user.schema";
 
 const lngs = {
   br: { nativeName: "BR" },
@@ -16,21 +17,30 @@ const lngs = {
 function HeaderDegemer({
   school,
   classroom,
+  user,
 }: {
   school: SchoolType | null;
   classroom: ClassroomWithLinksType | null;
+  user: UserWithLinksType | null;
 }) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   // const {user, logout} = useAuth();
   console.log("school", school);
   console.log("classroom", classroom);
-  const title = school ? t("header.skol.title") + " " + school.schoolName : "";
+  const title =
+    school && school.schoolId !== 0
+      ? t("header.skol.title") + " " + school.schoolName
+      : "";
   const subTitle = classroom
     ? t("header.skol.classroom") + " " + classroom.group.groupName
+    : user
+    ? `${user.userFirstName} ${user.userFamilyName}`
     : "";
 
-  // const buttonText = user ? t('header.buttonDisconnect') : t('header.buttonConnect');
+  const buttonText = user
+    ? t("header.buttonDisconnect")
+    : t("header.buttonConnect");
 
   // const handleAuthAction = () => {
   //     if (user) {
@@ -63,8 +73,12 @@ function HeaderDegemer({
       </div>
 
       <div className="flex flex-col items-center pr-2 ">
-        {/* <button className='text-center text-sm border-1 border-gray-400 bg-lime-400 rounded-xl px-2 py-1'
-                onClick={handleAuthAction}>{buttonText}</button> */}
+        <button
+          className="text-center text-sm border-1 border-gray-400 bg-lime-400 rounded-xl px-2 py-1"
+          // onClick={handleAuthAction}
+        >
+          {buttonText}
+        </button>
         <div className="flex ">
           {Object.keys(lngs).map((lng) => {
             let isSelected = "";

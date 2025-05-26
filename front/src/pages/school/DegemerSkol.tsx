@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import axios, { AxiosError } from "axios";
 import { Utilitaires } from "../../utils/Utilitaires";
-// import HeaderSkol from '../../components/core/HeaderSkol';
-// import LinkItem from '../../components/links/LinkItem';
 import { SchoolRefSchema, type SchoolType } from "@shared/schema/school.schema";
 import { TypeCTSchema } from "@shared/schema/typeUser.schema";
 import {
@@ -12,6 +10,7 @@ import {
   type ClassroomWithLinksType,
   type ClassroomType,
 } from "@shared/schema/classroom.schema";
+import { type UserWithLinksType } from "@shared/schema/user.schema";
 import HeaderDegemer from "../../components/degemer/HeaderDegemer";
 import LinkItem from "../../components/core/LinkItem";
 
@@ -19,6 +18,8 @@ export function DegemerSkol() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const actualUrl = useLocation();
+  const actualLng = i18n.resolvedLanguage;
+
   const { skol, type, idft } = useParams();
   //on nettoie les données de l'url
   const skolCleaned = skol
@@ -30,13 +31,12 @@ export function DegemerSkol() {
   const idftCleaned = idft
     ? Utilitaires.validateStringWithZodSchema(idft, ClassroomRefSchema)
     : null;
-  // const [classroomId, setClassroomId] = useState<number]
 
-  const actualLng = i18n.resolvedLanguage;
   const [school, setSchool] = useState<SchoolType | null>(null);
   const [classroom, setClassroom] = useState<ClassroomWithLinksType | null>(
     null
   );
+  const [user, setUser] = useState<UserWithLinksType | null>(null);
   const [classrooms, setClassrooms] = useState<ClassroomType[]>([]);
   const [message, setMessage] = useState<string>("Chargement...");
   const [compToShow, setCompToShow] = useState<string>("message");
@@ -89,6 +89,7 @@ export function DegemerSkol() {
       console.log("identifiant de la classe", idftCleaned);
       setMessage("Chargement...");
       setCompToShow("message");
+      setUser(null);
       try {
         const linksListSearched = await axios.post(
           "http://localhost:5000/api/degemer/classroomLinksList",
@@ -113,9 +114,38 @@ export function DegemerSkol() {
       }
     };
 
+    const getUserLinksList = async () => {
+      setMessage("Chargement...");
+      setCompToShow("message");
+      setClassroom(null);
+      try {
+        const linksListSearched = await axios.post(
+          "http://localhost:5000/api/degemer/userLinksList",
+          {
+            userPseudo: idftCleaned,
+            school: school,
+          }
+        );
+        setUser(linksListSearched.data.result);
+        setMessage(linksListSearched.data.message);
+        setCompToShow("user");
+      } catch (error: unknown) {
+        if (error instanceof AxiosError && error.response) {
+          setMessage(error.response.data.message); // Message d'erreur du backend
+          setSchool(null);
+          setClassrooms([]);
+        } else {
+          setSchool(null);
+          setClassrooms([]);
+          setMessage("Erreur serveur dans getUserLinksList!");
+        }
+      }
+    };
+
     if (typeCleaned && idftCleaned && school) {
       console.log("typeCleaned", typeCleaned);
-      getClassroomLinksList();
+      if (typeCleaned === "c") getClassroomLinksList();
+      if (typeCleaned === "t") getUserLinksList();
     }
     if (type !== undefined && typeCleaned === null) {
       setMessage("Type non valide");
@@ -186,11 +216,35 @@ export function DegemerSkol() {
       );
     }
   }
+  if (compToShow === "user") {
+    if (message === "noLink") {
+      myComponent = (
+        <div className="flex flex-wrap justify-around ">
+          <p>{t("header.skol.noLink")}</p>
+        </div>
+      );
+    } else {
+      myComponent = (
+        <div className="flex flex-wrap justify-around ">
+          {user?.userLinks.map((link) => {
+            return (
+              <LinkItem
+                key={link.link.linkId}
+                link={link.link}
+                actualLng={actualLng}
+                handleClick={handleClickLink}
+              />
+            );
+          })}
+        </div>
+      );
+    }
+  }
 
   return (
     <>
       {compToShow !== "message" && (
-        <HeaderDegemer school={school} classroom={classroom} />
+        <HeaderDegemer school={school} classroom={classroom} user={user} />
       )}
       {myComponent}
     </>

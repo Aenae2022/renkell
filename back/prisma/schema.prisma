@@ -37,15 +37,7 @@ model Classroom {
   group   Group?     @relation(fields: [groupId], references: [groupId], onDelete: SetNull)
 }
 
-model Group {
-  groupId Int     @id @default(autoincrement())
-  groupName String @db.VarChar(255)
-  groupLanguage String @db.VarChar(50)
-  groupPrincipal Boolean
 
-  classroom Classroom?  // relation 1-1 inverse
-  groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
-}
 
 model Link {
   linkId             Int     @id @default(autoincrement())
@@ -66,6 +58,8 @@ model Link {
   linkType           String  @db.VarChar(50) @default("all")
 
   groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
+  userLinks LinkUser[] // Relation avec la table de liaison GroupLink
+
 }
 
 model GroupLink {
@@ -78,3 +72,59 @@ model GroupLink {
   @@id([groupId, linkId]) // clé composite
 }
 
+model Group {
+  groupId Int     @id @default(autoincrement())
+  groupName String @db.VarChar(255)
+  groupLanguage String @db.VarChar(50)
+  groupPrincipal Boolean
+
+  classroom Classroom?  // relation 1-1 inverse
+  groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
+  groupUsers GroupUser[]
+}
+
+model User {
+   userId             Int     @id @default(autoincrement())
+   userFamilyName String  @db.VarChar(50)
+   userFirstName String  @db.VarChar(50)
+   userType String  @db.VarChar(50) @default("invit")
+   userPseudo String? @db.VarChar(50)   @unique
+   userPsswd String? @db.VarChar(255) 
+   userMail String? @db.VarChar(255) @unique
+   userIcon String @db.VarChar(50) @default("user_student.png")
+
+   gradeId        Int?    // clé étrangère optionnelle donc NULL si pas d'association avec un niveau scolaire
+   grade          Grade? @relation(fields: [gradeId], references: [gradeId], onDelete: SetNull)
+
+  userLinks LinkUser[] 
+  userGroups GroupUser[]
+}
+
+model GroupUser {
+  user   User  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId Int
+
+  group        Group       @relation(fields: [groupId], references: [groupId], onDelete: Cascade)
+  groupId      Int
+
+  principal Boolean @default(false)
+
+  @@id([userId, groupId]) // clé composite
+}
+
+model LinkUser {
+  user   User  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId Int
+
+  link        Link       @relation(fields: [linkId], references: [linkId], onDelete: Cascade)
+  linkId      Int
+
+  @@id([userId, linkId]) // clé composite
+}
+
+model Grade {
+  gradeId Int @id @default(autoincrement())
+  gradeName String @db.VarChar(50)
+  users  User[] // Relation 1-n avec Classroom
+
+}

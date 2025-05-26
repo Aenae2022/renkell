@@ -2,6 +2,7 @@ import { prisma } from '../lib/prisma/client';
 
 class ClassroomModel {
   static async doesClassroomRefExist(classroomRef: string): Promise<boolean> {
+
     const classroom = await prisma.classroom.findUnique({
       where: { classroomRef: classroomRef },
       select: { classroomRef: true },
