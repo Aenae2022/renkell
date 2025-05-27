@@ -262,7 +262,7 @@ export function DegemerSkol() {
         {classrooms.map((classe) => {
           return (
             <button
-              className={`min-w-70 h-25 m-5 p-2 cursor-pointer
+              className={`w-[180px] h-24 m-5 p-2 cursor-pointer
                     text-center text-2xl font-bold 
                     border-2  rounded-[10px] shadow-lg 
                     flex justify-center items-center`}

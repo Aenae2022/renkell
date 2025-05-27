@@ -28,6 +28,8 @@ export const theme = {
 
       orthographe: 'var(--color-orthographe)',
       'orthographe-dark': 'var(--color-orthographe-dark)',
+      'orthographe-light': 'var(--color-orthographe-light)',
+      'orthographe-50': 'var(--color-orthographe-50)',
       'orthographe-25': 'var(--color-orthographe-25)',
       dictee: 'var(--color-dictee)',
       'dictee-dark': 'var(--color-dictee-dark)',

@@ -32,6 +32,8 @@
 
   --color-orthographe: oklch(0.627 0.194 149.214);
   --color-orthographe-dark: oklch(0.448 0.119 151.328);
+  --color-orthographe-light: oklch(0.7804 0.194 149.214)
+  --color-orthographe-50: oklch(0.627 0.194 149.214 /0.5);
   --color-orthographe-25: oklch(0.627 0.194 149.214 /0.25);
 
   --color-dictee: oklch(0.448 0.119 151.328);
