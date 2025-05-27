@@ -1,15 +1,15 @@
 import { createContext } from "react";
 import { type UserDatasConnectType } from "@shared/schema/user.schema";
-import { type ClassroomShortType } from "@shared/schema/classroom.schema";
+import type { GroupInfoType } from "@shared/schema/group.schema";
 
 export interface AuthContextType {
   tokenConn: string | null;
   userConn: UserDatasConnectType | null; //
-  classroomConn: ClassroomShortType | null; //
+  groupPConn: GroupInfoType | null; //
   login: (
     tokenConn: string,
     userConn: UserDatasConnectType,
-    classroomConn: ClassroomShortType
+    groupPConn: GroupInfoType
   ) => void;
   logout: () => void;
 }

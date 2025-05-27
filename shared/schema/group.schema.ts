@@ -12,22 +12,23 @@ export const GroupLinksSchema = z.object({
   groupLinks: z.array(GroupLinkSchema),
 });
 
-export const groupInfoSchema = z.object({
+export const GroupInfoSchema = z.object({
   groupId: z.number(),
   groupName : StringNameGroupSchema, 
   principal : z.boolean(),
 })
 
-export const groupPrincipalInfoSchema = z.object({
+export const GroupPrincipalInfoSchema = z.object({
   groupId: z.number(),
   groupName : StringNameGroupSchema, 
   principal : z.literal(true),
 })
 
-export const groupSecondaireInfoSchema = z.object({
+export const GroupSecondaireInfoSchema = z.object({
   groupId: z.number(),
   groupName : StringNameGroupSchema, 
   principal : z.literal(false),
 })
 
-export type GroupLinksSchema = z.infer<typeof GroupLinksSchema>;
+export type GroupLinksType = z.infer<typeof GroupLinksSchema>;
+export type GroupInfoType = z.infer<typeof GroupInfoSchema>

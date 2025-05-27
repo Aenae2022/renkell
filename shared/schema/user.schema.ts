@@ -1,8 +1,7 @@
 import { z } from "zod";
 import { StringShortRefSchema } from "./fields/stringShortRef.schema";
-import { ColorHexaSchema } from "./fields/colorHexa.schema";
 import { StringNameSchema } from "./fields/stringName.schema";
-import { groupInfoSchema, GroupLinksSchema, groupPrincipalInfoSchema, groupSecondaireInfoSchema} from "./group.schema";
+import { GroupInfoSchema, GroupPrincipalInfoSchema, GroupSecondaireInfoSchema} from "./group.schema";
 import { LinkShortSchema } from "./link.schema";
 import { BcryptHashSchema } from "./fields/password.schema";
 import { TypeUserDatasSchema } from "./typeUser.schema";
@@ -16,13 +15,13 @@ export const UserLinksSchema = z.object({
 });
 
 export const GroupsAllSchema = z.object({
-  group: groupInfoSchema,
+  group: GroupInfoSchema,
 });
 export const GroupsPSchema = z.object({
-  group: groupPrincipalInfoSchema,
+  group: GroupPrincipalInfoSchema,
 });
 export const GroupsSSchema = z.object({
-  group: groupSecondaireInfoSchema,
+  group: GroupSecondaireInfoSchema,
 });
 
 export const UserWithLinksSchema = z.object({
@@ -44,9 +43,9 @@ export const UserDatasConnectSchema = z.object({
   userType: TypeUserDatasSchema,
   userIcon: FileNameSchema,
   grade: GradeSchema.nullable(),
-  userGroups: z.array(groupInfoSchema),
-  groupsP : z.array(groupPrincipalInfoSchema),
-  groupsS : z.array(groupSecondaireInfoSchema),
+  userGroups: z.array(GroupInfoSchema),
+  groupsP : z.array(GroupPrincipalInfoSchema),
+  groupsS : z.array(GroupSecondaireInfoSchema),
 })
 
 // Type TypeScript associé

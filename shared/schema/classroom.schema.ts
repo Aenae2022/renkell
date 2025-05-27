@@ -2,8 +2,7 @@ import { z } from "zod";
 import { StringShortRefSchema } from "./fields/stringShortRef.schema";
 import { ColorHexaSchema } from "./fields/colorHexa.schema";
 import { GroupLinksSchema} from "./group.schema";
-import { group } from "console";
-import { StringNameGroupSchema } from "./fields/stringNameGroup.schema";
+
 
 
 export const ClassroomRefSchema = StringShortRefSchema;

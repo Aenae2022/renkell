@@ -5,7 +5,11 @@
   "login": {
             "title":"Connexion",
             "pseudo":"Identifiant",
-            "password":"Mot de passe"
+            "password":"Mot de passe",
+      "errorFields":"Il faut saisir un identifiant et un mot de passe !",
+      "badIdentification":"Identifiant et/ou mot de passe incorrect ! "
+
+            
         },
   "buttonConnect":"Se connecter",
   "buttonDisconnect" : "Déconnexion",

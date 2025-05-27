@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { type UserDatasConnectType } from "@shared/schema/user.schema";
-import { type ClassroomShortType } from "@shared/schema/classroom.schema";
 import { jwtDecode } from "jwt-decode";
 import { AuthContext } from "./AuthContext";
+import type { GroupInfoType } from "@shared/schema/group.schema";
 
 interface JwtPayload {
   exp: number; // Date d'expiration UNIX (en secondes)
@@ -30,9 +30,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       ? JSON.parse(localStorage.getItem("userConn")!)
       : null
   );
-  const [classroomConn, setClassroomConn] = useState<ClassroomShortType | null>(
-    localStorage.getItem("classroomConn")
-      ? JSON.parse(localStorage.getItem("classroomConn")!)
+  const [groupPConn, setGroupPConn] = useState<GroupInfoType | null>(
+    localStorage.getItem("groupConn")
+      ? JSON.parse(localStorage.getItem("groupConn")!)
       : null
   );
 
@@ -41,17 +41,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const login = (
     newToken: string,
     userData: UserDatasConnectType,
-    newClassroom: ClassroomShortType
+    newGroupP: GroupInfoType
   ) => {
     setTokenConn(newToken);
     setUserConn(userData);
-    setClassroomConn(newClassroom);
+    setGroupPConn(newGroupP);
   };
 
   const logout = useCallback(() => {
     setTokenConn(null);
     setUserConn(null);
-    setClassroomConn(null);
+    setGroupPConn(null);
     navigate("/"); // Rediriger vers la page d'accueil'
   }, [navigate]);
 
@@ -71,16 +71,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       localStorage.removeItem("userConn");
     }
-    if (classroomConn) {
-      localStorage.setItem("classroomConn", JSON.stringify(classroomConn));
+    if (groupPConn) {
+      localStorage.setItem("groupPConn", JSON.stringify(groupPConn));
     } else {
-      localStorage.removeItem("classroomConn");
+      localStorage.removeItem("groupPConn");
     }
-  }, [tokenConn, userConn, classroomConn, logout]);
+  }, [tokenConn, userConn, groupPConn, logout]);
 
   return (
     <AuthContext.Provider
-      value={{ tokenConn, userConn, classroomConn, login, logout }}
+      value={{ tokenConn, userConn, groupPConn, login, logout }}
     >
       {children}
     </AuthContext.Provider>

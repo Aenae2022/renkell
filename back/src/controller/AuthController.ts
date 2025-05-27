@@ -20,7 +20,7 @@ export default class AuthController {
         //on récupère les datas de user si l'utilisateur existe
         const validatedUser = await UserModel.getUserByPseudo(userPseudo);
         if (!validatedUser || validatedUser.reponse === null) {
-           res.status(400).json({ message: validatedUser.message || "header.login.badIdentification" });
+           res.status(400).json({ message: validatedUser.message || "header.login.badIdentification", reponse:null });
            return
         }
 
@@ -35,7 +35,7 @@ export default class AuthController {
         const myUser = parseResult.data; // ✅ bien typé
         
         if(myUser.userPsswd === null || myUser.userPsswd === undefined) {
-            res.status(400).json({ message: "header.login.badIdentification2" });
+            res.status(400).json({ message: "header.login.badIdentification", reponse: null });
             return 
         }
 
@@ -50,14 +50,14 @@ export default class AuthController {
         }
 
         if (!isMatch) {
-            res.status(400).json({ message: "header.login.badIdentification3" });
+            res.status(400).json({ message: "header.login.badIdentification", reponse:null });
             return;
         }           
 
         // Générer un JWT pour l'utilisateur
         const token = generateToken(myUser.userId);
   
-         res.status(200).json({ message: "header.login.goodIdentification4", 
+         res.status(200).json({ message: "header.login.goodIdentification", 
             reponse: true, 
             result: {
                 myUser,

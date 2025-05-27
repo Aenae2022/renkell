@@ -5,7 +5,9 @@
   "login": {
       "title":"Pajenn kevreañ",
       "pseudo":"Anaouder",
-      "password":"Ger-tremen"
+      "password":"Ger-tremen",
+      "errorFields":"An anaouder hag ar ger-tremen a zo ret !",
+      "badIdentification":"Ne glot ket an anaouder gant ar ger-tremen."
   },
   "buttonConnect" : "Kevreañ",
   "buttonDisconnect" : "Digevreañ",
