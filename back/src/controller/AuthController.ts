@@ -17,7 +17,6 @@ export default class AuthController {
     
     try {
 
-console.log("Req body brut :", req.body);
         //on récupère les datas de user si l'utilisateur existe
         const validatedUser = await UserModel.getUserByPseudo(userPseudo);
         if (!validatedUser || validatedUser.reponse === null) {

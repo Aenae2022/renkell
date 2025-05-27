@@ -32,127 +32,212 @@ export function DegemerSkol() {
     ? Utilitaires.validateStringWithZodSchema(idft, ClassroomRefSchema)
     : null;
 
-  const [school, setSchool] = useState<SchoolType | null>(null);
+  const [school, setSchool] = useState<SchoolType | null>(null); //11
   const [classroom, setClassroom] = useState<ClassroomWithLinksType | null>(
     null
-  );
-  const [user, setUser] = useState<UserWithLinksType | null>(null);
-  const [classrooms, setClassrooms] = useState<ClassroomType[]>([]);
-  const [message, setMessage] = useState<string>("Chargement...");
-  const [compToShow, setCompToShow] = useState<string>("message");
-
-  //gestion de l'école
-  useEffect(() => {
-    //si une école est définie, obtenir les infos écoles et la liste des classes
-    const getClassroomsList = async (skolCleaned: string) => {
-      setMessage("Chargement...");
-
-      try {
-        const classroomsListSearched = await axios.post(
-          "http://localhost:5000/api/degemer/classrooms",
-          { schoolRef: skolCleaned }
-        );
-
-        setSchool({
-          schoolId: classroomsListSearched.data.result.schoolId,
-          schoolName: classroomsListSearched.data.result.schoolName,
-          schoolRef: classroomsListSearched.data.result.schoolRef,
-        });
-
-        setClassrooms(classroomsListSearched.data.result.classrooms);
-
-        setCompToShow("school");
-      } catch (error: unknown) {
-        // Utilisation de `unknown` pour éviter `any`
-        if (error instanceof AxiosError && error.response) {
-          setMessage(error.response.data.message); // Message d'erreur du backend
-        } else {
-          setMessage("Erreur serveur !");
-        }
-      }
-    };
-
-    if (skolCleaned) {
-      if (skolCleaned === "0") {
-        console.log("Aucune école définie");
-        setSchool({ schoolId: 0, schoolName: "-", schoolRef: "-" });
-        setMessage("Aucune école définie");
-      } else {
-        getClassroomsList(skolCleaned);
-      }
-    }
-  }, [skolCleaned]);
+  ); //12
+  const [user, setUser] = useState<UserWithLinksType | null>(null); //13
+  const [classrooms, setClassrooms] = useState<ClassroomType[]>([]); //14
+  const [message, setMessage] = useState<string>("Chargement..."); //15
+  const [compToShow, setCompToShow] = useState<string>("message"); //16
 
   useEffect(() => {
-    const getClassroomLinksList = async () => {
-      console.log("school dans getClassroomLinksList", school);
-      console.log("identifiant de la classe", idftCleaned);
-      setMessage("Chargement...");
-      setCompToShow("message");
-      setUser(null);
-      try {
-        const linksListSearched = await axios.post(
-          "http://localhost:5000/api/degemer/classroomLinksList",
-          {
-            classroomRef: idftCleaned,
-            school: school,
+    const fetchData = async () => {
+      const getClassroomsList = async (skolCleaned: string) => {
+        let schoolTmp = null;
+        let classroomsTmp: ClassroomType[] | null = null;
+        try {
+          const classroomsListSearched = await axios.post(
+            "http://localhost:5000/api/degemer/classrooms",
+            { schoolRef: skolCleaned }
+          );
+
+          schoolTmp = {
+            schoolId: classroomsListSearched.data.result.schoolId,
+            schoolName: classroomsListSearched.data.result.schoolName,
+            schoolRef: classroomsListSearched.data.result.schoolRef,
+          };
+
+          classroomsTmp = classroomsListSearched.data.result.classrooms;
+        } catch (error: unknown) {
+          // Utilisation de `unknown` pour éviter `any`
+          if (error instanceof AxiosError && error.response) {
+            setMessage(error.response.data.message); // Message d'erreur du backend
+          } else {
+            setMessage("Erreur serveur !");
           }
-        );
-        setClassroom(linksListSearched.data.result);
-        setMessage(linksListSearched.data.message);
-        setCompToShow("classroom");
-      } catch (error: unknown) {
-        if (error instanceof AxiosError && error.response) {
-          setMessage(error.response.data.message); // Message d'erreur du backend
-          setSchool(null);
-          setClassrooms([]);
-        } else {
-          setSchool(null);
-          setClassrooms([]);
-          setMessage("Erreur maudit serveur  dans getClassroomLinksList!");
         }
+
+        return { schoolTmp, classroomsTmp };
+      };
+
+      const getClassroomLinksList = async (school: SchoolType) => {
+        let classroomTmp: ClassroomWithLinksType | null = null;
+        let messageTmp = "Chargement...";
+        try {
+          const linksListSearched = await axios.post(
+            "http://localhost:5000/api/degemer/classroomLinksList",
+            {
+              classroomRef: idftCleaned,
+              school: school,
+            }
+          );
+          classroomTmp = linksListSearched.data.result;
+          messageTmp = linksListSearched.data.message;
+        } catch (error: unknown) {
+          setCompToShow("message");
+          if (error instanceof AxiosError && error.response) {
+            messageTmp = error.response.data.message; // Message d'erreur du backend
+          } else {
+            messageTmp = "Erreur maudit serveur  dans getClassroomLinksList!";
+          }
+        }
+        return { classroomTmp, messageTmp };
+      };
+
+      const getUserLinksList = async (school: SchoolType) => {
+        let userTmp: UserWithLinksType | null = null;
+        let messageTmp = "Chargement...";
+        try {
+          const linksListSearched = await axios.post(
+            "http://localhost:5000/api/degemer/userLinksList",
+            {
+              userPseudo: idftCleaned,
+              school: school,
+            }
+          );
+          userTmp = linksListSearched.data.result;
+          messageTmp = linksListSearched.data.message;
+        } catch (error: unknown) {
+          if (error instanceof AxiosError && error.response) {
+            messageTmp = error.response.data.message; // Message d'erreur du backend
+          } else {
+            messageTmp = "Erreur serveur dans getUserLinksList!";
+          }
+        }
+        return { userTmp, messageTmp };
+      };
+
+      //on définit les variables locales
+      let localSchool: SchoolType | null = null;
+      let localClassrooms: ClassroomType[] = [];
+      let localClassroom: ClassroomWithLinksType | null = null;
+      let localUser: UserWithLinksType | null = null;
+      let localMessage = "Chargement...";
+      let localCompToShow = "message";
+
+      try {
+        // Cas école non définie
+        if (!skolCleaned) return;
+
+        // Cas école définie
+        if (skolCleaned === "0") {
+          //une école vide
+          localSchool = { schoolId: 0, schoolName: "-", schoolRef: "-" };
+          localMessage = "degemerSkol.noSchool";
+        } else {
+          //vérification de l'école et récupération des classes
+          const { schoolTmp, classroomsTmp } = await getClassroomsList(
+            skolCleaned
+          );
+          if (!schoolTmp) {
+            //pas d'école trouvée, on affiche un message et on quitte le useEffect
+            localMessage = "degemerSkol.noSchoolDesc";
+            localCompToShow = "message";
+            setMessage(localMessage);
+            setCompToShow(localCompToShow);
+            return;
+          } else {
+            localSchool = schoolTmp;
+            if (classroomsTmp && classroomsTmp.length > 0) {
+              localClassrooms = classroomsTmp;
+              localMessage = ""; // plus de message à afficher
+              localCompToShow = "school";
+            } else {
+              //pas de classes trouvées, on met à jour le message et on quitte le useEffect
+              localCompToShow = "message";
+              localMessage = "degemerSkol.noClassroom";
+              setSchool(localSchool);
+              setMessage(localMessage);
+              setCompToShow(localCompToShow);
+            }
+          }
+        }
+
+        //car url école uniquement, on charge les classes et on quitte le useEffect
+        if (type === undefined || idft === undefined) {
+          setSchool(localSchool);
+          setClassrooms(localClassrooms);
+          setCompToShow("school");
+          return;
+        }
+        //cas type et idft définis
+        if (typeCleaned && idftCleaned && localSchool) {
+          if (typeCleaned === "c") {
+            const { classroomTmp, messageTmp } = await getClassroomLinksList(
+              localSchool
+            );
+            if (!classroomTmp) {
+              //pas de classe trouvée, on met à jour le message et on quitte le useEffect
+              localMessage = "degemerSkol.noClassroomDesc";
+              localCompToShow = "message";
+              setMessage(localMessage);
+              setCompToShow(localCompToShow);
+              setSchool(localSchool);
+              setClassrooms(localClassrooms);
+              return;
+            }
+            localClassroom = classroomTmp;
+            localMessage = messageTmp;
+            if (localClassroom.group.groupLinks.length === 0) {
+              //pas de liens trouvés
+              localMessage = "degemerSkol.noLink";
+              localCompToShow = "message";
+            } else {
+              localCompToShow = "classroom";
+            }
+            setSchool(localSchool);
+            setClassrooms(localClassrooms);
+            setClassroom(localClassroom);
+            setMessage(localMessage);
+            setCompToShow(localCompToShow);
+          } else if (typeCleaned === "t") {
+            const { userTmp, messageTmp } = await getUserLinksList(localSchool);
+            if (!userTmp) {
+              //pas de user trouvé, on met à jour le message et on quitte le useEffect
+              localMessage = "degemerSkol.noUserDesc";
+              localCompToShow = "message";
+              setMessage(localMessage);
+              setCompToShow(localCompToShow);
+              return;
+            }
+            localUser = userTmp;
+            localMessage = messageTmp;
+            if (localUser.userLinks.length === 0) {
+              //pas de liens trouvés
+              localCompToShow = "message";
+              localMessage = "degemerSkol.noLink";
+            } else {
+              localCompToShow = "user";
+            }
+            setSchool(localSchool);
+            setClassrooms(localClassrooms);
+            setUser(localUser);
+            setMessage(localMessage);
+            setCompToShow(localCompToShow);
+          }
+        }
+      } catch (err) {
+        localMessage = "Erreur inattendue";
+        localCompToShow = "message";
+        setMessage(localMessage);
+        setCompToShow(localCompToShow);
+        console.error("Erreur dans fetchData:", err);
       }
     };
 
-    const getUserLinksList = async () => {
-      setMessage("Chargement...");
-      setCompToShow("message");
-      setClassroom(null);
-      try {
-        const linksListSearched = await axios.post(
-          "http://localhost:5000/api/degemer/userLinksList",
-          {
-            userPseudo: idftCleaned,
-            school: school,
-          }
-        );
-        setUser(linksListSearched.data.result);
-        setMessage(linksListSearched.data.message);
-        setCompToShow("user");
-      } catch (error: unknown) {
-        if (error instanceof AxiosError && error.response) {
-          setMessage(error.response.data.message); // Message d'erreur du backend
-          setSchool(null);
-          setClassrooms([]);
-        } else {
-          setSchool(null);
-          setClassrooms([]);
-          setMessage("Erreur serveur dans getUserLinksList!");
-        }
-      }
-    };
-
-    if (typeCleaned && idftCleaned && school) {
-      console.log("typeCleaned", typeCleaned);
-      if (typeCleaned === "c") getClassroomLinksList();
-      if (typeCleaned === "t") getUserLinksList();
-    }
-    if (type !== undefined && typeCleaned === null) {
-      setMessage("Type non valide");
-      setSchool(null);
-      setClassrooms([]);
-    }
-  }, [school, typeCleaned, idftCleaned, type]);
+    fetchData();
+  }, [idft, idftCleaned, skolCleaned, type, typeCleaned]);
 
   const handleClick = (classroomRef: string) => {
     const redirection = actualUrl.pathname + "/c/" + classroomRef;
@@ -163,9 +248,13 @@ export function DegemerSkol() {
     window.open(redirection, "_blank", "noreferrer");
   };
 
-  let myComponent = <p>{message}</p>;
+  let myComponent;
   if (compToShow === "message") {
-    myComponent = <p>{message}</p>;
+    myComponent = (
+      <div className="m-auto bg-red-200  border-3 border-red-600 rounded-md max-w-[60%] text-center p-4">
+        <p>{t(message)}</p>
+      </div>
+    );
   }
   if (compToShow === "school") {
     myComponent = (
@@ -173,7 +262,7 @@ export function DegemerSkol() {
         {classrooms.map((classe) => {
           return (
             <button
-              className={`min-w-50 h-17 m-5 p-2 cursor-pointer
+              className={`min-w-70 h-25 m-5 p-2 cursor-pointer
                     text-center text-2xl font-bold 
                     border-2  rounded-[10px] shadow-lg 
                     flex justify-center items-center`}
@@ -243,9 +332,8 @@ export function DegemerSkol() {
 
   return (
     <>
-      {compToShow !== "message" && (
-        <HeaderDegemer school={school} classroom={classroom} user={user} />
-      )}
+      <HeaderDegemer school={school} classroom={classroom} user={user} />
+
       {myComponent}
     </>
   );

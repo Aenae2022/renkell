@@ -1,5 +1,5 @@
 import { prisma } from '../lib/prisma/client';
-
+import { type SchoolWithClassroomsType } from '@shared/schema/school.schema';
 class SchoolModel {
   static async doesSchoolRefExist(schoolRef: string): Promise<boolean> {
     const school = await prisma.school.findUnique({
@@ -17,7 +17,11 @@ class SchoolModel {
 
   
 
-  static async getClassroomsListByRef(schoolRef: string) {
+  static async getClassroomsListByRef(schoolRef: string) : Promise<{
+    message: string;
+    reponse: boolean | null;
+    result: SchoolWithClassroomsType | null;}
+    >{
     try {
       const schoolWithClasses = await prisma.school.findUnique({
         where: {
@@ -53,7 +57,7 @@ class SchoolModel {
       return {
         message: "École introuvable",
         reponse: null,
-        result: [],
+        result: null,
       };
     }
     if(schoolWithClasses.classrooms.length === 0) {

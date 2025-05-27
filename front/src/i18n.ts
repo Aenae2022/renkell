@@ -4,6 +4,8 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import headerBr from "./locales/br/header.json";
 import headerFr from "./locales/fr/header.json";
+import degemerSkolBr from "./locales/br/degemerSkol.json";
+import degemerSkolFr from "./locales/fr/degemerSkol.json";
 import mainBr from "./locales/br/main.json";
 import mainFr from "./locales/fr/main.json";
 import jbdbBr from "./locales/br/jbdb.json";
@@ -22,6 +24,7 @@ const RESOURCES = {
   br: { 
     translation: {
       header : headerBr,
+      degemerSkol: degemerSkolBr,
       main : mainBr,
       jbdb: jbdbBr,
       dictation : dictationBr,
@@ -34,6 +37,7 @@ const RESOURCES = {
   fr: { 
     translation: {
       header : headerFr,
+      degemerSkol: degemerSkolFr,
       main : mainFr,
       jbdb: jbdbFr,
       dictation : dictationFr,
