@@ -6,11 +6,17 @@ export default class GroupModel {
 
     try{
       const group = await prisma.group.findUnique({
-      where: { groupId: groupId },
-      select: { classroomRef: true },
+      where: { groupId },
+      select: {
+        classroom: {
+          select: {
+            classroomRef: true,
+          },
+        },
+      },
     });
     //on valide les données avec Zod
-        const parsed = ClassroomRefSchema.safeParse(group);
+        const parsed = ClassroomRefSchema.safeParse(group.classroom.classroomRef);
     
         if (!parsed.success) {
           console.error("Validation Zod échouée :", parsed.error.errors);

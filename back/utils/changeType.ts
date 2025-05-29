@@ -8,6 +8,7 @@ export function toUserSession(user: UserDatasConnectType): UserSessionConnectTyp
     userType,
     userIcon,
     grade,
+    userSchool,
     userGroups,
     groupsP,
     groupsS
@@ -20,6 +21,7 @@ export function toUserSession(user: UserDatasConnectType): UserSessionConnectTyp
     userType,
     userIcon,
     grade,
+    userSchool,
     userGroups,
     groupsP,
     groupsS

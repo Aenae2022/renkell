@@ -76,21 +76,42 @@ export default class AuthController {
     } 
 
     static async logout(req: Request, res: Response) {
-      const userDatas = req.session.user
-      const refSchool = userDatas?.userSchool ? userDatas.userSchool.schoolRef : 0
-      let redirection = '/degemer/'+refSchool
-      if(userDatas && userDatas.groupsP.length > 0){
-        const refClassroomSearch = await GroupModel.getClassroomRefByGroupId(userDatas.groupsP[0].groupId)
-        if(refClassroomSearch.reponse){
-          redirection = redirection + '/c/'+refClassroomSearch.result
+      try {
+        const userDatas = req.session.user;
+        console.log('userDatas', userDatas)
+      // Redirection par défaut
+      let redirection = '/degemer/0';
+
+      // Si l'utilisateur est connecté et a une école
+      if (userDatas?.userSchool?.schoolRef) {
+        redirection = `/degemer/${userDatas.userSchool.schoolRef}`;
+      }
+      // s'il a au moins un groupe principal
+      if (userDatas && Array.isArray(userDatas.groupsP) && userDatas.groupsP.length > 0) {
+        const groupId = userDatas.groupsP[0].groupId;
+
+        const refClassroomSearch = await GroupModel.getClassroomRefByGroupId(groupId);
+        if (refClassroomSearch.reponse) {
+          redirection += `/c/${refClassroomSearch.result}`;
         }
       }
-      
-  req.session.destroy(() => {
-    res.clearCookie("connect.sid"); // Nom par défaut du cookie
-    res.json({ success: true, result:redirection });
-  });
-};
+
+      req.session.destroy((err) => {
+        if (err) {
+          console.error("Erreur lors de la destruction de session :", err);
+          return res.status(500).json({ success: false, message: "Erreur serveur lors de la déconnexion" });
+        }
+
+        res.clearCookie("connect.sid");
+        res.json({ success: true, result: redirection });
+      });
+
+  } catch (error) {
+    console.error("Erreur dans logout :", error);
+    res.status(500).json({ success: false, message: "Erreur serveur dans logout" });
+  }
+}
+
 
 static getSession(req: Request, res: Response){
   if (req.session.user) {
