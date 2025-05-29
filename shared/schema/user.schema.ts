@@ -48,7 +48,20 @@ export const UserDatasConnectSchema = z.object({
   groupsS : z.array(GroupSecondaireInfoSchema),
 })
 
+export const UserSessionConnectSchema = z.object({
+  userId: z.number().int(),
+  userFamilyName: StringNameSchema,
+  userFirstName: StringNameSchema,
+  userType: TypeUserDatasSchema,
+  userIcon: FileNameSchema,
+  grade: GradeSchema.nullable(),
+  userGroups: z.array(GroupInfoSchema),
+  groupsP : z.array(GroupPrincipalInfoSchema),
+  groupsS : z.array(GroupSecondaireInfoSchema),
+})
+
 // Type TypeScript associé
 export type UserWithLinksType = z.infer<typeof UserWithLinksSchema>;
 export type UserPseudoType = z.infer<typeof UserPseudoSchema>;
 export type UserDatasConnectType = z.infer<typeof UserDatasConnectSchema>;
+export type UserSessionConnectType = z.infer<typeof UserSessionConnectSchema>

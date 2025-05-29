@@ -7,6 +7,8 @@ import logoFR from "@pictures/icons/francais.png";
 import logoBR from "@pictures/icons/breton.png";
 import type { UserWithLinksType } from "@shared/schema/user.schema";
 import ConnexionButton from "../core/ConnectionButton";
+import { useState } from "react";
+import Login from "../core/Login";
 
 const lngs = {
   br: { nativeName: "BR" },
@@ -25,8 +27,7 @@ function HeaderDegemer({
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   // const {user, logout} = useAuth();
-  console.log("school", school);
-  console.log("classroom", classroom);
+  const [showLogin, setShowLogin] = useState<boolean>(false);
   const title =
     school && school.schoolId !== 0
       ? t("header.skol.title") + " " + school.schoolName
@@ -61,7 +62,7 @@ function HeaderDegemer({
       </div>
 
       <div className="flex flex-col items-center pr-2 ">
-        <ConnexionButton />
+        <ConnexionButton showLogin={setShowLogin} />
         <div className="flex ">
           {Object.keys(lngs).map((lng) => {
             let isSelected = "";
@@ -80,6 +81,7 @@ function HeaderDegemer({
           })}
         </div>
       </div>
+      {showLogin ? <Login showLogin={setShowLogin} /> : null}
     </div>
   );
 }

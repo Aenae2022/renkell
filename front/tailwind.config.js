@@ -16,24 +16,30 @@ export const theme = {
       'mathematiques-25': 'var(--color-mathematiques-25)',
       lexique: 'var(--color-lexique)',
       'lexique-dark': 'var(--color-lexique-dark)',
+      //bleu
       grammaire: 'var(--color-grammaire)',
       'grammaire-light': 'var(--color-grammaire-light)',
       'grammaire-dark': 'var(--color-grammaire-dark)',
       'grammaire-50': 'var(--color-grammaire-50)',
       'grammaire-25': 'var(--color-grammaire-25)',
-      conjugaison: 'var(--color-conjugaison)',
+      //bleu clair
+      conjugaison: 'var(--color-conjugaison)', 
+      'conjugaison-light':'var(--color-conjugaison-light)',
       'conjugaison-dark': 'var(--color-conjugaison-dark)',
       'conjugaison-25': 'var(--color-conjugaison-25)',
       'conjugaison-50': 'var(--color-conjugaison-50)',
-
+      //vert
       orthographe: 'var(--color-orthographe)',
       'orthographe-dark': 'var(--color-orthographe-dark)',
       'orthographe-light': 'var(--color-orthographe-light)',
       'orthographe-50': 'var(--color-orthographe-50)',
       'orthographe-25': 'var(--color-orthographe-25)',
+      //Vert foncé
       dictee: 'var(--color-dictee)',
       'dictee-dark': 'var(--color-dictee-dark)',
       'dictee-25': 'var(--color-dictee-25)',
+      'dictee-50': 'var(--color-dictee-50)',
+      //Vert : orthographe
       nombre: 'var(--color-nombre)',
       'nombre-dark': 'var(--color-nombre-dark)',
       calcul: 'var(--color-calcul)',

@@ -1,10 +1,11 @@
+//back/scr/controller/AuthController.ts
 import { Request, Response } from "express";
 import UserModel from "../model/UserModel";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { UserDatasConnectSchema } from "@shared/schema/user.schema";
+import { UserDatasConnectSchema, type UserDatasConnectType } from "@shared/schema/user.schema";
 import dotenv from "dotenv";
-import {generateToken} from "../../utils/jwt";
+
+import  {toUserSession} from "../../utils/changeType"
 dotenv.config();
 
 
@@ -54,16 +55,18 @@ export default class AuthController {
             return;
         }           
 
-        // Générer un JWT pour l'utilisateur
-        const token = generateToken(myUser.userId);
-  
-         res.status(200).json({ message: "header.login.goodIdentification", 
-            reponse: true, 
-            result: {
-                myUser,
-                token,
-            }});
-        return
+        //modificatin des données pour stockage en session
+        const userSession = toUserSession(myUser);
+       
+        req.session.user = userSession;
+
+      res.status(200).json({
+  message: "header.login.goodIdentification",
+  reponse: true,
+});
+      
+
+       
       } catch (error) {
         console.error("Erreur dans le contrôleur :", error);
          res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
@@ -71,6 +74,20 @@ export default class AuthController {
       }
     } 
 
+    static logout(req: Request, res: Response) {
+  req.session.destroy(() => {
+    res.clearCookie("connect.sid"); // Nom par défaut du cookie
+    res.json({ success: true });
+  });
+};
+
+static getSession(req: Request, res: Response){
+  if (req.session.user) {
+    res.json({ user: req.session.user });
+  } else {
+    res.json({ user: null });
+  }
+};
 }
 
 

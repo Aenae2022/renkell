@@ -12,6 +12,7 @@ router.post("/login",
     checkInputUserPseudoValid,checkInputUserPsswdValid,
     async (req, res) => await AuthController.validateConnection(req, res));
     
-
+router.post("/logout", (req, res)=>  AuthController.logout(req, res));
+router.get("/session", (req, res)=>  AuthController.getSession(req, res));
 
 export default router;

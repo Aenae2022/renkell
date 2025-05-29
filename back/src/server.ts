@@ -1,6 +1,9 @@
 import express from "express";
+
 import cors from "cors";
 import dotenv from "dotenv";
+import session from "express-session";
+
 import authRoute from "./routes/authRoutes";
 import degemerRoutes from "./routes/degemerRoutes"
 // import userRoutes from "./routes/userRoutes.mjs"
@@ -13,9 +16,22 @@ dotenv.config();
 
  
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:5173", // <-- ton frontend
+  credentials: true               // <-- autorise les cookies
+}));app.use(express.json());
 
+app.use(session({
+  secret: process.env.SESSION_SECRET || "dev-secret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 1000 * 60 * 30, // 30 min
+  }
+}));
 
 // Route test
 app.get("/", (req, res) => {

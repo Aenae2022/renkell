@@ -1,17 +1,13 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
-import { AxiosError } from "axios";
-import { useAuth } from "../../hooks/useAuth"; // chemin selon ton projet
 import { useNavigate } from "react-router-dom";
 import { Utilitaires } from "../../utils/Utilitaires";
-import {
-  UserPseudoSchema,
-  type UserDatasConnectType,
-} from "@shared/schema/user.schema";
+import { UserPseudoSchema } from "@shared/schema/user.schema";
 import { PasswordSchema } from "@shared/schema/fields/password.schema";
-import type { GroupInfoType } from "@shared/schema/group.schema";
-const Login = () => {
+import iconEsc from "@pictures/icons/faux.png";
+import api from "../../api/axios";
+
+const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
   const { t } = useTranslation();
 
   const titlePage = t("header.login.title");
@@ -22,7 +18,6 @@ const Login = () => {
   const [pseudo, setPseudo] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -43,77 +38,61 @@ const Login = () => {
       const passwordCleaned = PasswordSchema.safeParse(password)
         ? password
         : null;
-      console.log("données envoyées : ", pseudoCleaned, passwordCleaned);
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        {
-          userPseudo: pseudoCleaned,
-          userPsswd: passwordCleaned,
-        }
-      );
 
-      if (!response.data.reponse) {
-        setMessage(t("header.login.badIdentification"));
-        return;
-      }
-      const newUser: UserDatasConnectType = response.data.result.myUser;
-      //récupérer la classroom du group principal s'il existe
-      //TODO : pour l'instant un seul group principal par user mais pourra changer par la suite
-      let newGroupP: GroupInfoType;
-      if (newUser.groupsP.length > 0) {
-        newGroupP = newUser.groupsP[0];
-      } else {
-        newGroupP = {
-          groupId: 0,
-          groupName: "",
-          principal: true,
-        };
-      }
+      const response = await api.post("/api/auth/login", {
+        userPseudo: pseudoCleaned,
+        userPsswd: passwordCleaned,
+      });
 
-      login(response.data.result.token, newUser, newGroupP); // Stocke le token dans le contexte
+      console.log("Connexion réussie :", response.data);
+
       navigate("/dashboard"); // Redirige vers le dashboard
-    } catch (error: unknown) {
-      if (error instanceof AxiosError && error.response) {
-        setMessage(error.response.data.message); // Message d'erreur du backend
-      } else {
-        setMessage("Erreur serveur !");
-      }
+    } catch (err) {
+      console.error("Erreur de connexion :", err);
     }
   };
 
   return (
-    <div className="flex flex-col items-center ">
-      <h2 className="text-2xl font-bold mb-4">{titlePage}</h2>
-      <form
-        onSubmit={handleLogin}
-        className="w-80 bg-gray-200 p-4 rounded-lg shadow-md"
-      >
-        <div>
-          <label className="block pb-2">{textPseudo} :</label>
-          <input
-            type="text"
-            value={pseudo}
-            onChange={(e) => setPseudo(e.target.value)}
-            className="w-full p-2 border rounded-2xl"
-          />
-        </div>
-        <div>
-          <label className="block pt-2 pb-2">{textPassword} :</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border rounded-2xl"
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-lime-600 text-white p-2 rounded-full w-full mt-4"
+    <div className="fixed z-[9998] w-full h-full top-0 left-0 bg-dictee-50">
+      <div className="fixed z-[9999] w-[450px] p-2.5 bg-cover bg-conjugaison-light rounded-lg bg-center top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col items-center ">
+        <h2 className="text-2xl font-bold mb-4">{titlePage}</h2>
+        <img
+          src={iconEsc} // remplace avec ton chemin
+          alt="Fermer"
+          className="absolute top-2 right-2 w-6 h-6 cursor-pointer"
+          onClick={() => showLogin(false)} // par exemple, pour fermer
+        />
+        <form
+          onSubmit={handleLogin}
+          className="w-80 bg-gray-200 p-4 rounded-lg shadow-md"
         >
-          {textButton}
-        </button>
-        {message && <p className="mt-2 text-red-500">{t(message)}</p>}
-      </form>
+          <div>
+            <label className="block pb-2">{textPseudo} :</label>
+            <input
+              type="text"
+              value={pseudo}
+              onChange={(e) => setPseudo(e.target.value)}
+              className="w-full p-2 border rounded-2xl"
+            />
+          </div>
+          <div>
+            <label className="block pt-2 pb-2">{textPassword} :</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-2 border rounded-2xl"
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-lime-600 text-white p-2 rounded-full w-full mt-4"
+          >
+            {textButton}
+          </button>
+          {message && <p className="mt-2 text-red-500">{t(message)}</p>}
+        </form>
+      </div>
     </div>
   );
 };
