@@ -1,12 +1,13 @@
 //back/scr/controller/AuthController.ts
 import { Request, Response } from "express";
 import UserModel from "../model/UserModel";
+import GroupModel from "../model/GroupModel"
 import bcrypt from "bcrypt";
 import { UserDatasConnectSchema, type UserDatasConnectType } from "@shared/schema/user.schema";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
 import  {toUserSession} from "../../utils/changeType"
-dotenv.config();
+// dotenv.config();
 
 
 export default class AuthController {
@@ -61,9 +62,9 @@ export default class AuthController {
         req.session.user = userSession;
 
       res.status(200).json({
-  message: "header.login.goodIdentification",
-  reponse: true,
-});
+        message: "header.login.goodIdentification",
+        reponse: true,
+      });
       
 
        
@@ -74,10 +75,20 @@ export default class AuthController {
       }
     } 
 
-    static logout(req: Request, res: Response) {
+    static async logout(req: Request, res: Response) {
+      const userDatas = req.session.user
+      const refSchool = userDatas?.userSchool ? userDatas.userSchool.schoolRef : 0
+      let redirection = '/degemer/'+refSchool
+      if(userDatas && userDatas.groupsP.length > 0){
+        const refClassroomSearch = await GroupModel.getClassroomRefByGroupId(userDatas.groupsP[0].groupId)
+        if(refClassroomSearch.reponse){
+          redirection = redirection + '/c/'+refClassroomSearch.result
+        }
+      }
+      
   req.session.destroy(() => {
     res.clearCookie("connect.sid"); // Nom par défaut du cookie
-    res.json({ success: true });
+    res.json({ success: true, result:redirection });
   });
 };
 

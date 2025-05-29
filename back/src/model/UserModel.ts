@@ -1,7 +1,13 @@
 import { StringNameGroupSchema } from '@shared/schema/fields/stringNameGroup.schema';
 import { prisma } from '../lib/prisma/client';
-import { UserDatasConnectSchema } from "@shared/schema/user.schema";
+import { UserDatasConnectSchema, UserDatasConnectType } from "@shared/schema/user.schema";
+import { GroupInfoType } from '@shared/schema/group.schema';
 
+
+interface UserGroupBd{
+  principal : boolean;
+  group : GroupInfoType;
+}
 class UserModel {
 
   static async doesUserPseudoExist(userPseudo: string): Promise<boolean> {
@@ -17,7 +23,7 @@ class UserModel {
   try {
     console.log("Récupération des données de l'utilisateur :", userPseudo);
     console.log(JSON.stringify(userPseudo))
-    const userDatas = await prisma.user.findUnique({
+    const userDatas  = await prisma.user.findUnique({
       where: { userPseudo : userPseudo},
       select: {
         userId: true,
@@ -31,6 +37,13 @@ class UserModel {
           select: {
             gradeId: true,
             gradeName: true,
+          },
+        },   
+        school: {
+          select: {
+            schoolId: true,
+            schoolName: true,
+            schoolRef: true,
           },
         },
         userGroups: {
@@ -47,7 +60,8 @@ class UserModel {
             groupId: "asc",
           }
         }
-      }
+      },
+      
     });
 
     if (!userDatas) {
@@ -59,12 +73,12 @@ class UserModel {
     }
 
     // Séparer groupes principal et secondaire
-    const groupesPrincipaux = userDatas.userGroups.filter(g => g.principal).map(g => ({
+    const groupesPrincipaux = userDatas.userGroups.filter((g : UserGroupBd) => g.principal).map((g : UserGroupBd) => ({
         groupId: g.group.groupId,
         groupName: g.group.groupName,
         principal: g.principal
       }));
-    const groupesSecondaires = userDatas.userGroups.filter(g => !g.principal).map(g => ({
+    const groupesSecondaires = userDatas.userGroups.filter((g : UserGroupBd) => !g.principal).map((g : UserGroupBd) => ({
         groupId: g.group.groupId,
         groupName: g.group.groupName,
         principal: g.principal
@@ -80,7 +94,8 @@ class UserModel {
       userType:       userDatas.userType,
       userIcon:       userDatas.userIcon,
       grade:          userDatas.grade,              // correspond à GradeSchema
-      userGroups: userDatas.userGroups.map(g => ({
+      userSchool : userDatas.school,
+      userGroups: userDatas.userGroups.map((g : UserGroupBd) => ({
         groupId: g.group.groupId,
         groupName: g.group.groupName,
         principal: g.principal

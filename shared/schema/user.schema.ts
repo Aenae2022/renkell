@@ -7,6 +7,7 @@ import { BcryptHashSchema } from "./fields/password.schema";
 import { TypeUserDatasSchema } from "./typeUser.schema";
 import FileNameSchema from "./fields/fileName.schema";
 import { GradeSchema } from "./grade.schema";
+import { SchoolSchema } from "./school.schema";
 
 
 export const UserPseudoSchema = StringShortRefSchema;
@@ -43,6 +44,7 @@ export const UserDatasConnectSchema = z.object({
   userType: TypeUserDatasSchema,
   userIcon: FileNameSchema,
   grade: GradeSchema.nullable(),
+  userSchool : SchoolSchema.nullable(),
   userGroups: z.array(GroupInfoSchema),
   groupsP : z.array(GroupPrincipalInfoSchema),
   groupsS : z.array(GroupSecondaireInfoSchema),
@@ -55,6 +57,7 @@ export const UserSessionConnectSchema = z.object({
   userType: TypeUserDatasSchema,
   userIcon: FileNameSchema,
   grade: GradeSchema.nullable(),
+  userSchool : SchoolSchema.nullable(),
   userGroups: z.array(GroupInfoSchema),
   groupsP : z.array(GroupPrincipalInfoSchema),
   groupsS : z.array(GroupSecondaireInfoSchema),

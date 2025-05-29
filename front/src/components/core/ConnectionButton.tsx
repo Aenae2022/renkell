@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import api from "../../api/axios";
 import { useEffect, useState } from "react";
 import { type UserSessionConnectType } from "@shared/schema/user.schema";
+import { useNavigate } from "react-router-dom";
 const ConnexionButton = ({
   showLogin,
 }: {
@@ -9,7 +10,7 @@ const ConnexionButton = ({
 }) => {
   const { t } = useTranslation();
   const [userConn, setUserConn] = useState<UserSessionConnectType | null>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     api
       .get("/api/auth/session")
@@ -19,8 +20,9 @@ const ConnexionButton = ({
   }, []);
 
   const handleLogout = async () => {
-    await api.post("/api/auth/logout");
+    const reponse = await api.post("/api/auth/logout");
     setUserConn(null);
+    navigate(reponse.data.result); // Redirige vers la page degemer correspondante à l'utilisateur
   };
   return (
     <>
