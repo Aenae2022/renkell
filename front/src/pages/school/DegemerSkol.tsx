@@ -43,6 +43,7 @@ export function DegemerSkol() {
 
   useEffect(() => {
     const fetchData = async () => {
+      localStorage.clear();
       const getClassroomsList = async (skolCleaned: string) => {
         let schoolTmp = null;
         let classroomsTmp: ClassroomType[] | null = null;
@@ -133,7 +134,7 @@ export function DegemerSkol() {
         // Cas école définie
         if (skolCleaned === "0") {
           //une école vide
-          localSchool = { schoolId: 0, schoolName: "-", schoolRef: "-" };
+          localSchool = { schoolId: 0, schoolName: "-", schoolRef: "0" };
           localMessage = "degemerSkol.noSchool";
         } else {
           //vérification de l'école et récupération des classes
@@ -163,8 +164,9 @@ export function DegemerSkol() {
             }
           }
         }
+        localStorage.setItem("school", localSchool.schoolRef);
 
-        //car url école uniquement, on charge les classes et on quitte le useEffect
+        //cas url école uniquement, on charge les classes et on quitte le useEffect
         if (type === undefined || idft === undefined) {
           setSchool(localSchool);
           setClassrooms(localClassrooms);
@@ -201,6 +203,7 @@ export function DegemerSkol() {
             setClassroom(localClassroom);
             setMessage(localMessage);
             setCompToShow(localCompToShow);
+            localStorage.setItem("classroom", localClassroom.classroomRef);
           } else if (typeCleaned === "t") {
             const { userTmp, messageTmp } = await getUserLinksList(localSchool);
             if (!userTmp) {
@@ -213,6 +216,13 @@ export function DegemerSkol() {
             }
             localUser = userTmp;
             localMessage = messageTmp;
+            if (localUser.userClassroomRef) {
+              localStorage.setItem("classroom", localUser.userClassroomRef);
+              console.log(
+                "stockage de classroom en localstorage",
+                localUser.userClassroomRef
+              );
+            }
             if (localUser.userLinks.length === 0) {
               //pas de liens trouvés
               localCompToShow = "message";

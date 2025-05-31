@@ -8,6 +8,7 @@ import { TypeUserDatasSchema } from "./typeUser.schema";
 import FileNameSchema from "./fields/fileName.schema";
 import { GradeSchema } from "./grade.schema";
 import { SchoolSchema } from "./school.schema";
+import { StringNameGroupSchema } from "./fields/stringNameGroup.schema";
 
 
 export const UserPseudoSchema = StringShortRefSchema;
@@ -25,10 +26,18 @@ export const GroupsSSchema = z.object({
   group: GroupSecondaireInfoSchema,
 });
 
+export const UserGroupBdSchema = z.object({
+  principal : z.boolean(),
+  group : z.object({
+    groupId : z.number(),
+    groupName : StringNameGroupSchema
+  })
+})
 export const UserWithLinksSchema = z.object({
 
   userFamilyName: StringNameSchema,
   userFirstName: StringNameSchema,
+  userClassroomRef : StringShortRefSchema.nullable(),
   userLinks: z.array(UserLinksSchema),
 
 });
@@ -68,3 +77,4 @@ export type UserWithLinksType = z.infer<typeof UserWithLinksSchema>;
 export type UserPseudoType = z.infer<typeof UserPseudoSchema>;
 export type UserDatasConnectType = z.infer<typeof UserDatasConnectSchema>;
 export type UserSessionConnectType = z.infer<typeof UserSessionConnectSchema>
+export type UserGroupBdType = z.infer<typeof UserGroupBdSchema>

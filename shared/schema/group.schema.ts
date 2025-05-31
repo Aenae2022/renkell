@@ -32,3 +32,5 @@ export const GroupSecondaireInfoSchema = z.object({
 
 export type GroupLinksType = z.infer<typeof GroupLinksSchema>;
 export type GroupInfoType = z.infer<typeof GroupInfoSchema>
+export type GroupNameType = z.infer<typeof StringNameGroupSchema>
+

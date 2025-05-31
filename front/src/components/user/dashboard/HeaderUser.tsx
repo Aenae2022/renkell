@@ -1,0 +1,69 @@
+import { type SchoolType } from "@shared/schema/school.schema";
+import { type ClassroomWithLinksType } from "@shared/schema/classroom.schema";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import logo from "@pictures/icons/classeur.png";
+import logoFR from "@pictures/icons/francais.png";
+import logoBR from "@pictures/icons/breton.png";
+import type { UserWithLinksType } from "@shared/schema/user.schema";
+import ConnexionButton from "../core/ConnectionButton";
+import { useState } from "react";
+import Login from "../core/Login";
+
+const lngs = {
+  br: { nativeName: "BR" },
+  fr: { nativeName: "FR" },
+};
+
+function HeaderUser() {
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const [showLogin, setShowLogin] = useState<boolean>(false);
+
+  return (
+    <div className="flex mb-3 pb-3 pl-4 justify-between items-center bg-conjugaison-25">
+      <div className="mr-header-element">
+        <div id="ReturnMenu">
+          <img
+            src={logo}
+            className="w-25 h-20"
+            onClick={() => {
+              navigate("/dashboard");
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="min-w-1/4">
+        <div className="mr-header-welcomeMessage">
+          <h1 className="text-4xl">{title}</h1>
+          <h2>{subTitle}</h2>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center pr-2 ">
+        <ConnexionButton showLogin={setShowLogin} />
+        <div className="flex ">
+          {Object.keys(lngs).map((lng) => {
+            let isSelected = "";
+            if (i18n.resolvedLanguage === lng)
+              isSelected = " ring ring-2 ring-amber-200 rounded-xl";
+            const styleLng = "w-7 h-7 m-1" + isSelected;
+            const logoUsed = lng === "fr" ? logoFR : logoBR;
+            return (
+              <img
+                key={lng}
+                src={logoUsed}
+                className={styleLng}
+                onClick={() => i18n.changeLanguage(lng)}
+              />
+            );
+          })}
+        </div>
+      </div>
+      {showLogin ? <Login showLogin={setShowLogin} /> : null}
+    </div>
+  );
+}
+
+export default HeaderUser;

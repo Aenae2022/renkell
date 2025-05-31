@@ -1,13 +1,11 @@
 import { StringNameGroupSchema } from '@shared/schema/fields/stringNameGroup.schema';
 import { prisma } from '../lib/prisma/client';
-import { UserDatasConnectSchema, UserDatasConnectType } from "@shared/schema/user.schema";
-import { GroupInfoType } from '@shared/schema/group.schema';
+import { GroupsAllSchema, UserDatasConnectSchema, UserDatasConnectType } from "@shared/schema/user.schema";
+import { type GroupInfoType } from '@shared/schema/group.schema';
+import { UserInfo } from 'os';
+import { type UserGroupBdType } from '@shared/schema/user.schema';
 
 
-interface UserGroupBd{
-  principal : boolean;
-  group : GroupInfoType;
-}
 class UserModel {
 
   static async doesUserPseudoExist(userPseudo: string): Promise<boolean> {
@@ -72,17 +70,20 @@ class UserModel {
       };
     }
 
-    // Séparer groupes principal et secondaire
-    const groupesPrincipaux = userDatas.userGroups.filter((g : UserGroupBd) => g.principal).map((g : UserGroupBd) => ({
-        groupId: g.group.groupId,
-        groupName: g.group.groupName,
-        principal: g.principal
-      }));
-    const groupesSecondaires = userDatas.userGroups.filter((g : UserGroupBd) => !g.principal).map((g : UserGroupBd) => ({
-        groupId: g.group.groupId,
-        groupName: g.group.groupName,
-        principal: g.principal
-      }));
+    //Reconstruire le tableau des groupes :
+    const groupes = userDatas.userGroups.map((g : UserGroupBdType) => ({
+      groupId : g.group.groupId,
+      groupName : g.group.groupName,
+      principal : g.principal
+    }));
+
+
+
+    // Séparer groupes principal et secondaire 
+    //TODO modif por tuiliser groupes
+    const groupesPrincipaux = groupes.filter((g : GroupInfoType) => g.principal)
+    
+    const groupesSecondaires = groupes.filter((g : GroupInfoType) => !g.principal)
 
     // On reconstruit l'objet final
     const result = {
@@ -95,11 +96,7 @@ class UserModel {
       userIcon:       userDatas.userIcon,
       grade:          userDatas.grade,              // correspond à GradeSchema
       userSchool : userDatas.school,
-      userGroups: userDatas.userGroups.map((g : UserGroupBd) => ({
-        groupId: g.group.groupId,
-        groupName: g.group.groupName,
-        principal: g.principal
-      })),
+      userGroups: groupes,
       groupsP : groupesPrincipaux,
       groupsS: groupesSecondaires,
     };
@@ -133,6 +130,24 @@ class UserModel {
         select: {
             userFamilyName: true,
             userFirstName : true,
+            userGroups :{
+              where :{
+                principal : true,
+              },
+              select : {
+                group : {
+                  select : {
+                    groupId : true,
+                    groupName : true,
+                    classroom : {
+                      select : {
+                        classroomRef : true
+                      }
+                    }
+                  }
+                }
+              }
+            },
             userLinks: {
               select: {
                 link: { // ✅ on accède aux données du lien à travers `link`
@@ -159,17 +174,24 @@ class UserModel {
         result: [],
       };
     }
-    if(userWithLinks.userLinks.length === 0) {
+
+    const myUserWithLinks = {
+      userFamilyName: userWithLinks.userFamilyName,
+      userFirstName: userWithLinks.userFirstName,
+      userClassroomRef : userWithLinks.userGroups[0].group.classroom?.classroomRef,
+      userLinks: userWithLinks.userLinks
+    }
+    if(myUserWithLinks.userLinks.length === 0) {
          return {
         message: "noLink",
         reponse: false,
-        result: userWithLinks,
+        result: myUserWithLinks,
       };
     }
     return {
       message: "Liste des liens récupérée avec succès",
       reponse: true,
-      result: userWithLinks,
+      result: myUserWithLinks,
     };
   } catch (error) {
     console.error("Erreur Prisma :", error);

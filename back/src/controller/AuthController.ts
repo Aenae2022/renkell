@@ -56,6 +56,12 @@ export default class AuthController {
             return;
         }           
 
+        // s'il a au moins un groupe principal
+        if (Array.isArray(myUser.groupsP) && myUser.groupsP.length > 0) {
+        const groupId = myUser.groupsP[0].groupId;
+
+        
+      }
         //modificatin des données pour stockage en session
         const userSession = toUserSession(myUser);
        
@@ -113,13 +119,13 @@ export default class AuthController {
 }
 
 
-static getSession(req: Request, res: Response){
+static async getSessionUser(req: Request, res: Response) {
   if (req.session.user) {
-    res.json({ user: req.session.user });
+    res.json({ success: true, user: req.session.user });
   } else {
-    res.json({ user: null });
+    res.json({ success: false, message: "Non connecté" });
   }
-};
+}
 }
 
 
