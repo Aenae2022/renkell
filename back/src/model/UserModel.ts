@@ -55,7 +55,7 @@ class UserModel {
             }
           },
           orderBy: {
-            groupId: "asc",
+            principal: "desc",
           }
         }
       },

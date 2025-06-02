@@ -40,12 +40,17 @@ const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
       const passwordCleaned = PasswordSchema.safeParse(password)
         ? password
         : null;
+      if (!pseudoCleaned || !passwordCleaned) {
+        setMessage(t("header.login.errorFields"));
+        return;
+      }
       const success = await login(pseudoCleaned, passwordCleaned);
 
       if (success) {
         navigate("/dashboard");
       } else {
-        alert("Identifiants incorrects");
+        setMessage(t("header.login.errorFields"));
+        return;
       }
     } catch (err) {
       console.error("Erreur de connexion :", err);

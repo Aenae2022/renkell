@@ -2,7 +2,7 @@
 import type { UserSessionConnectType } from "@shared/schema/user.schema";
 import { createContext, useContext } from "react";
 
-type AuthContextType = {
+export type AuthContextType = {
   user: UserSessionConnectType | null;
   setUser: (user: UserSessionConnectType | null) => void;
   loading: boolean;

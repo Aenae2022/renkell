@@ -44,7 +44,7 @@ export const theme = {
       'nombre-dark': 'var(--color-nombre-dark)',
       calcul: 'var(--color-calcul)',
       'calcul-dark': 'var(--color-calcul-dark)',
-      calculmental: 'var(--color-calculmental)',
+      'calculmental': 'var(--color-calculmental)',
       'calculmental-dark': 'var(--color-calculmental-dark)',
       'calculmental-25': 'var(--color-calculmental-25)',
 

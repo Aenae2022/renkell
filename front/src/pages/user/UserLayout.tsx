@@ -1,42 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import api from "../../api/axios";
 import Loader from "../../components/core/Loader";
+import HeaderUser from "../../components/user/core/HeaderUser";
+import MenuUser from "../../components/user/core/MenuUser";
 import { useAuth } from "../../context/AuthContext";
 export default function UserLayout() {
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const { user, loading } = useAuth();
+
   useEffect(() => {
-    const checkSession = async () => {
-      const resCheck = await api.get("/api/auth/session");
-      if (resCheck.data.user) {
-        setLoading(false);
-      } else {
-        const schoolRef = localStorage.getItem("school");
-        const classroomRef = localStorage.getItem("classroom");
-        const redirection =
-          "/degemer/" +
-          (schoolRef ? schoolRef : "0") +
-          (classroomRef ? "/c/" + classroomRef : "");
-        navigate(redirection);
-      }
-    };
-    checkSession();
-  }, [navigate]);
-  const { user } = useAuth();
+    if (!loading && !user) {
+      const schoolRef = localStorage.getItem("school");
+      const classroomRef = localStorage.getItem("classroom");
+      const redirection =
+        "/degemer/" +
+        (schoolRef ? schoolRef : "0") +
+        (classroomRef ? "/c/" + classroomRef : "");
+      navigate(redirection);
+    }
+  }, [loading, user, navigate]);
   console.log("user", user);
   if (loading) return <Loader />;
 
   return (
     <div
-      className="app-container"
-      style={{ display: "flex", flexDirection: "column", height: "100vh" }}
+      className="flex flex-col h-[100vh]"
+      // style={{ display: "flex", flexDirection: "column", height: "100vh" }}
     >
-      <header>...</header>
-      <div style={{ display: "flex", flex: 1 }}>
-        <nav>...</nav>
-        <main style={{ flex: 1, padding: "1rem", overflowY: "auto" }}>
+      <HeaderUser />
+      <div className="flex flex-1 relative">
+        <MenuUser />
+        <main className="w-full">
           <Outlet /> {/* Rendu des routes enfants */}
         </main>
       </div>
