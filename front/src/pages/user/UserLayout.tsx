@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import Loader from "../../components/core/Loader";
+import { useAuth } from "../../context/AuthContext";
 export default function UserLayout() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -23,8 +24,10 @@ export default function UserLayout() {
     };
     checkSession();
   }, [navigate]);
-
+  const { user } = useAuth();
+  console.log("user", user);
   if (loading) return <Loader />;
+
   return (
     <div
       className="app-container"

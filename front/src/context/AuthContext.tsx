@@ -4,13 +4,19 @@ import { createContext, useContext } from "react";
 
 type AuthContextType = {
   user: UserSessionConnectType | null;
-  setUser: React.Dispatch<React.SetStateAction<UserSessionConnectType | null>>;
+  setUser: (user: UserSessionConnectType | null) => void;
   loading: boolean;
+  login: (pseudo: string, password: string) => Promise<boolean>;
 };
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
+export const AuthContext = createContext<AuthContextType>({
+  user: null,
+  setUser: () => {},
+  loading: true,
+  login: async () => {
+    return false;
+  },
+});
 
 export function useAuth() {
   const context = useContext(AuthContext);

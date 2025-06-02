@@ -66,6 +66,7 @@ export default class AuthController {
         const userSession = toUserSession(myUser);
        
         req.session.user = userSession;
+console.log("Session enregistrée :", req.session.user);
 
       res.status(200).json({
         message: "header.login.goodIdentification",
@@ -118,7 +119,7 @@ export default class AuthController {
   }
 }
 
-
+//return : succes, user (si réussi) / success, message (si échec)
 static async getSessionUser(req: Request, res: Response) {
   if (req.session.user) {
     res.json({ success: true, user: req.session.user });

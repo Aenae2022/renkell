@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Utilitaires } from "../../utils/Utilitaires";
 import { UserPseudoSchema } from "@shared/schema/user.schema";
 import { PasswordSchema } from "@shared/schema/fields/password.schema";
+import { useAuth } from "../../context/AuthContext";
+
 import iconEsc from "@pictures/icons/faux.png";
-import api from "../../api/axios";
 
 const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,15 +40,13 @@ const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
       const passwordCleaned = PasswordSchema.safeParse(password)
         ? password
         : null;
+      const success = await login(pseudoCleaned, passwordCleaned);
 
-      const response = await api.post("/api/auth/login", {
-        userPseudo: pseudoCleaned,
-        userPsswd: passwordCleaned,
-      });
-
-      console.log("Connexion réussie :", response.data);
-
-      navigate("/dashboard"); // Redirige vers le dashboard
+      if (success) {
+        navigate("/dashboard");
+      } else {
+        alert("Identifiants incorrects");
+      }
     } catch (err) {
       console.error("Erreur de connexion :", err);
     }
