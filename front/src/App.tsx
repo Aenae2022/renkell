@@ -4,6 +4,7 @@ import DegemerSkolWithKey from "./wrappers/DegemerSkolWithKey";
 import UserLayout from "./pages/user/UserLayout";
 import Dashboard from "./pages/user/Dashboard";
 import Params from "./pages/user/Params";
+import ParamsLinks from "./components/user/params/ParamsLinks";
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
           <Route path="/" element={<UserLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="dashboard/params" element={<Params />} />"
+            <Route path="dashboard/params" element={<Params />} />
+            <Route path="dashboard/params/links" element={<ParamsLinks />} />
             {/* autres pages */}
           </Route>
         </Routes>

@@ -23,17 +23,36 @@ function PrincipalTags({
     //1 récupérer le type de principal
     const newPrincipalTagRef = tagRef;
     //2 récupérer le premier secondary du nouveau principal si existe
-    const searchSecondaryTag = secondaryTagsList.find(
+    const firstSecondaryTag = secondaryTagsList.find(
       (tag) => tag.tagSource === newPrincipalTagRef
-    );
-    const newSecondaryTagType =
-      searchSecondaryTag !== undefined ? searchSecondaryTag.type : "";
+    )?.type;
+    let startSecondaryTag = "";
+    if (firstSecondaryTag) {
+      const storedSecondaryTag = localStorage.getItem("secondaryTag");
+      //pas de tag en mémoire
+      if (storedSecondaryTag === null || storedSecondaryTag === "") {
+        startSecondaryTag = firstSecondaryTag;
+      } else {
+        //tag en mémoire, on vérifie le match avec le tag principal
+        const storedSecondaryTagValid = secondaryTagsList.find(
+          (sTag) =>
+            sTag.type === storedSecondaryTag &&
+            sTag.tagSource === newPrincipalTagRef
+        );
+        if (!storedSecondaryTagValid) {
+          //si le tag est valid on ne fait rien, sinon on le remplace pour le first
+          startSecondaryTag = firstSecondaryTag;
+        } else {
+          startSecondaryTag = storedSecondaryTag;
+        }
+      }
+    }
     //3 mettre à jour les états
     setPrincipalTagActivated(newPrincipalTagRef);
-    setSecondaryTagActivated(newSecondaryTagType);
+    setSecondaryTagActivated(startSecondaryTag);
     //4 Mettre à jour le localstorage
     localStorage.setItem("principalTag", newPrincipalTagRef);
-    localStorage.setItem("secondaryTag", newSecondaryTagType);
+    localStorage.setItem("secondaryTag", startSecondaryTag);
   };
   return (
     <div className="pl-24 flex items-end">

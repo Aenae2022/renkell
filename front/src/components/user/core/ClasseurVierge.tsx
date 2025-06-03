@@ -35,7 +35,7 @@ function ClasseurVierge({
       />
       <div className="flex">
         <div
-          className="rounded w-full pl-20 mr-3 pr-3 py-5 min-h-[300px] bg-repeat-y bg-left-top"
+          className="rounded w-full pl-20 pr-3 py-5 min-h-[300px] bg-repeat-y bg-left-top"
           style={{
             backgroundImage: `url(${CarnetSpiraleMini}), url(${CarnetSpiraleFond})`,
             backgroundRepeat: "repeat-y, repeat",

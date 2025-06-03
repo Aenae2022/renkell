@@ -31,7 +31,7 @@ export default function UserLayout() {
       <HeaderUser />
       <div className="flex flex-1 relative">
         <MenuUser />
-        <main className="w-full">
+        <main className="w-full mx-2">
           <Outlet /> {/* Rendu des routes enfants */}
         </main>
       </div>

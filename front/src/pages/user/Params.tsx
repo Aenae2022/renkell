@@ -1,23 +1,21 @@
 import { useAuthStrict } from "../../hook/useAuthStrict";
 import ClasseurVierge from "../../components/user/core/ClasseurVierge";
-import Loader from "../../components/core/Loader";
-// import LinksParams from "../../components/user/core/LinksParams";
 import {
-  defineActiveTags,
-  PrincipalTag,
-  SecondaryTag,
-} from "../../utils/createClasseur";
-import { useEffect, useMemo, useState } from "react";
-import type { UserSessionConnectType } from "@shared/schema/user.schema";
+  type PrincipalTagType,
+  type SecondaryTagType,
+} from "@shared/schema/tags.schema";
+import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import logoLiens from "@pictures/icons/liens.png";
 
 export default function DegemerParamsLinks() {
   const auth = useAuthStrict();
   if (!auth) return null; // ou loader / fallback
-  const { user } = auth;
-  return <ShowPage {...user} />;
+  return <ShowPage />;
 }
 
-function ShowPage(user: UserSessionConnectType) {
+function ShowPage() {
   const [principalTagActivated, setPrincipalTagActivated] =
     useState<string>("");
   const [secondaryTagActivated, setSecondaryTagActivated] =
@@ -27,71 +25,47 @@ function ShowPage(user: UserSessionConnectType) {
   //définir les onglets
   //1-l'onglet user
   const principalTagsList = useMemo(() => {
-    const list = [
-      new PrincipalTag(
-        user.userId,
-        "userParamsLinks.pTag.teacher",
-        "user",
-        "calculmental"
-      ), //id, title, concerned, color
-    ];
-    //2-récupérer les onglets pour les groupes gérés par l'enseignant
-    if (user.userGroups.length > 0) {
-      user.userGroups.forEach((group) => {
-        const groupColor = group.principal ? "grammaire" : "conjugaison";
-        list.push(
-          new PrincipalTag(group.groupId, group.groupName, "group", groupColor)
-        );
-      });
-    }
+    const list: PrincipalTagType[] = [];
     return list;
-  }, [user.userId, user.userGroups]);
+  }, []);
 
   //les onglets secondaires
-  const secondaryTagsList: SecondaryTag[] = useMemo(() => {
-    const secondaryTagsTypes = [
-      { type: "link", title: "userParamsLinks.sTag.link", color: "geometrie" },
-      {
-        type: "appli",
-        title: "userParamsLinks.sTag.appli",
-        color: "resolution",
-      },
-    ];
-    const list: SecondaryTag[] = [];
-    principalTagsList.forEach((tag) => {
-      secondaryTagsTypes.forEach((type) => {
-        list.push(
-          new SecondaryTag(
-            type.type,
-            type.title,
-            type.color,
-            tag.concerned + tag.id
-          )
-        );
-      });
-    });
+  const secondaryTagsList: SecondaryTagType[] = useMemo(() => {
+    const list: SecondaryTagType[] = [];
     return list;
-  }, [principalTagsList]);
+  }, []);
 
-  //gestion des onglets actifs
-  useEffect(() => {
-    const { startPrincipalTag, startSecondaryTag } = defineActiveTags(
-      principalTagsList,
-      secondaryTagsList
-    );
-    setPrincipalTagActivated(startPrincipalTag);
-    setSecondaryTagActivated(startSecondaryTag);
-  }, [principalTagsList, secondaryTagsList]);
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const myComponentContent = (
+    <div>
+      <h1 className="text-2xl font-bold text-grammaire text-center">
+        {t("degemerParams.titlePage")}
+      </h1>
+      <div
+        className={`flex flex-col justify-end items-center 
+      w-32 h-32 m-5 bg-amber-100 cursor-pointer pt-2 px-2
+      align-text-bottom text-m text-black
+      border-r-4 border-b-4 border-gray-700 rounded-[10px] 
+      `}
+      >
+        <div className="flex-1 flex items-center justify-center overflow-hidden">
+          <img
+            className="w-full h-full object-contain rounded-xl"
+            alt="logoLiens"
+            src={logoLiens}
+            onClick={() => {
+              navigate("/dashboard/params/links");
+            }}
+          />
+        </div>
+        <p className="text-center px-1 text-sm whitespace-pre-wrap">
+          {t("degemerParams.links")}
+        </p>
+      </div>
+    </div>
+  );
 
-  let myComponentContent = <Loader />;
-
-  //cas des liens internet
-  // if (secondaryTagActivated === 'link' ){
-  //     const monTypeSelected = principalTagsList.find(tag => tag.ref === principalTagActivated)?.concerned;
-  //     const monIdSelected = principalTagsList.find(tag => tag.ref === principalTagActivated)?.id;
-  //     myComponentContent = <LinksParams typeRef={monTypeSelected} idRef={monIdSelected}/>
-  // }
-  // const myComponent = <>{myComponentHeader} {myComponentContent}</>
   return (
     <ClasseurVierge
       principalTagsList={principalTagsList}

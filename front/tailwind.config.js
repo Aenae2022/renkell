@@ -3,6 +3,17 @@ export const content = [
   "./index.html", // <- si tu utilises index.html à la racine
   "./src/**/*.{js,ts,jsx,tsx}" // <- tous les fichiers React dans src/
 ];
+
+export const safelist = [
+    {
+    pattern: /(^|^)bg-(francais|mathematiques|lexique|grammaire|conjugaison|orthographe|dictee|nombre|calcul|calculmental|geometrie|mesure|resolution)(-(dark|25|50|light))?/,
+    variants: ['hover'],
+  },
+  {
+    pattern: /(^|^)border-(francais|mathematiques|lexique|grammaire|conjugaison|orthographe|dictee|nombre|calcul|calculmental|geometrie|mesure|resolution)(-(dark|25|50|light))?/,
+  },
+];
+
 export const theme = {
   extend: {
     colors: {
@@ -44,19 +55,24 @@ export const theme = {
       'nombre-dark': 'var(--color-nombre-dark)',
       calcul: 'var(--color-calcul)',
       'calcul-dark': 'var(--color-calcul-dark)',
+      //rose
       'calculmental': 'var(--color-calculmental)',
+      'calculmental-light': 'var(--color-calculmental-light)',
       'calculmental-dark': 'var(--color-calculmental-dark)',
       'calculmental-25': 'var(--color-calculmental-25)',
-
+      //violet
       geometrie: 'var(--color-geometrie)',
       'geometrie-dark': 'var(--color-geometrie-dark)',
+      'geometrie-light': 'var(--color-geometrie-light)',
+      'geometrie-50': 'var(--color-geometrie-50)',
+      'geometrie-25': 'var(--color-geometrie-25)',
+      //bleu clair de conjugaison
       mesure: 'var(--color-mesure)',
       'mesure-light': 'var(--color-mesure-light)',
       'mesure-dark': 'var(--color-mesure-dark)',
-
       'mesure-50': 'var(--color-mesure-50)',
-
       'mesure-25': 'var(--color-mesure-25)',
+      //orange
       resolution: 'var(--color-resolution)',
       'resolution-light': 'var(--color-resolution-light)',
       'resolution-50': 'var(--color-resolution-50)',

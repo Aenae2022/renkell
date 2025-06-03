@@ -49,7 +49,7 @@ export function MenuUser() {
         <img
           src={iconUserSrc}
           alt="iconUser"
-          className="rounded-2xl max-w-10"
+          className="rounded-2xl max-w-10 max-h-10"
           onClick={() => (showTitle ? setShowTitle(false) : setShowTitle(true))}
         />
       </div>
