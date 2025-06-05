@@ -6,7 +6,6 @@ import { prisma } from '../../../../src/lib/prisma/client'
 interface UserAnswers {
   userFamilyName: string;
   userFirstName:string;
-  userType: string;
   userPsswd: string;
   userMail: string; 
   userIcon: string; 
@@ -47,16 +46,6 @@ export async function runCreateUserICLI() {
         message: 'Entrez le prénom de l\'utilisateur :',
         validate: (input) => input.trim() !== '' || 'ce champ ne peut pas être vide',
 
-      },{
-        type: 'input',
-        name: 'userType',
-        message: 'le type d\'utilisateur [student, teacher, admin, invit] :',
-        validate: (input) => {
-            const allowedTypes = ['student', 'teacher', 'admin', 'invit'];
-            return allowedTypes.includes(input.trim())
-                ? true
-                : `Ce champ doit être l'un des suivants : ${allowedTypes.join(', ')}`;
-        }
       },
       {
         type: 'input',  
@@ -75,7 +64,6 @@ export async function runCreateUserICLI() {
     await createUser({
       userFamilyName: answers.userFamilyName,
       userFirstName: answers.userFirstName,
-      userType: answers.userType,
       userPseudo: userPseudo,
       userPsswd: answers.userPsswd ? answers.userPsswd : undefined,
         userMail: answers.userMail ? answers.userMail : undefined,

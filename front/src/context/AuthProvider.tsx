@@ -39,14 +39,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const sessionRes = await api.get("/api/auth/session");
         if (sessionRes.data.success) {
           setUser(sessionRes.data.user);
-          return true;
+          return { reponse: true, result: sessionRes.data.user };
         }
       }
 
-      return false;
+      return { reponse: false, result: undefined };
     } catch (err) {
       console.error("Erreur login :", err);
-      return false;
+      return { reponse: false, result: undefined };
     }
   };
   return (

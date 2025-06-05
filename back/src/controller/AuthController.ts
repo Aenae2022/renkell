@@ -59,14 +59,11 @@ export default class AuthController {
         // s'il a au moins un groupe principal
         if (Array.isArray(myUser.groupsP) && myUser.groupsP.length > 0) {
         const groupId = myUser.groupsP[0].groupId;
-
-        
       }
         //modificatin des données pour stockage en session
         const userSession = toUserSession(myUser);
        
         req.session.user = userSession;
-console.log("Session enregistrée :", req.session.user);
 
       res.status(200).json({
         message: "header.login.goodIdentification",

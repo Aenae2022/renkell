@@ -87,7 +87,6 @@ model User {
    userId             Int     @id @default(autoincrement())
    userFamilyName String  @db.VarChar(50)
    userFirstName String  @db.VarChar(50)
-   userType String  @db.VarChar(50) @default("invit")
    userPseudo String? @db.VarChar(50)   @unique
    userPsswd String? @db.VarChar(255) 
    userMail String? @db.VarChar(255) @unique
@@ -101,6 +100,24 @@ model User {
 
   userLinks LinkUser[] 
   userGroups GroupUser[]
+  userRoles RoleUser[]
+}
+
+model Role {
+  roleId Int @id @default(autoincrement())
+  roleName String @db.VarChar(50)
+
+  roleUsers RoleUser[]
+  }
+
+model RoleUser{
+  user   User  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId Int
+
+  roles        Role       @relation(fields: [roleId], references: [roleId], onDelete: Cascade)
+  roleId      Int
+
+  @@id([userId, roleId]) // clé composite
 }
 
 model GroupUser {

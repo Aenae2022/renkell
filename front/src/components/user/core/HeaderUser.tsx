@@ -6,29 +6,22 @@ import logoBR from "@pictures/icons/breton.png";
 import ConnexionButton from "../../core/ConnectionButton";
 import { useState } from "react";
 import Login from "../../core/Login";
-import { useAuthStrict } from "../../../hook/useAuthStrict";
 
 const lngs = {
   br: { nativeName: "BR" },
   fr: { nativeName: "FR" },
 };
 
-function HeaderUser() {
-  const { t, i18n } = useTranslation();
+interface HeaderUserProps {
+  title: string;
+  subTitle: string;
+  redirection: string;
+}
+
+function HeaderUser({ title, subTitle, redirection }: HeaderUserProps) {
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   const [showLogin, setShowLogin] = useState<boolean>(false);
-  const auth = useAuthStrict();
-  if (!auth) return null; // ou loader / fallback
-  const { user } = auth;
-
-  const title = user?.userFirstName + " " + user?.userFamilyName;
-  //définir le sous-titre (group principal // group secondaire // école)
-  let subTitle = "";
-  if (user.userGroups.length > 0) {
-    subTitle = t("header.skol.classroom") + " " + user.userGroups[0].groupName;
-  } else if (user.userSchool) {
-    subTitle = t("header.skol.title") + " " + user.userSchool.schoolName;
-  }
 
   return (
     <div className="flex mb-3 pb-3 pl-4 justify-between items-center bg-conjugaison-25 relative top-2 left-2">
@@ -39,7 +32,7 @@ function HeaderUser() {
             className="w-[100px] min-w-[80px] h-[80px] min-h-[64px]"
             alt="logo"
             onClick={() => {
-              navigate("/dashboard");
+              navigate(redirection);
             }}
           />
         </div>

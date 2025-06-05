@@ -4,14 +4,15 @@ import { StringNameSchema } from "./fields/stringName.schema";
 import { GroupInfoSchema, GroupPrincipalInfoSchema, GroupSecondaireInfoSchema} from "./group.schema";
 import { LinkShortSchema } from "./link.schema";
 import { BcryptHashSchema } from "./fields/password.schema";
-import { TypeUserDatasSchema } from "./typeUser.schema";
 import FileNameSchema from "./fields/fileName.schema";
 import { GradeSchema } from "./grade.schema";
 import { SchoolSchema } from "./school.schema";
 import { StringNameGroupSchema } from "./fields/stringNameGroup.schema";
+import { UserRoleSchema } from "./role.schema";
 
 
 export const UserPseudoSchema = StringShortRefSchema;
+
 export const UserLinksSchema = z.object({
   link: LinkShortSchema,
 });
@@ -19,9 +20,11 @@ export const UserLinksSchema = z.object({
 export const GroupsAllSchema = z.object({
   group: GroupInfoSchema,
 });
+
 export const GroupsPSchema = z.object({
   group: GroupPrincipalInfoSchema,
 });
+
 export const GroupsSSchema = z.object({
   group: GroupSecondaireInfoSchema,
 });
@@ -33,6 +36,7 @@ export const UserGroupBdSchema = z.object({
     groupName : StringNameGroupSchema
   })
 })
+
 export const UserWithLinksSchema = z.object({
 
   userFamilyName: StringNameSchema,
@@ -42,15 +46,14 @@ export const UserWithLinksSchema = z.object({
 
 });
 
-
-
 export const UserDatasConnectSchema = z.object({
   userId: z.number().int(),
   userFamilyName: StringNameSchema,
   userFirstName: StringNameSchema,
   userPsswd: BcryptHashSchema.nullable(),
   userPseudo: StringShortRefSchema.nullable(),
-  userType: TypeUserDatasSchema,
+  userRoles : z.array(UserRoleSchema),
+  roleActivated : UserRoleSchema,
   userIcon: FileNameSchema,
   grade: GradeSchema.nullable(),
   userSchool : SchoolSchema.nullable(),
@@ -63,7 +66,8 @@ export const UserSessionConnectSchema = z.object({
   userId: z.number().int(),
   userFamilyName: StringNameSchema,
   userFirstName: StringNameSchema,
-  userType: TypeUserDatasSchema,
+  userRoles : z.array(UserRoleSchema),
+  roleActivated : UserRoleSchema,
   userIcon: FileNameSchema,
   grade: GradeSchema.nullable(),
   userSchool : SchoolSchema.nullable(),

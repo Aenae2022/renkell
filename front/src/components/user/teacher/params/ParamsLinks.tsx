@@ -1,12 +1,12 @@
-import { useAuthStrict } from "../../../hook/useAuthStrict";
-import ClasseurVierge from "../../../components/user/core/ClasseurVierge";
-import Loader from "../../../components/core/Loader";
+import { useAuthStrict } from "../../../../hook/useAuthStrict";
+import ClasseurVierge from "../../core/ClasseurVierge";
+import Loader from "../../../core/Loader";
 // import LinksParams from "../../components/user/core/LinksParams";
 import {
   defineActiveTags,
   PrincipalTag,
   SecondaryTag,
-} from "../../../utils/createClasseur";
+} from "../../../../utils/createClasseur";
 import { useEffect, useMemo, useState } from "react";
 import type { UserSessionConnectType } from "@shared/schema/user.schema";
 

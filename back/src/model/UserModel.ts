@@ -29,7 +29,6 @@ class UserModel {
         userFirstName: true,
         userPsswd: true,
         userPseudo: true,
-        userType: true,
         userIcon: true,
         grade: {
           select: {
@@ -57,7 +56,23 @@ class UserModel {
           orderBy: {
             principal: "desc",
           }
-        }
+        },
+        userRoles: {
+          select: {
+            roles: {
+              select: {
+                roleId: true,
+                roleName: true,
+              }
+            }
+          },
+          orderBy: {
+            roles: {
+              roleId: "asc",
+            }
+          }
+        },
+
       },
       
     });
@@ -76,14 +91,17 @@ class UserModel {
       groupName : g.group.groupName,
       principal : g.principal
     }));
-
-
-
     // Séparer groupes principal et secondaire 
-    //TODO modif por tuiliser groupes
     const groupesPrincipaux = groupes.filter((g : GroupInfoType) => g.principal)
-    
     const groupesSecondaires = groupes.filter((g : GroupInfoType) => !g.principal)
+
+    //construire le tableau des roles
+    const roles = userDatas.userRoles.map((r : any) => ({
+        roleId : r.roles.roleId,
+        roleName : r.roles.roleName,
+      }))
+    //définir le role actuel (role de plus bas niveau par défaut)
+    const roleAct = roles[0];
 
     // On reconstruit l'objet final
     const result = {
@@ -92,7 +110,8 @@ class UserModel {
       userFirstName:  userDatas.userFirstName,
       userPsswd:      userDatas.userPsswd,
       userPseudo:     userDatas.userPseudo,
-      userType:       userDatas.userType,
+      userRoles:      roles,
+      roleActivated : roleAct,
       userIcon:       userDatas.userIcon,
       grade:          userDatas.grade,              // correspond à GradeSchema
       userSchool : userDatas.school,

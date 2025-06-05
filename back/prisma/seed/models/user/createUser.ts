@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 interface UserParams {
   userFamilyName: string;
   userFirstName:string;
-  userType: string;
   userPseudo?: string;
   userPsswd?: string;
   userMail?: string; 
@@ -20,7 +19,6 @@ export async function createUser(params: UserParams) {
   const user : any = {
          userFamilyName: params.userFamilyName,
          userFirstName: params.userFirstName,
-         userType: params.userType,
       }
    
 

@@ -10,11 +10,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "create:school": "tsx prisma/seed/createSchool.ts",
     "create:classroom": "tsx prisma/seed/createClassroom.ts",
+    "create:roles": "tsx prisma/seed/cli/role/createRoleCLI.ts",
+    "assoc:roles": "tsx prisma/seed/cli/user/associateUserRoleCLI.ts",
+
     "seed": "tsx prisma/seed/cli/main.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "ISC", 
   "type": "commonjs",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

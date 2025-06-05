@@ -1,5 +1,5 @@
-import { useAuthStrict } from "../../hook/useAuthStrict";
-import ClasseurVierge from "../../components/user/core/ClasseurVierge";
+import { useAuthStrict } from "../../../hook/useAuthStrict";
+import ClasseurVierge from "../../../components/user/core/ClasseurVierge";
 import {
   type PrincipalTagType,
   type SecondaryTagType,
@@ -55,7 +55,7 @@ function ShowPage() {
             alt="logoLiens"
             src={logoLiens}
             onClick={() => {
-              navigate("/dashboard/params/links");
+              navigate("/teacher/params/links");
             }}
           />
         </div>

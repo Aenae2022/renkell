@@ -1,10 +1,10 @@
 import "./index.css";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import DegemerSkolWithKey from "./wrappers/DegemerSkolWithKey";
-import UserLayout from "./pages/user/UserLayout";
-import Dashboard from "./pages/user/Dashboard";
-import Params from "./pages/user/Params";
-import ParamsLinks from "./components/user/params/ParamsLinks";
+import DashboardTeacher from "./pages/user/teacher/Dashboard";
+import Params from "./pages/user/teacher/Params";
+import ParamsLinks from "./components/user/teacher/params/ParamsLinks";
+import TeacherLayout from "./pages/user/teacher/TeacherLayout";
 
 function App() {
   return (
@@ -18,11 +18,10 @@ function App() {
           />
 
           {/* Route protégée avec layout */}
-          <Route path="/" element={<UserLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="dashboard/params" element={<Params />} />
-            <Route path="dashboard/params/links" element={<ParamsLinks />} />
+          <Route path="/teacher/" element={<TeacherLayout />}>
+            <Route index element={<DashboardTeacher />} />
+            <Route path="params" element={<Params />} />
+            <Route path="params/links" element={<ParamsLinks />} />
             {/* autres pages */}
           </Route>
         </Routes>

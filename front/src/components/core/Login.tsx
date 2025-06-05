@@ -46,8 +46,22 @@ const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
       }
       const success = await login(pseudoCleaned, passwordCleaned);
 
-      if (success) {
-        navigate("/dashboard");
+      if (success.reponse && success.result) {
+        const mainRole = success.result.roleActivated.roleName;
+        //on redirige en fonction du role de l'utilisateur
+        switch (mainRole) {
+          case "TEACHER":
+            navigate("/teacher");
+            break;
+          case "SCHOOL_ADMIN":
+            navigate("/admin");
+            break;
+          case "MASTER_SCHOOL":
+            navigate("/master");
+            break;
+          default:
+            navigate("/student");
+        }
       } else {
         setMessage(t("header.login.errorFields"));
         return;
