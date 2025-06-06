@@ -13,8 +13,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     api
       .get("/api/auth/session")
       .then((res) => {
-        console.log("Auth session:", res.data); // ← ajoute ça
-
         if (res.data.success) {
           setUser(res.data.user);
         }

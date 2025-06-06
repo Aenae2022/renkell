@@ -20,7 +20,6 @@ export default function UserLayout() {
       navigate(redirection);
     }
   }, [loading, user, navigate]);
-  console.log("user", user);
   if (loading) return <Loader />;
 
   return (

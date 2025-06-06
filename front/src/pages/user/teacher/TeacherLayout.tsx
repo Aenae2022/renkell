@@ -21,7 +21,7 @@ export default function TeacherLayout() {
       navigate(redirection);
     }
   }, [loading, user, navigate]);
-  console.log("user", user);
+
   if (loading) return <Loader />;
 
   return (
@@ -33,7 +33,7 @@ export default function TeacherLayout() {
       <div className="flex flex-1 relative">
         <MenuTeacher />
         <main className="w-full mx-2">
-          <Outlet /> {/* Rendu des routes enfants */}
+          <Outlet context={user} /> {/* Rendu des routes enfants */}
         </main>
       </div>
       <footer>...</footer>

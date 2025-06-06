@@ -17,7 +17,7 @@ export function MenuUser({ iconUserSrc, myUserFunctions }: MenuUserProps) {
   const [showTitle, setShowTitle] = useState(false);
 
   return (
-    <nav className="min-w-18 bg-geometrie  py-2 rounded-2xl border-2 border-gray-400 absolute top-0 left-2 z-index=9995">
+    <nav className="min-w-18 bg-geometrie  py-2 rounded-2xl border-2 border-gray-400 absolute top-0 left-2 z-50">
       <div className="max-w-12 max-h-10 ml-2  mb-2 cursor-pointer">
         <img
           src={iconUserSrc}

@@ -4,6 +4,7 @@ import { GroupsAllSchema, UserDatasConnectSchema, UserDatasConnectType } from "@
 import { type GroupInfoType } from '@shared/schema/group.schema';
 import { UserInfo } from 'os';
 import { type UserGroupBdType } from '@shared/schema/user.schema';
+import { type LinkShortType } from '@shared/schema/link.schema';
 
 
 class UserModel {
@@ -16,6 +17,13 @@ class UserModel {
     return !!user;
   }
 
+  static async doesUserIdExist(userId: number): Promise<boolean> {
+    const user = await prisma.user.findUnique({
+      where: { userId: userId },
+      select: { userId: true },
+    });
+    return !!user;
+  }
 
   static async getUserByPseudo(userPseudo: string) {
   try {
@@ -211,6 +219,68 @@ class UserModel {
       message: "Liste des liens récupérée avec succès",
       reponse: true,
       result: myUserWithLinks,
+    };
+  } catch (error) {
+    console.error("Erreur Prisma :", error);
+    throw error;
+  }
+}
+
+static async getUserLinksListByUserId(userId: number) {
+    try {
+      const userLinks = await prisma.user.findUnique({
+        where: {
+            userId: userId,
+        },
+        select: {
+          userLinks: {
+            select: {
+              link: { // ✅ on accède aux données du lien à travers `link`
+                select: {
+                  linkId: true,
+                  linkRedirection: true,
+                  linkIcon: true,
+                  linkTitleBr: true,
+                  linkTitleFr: true,
+                },
+              },
+            },
+            orderBy: {
+              linkId: "asc",
+            },
+          }
+        },
+      });
+
+      if (!userLinks) {
+        return {
+          message: "utilisateur introuvable",
+          reponse: null,
+          result: [],
+        };
+      }
+
+      if(userLinks.userLinks.length === 0) {
+        return {
+          message: "noLink",
+          reponse: false,
+          result: [],
+        };
+      }
+
+      const userLinksList = userLinks.userLinks.map((l : { link: LinkShortType }) => ({
+        linkId: l.link.linkId,
+        linkRedirection: l.link.linkRedirection,
+        linkIcon: l.link.linkIcon,
+        linkTitleBr: l.link.linkTitleBr,
+        linkTitleFr: l.link.linkTitleFr,
+      })); 
+
+
+    return {
+      message: "Liste des liens récupérée avec succès",
+      reponse: true,
+      result: userLinksList,
     };
   } catch (error) {
     console.error("Erreur Prisma :", error);

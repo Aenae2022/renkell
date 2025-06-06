@@ -14,5 +14,8 @@ router.post("/login",
     
 router.post("/logout", (req, res)=>  AuthController.logout(req, res));
 router.get("/session", (req, res)=>  AuthController.getSessionUser(req, res));
+router.get("/ping", (req, res) => {
+  res.sendStatus(200);
+});
 
 export default router;

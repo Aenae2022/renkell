@@ -218,10 +218,6 @@ export function DegemerSkol() {
             localMessage = messageTmp;
             if (localUser.userClassroomRef) {
               localStorage.setItem("classroom", localUser.userClassroomRef);
-              console.log(
-                "stockage de classroom en localstorage",
-                localUser.userClassroomRef
-              );
             }
             if (localUser.userLinks.length === 0) {
               //pas de liens trouvés

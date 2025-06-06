@@ -9,7 +9,13 @@
 
     "baseUrl": ".", // ← nécessaire pour que "paths" fonctionne
     "paths": {
-      "@shared/*": ["../shared/*"]
+      "@shared/*": ["../shared/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@pictures/*":["./src/assets/pictures/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@srcFront/*":["./src/*"]
     },
 
     /* Bundler mode */

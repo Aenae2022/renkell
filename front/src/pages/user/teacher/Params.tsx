@@ -1,4 +1,3 @@
-import { useAuthStrict } from "../../../hook/useAuthStrict";
 import ClasseurVierge from "../../../components/user/core/ClasseurVierge";
 import {
   type PrincipalTagType,
@@ -9,13 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import logoLiens from "@pictures/icons/liens.png";
 
-export default function DegemerParamsLinks() {
-  const auth = useAuthStrict();
-  if (!auth) return null; // ou loader / fallback
-  return <ShowPage />;
-}
-
-function ShowPage() {
+export default function Params() {
   const [principalTagActivated, setPrincipalTagActivated] =
     useState<string>("");
   const [secondaryTagActivated, setSecondaryTagActivated] =

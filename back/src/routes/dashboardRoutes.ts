@@ -1,14 +1,13 @@
 import express from "express";
-import { isAuthenticated } from "../middleware/authMiddleware";
+import { isAuthenticated } from "@srcBack/middleware/authMiddleware";
+import { checkRoles } from "@srcBack/middleware/checkRoles";
+import { checkUserIdValid } from "@srcBack/middleware/user/checkUserIdValid";
+import DashboardController from "@srcBack/controller/DashboardController";
 
 const router = express.Router();
 
-router.get("/dashboard", isAuthenticated, (req, res) => {
-  // On sait que req.session.user existe
-  res.json({
-    message: "Bienvenue sur votre dashboard",
-    user: req.session.user,
-  });
-});
-
+router.get("/teacherLinksList",
+    isAuthenticated, checkRoles(["TEACHER"]), checkUserIdValid(), 
+    async (req, res) => await DashboardController.getTeacherLinksList(req, res));
 export default router;
+ 

@@ -1,4 +1,3 @@
-import { useAuthStrict } from "../../../../hook/useAuthStrict";
 import ClasseurVierge from "../../core/ClasseurVierge";
 import Loader from "../../../core/Loader";
 // import LinksParams from "../../components/user/core/LinksParams";
@@ -9,15 +8,11 @@ import {
 } from "../../../../utils/createClasseur";
 import { useEffect, useMemo, useState } from "react";
 import type { UserSessionConnectType } from "@shared/schema/user.schema";
+import { useOutletContext } from "react-router-dom";
 
 export default function DegemerParamsLinks() {
-  const auth = useAuthStrict();
-  if (!auth) return null; // ou loader / fallback
-  const { user } = auth;
-  return <ShowPage {...user} />;
-}
+  const user = useOutletContext<UserSessionConnectType>();
 
-function ShowPage(user: UserSessionConnectType) {
   const [principalTagActivated, setPrincipalTagActivated] =
     useState<string>("");
   const [secondaryTagActivated, setSecondaryTagActivated] =
@@ -81,7 +76,6 @@ function ShowPage(user: UserSessionConnectType) {
     );
     setPrincipalTagActivated(startPrincipalTag);
     setSecondaryTagActivated(startSecondaryTag);
-    console.log(principalTagsList);
   }, [principalTagsList, secondaryTagsList]);
 
   let myComponentContent = <Loader />;
