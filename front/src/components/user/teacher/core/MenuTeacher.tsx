@@ -1,17 +1,13 @@
-import { useAuthStrict } from "../../../../hook/useAuthStrict";
 import logoReglage from "@pictures/icons/reglage.webp";
 import logoLibrary from "@pictures/icons/lecture.png";
 import MenuUser from "../../core/MenuUser";
+import type { UserSessionConnectType } from "@shared/schema/user.schema";
 
 const icons = import.meta.glob<{ default: string }>("@pictures/iconsUser/*", {
   eager: true,
 });
 
-export function MenuTeacher() {
-  const auth = useAuthStrict();
-
-  if (!auth) return null; // ou loader / fallback
-  const { user } = auth;
+export function MenuTeacher({ user }: { user: UserSessionConnectType }) {
   const iconUserSrc =
     icons[`/src/assets/pictures/iconsUser/${user.userIcon}`]?.default;
 

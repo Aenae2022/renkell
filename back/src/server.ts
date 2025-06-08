@@ -46,7 +46,7 @@ app.get("/test", (req, res) => {
 // Utilisation des routes
 app.use("/api/auth", authRoute);// Route d'inscription
 app.use("/api/degemer", degemerRoutes);// Route page d'accueil classes/école
-app.use("api/dashboard", dashboardRoutes);// Route page d'accueil utilisateur")
+app.use("/api/dashboard", dashboardRoutes);// Route page d'accueil utilisateur")
 // app.use("/api/user", userRoutes);// Route page d'accueil classes/école
 // app.use("/api/links", linksRoutes);// Route page de gestion des raccourcis liens et applications
 // app.use("/api/email", emailRoutes);// Route page de gestion des mails

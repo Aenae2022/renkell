@@ -1,12 +1,9 @@
 import { useTranslation } from "react-i18next";
-import { useAuthStrict } from "../../../../hook/useAuthStrict";
 import HeaderUser from "../../core/HeaderUser";
+import type { UserSessionConnectType } from "@shared/schema/user.schema";
 
-function HeaderTeacher() {
+function HeaderTeacher({ user }: { user: UserSessionConnectType }) {
   const { t } = useTranslation();
-  const auth = useAuthStrict();
-  if (!auth) return null; // ou loader / fallback
-  const { user } = auth;
 
   const title = user.userFirstName + " " + user.userFamilyName;
   //définir le sous-titre (group principal // group secondaire // école)

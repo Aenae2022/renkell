@@ -1,15 +1,21 @@
 // front/src/hooks/useAuthStrict.ts
-import { useAuth } from "../context/AuthContext";
+import type { UserSessionConnectType } from "@shared/schema/user.schema";
+import { useAuth, type AuthContextType } from "../context/AuthContext";
 
-export function useAuthStrict() {
+export type AuthStrictReturn =
+  | { status: "loading" }
+  | { status: "unauthenticated" }
+  | ({ status: "authenticated" } & Omit<AuthContextType, "user"> & { user: UserSessionConnectType });
+
+export function useAuthStrict(): AuthStrictReturn {
   const { user, loading, ...rest } = useAuth();
-
-  if (loading) return null; // Ou return undefined si tu veux bloquer le rendu temporairement
+  
+  if (loading) return {status: 'loading'}; 
 
   if (!user) {
     console.warn("useAuthStrict: utilisateur non authentifié.");
-    return null; // ne jette plus d'erreur
+    return {status: 'unauthenticated'}; 
   }
 
-  return { user, ...rest };
+  return { user, status : 'authenticated', loading, ...rest };
 }
