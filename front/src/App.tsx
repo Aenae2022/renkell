@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import DegemerSkolWithKey from "./wrappers/DegemerSkolWithKey";
 import DashboardTeacher from "./pages/user/teacher/DashboardTeacher";
 import Params from "./pages/user/teacher/Params";
-import ParamsLinks from "./components/user/teacher/params/ParamsLinks";
+import ParamsLinks from "./pages/user/teacher/ParamsLinks";
 import TeacherLayout from "./pages/user/teacher/TeacherLayout";
 
 function App() {

@@ -2,6 +2,16 @@ import { ClassroomRefSchema, ClassroomRefType } from '@shared/schema/classroom.s
 import { prisma } from '../lib/prisma/client';
 
 export default class GroupModel {
+  
+  static async doesGroupIdExist(groupId: number): Promise<boolean> {
+
+    const group = await prisma.group.findUnique({
+      where: { groupId: groupId },
+      select: { groupId: true },
+    });
+    return !!group;
+  }
+  
   static async getClassroomRefByGroupId(groupId: number) {
 
     try{

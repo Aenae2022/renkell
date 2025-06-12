@@ -18,11 +18,14 @@ import userMenuBr from "./locales/br/userMenu.json";
 import userMenuFr from "./locales/fr/userMenu.json";
 import degemerParamsBr from "./locales/br/degemerParams.json";
 import degemerParamsFr from "./locales/fr/degemerParams.json";
+import dashboardBr from "./locales/br/dashboard.json";
+import dashboardFr from "./locales/fr/dashboard.json";
 import libraryBr from "./locales/br/library.json";
 import libraryFr from "./locales/fr/library.json";
 const RESOURCES = {
   br: { 
     translation: {
+      dashboard : dashboardBr,
       header : headerBr,
       degemerSkol: degemerSkolBr,
       main : mainBr,
@@ -36,6 +39,7 @@ const RESOURCES = {
   },
   fr: { 
     translation: {
+      dashboard: dashboardFr,
       header : headerFr,
       degemerSkol: degemerSkolFr,
       main : mainFr,

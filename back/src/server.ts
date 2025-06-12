@@ -7,6 +7,7 @@ import session from "express-session";
 import authRoute from "./routes/authRoutes";
 import degemerRoutes from "./routes/degemerRoutes"
 import dashboardRoutes from "./routes/dashboardRoutes";
+import linksRoutes from "./routes/linksRoutes";
 // import userRoutes from "./routes/userRoutes.mjs"
 // import linksRoutes from "./routes/linksRoutes.mjs"
 // import emailRoutes from "./routes/emailRoutes.mjs"
@@ -48,7 +49,7 @@ app.use("/api/auth", authRoute);// Route d'inscription
 app.use("/api/degemer", degemerRoutes);// Route page d'accueil classes/école
 app.use("/api/dashboard", dashboardRoutes);// Route page d'accueil utilisateur")
 // app.use("/api/user", userRoutes);// Route page d'accueil classes/école
-// app.use("/api/links", linksRoutes);// Route page de gestion des raccourcis liens et applications
+app.use("/api/links", linksRoutes);// Route page de gestion des raccourcis liens et applications
 // app.use("/api/email", emailRoutes);// Route page de gestion des mails
 // app.use("/api/library", libraryRoutes);// Route page de l'application librairie
 

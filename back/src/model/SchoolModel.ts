@@ -9,6 +9,14 @@ class SchoolModel {
     return !!school;
   }
 
+  static async doesSchoolIdExist(schoolId: number): Promise<boolean> {
+    const school = await prisma.school.findUnique({
+      where: { schoolId: schoolId },
+      select: { schoolId: true },
+    });
+    return !!school;
+  }
+
   static async createSchool(schoolName: string, schoolRef: string) {
     return prisma.school.create({
       data: { schoolName, schoolRef }

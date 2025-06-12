@@ -59,7 +59,7 @@ model Link {
 
   groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
   userLinks LinkUser[] // Relation avec la table de liaison GroupLink
-
+  linkUserPermission LienPermission[] // Relation avec la table de liaison LienPermission
 }
 
 model GroupLink {
@@ -101,6 +101,7 @@ model User {
   userLinks LinkUser[] 
   userGroups GroupUser[]
   userRoles RoleUser[]
+  userLinkPermissions LienPermission[]
 }
 
 model Role {
@@ -146,5 +147,15 @@ model Grade {
   gradeId Int @id @default(autoincrement())
   gradeName String @db.VarChar(50)
   users  User[] // Relation 1-n avec Classroom
-
 }
+
+model LienPermission {
+  plId Int @id @default(autoincrement())
+
+  links Link @relation(fields: [linkId], references: [linkId], onDelete: Cascade)
+  linkId Int
+
+  users User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId Int
+}
+

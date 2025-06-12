@@ -38,34 +38,25 @@ export class SecondaryTag {
 }
 
 export const defineActiveTags = (principalTagsList : PrincipalTag[], secondaryTagsList : SecondaryTag[]) => {
-    console.log('principalTagsList', principalTagsList)
-    console.log('secondaryTagsList', secondaryTagsList)
     
     //1- récup premier onglet principal
     const storedTag = localStorage.getItem('principalTag');
     const storedTagValid = storedTag !== null && principalTagsList.filter(t => t.ref === storedTag).length > 0;
     const startPrincipalTag = storedTagValid  ? storedTag : principalTagsList[0].ref;
-    console.log('startPrincipalTag', startPrincipalTag)
 
     //vérifier si des tags spécifiques sont associés à ce tag général
     //2- récup premier onglet spécifique si existant
     const firstSecondaryTag = secondaryTagsList.find(tag => tag.tagSource === startPrincipalTag)?.type
     let startSecondaryTag = ""
     if(firstSecondaryTag){
-        console.log('firstSecondaryTag', firstSecondaryTag)
-        console.log("il y a un tag spé. on vérifie sur un tag est déjà en mémoire")
         const storedSecondaryTag = localStorage.getItem('secondaryTag');
-        console.log('storedSecondaryTag', storedSecondaryTag)
 
         //pas de tag en mémoire
         if(storedSecondaryTag === null || storedSecondaryTag === ''){
-            console.log('pas de tag en mémoire')
             startSecondaryTag = firstSecondaryTag;
         } 
         else { //tag en mémoire, on vérifie le match avec le tag principal
-            console.log('tag en mémoire, on vérifie le match avec le tag principal')
             const storedSecondaryTagValid = secondaryTagsList.find(sTag => sTag.type === storedSecondaryTag && sTag.tagSource === startPrincipalTag);
-            console.log('storedSecondaryTagValid', storedSecondaryTagValid)
             if(!storedSecondaryTagValid){ //si le tag est valid on ne fait rien, sinon on le remplace pour le first
                 startSecondaryTag = firstSecondaryTag;
             } else {

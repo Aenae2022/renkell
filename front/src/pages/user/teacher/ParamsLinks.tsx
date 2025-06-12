@@ -1,14 +1,15 @@
-import ClasseurVierge from "../../core/ClasseurVierge";
-import Loader from "../../../core/Loader";
+import ClasseurVierge from "../../../components/user/core/ClasseurVierge";
+import Loader from "../../../components/core/Loader";
 // import LinksParams from "../../components/user/core/LinksParams";
 import {
   defineActiveTags,
   PrincipalTag,
   SecondaryTag,
-} from "../../../../utils/createClasseur";
+} from "../../../utils/createClasseur";
 import { useEffect, useMemo, useState } from "react";
 import type { UserSessionConnectType } from "@shared/schema/user.schema";
 import { useOutletContext } from "react-router-dom";
+import LinksParams from "@components/user/teacher/params/LinksParams";
 
 export default function DegemerParamsLinks() {
   const user = useOutletContext<UserSessionConnectType>();
@@ -81,12 +82,20 @@ export default function DegemerParamsLinks() {
   let myComponentContent = <Loader />;
 
   //cas des liens internet
-  // if (secondaryTagActivated === 'link' ){
-  //     const monTypeSelected = principalTagsList.find(tag => tag.ref === principalTagActivated)?.concerned;
-  //     const monIdSelected = principalTagsList.find(tag => tag.ref === principalTagActivated)?.id;
-  //     myComponentContent = <LinksParams typeRef={monTypeSelected} idRef={monIdSelected}/>
-  // }
-  // const myComponent = <>{myComponentHeader} {myComponentContent}</>
+  if (secondaryTagActivated === "link") {
+    const monTypeSelected = principalTagsList.find(
+      (tag) => tag.ref === principalTagActivated
+    )?.concerned;
+    const monIdSelected = principalTagsList.find(
+      (tag) => tag.ref === principalTagActivated
+    )?.id;
+    if (monTypeSelected && monIdSelected) {
+      myComponentContent = (
+        <LinksParams typeRef={monTypeSelected} idRef={monIdSelected} />
+      );
+    }
+  }
+
   return (
     <ClasseurVierge
       principalTagsList={principalTagsList}

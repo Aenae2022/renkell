@@ -20,3 +20,22 @@ export function checkUserIdValid() {
     next(); // continuer si tout est OK
   };
 }
+
+export const checkUserIdPostValid = () => {
+  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const { userId } = req.body;
+    if (!userId) {
+      res.status(401).json({ message: "Non authentifié." });
+      return;
+    }
+
+    const userValid = await UserModel.doesUserIdExist(userId);
+    if(!userValid){
+      res.status(400).json({ message: "Utilisateur introuvable." });
+      return;
+    }
+
+
+    next(); // continuer si tout est OK
+  };
+}

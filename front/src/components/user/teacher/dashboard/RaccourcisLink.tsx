@@ -1,23 +1,16 @@
-import type { SchoolType } from "@shared/schema/school.schema";
-import type {
-  UserSessionConnectType,
-  UserWithLinksType,
-} from "@shared/schema/user.schema";
+import type { UserSessionConnectType } from "@shared/schema/user.schema";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import api from "@srcFront/api/axios";
-import { boolean } from "zod/v4";
 import type { LinkShortType } from "@shared/schema/link.schema";
 import Loader from "@components/core/Loader";
 import LinkItem from "@components/core/LinkItem";
 
 export default function RaccourcisLink() {
   const user = useOutletContext<UserSessionConnectType>();
-  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const actualUrl = useLocation();
   const actualLng = i18n.resolvedLanguage;
   const [loading, setLoading] = useState<boolean>(true);
   const [linksList, setLinksList] = useState<LinkShortType[]>([]);
@@ -57,7 +50,7 @@ export default function RaccourcisLink() {
   if (message !== "")
     return (
       <div className="m-auto bg-red-200  border-3 border-red-600 rounded-md max-w-[60%] text-center p-4">
-        <p>{t(message)}</p>
+        <p>{t("dashboard." + message)}</p>
       </div>
     );
 

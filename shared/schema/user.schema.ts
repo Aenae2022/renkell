@@ -76,9 +76,19 @@ export const UserSessionConnectSchema = z.object({
   groupsS : z.array(GroupSecondaireInfoSchema),
 })
 
+export const UserMiniSchema = z.object({
+  userId: z.number().int(),
+  userName: StringNameSchema,
+});
+
+export const UserMiniListSchema = z.array(UserMiniSchema);
+
+
+
 // Type TypeScript associé
 export type UserWithLinksType = z.infer<typeof UserWithLinksSchema>;
 export type UserPseudoType = z.infer<typeof UserPseudoSchema>;
 export type UserDatasConnectType = z.infer<typeof UserDatasConnectSchema>;
 export type UserSessionConnectType = z.infer<typeof UserSessionConnectSchema>
 export type UserGroupBdType = z.infer<typeof UserGroupBdSchema>
+export type UserMiniType = z.infer<typeof UserMiniSchema>

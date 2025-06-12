@@ -1,6 +1,6 @@
 import { StringNameGroupSchema } from '@shared/schema/fields/stringNameGroup.schema';
 import { prisma } from '../lib/prisma/client';
-import { GroupsAllSchema, UserDatasConnectSchema, UserDatasConnectType } from "@shared/schema/user.schema";
+import { GroupsAllSchema, UserDatasConnectSchema, UserDatasConnectType, UserMiniListSchema } from "@shared/schema/user.schema";
 import { type GroupInfoType } from '@shared/schema/group.schema';
 import { UserInfo } from 'os';
 import { type UserGroupBdType } from '@shared/schema/user.schema';
@@ -24,6 +24,57 @@ class UserModel {
     });
     return !!user;
   }
+
+static async getOthersTeacherList(userId: number, schoolId: number) {
+
+  try {
+    const usersDatas  = await prisma.user.findMany({
+      where: { userId: { not: userId }, userRoles: { some: { roleId: 2 } }, schoolId: schoolId},
+      select: {
+        userId: true,
+        userFamilyName: true,
+        userFirstName: true,
+      },  
+      orderBy: [
+        {userFamilyName: "asc"},
+        {userFirstName: "asc"},
+      ]
+    });
+
+    if (!usersDatas) {
+      return {
+        message: "Il n'y a pas d'autre utilisateur",
+        reponse: null,
+        result: [],
+      };
+    }
+
+    //Reconstruire le tableau des groupes :
+    const usersList = usersDatas.map((g : {userId: number, userFamilyName: string, userFirstName: string}) => ({
+      userId : g.userId,
+      userName : g.userFirstName + " " + g.userFamilyName,     
+    }));
+
+
+    //on valide les données avec Zod
+    const parsed = UserMiniListSchema.safeParse(usersList);
+
+    if (!parsed.success) {
+      console.error("Validation Zod échouée :", parsed.error.errors);
+      throw new Error("Données invalides");
+    }
+
+    return {
+      message: "Liste des utilisateurs récupérée avec succès",
+      reponse: true,
+      result: parsed.data,
+    };
+
+  } catch (error) {
+    console.error("Erreur Prisma :", error);
+    throw error;
+  }
+}
 
   static async getUserByPseudo(userPseudo: string) {
   try {
