@@ -106,7 +106,7 @@ function LinksParamsFooter({ usersList }: { usersList: UserMiniType[] }) {
           checked={concernedLink === "all"}
           onChange={(e) => handleChangeConcerned(e.currentTarget.value)}
         />
-        <label className="mr-2">{t("userParamsLinks.concernedAll")}</label>
+        <label className="mr-2">{t("userParamsLinks.ask.concernedAll")}</label>
 
         <input
           type="radio"
@@ -116,7 +116,9 @@ function LinksParamsFooter({ usersList }: { usersList: UserMiniType[] }) {
           checked={concernedLink === "teacher"}
           onChange={(e) => handleChangeConcerned(e.currentTarget.value)}
         />
-        <label className="mr-2">{t("userParamsLinks.concernedTeacher")}</label>
+        <label className="mr-2">
+          {t("userParamsLinks.ask.concernedTeacher")}
+        </label>
 
         <input
           type="radio"
@@ -126,7 +128,9 @@ function LinksParamsFooter({ usersList }: { usersList: UserMiniType[] }) {
           checked={concernedLink === "student"}
           onChange={(e) => handleChangeConcerned(e.currentTarget.value)}
         />
-        <label className="mr-2">{t("userParamsLinks.concernedStudent")}</label>
+        <label className="mr-2">
+          {t("userParamsLinks.ask.concernedStudent")}
+        </label>
       </div>
       <div>
         <input
@@ -137,7 +141,7 @@ function LinksParamsFooter({ usersList }: { usersList: UserMiniType[] }) {
           checked={askedLink === "public"}
           onChange={(e) => handleChangeShare(e.currentTarget.value)}
         />
-        <label className="mr-2">{t("userParamsLinks.linksAll")}</label>
+        <label className="mr-2">{t("userParamsLinks.ask.linkAll")}</label>
 
         <input
           type="radio"
@@ -147,7 +151,7 @@ function LinksParamsFooter({ usersList }: { usersList: UserMiniType[] }) {
           checked={askedLink === "shared"}
           onChange={(e) => handleChangeShare(e.currentTarget.value)}
         />
-        <label className="mr-2">{t("userParamsLinks.linksMany")}</label>
+        <label className="mr-2">{t("userParamsLinks.ask.linkMany")}</label>
 
         <input
           type="radio"
@@ -157,7 +161,7 @@ function LinksParamsFooter({ usersList }: { usersList: UserMiniType[] }) {
           checked={askedLink === "personal"}
           onChange={(e) => handleChangeShare(e.currentTarget.value)}
         />
-        <label className="mr-2">{t("userParamsLinks.linksOne")}</label>
+        <label className="mr-2">{t("userParamsLinks.ask.linkOne")}</label>
       </div>
       {showLinksMany ? (
         <div>

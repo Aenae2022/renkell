@@ -9,7 +9,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import type { UserSessionConnectType } from "@shared/schema/user.schema";
 import { useOutletContext } from "react-router-dom";
-import LinksParams from "@components/user/teacher/params/LinksParams";
+import LinksParams from "@components/user/teacher/params/paramsLink/LinksParams";
 
 export default function DegemerParamsLinks() {
   const user = useOutletContext<UserSessionConnectType>();
@@ -80,6 +80,7 @@ export default function DegemerParamsLinks() {
   }, [principalTagsList, secondaryTagsList]);
 
   let myComponentContent = <Loader />;
+  // let myComponentContent = <LinksParamsSkeleton />;
 
   //cas des liens internet
   if (secondaryTagActivated === "link") {

@@ -26,6 +26,13 @@
         "send" : "Envoyer !",
         "noLink" : "Vous devez proposer le lien avant d'envoyer la demande.",
         "success":"Demande envoyée !",
-        "error":"La demande n'a pu être envoyée. Essayez à nouveau !"
+        "error":"La demande n'a pu être envoyée. Essayez à nouveau !",
+        "concernedAll": "Lien pour tous.",
+        "concernedTeacher": "Lien pour les enseignants.",
+        "concernedStudent": "Lien pour les élèves.",
+        "linkMany": "Lien partagé",
+        "linkOne":"Lien personnel",
+        "linkAll":"Lien public",
+        "invalidLink": "Le lien que vous avez entré n'est pas valide. Veuillez vérifier l'URL et réessayer."
     }
 }

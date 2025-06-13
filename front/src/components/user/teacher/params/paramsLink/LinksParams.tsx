@@ -1,4 +1,3 @@
-import Loader from "@components/core/Loader";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { AxiosError } from "axios";
@@ -11,6 +10,7 @@ import type { LinkDataType } from "@shared/schema/link.schema";
 import api from "@srcFront/api/axios";
 import MatterLinksList from "./MatterLinksList";
 import LinksParamsFooter from "./LinksParamsFooter";
+import LinksParamsSkeleton from "./LinksParamsSkeleton";
 
 //ici les données pour le fonctionnement du classeur
 
@@ -243,7 +243,7 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
   let myListComponent;
 
   if (isLoading) {
-    myListComponent = <Loader />;
+    myListComponent = <LinksParamsSkeleton />;
   } else if (error) {
     myListComponent = <p className="text-red-500">{error}</p>;
   } else if (linksList.length > 0) {

@@ -18,6 +18,8 @@ function MatterLinksList({ title, linksList, matter, handleChange }: Props) {
     autre: "pt-1 ml-2 pl-4 border-1 border-orthographe",
     neutral: "pt-1 ml-2 pl-4",
   } as const;
+  const toolTipStyle =
+    "absolute top-[110%] left-1/2 -translate-x-1/2 bg-black/75 w-full text-white px-1 py-0.5 rounded-md z-10 hidden group-hover:block";
 
   if (linksList.length > 0) {
     const linksTypeStyle =
@@ -33,6 +35,7 @@ function MatterLinksList({ title, linksList, matter, handleChange }: Props) {
             {linksList.map((link) => {
               let titleLinkButton = "";
               let fullnameButton = "";
+              let descriptionButton = "";
               switch (actualLng) {
                 case "fr":
                   titleLinkButton =
@@ -46,6 +49,12 @@ function MatterLinksList({ title, linksList, matter, handleChange }: Props) {
                       ? link.fullnameFr
                       : link.fullnameBr !== null
                       ? link.fullnameBr
+                      : "";
+                  descriptionButton =
+                    link.descriptionFr !== null
+                      ? link.descriptionFr
+                      : link.descriptionBr !== null
+                      ? link.descriptionBr
                       : "";
                   break;
                 case "br":
@@ -61,6 +70,12 @@ function MatterLinksList({ title, linksList, matter, handleChange }: Props) {
                       : link.fullnameFr !== null
                       ? link.fullnameFr
                       : "";
+                  descriptionButton =
+                    link.descriptionBr !== null
+                      ? link.descriptionBr
+                      : link.descriptionFr !== null
+                      ? link.descriptionFr
+                      : "";
                   break;
                 default:
                   titleLinkButton =
@@ -75,6 +90,12 @@ function MatterLinksList({ title, linksList, matter, handleChange }: Props) {
                       : link.fullnameBr !== null
                       ? link.fullnameBr
                       : "";
+                  descriptionButton =
+                    link.descriptionFr !== null
+                      ? link.descriptionFr
+                      : link.descriptionBr !== null
+                      ? link.descriptionBr
+                      : "";
                   break;
               }
               return (
@@ -87,10 +108,13 @@ function MatterLinksList({ title, linksList, matter, handleChange }: Props) {
                       handleChange(link.linkId, e.target.checked)
                     }
                   />
-                  <label className="ml-1">
+                  <label className="ml-1 group relative cursor-pointer">
                     {titleLinkButton}
                     <span className="text-xs ml-2 italic">
                       {fullnameButton !== titleLinkButton ? fullnameButton : ""}
+                      {descriptionButton !== "" && (
+                        <div className={toolTipStyle}>{descriptionButton}</div>
+                      )}
                     </span>
                     <img
                       src={`/pictures/lienSite/${link.icon}`}
