@@ -5,6 +5,7 @@ import { type GroupInfoType } from '@shared/schema/group.schema';
 import { UserInfo } from 'os';
 import { type UserGroupBdType } from '@shared/schema/user.schema';
 import { type LinkShortType } from '@shared/schema/link.schema';
+import z from 'zod';
 
 
 class UserModel {
@@ -333,6 +334,45 @@ static async getUserLinksListByUserId(userId: number) {
       reponse: true,
       result: userLinksList,
     };
+  } catch (error) {
+    console.error("Erreur Prisma :", error);
+    throw error;
+  }
+}
+
+static async getUserMailById(userId: number) {
+  try {
+    const userDatas  = await prisma.user.findUnique({
+      where: { userId : userId},
+      select: {
+        userMail: true,
+      },      
+    });
+
+    if (!userDatas) {
+      return {
+        message: "mail introuvable",
+        reponse: null,
+        result: "",
+      };
+    }
+
+    
+    //on valide les données avec Zod
+    const mailSchema = z.string().email();
+    const parsed = mailSchema.safeParse(userDatas.userMail);
+
+    if (!parsed.success) {
+      console.error("Validation Zod échouée :", parsed.error.errors);
+      throw new Error("Mail utilisateur invalide");
+    }
+
+    return {
+      message: "Mail récupéré avec succès",
+      reponse: true,
+      result: parsed.data,
+    };
+
   } catch (error) {
     console.error("Erreur Prisma :", error);
     throw error;

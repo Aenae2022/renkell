@@ -1,7 +1,90 @@
-import { LinkDataSchema, LinksDataSchema } from '@shared/schema/link.schema';
+import { LinksDataSchema } from '@shared/schema/link.schema';
 import { prisma } from '../lib/prisma/client';
 
+interface AssociateLinkParams {
+  refId: number; // Identifiant de l'utilisateur ou du groupe   
+  linkId: number; // Identifiant du lien
+  type: 'user' | 'group'; // Type de référence (utilisateur ou groupe)
+  operation: 'addAssociation' | 'removeAssociation'; // Opération à effectuer
+}
 export default class LinkModel {
+
+  //associer ou disassocier des liens
+  static async  associateLink({refId, linkId, type, operation} : AssociateLinkParams) { //identifiant( user/group), id du lien, type (user/group), operation(addAssociation/removeAssociation)
+    try {
+
+      if(type === "group") {
+
+        if(operation === 'addAssociation') {
+          const groupAddAssociation = await prisma.groupLink.create({
+            data: {
+              groupId: refId,
+              linkId: linkId,
+            },
+          });
+          if(!groupAddAssociation) {
+            return {message : "échec de l'association", reponse : false}
+          }
+          return {message : "association réussie", reponse : true}
+        }
+
+        if(operation === 'removeAssociation') {
+          const groupDelAssociation = await prisma.groupLink.delete({
+            where: { 
+              groupId_linkId: {
+                groupId: refId,
+                linkId: linkId,
+              },
+            }
+          });
+
+          if(!groupDelAssociation) {
+            return {message : "échec de la suppression", reponse : false}
+          }
+          return {message : "suppression réussie", reponse : true}
+              
+        }
+      }
+
+      if(type === "user") {
+
+        if(operation === 'addAssociation') {
+          const userAddAssociation = await prisma.linkUser.create({
+            data: {
+              userId: refId,
+              linkId: linkId,
+            },
+          });
+          if(!userAddAssociation) {
+            return {message : "échec de l'association", reponse : false}
+          }
+          return {message : "association réussie", reponse : true}
+        }
+
+        if(operation === 'removeAssociation') {
+          const userDelAssociation = await prisma.linkUser.delete({
+            where: { 
+              userId_linkId: {
+                userId: refId,
+                linkId: linkId,
+              },
+            }
+          });
+
+          if(!userDelAssociation) {
+            return {message : "échec de la suppression", reponse : false}
+          }
+          return {message : "suppression réussie", reponse : true}
+              
+        }
+      }
+    } catch (error) {
+      console.error("Erreur Prisma :", error);
+      throw error;
+    }
+  }
+  
+    
   static async getTeacherLinksListData(userId: number) {
 
     try{

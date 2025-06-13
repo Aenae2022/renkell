@@ -1,5 +1,6 @@
 import LinkModel from "@srcBack/model/LinkModel";
 import UserModel from "@srcBack/model/UserModel";
+import { sendEmail } from "@srcBack/services/mailService";
 import { Request, Response } from "express";
 
 export default class LinksController {
@@ -76,7 +77,56 @@ export default class LinksController {
       }
     }
 
+  static async linkAssociation (
+    req: Request,
+    res: Response) {
+    
+    const { refId, linkId, type, operation  } = req.body;
+    
+    try {
+      const associationWork = await LinkModel.associateLink({refId, linkId, type, operation});
+    
+      if (!associationWork) {
+           res.status(400).json({ message: "error", reponse: null, result: [] });
+           return
+      }
+      res.status(200).json({ message: associationWork.message, reponse: associationWork.reponse});
+      return
+    } catch (error) {
+      console.error("Erreur dans le contrôleur :", error);
+      res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
+      return
+    }
+  }
 
+  static async newLinkMail (
+    req: Request,
+    res: Response) {
+    
+    try {
+      const { recipient, sender, subject, message } = req.body;    
+      
+      //on récupère l'email de l'utilisateur
+      const senderMail = await UserModel.getUserMailById(sender);
+      if(!senderMail || senderMail.reponse === null || senderMail.result === "") {
+        res.status(400).json({ message: "userParamsLinks.ask.error", reponse: null, result: [] });
+        return
+      }
+       
+      //on envoie l'email
+      const emailSent = await sendEmail({recipient, sender:senderMail.result, subject, message});
+    
+        if (emailSent) {
+            res.status(200).json({ result : true, message: "userParamsLinks.ask.success" });
+        } else {
+            res.status(500).json({ result : false, message: "userParamsLinks.ask.error" });
+        }
+    } catch (error) {
+      console.error("Erreur dans le contrôleur :", error);
+      res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
+      return
+    }
+  }
 
 }
 

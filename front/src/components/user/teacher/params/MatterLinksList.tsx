@@ -5,8 +5,9 @@ interface Props {
   title: string;
   linksList: LinkDataType[];
   matter: string;
+  handleChange: (linkId: number, isChecked: boolean) => void;
 }
-function MatterLinksList({ title, linksList, matter }: Props) {
+function MatterLinksList({ title, linksList, matter, handleChange }: Props) {
   const { t, i18n } = useTranslation();
   const actualLng = i18n.resolvedLanguage;
 
@@ -82,7 +83,9 @@ function MatterLinksList({ title, linksList, matter }: Props) {
                     type="checkbox"
                     name={`checkBox${link.linkId}`}
                     checked={link.isAssociated}
-                    // onChange={(e) => handleChange(link.linkId, e.target.checked)}
+                    onChange={(e) =>
+                      handleChange(link.linkId, e.target.checked)
+                    }
                   />
                   <label className="ml-1">
                     {titleLinkButton}
