@@ -1,8 +1,6 @@
-import { StringNameGroupSchema } from '@shared/schema/fields/stringNameGroup.schema';
 import { prisma } from '../lib/prisma/client';
-import { GroupsAllSchema, UserDatasConnectSchema, UserDatasConnectType, UserMiniListSchema } from "@shared/schema/user.schema";
+import { UserDatasConnectSchema, UserMiniListSchema } from "@shared/schema/user.schema";
 import { type GroupInfoType } from '@shared/schema/group.schema';
-import { UserInfo } from 'os';
 import { type UserGroupBdType } from '@shared/schema/user.schema';
 import { type LinkShortType } from '@shared/schema/link.schema';
 import z from 'zod';
@@ -25,6 +23,22 @@ class UserModel {
     });
     return !!user;
   }
+
+  static async doesUserIdExistInGroupId(userId:number, groupId:number): Promise<boolean> {
+    const user = await prisma.user.findFirst({
+      where: {
+        userId: userId,
+        userGroups: {
+          some: {
+            groupId: groupId,
+          },
+        },
+      },
+      select: { userId: true },
+    });
+    return !!user;
+  }
+
 
 static async getOthersTeacherList(userId: number, schoolId: number) {
 
@@ -79,8 +93,7 @@ static async getOthersTeacherList(userId: number, schoolId: number) {
 
   static async getUserByPseudo(userPseudo: string) {
   try {
-    console.log("Récupération des données de l'utilisateur :", userPseudo);
-    console.log(JSON.stringify(userPseudo))
+
     const userDatas  = await prisma.user.findUnique({
       where: { userPseudo : userPseudo},
       select: {

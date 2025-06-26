@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { StringRoleNameSchema } from "./fields/stringRoleName.schema";
+import { EntierPositifSchema } from "./fields/entierPositif.schema";
 
 export const UserRoleSchema = z.object({
-  roleId: z.number(),
+  roleId: EntierPositifSchema,
   roleName: StringRoleNameSchema,
 });
 

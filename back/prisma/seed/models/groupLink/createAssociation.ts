@@ -11,7 +11,7 @@ export async function createAssociation(params: GroupLinkParams) {
     groupId: params.groupId,
     linkId: params.linkId,
   };
-  const newAssociation = await prisma.GroupLink.create({
+  const newAssociation = await prisma.groupLink.create({
     data: associationData,
   });
 

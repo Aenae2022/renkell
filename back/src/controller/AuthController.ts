@@ -82,7 +82,6 @@ export default class AuthController {
     static async logout(req: Request, res: Response) {
       try {
         const userDatas = req.session.user;
-        console.log('userDatas', userDatas)
       // Redirection par défaut
       let redirection = '/degemer/0';
 

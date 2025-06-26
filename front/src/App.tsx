@@ -5,6 +5,7 @@ import DashboardTeacher from "./pages/user/teacher/DashboardTeacher";
 import Params from "./pages/user/teacher/Params";
 import ParamsLinks from "./pages/user/teacher/ParamsLinks";
 import TeacherLayout from "./pages/user/teacher/TeacherLayout";
+import LibraryApp from "@pages/user/teacher/LibraryApp";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route index element={<DashboardTeacher />} />
             <Route path="params" element={<Params />} />
             <Route path="params/links" element={<ParamsLinks />} />
+            <Route path="library" element={<LibraryApp />} />
             {/* autres pages */}
           </Route>
         </Routes>

@@ -2,13 +2,14 @@ import { z } from "zod";
 import { StringShortRefSchema } from "./fields/stringShortRef.schema";
 import { ColorHexaSchema } from "./fields/colorHexa.schema";
 import { GroupLinksSchema} from "./group.schema";
+import { EntierPositifSchema } from "./fields/entierPositif.schema";
 
 
 
 export const ClassroomRefSchema = StringShortRefSchema;
 
 export const ClassroomSchema = z.object({
-  classroomId: z.number(),
+  classroomId: EntierPositifSchema,
   classroomNumber: z.number(),
   classroomOrder: z.number(),
   classroomBackgroundColor: ColorHexaSchema,
@@ -21,8 +22,8 @@ export const ClassroomSchema = z.object({
 });
 
 export const ClassroomShortSchema = z.object({
-  classroomId: z.number(),
-  classroomNumber: z.number(),
+  classroomId: EntierPositifSchema,
+  classroomNumber: EntierPositifSchema,
   classroomBackgroundColor: ColorHexaSchema,
   classroomBorderColor: ColorHexaSchema,
   classroomColor: ColorHexaSchema,

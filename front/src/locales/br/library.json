@@ -5,8 +5,12 @@
         "stats": "Ar stadegoù",
         "params": "An arventennoù"
     },
+    "studentsList":{
+        "noStudent": "N'eus skolidi ebet staget diouzhoc'h"
+    },
     "degemer" : {
-        "title": "Levraoueg ar re"
+        "title": "Levraoueg ar re",
+        "error": "N'eus strollad ebet staget diouzhoc'h"
     },
     "bookBox": {
         "bookReading": "Levr amprestet",

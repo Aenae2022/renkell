@@ -17,5 +17,6 @@ export function useAuthStrict(): AuthStrictReturn {
     return {status: 'unauthenticated'}; 
   }
 
+
   return { user, status : 'authenticated', loading, ...rest };
 }

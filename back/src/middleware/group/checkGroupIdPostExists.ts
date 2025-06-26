@@ -3,6 +3,7 @@ import ClassroomModel from "../../model/ClassroomModel";
 import { ClassroomRefSchema } from "@shared/schema/classroom.schema";
 import z from "zod";
 import GroupModel from "@srcBack/model/GroupModel";
+import { EntierPositifSchema } from "@shared/schema/fields/entierPositif.schema";
 
 export const checkGroupIdPostExists = async(
     req: Request,
@@ -17,7 +18,7 @@ export const checkGroupIdPostExists = async(
   }
 
   // ✅ Validation avec Zod
-  const result = z.number().safeParse(groupId);
+  const result =EntierPositifSchema.safeParse(groupId);
 
   if (!result.success) {
     res.status(400).json({

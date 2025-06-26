@@ -18,7 +18,7 @@ export function MenuTeacher({ user }: { user: UserSessionConnectType }) {
       title: "reglages",
     },
     {
-      action: "teacher/library",
+      action: "/teacher/library",
       icon: logoLibrary,
       title: "library",
     },

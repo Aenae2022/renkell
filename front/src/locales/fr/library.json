@@ -5,11 +5,16 @@
         "stats": "Les stats",
         "params": "Paramètres"
     },
+    "studentsList":{
+        "noStudent": "Vous n'avez pas d'élèves associés à votre groupe"
+    },
     "degemer" : {
-        "title": "Bibliothèque des"
+        "title": "Bibliothèque des",
+        "error": "Vous n'avez pas de groupe associé"
+
     },
     "bookBox": {
-        "bookReading": "Livre emrpunté",
+        "bookReading": "Livre emprunté",
         "bookWaiting": "Livre réservé",
         "bookNoReading": "Emprunter un livre",
         "bookNoWaiting": "Réserver un livre",
@@ -35,11 +40,81 @@
         "deleteBook": "Annuler l'emprunt",
         "reserved": "Livre réservé",
         "borrowBook": "Emprunter",
-        "bookReservedToBorrow": "Livre réservé à emprunter"
+        "bookReservedToBorrow": "Livre réservé à emprunter",
+        "borrowBookPersonal": "Lire un livre personnel"
+
 
     },
     "reserveBookBox": {
-        
+        "deleteBook":"Annuler l'emprunt",
         "reserveBook": "Réserver"
+    },
+    "libraryBox": {
+        "welcomeMyLibrary" : "Bibliothèque des ",
+        "addBookInLibrary" : "Ajouter un livre dans la bibliothèque de classe",
+        "title" : "Titre",
+        "author" : "Auteur",
+            "editor" : "Editeur",
+            "ISBN" : "ISBN",
+        "location": {
+            "title":"Propriétaire",
+            "med":"Médiathèque",
+            "roo": "Classe",
+            "sch": "Ecole",
+            "per": "Personnel"
+        },
+        "alert": "Attention !",
+        "alertBorrowed": "Livre emrunté par ",
+        "error1" : "Le titre est nécessaire pour l'ajout d'un livre.",
+        "error2" : "Livre ajouté ! ",
+        "error4" : "Erreur. Enregistrement du livre impossible.",
+        "chooseNewBook" : "Voici des livres qui pourraient correspondre à votre recherche. Choisissez en un ou créez un nouveau livre."
+    },
+    "ficheBox":{
+        "title":"Ajouter un livre",
+        "nbBook" : "nombre d'exemplaire",
+        "inDbYet" : "Ce titre existe déjà dans la bibliothèque.",
+        "chooseStudent" :"Livre de ",
+        "abort" : "Annuler",
+        "save" : "Enregistrer"
+    },
+    "statsBox" : {
+        "library" : "Livres",
+        "student" : "Elèves",
+        "bookLocation_roo" : "Classe",
+        "bookLocation_med" : "Médiathèque",
+        "bookLocation_sch" : "Ecole",
+        "bookLocation_per" : "Personnel",
+        "period" : "Choisissez une période : ",
+        "selectedAllPeriod" : "toutes",
+        "selectedBloazPeriod" : "année",
+        "selectedPeriod" : "période ",
+        "chooseBooks" : "Choisissez les livres pour les stats.",
+        "booksTopBorrowed" : "Titres les plus empruntés :",
+        "booksTopReaded" : "Titres les plus lus :",
+        "topReaders" : "Elèves ayant lu le plus de livres ",
+        "topDistinctReaders" : "Elèves ayant lu le plus de livres différents",
+        "topNoReaders" : "Elèves ayant rendu le plus de livres sans les lire",
+        "noStats": "Aucune stat pour les paramètres sélectionnés."
+    },
+    "paramsBox":{
+        "globalTitle":"Périodes par défaut",
+        "yearPeriod":"année",
+        "shortPeriod":"Période",
+        "groupTitle":"Périodes du groupe",
+        "addTitle": "Ajouter une nouvelle période.",
+        "periodName":"Nom de la période :",
+        "periodStart":"Date de début de la période :",
+        "periodEnd":"Date de fin de la période :",
+        "save":"Créer",
+        "deleteConfirm":"supprimer la période",
+        "confirm":"Supprimer",
+        "abort":"Annuler",
+        "error1Title":"Erreur !",
+        "error1Msg":"La période n'a pas pu être supprimée. Essayez de nouveau ou contactez l'administrateur",
+        "error2Title":"Erreur !",
+        "error2Msg":"Le nom de la période est obligatoire !",
+        "errorStart":"La date de début n'est pas valide.",
+        "errorEnd":"La date de fin n'est pas valide."
     }
 }

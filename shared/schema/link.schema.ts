@@ -2,9 +2,10 @@ import { z } from "zod";
 import { StringShortRefSchema } from "./fields/stringShortRef.schema";
 import { StringNameSchema } from "./fields/stringName.schema";
 import {StringNamePictureSchema} from "./fields/stringNamePicture.schema" 
+import { EntierPositifSchema } from "./fields/entierPositif.schema";
 
 export const LinkShortSchema = z.object({
-  linkId: z.number(),
+  linkId: EntierPositifSchema,
   linkRedirection: z.string(),
   linkIcon: z.string(),
   linkTitleBr: z.string(),
@@ -15,7 +16,7 @@ export const LinkShortSchema = z.object({
 
 export const LinkDataSchema = z.object(
 {
-  linkId: z.number(),
+  linkId: EntierPositifSchema,
   linkName: StringShortRefSchema,
   titleFr: StringNameSchema.nullable(),
   titleBr: StringNameSchema.nullable(),

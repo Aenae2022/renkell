@@ -25,7 +25,6 @@ export default function RaccourcisLink() {
         const linksListSearched = await api.get(
           "/api/dashboard/teacherLinksList"
         );
-        console.log("linksListSearched", linksListSearched.data);
         if (linksListSearched.data.result.length === 0)
           setMessage(linksListSearched.data.message);
         setLinksList(linksListSearched.data.result);

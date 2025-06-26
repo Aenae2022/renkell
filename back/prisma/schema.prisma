@@ -37,8 +37,6 @@ model Classroom {
   group   Group?     @relation(fields: [groupId], references: [groupId], onDelete: SetNull)
 }
 
-
-
 model Link {
   linkId             Int     @id @default(autoincrement())
   linkName           String  @db.VarChar(500)
@@ -70,38 +68,6 @@ model GroupLink {
   linkId      Int
 
   @@id([groupId, linkId]) // clé composite
-}
-
-model Group {
-  groupId Int     @id @default(autoincrement())
-  groupName String @db.VarChar(255)
-  groupLanguage String @db.VarChar(50)
-  groupPrincipal Boolean
-
-  classroom Classroom?  // relation 1-1 inverse
-  groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
-  groupUsers GroupUser[]
-}
-
-model User {
-   userId             Int     @id @default(autoincrement())
-   userFamilyName String  @db.VarChar(50)
-   userFirstName String  @db.VarChar(50)
-   userPseudo String? @db.VarChar(50)   @unique
-   userPsswd String? @db.VarChar(255) 
-   userMail String? @db.VarChar(255) @unique
-   userIcon String @db.VarChar(50) @default("user_student.png")
-
-   gradeId        Int?    // clé étrangère optionnelle donc NULL si pas d'association avec un niveau scolaire
-   grade          Grade? @relation(fields: [gradeId], references: [gradeId], onDelete: SetNull)
-
-   schoolId Int? // clé étrangère optionnelle donc NULL si pas d'association avec une école
-   school   School? @relation(fields: [schoolId], references: [schoolId], onDelete: SetNull)
-
-  userLinks LinkUser[] 
-  userGroups GroupUser[]
-  userRoles RoleUser[]
-  userLinkPermissions LienPermission[]
 }
 
 model Role {
@@ -159,3 +125,95 @@ model LienPermission {
   userId Int
 }
 
+model User {
+   userId             Int     @id @default(autoincrement())
+   userFamilyName String  @db.VarChar(50)
+   userFirstName String  @db.VarChar(50)
+   userPseudo String? @db.VarChar(50)   @unique
+   userPsswd String? @db.VarChar(255) 
+   userMail String? @db.VarChar(255) @unique
+   userIcon String @db.VarChar(50) @default("user_student.png")
+
+   gradeId        Int?    // clé étrangère optionnelle donc NULL si pas d'association avec un niveau scolaire
+   grade          Grade? @relation(fields: [gradeId], references: [gradeId], onDelete: SetNull)
+
+   schoolId Int? // clé étrangère optionnelle donc NULL si pas d'association avec une école
+   school   School? @relation(fields: [schoolId], references: [schoolId], onDelete: SetNull)
+
+  userLinks LinkUser[] 
+  userGroups GroupUser[]
+  userRoles RoleUser[]
+  userLinkPermissions LienPermission[]
+  bookEvents BookEvent[]
+}
+
+model Book {
+  bookId Int @id @default(autoincrement())
+  bookTitle String @db.VarChar(255)
+  bookAuthor String? @db.VarChar(100)
+  bookPublisher String? @db.VarChar(100)
+  bookIsbn String? @db.VarChar(25) 
+
+  libraryGroup BookGroup[] 
+}
+
+model Eventlibrarytype {
+  eventLibraryTypeId Int @id @default(autoincrement())
+  eventLibraryTypeName String @db.VarChar(50)
+
+  bookEvents BookEvent[]
+}
+
+model Periodlibrary {
+  periodId Int @id @default(autoincrement())
+  groupId Int?
+  periodName String @db.VarChar(50)
+  dateStart DateTime
+  dateEnd DateTime
+
+  group Group? @relation(fields: [groupId], references: [groupId], onDelete: SetNull)
+
+}
+
+model Group {
+  groupId Int     @id @default(autoincrement())
+  groupName String @db.VarChar(255)
+  groupLanguage String @db.VarChar(50)
+  groupPrincipal Boolean
+
+  classroom Classroom?  // relation 1-1 inverse
+  groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
+  groupUsers GroupUser[]
+  libraryGroup BookGroup[]
+  groupPeriods Periodlibrary[]
+
+}
+model BookGroup {
+  bookGroupId Int @id @default(autoincrement())
+  bookId Int
+  groupId Int
+  location String
+  onWork Boolean
+  dateAdd DateTime
+  dateRemove DateTime?
+
+  // Relations
+  book  Book  @relation(fields: [bookId], references: [bookId])
+  group Group @relation(fields: [groupId], references: [groupId])
+  bookEvents BookEvent[]
+}
+
+model BookEvent{
+  bookEventId Int @id @default(autoincrement())
+  bookEventType Int
+  bookEventDate DateTime
+  userId Int
+  bookGroupId Int
+
+  // Relations
+  groupBook  BookGroup  @relation(fields: [bookGroupId], references: [bookGroupId])
+  user User @relation(fields: [userId], references: [userId])
+  eventLibraryType Eventlibrarytype @relation(fields: [bookEventType], references: [eventLibraryTypeId])
+
+
+}
