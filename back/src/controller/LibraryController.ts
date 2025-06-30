@@ -152,7 +152,6 @@ export default class LibraryController {
       waitingList: waitingList,
     }
     
-    console.log('bookReading', myBookFind)
     const parsedBookFind = BookReadingSchema.safeParse(myBookFind);
     if (!parsedBookFind.success) {
       console.error("Validation zod échouée :", parsedBookFind.error);
@@ -319,6 +318,26 @@ static async getFilteredBooksProposition(req: Request,res: Response) {
      return
 }
 
+static async getGroupsLibrary(req: Request,res: Response) {
+    const { groupId } = req.body;
+  try{
+    const groupBooksList = await LibraryModel.getGroupsLibrary(groupId);
+    if (!groupBooksList || groupBooksList.reponse === null) {
+        res.status(400).json({ message: "LibrayController getGroupsLibrary erreur", reponse : null, result : null });
+        return;
+    }
+    
+    res.status(200).json(groupBooksList);
+    return
+  }
+  catch (error) {
+    console.error("LibrayController getGroupsLibrary erreur :", error);
+    throw error;
+  }
+   
+    
+}
+
 static async getReferenceBookInGroupLibrary(req: Request,res: Response){
   try {
     const { groupId, bookId } = req.body;
@@ -404,7 +423,33 @@ static async getReferenceBookInGroupLibrary(req: Request,res: Response){
     res.status(200).json(createBook);
     return
 }
-  
+
+static async removeGroupBookFromList(req: Request,res: Response){
+    const { bookGroupId } = req.body;
+    
+    //avant de retirer le livre on vérifie qu'il n'est pas emprunté
+    const is_borrowedAsk = await LibraryModel.isABookBorrowed(bookGroupId);
+    if(is_borrowedAsk.result){ //le livre est emprunté
+        const bookBorrower = await LibraryModel.getActualBookBorrower(bookGroupId);
+        res.status(200).json( {message: "livre emprunté", reponse: null , result :bookBorrower.result?.userFirstName + " " + bookBorrower.result?.userFamilyName});
+        return
+    }
+   //avant de retirer le livre on enlève les réservations éventuelles
+    const is_reservedAsk = await LibraryModel.isABookReserved(bookGroupId);
+    if(is_reservedAsk.reponse){ //le livre est réservé
+      const removeBookAllReservation = await LibraryModel.removeBookAllReservation(bookGroupId);
+    }
+
+    //on enlève le livre de la liste de la classe
+    const removeBookFromList = await LibraryModel.updateNoWorkAGroupBook(bookGroupId);
+   if (removeBookFromList.reponse === null) {
+        res.status(400).json({ message: 'erreur', reponse :null, result : false });
+        return
+    }
+    
+    res.status(200).json({ message: "réussite", reponse : true, result: true });
+    return
+}
 
   //annuler l'emprunt d'un livre
   static async removeBorrowABook (req: Request,res: Response) {

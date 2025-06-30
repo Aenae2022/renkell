@@ -227,7 +227,6 @@ function StudentBookBox({
       }
     }
   };
-  console.log("coucou");
   return (
     <div className="w-full">
       <p className="mt-0 mb-2 ml-2.5 text-xl">

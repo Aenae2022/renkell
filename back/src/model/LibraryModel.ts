@@ -35,7 +35,6 @@ export default class LibraryModel{
   //savoir si un userId lit un bookGroupId
   //return bool
   static async doesUserIdReadBookGroupId(userId :EntierPositifType, bookGroupId : EntierPositifType) {
-    console.log('userId et bookGroupId', userId, bookGroupId)
     try {
 
       const valid = await prisma.bookEvent.findFirst({
@@ -258,7 +257,6 @@ export default class LibraryModel{
       const booksList : BookLibraryShortType[] = [];
   
       listBookProposition.forEach((book) => {
-          console.log("LibraryModel GetfilteredProposition book :", book)
           //validation zod
           const parsedBook = BookLibraryShortSchema.safeParse(book);
           if (!parsedBook.success) {
@@ -719,7 +717,6 @@ static async borrowABook(userId:number,bookGroupId:number){
           return {message: "Pas de réservation pour ce livre", reponse : false, result : null};
         } 
         if (bookUpdate.count > 1) {
-          console.log(`${bookUpdate.count} événement(s) mis à jour.`);
           return {message: `${bookUpdate.count} événement(s) mis à jour.`, reponse : false, result : null};
         }
         return {message: `${bookUpdate.count} événement(s) mis à jour.`, reponse : true, result : null};
@@ -750,13 +747,20 @@ static async borrowABook(userId:number,bookGroupId:number){
   }
 
   static async createBookInLibrary(book : BookToGroupListType) {
+    const bookToCreate = {
+      bookTitle: book.bookTitle,
+      bookAuthor: book.bookAuthor,
+      bookPublisher: book.bookPublisher,
+      bookIsbn: book.bookIsbn,
+    }
+    console.log('bookToCreate : ', bookToCreate)
     try {
       const addBook = await prisma.book.create({
         data: {
-          bookTitle: book.bookTitle,
-          bookAuthor: book.bookAuthor,
-          bookPublisher: book.bookPublisher,
-          bookIsbn: book.bookIsbn,
+          bookTitle: bookToCreate.bookTitle,
+          bookAuthor: bookToCreate.bookAuthor,
+          bookPublisher: bookToCreate.bookPublisher,
+          bookIsbn: bookToCreate.bookIsbn,
         },
       });
       if (!addBook) {
@@ -791,6 +795,27 @@ static async borrowABook(userId:number,bookGroupId:number){
         console.error("Erreur dans removeBorrowABook :", error);
       }
     }
+
+    static async removeBookAllReservation(bookGroupId : EntierPositifType) {
+      try {
+        const removeReservation = await prisma.bookEvent.deleteMany({
+          where: {
+            bookGroupId: bookGroupId,
+            bookEventType: 4,
+          },
+        });
+
+        if(removeReservation.count === 0) {
+          return({message: "libraryModel, removeBookAllReservation, aucune réservation supprimée", reponse : false, result : null})
+        }
+        return({message: "réservation supprimée", reponse : true, result : removeReservation.count})
+      }
+      catch (error){
+        console.error("Erreur dans removeBookAllReservation :", error);
+        throw error;
+      }
+    }
+
   
   static async  removeReserveABook(userId :EntierPositifType, bookGroupId : EntierPositifType) {
     try {
@@ -811,7 +836,7 @@ static async borrowABook(userId:number,bookGroupId:number){
         console.error("Erreur dans removeReserveABook :", error);
         throw error;
       }
-    }
+  }
 
   static async reserveABook(userId : EntierPositifType, bookGroupId : EntierPositifType) {
     try{
@@ -834,9 +859,9 @@ static async borrowABook(userId:number,bookGroupId:number){
       console.error("Erreur dans LibraryModel reserveABook :", error);
       throw error;
     }
-}
+  }
   //return : message, reponse ('boolean)
-    static  async returnABook(userId : EntierPositifType, bookGroupId : EntierPositifType, isReaded: boolean) {
+  static  async returnABook(userId : EntierPositifType, bookGroupId : EntierPositifType, isReaded: boolean) {
       const readedCode = isReaded? 2 : 3;
       
       try {
@@ -862,8 +887,27 @@ static async borrowABook(userId:number,bookGroupId:number){
         console.error("Erreur dans returnABook :", error);
         throw error;
       }
+  }
+    
+  static async updateNoWorkAGroupBook(bookGroupId : EntierPositifType){
+    try {
+      const updateNoWork = await prisma.bookGroup.update({
+        where: {
+          bookGroupId: bookGroupId,
+        },
+        data: {
+          onWork: false,
+          dateRemove: new Date,
+        },
+      })
+      if(!updateNoWork) {
+        return ({message: "libraryModel, updateNoWorkAGroupBook, erreur", reponse : null})
+      }
+      return ({message: "réussite" ,reponse : true})
     }
-        
-  
-
+    catch (error) {
+      console.error("Erreur dans updateNoWorkAGroupBook :", error);
+      throw error;
+    }
+  }
 }

@@ -11,6 +11,7 @@ import { useOutletContext } from "react-router-dom";
 import type { GroupMiniType } from "@shared/schema/group.schema";
 import { useTranslation } from "react-i18next";
 import StudentsLibrary from "@components/user/teacher/library/StudentsLibrary";
+import BooksLibrary from "@components/user/teacher/library/BooksLibrary";
 
 export default function LibraryApp() {
   const user = useOutletContext<UserSessionConnectType>();
@@ -86,11 +87,11 @@ export default function LibraryApp() {
         myComponentContent = <StudentsLibrary group={groupToShow} />;
         break;
       }
-      // case principalTagsList[1].ref: {
-      //   //BooksLibrary
-      //   myComponentContent = <BooksLibrary group={groupToShow} />;
-      //   break;
-      // }
+      case principalTagsList[1].ref: {
+        //BooksLibrary
+        myComponentContent = <BooksLibrary group={groupToShow} />;
+        break;
+      }
       // case principalTagsList[2].ref: {
       //   //StatsLibrary
       //   myComponentContent = <StatsLibrary group={groupToShow} />;

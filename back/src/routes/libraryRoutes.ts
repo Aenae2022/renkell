@@ -105,4 +105,15 @@ router.post("/removeReserveABook",
     checkUserIdValid(), checkBookGroupIdExists,
     LibraryController.removeReserveABook);
 
+router.post("/groupBooksList", 
+    isAuthenticated, checkRoles(["TEACHER"]),
+    checkGroupIdPostExists,
+    LibraryController.getGroupsLibrary)
+
+router.post("/removeGroupBookFromList", 
+    isAuthenticated, checkRoles(["TEACHER"]),
+    checkBookGroupIdExists,
+    LibraryController.removeGroupBookFromList)
+    
+
 export default router;

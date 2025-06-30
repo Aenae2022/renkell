@@ -15,10 +15,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .then((res) => {
         if (res.data.success) {
           setUser(res.data.user);
+        } else {
+          // L'API a répondu, mais pas de session valide
+          setUser(null);
         }
       })
-      .catch(() => {
-        setUser(null);
+      .catch((err) => {
+        if (err.response?.status === 401) {
+          setUser(null); // ❗ seulement si non autorisé
+        } else {
+          console.warn("Erreur temporaire, on garde l'utilisateur connecté");
+          // Ne rien faire ici => garder l'utilisateur tel quel
+        }
       })
       .finally(() => setLoading(false));
   }, []);

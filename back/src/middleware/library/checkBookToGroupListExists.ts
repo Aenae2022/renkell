@@ -14,7 +14,6 @@ export const checkBookToGroupListExists = async(
     return;
   }
 
-  console.log('Middleware checkBookToGroupListExists : book', book)
   // ✅ Validation avec Zod
   const result = BookToGroupListSchema.safeParse(book);
 

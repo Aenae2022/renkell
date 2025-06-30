@@ -10,16 +10,17 @@ export const checkBookToGroupListValid = async(
 
   const { book } = req.body;
   if (!book) {
-    res.status(400).json({ message: "middleware checkBookToGroupListExistsL'objet book est manquant." });
+    res.status(400).json({ message: "middleware checkBookToGroupListValid L'objet book est manquant." });
     return;
   }
 
+  
   // ✅ Validation avec Zod
-  const result = BookSchema.safeParse(BookToGroupListSchema);
+  const result = BookToGroupListSchema.safeParse(book);
 
   if (!result.success) {
     res.status(400).json({
-      message: "middleware checkBookToGroupListExists : Validation du book échouée",
+      message: "middleware checkBookToGroupListValid : Validation du book échouée",
       errors: result.error.flatten().fieldErrors,
     });
     return;

@@ -170,7 +170,6 @@ function StudentBookBox({
     setBookWaiting(null);
     setBorrowableBooks([]);
     setReservableBooks([]);
-    console.log("studentsBookBox useEffect");
     if (containsOne) {
       // Cas : l'élève est déjà en train de lire un livre
       fetchBookReading();

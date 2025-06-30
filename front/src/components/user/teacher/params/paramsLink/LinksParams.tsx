@@ -156,13 +156,11 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
       });
 
       return response.data;
-    } catch (error: unknown) {
-      // Utilisation de `unknown` pour éviter `any`
-      if (error instanceof AxiosError && error.response) {
-        console.log(error.response.data.message); // Message d'erreur du backend
-      } else {
-        console.log("Erreur serveur !");
-      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des données du livre :",
+        error
+      );
     }
   };
 

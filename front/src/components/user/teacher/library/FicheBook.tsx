@@ -17,10 +17,10 @@ import api from "@srcFront/api/axios";
 
 interface FicheBookProps {
   isPersonal: boolean;
-  student: StudentLibraryType;
+  student: StudentLibraryType | null;
   groupId: EntierPositifType;
   showPopup: (value: boolean) => void;
-  updateStudentTypeEvent: (
+  updateStudentTypeEvent?: (
     userId: EntierPositifType,
     newTypeEvent: string
   ) => void;
@@ -184,6 +184,7 @@ function FicheBook({
       }
       //appel axios pour ajouter le livre dans library
       try {
+        console.log("verif newBook : ", newBook);
         const response = await api.post("/api/library/createBook", {
           book: newBook,
         });
@@ -196,6 +197,7 @@ function FicheBook({
         newBook.bookId = id;
       } catch (error) {
         console.error("Erreur lors de la création :", error);
+        return;
       }
     }
 
@@ -224,7 +226,6 @@ function FicheBook({
         });
 
         if (!result.data.reponse) {
-          console.log(response.data.message);
           notify("errorBook");
           return;
         }
@@ -237,7 +238,7 @@ function FicheBook({
           updateStudentTypeEvent(student.userId, newStudentEvents);
       } else {
         if (updateLibrary !== undefined)
-          updateLibrary(newBook, response.data.resultat);
+          updateLibrary(newBook, response.data.result);
       }
 
       showPopup(false);
