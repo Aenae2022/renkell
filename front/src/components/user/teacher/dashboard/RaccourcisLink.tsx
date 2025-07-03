@@ -32,9 +32,9 @@ export default function RaccourcisLink() {
         return { linksListSearched };
       } catch (error: unknown) {
         if (error instanceof AxiosError && error.response) {
-          console.log(error.response.data.message); // Message d'erreur du backend
+          console.error(error.response.data.message); // Message d'erreur du backend
         } else {
-          console.log("Erreur serveur dans getUserLinksList!");
+          console.error("Erreur serveur dans getUserLinksList!");
         }
       }
     };

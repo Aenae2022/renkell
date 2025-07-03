@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import LibraryModel from "@srcBack/model/LibraryModel";
-import { BookReadingSchema, BookType, BookWaitingSchema } from "@shared/schema/library.schema";
+import { BookReadingSchema, BookStatType, BookType, BookWaitingSchema, StudentLibraryType, StudentStatsType } from "@shared/schema/library.schema";
 
 export default class LibraryController {
 
@@ -338,6 +338,51 @@ static async getGroupsLibrary(req: Request,res: Response) {
     
 }
 
+static async getPeriodsList(req: Request,res: Response) {
+  const { groupId } = req.body;
+  
+  try {
+    const periodsList = await LibraryModel.getPeriodsList(groupId);
+    if (!periodsList || periodsList.reponse === null) {
+      res.status(400).json({ message: 'error', reponse : null, result : [] });
+      return
+    }
+
+    if(!periodsList.reponse) {
+      res.status(200).json({ message: 'rien', reponse : false, result : [] });
+      return
+    }
+
+    const periods = periodsList.result.map((period) => {
+      let periodType
+      if(period.groupId !== null){
+        periodType = period.groupId
+      }
+      else {
+        if(/^a/.test(period.periodName)){
+          periodType ="a"
+        } 
+        else {
+          periodType = 'p'
+        }
+      }
+      return {
+        periodId: period.periodId,
+        periodName: period.periodName,
+        periodStart: period.dateStart,
+        periodEnd: period.dateEnd,
+        periodType: periodType,
+      }
+    })
+    res.status(200).json({message : periodsList.message, reponse : true, result : periods});
+    return
+  }
+  catch (error) {
+    console.error("LibrayController getGroupsLibrary erreur :", error);
+    throw error;
+  }
+}
+
 static async getReferenceBookInGroupLibrary(req: Request,res: Response){
   try {
     const { groupId, bookId } = req.body;
@@ -361,6 +406,96 @@ static async getReferenceBookInGroupLibrary(req: Request,res: Response){
   }    
 }
   
+static async getStatsBooksDatas(req: Request,res: Response) {
+    const { groupId, period, locations } = req.body;
+    
+    try{
+      const booksList = await LibraryModel.getStatsBooksList(groupId, period, locations);
+      if (booksList.reponse === null) {
+          res.status(400).json({ message: booksList.message, reponse: null });
+          return
+      }
+      if (!booksList.reponse) {
+          res.status(200).json(booksList);
+          return
+      }
+      const booksStats : BookStatType[] = [];
+
+      await Promise.all(booksList.result.map(async (book) => {
+        const bookDatas = await LibraryModel.getStatsBookDatas(book.bookId, period, locations);
+        if(!bookDatas || bookDatas.reponse === null ) {
+          res.status(400).json({ message: "erreur dans la requête", reponse: null, result : null})
+          return
+        }
+        const bookToPush = {
+          ...book,
+          statsReading : {total : bookDatas.result.reading.nbr, concerned : bookDatas.result.reading.concerned},
+          statsBorrow : {total : bookDatas.result.readed.nbr + bookDatas.result.noReaded.nbr, concerned : bookDatas.result.readed.concerned + ' ' + bookDatas.result.noReaded.concerned},
+          statsReaded : {total : bookDatas.result.readed.nbr, concerned : bookDatas.result.readed.concerned },
+          statsReserved : {total : bookDatas.result.reserved.nbr, concerned : bookDatas.result.reserved.concerned },
+        }
+
+        booksStats.push(bookToPush)
+      }))
+      res.status(200).json({ message: "liste ok", reponse: true, result: booksStats });
+      return 
+    }
+    catch (error) {
+      console.error("Erreur dans le contrôleur :", error);
+      throw error;
+    }
+  }
+
+static async getStatsStudentsDatas(req : Request, res : Response) {
+  const { groupId, period, locations } = req.body;
+    
+  try {
+
+    //récupérer la liste des élèves
+    const studentsList = await LibraryModel.getStudentsListLibraryByGroup(groupId);
+    if (!studentsList) {
+      res.status(400).json({ message: "erreur dans la requête", reponse: null, result: [] });
+      return;
+    }
+    if (!studentsList.reponse) {
+      res.status(400).json(studentsList);
+      return
+    }
+    const studentsDatas : StudentStatsType[]= [];
+
+
+    await Promise.all(studentsList.result.map(async (student) => {
+        //nombre de lectures
+        const studentDatas = await LibraryModel.getStatsStudentDatas(student.userId, period, locations);
+
+        if(!studentDatas || studentDatas.reponse === null ) {
+          res.status(400).json({ message: "erreur dans la requête", reponse: null, result : null})
+          return
+        }
+        const studentToPush = {
+          userId : student.userId,
+          userFirstName : student.userFirstName,
+          userFamilyName : student.userFamilyName,
+          grade : student.grade === null ? "Aucun niveau" : student.grade,
+          groupId : groupId,
+          nbReaded : {total : studentDatas.result.readed.nbr, concerned : studentDatas.result.readed.concerned },
+          nbDistinctReaded : {total : studentDatas.result.distinctReaded.nbr, concerned : studentDatas.result.distinctReaded.concerned },
+          nbNoReaded : {total : studentDatas.result.noReaded.nbr, concerned : studentDatas.result.noReaded.concerned },
+        }
+
+        studentsDatas.push(studentToPush)
+    
+      }))
+
+    res.status(200).json({ message: "liste ok", reponse: true, result: studentsDatas });
+    return 
+  }
+  catch (error){
+    console.error("Erreur dans le contrôleur :", error);
+    throw error;
+  }
+}
+
     static async getStudentsListLibraryByGroup( req: Request,res: Response) {
     const { groupId } = req.body;
     

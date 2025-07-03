@@ -124,7 +124,6 @@ export class Utilitaires {
     static isInRange(start: string, end: string, today:Date): boolean {
         const startDate = new Date(start);
         const endDate = new Date(end);
-        //const test = new Date(today);
         return today >= startDate && today <= endDate;
       }
 }

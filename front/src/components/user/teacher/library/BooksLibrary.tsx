@@ -33,9 +33,9 @@ function BooksLibrary({ group }: { group: GroupMiniType }) {
       } catch (error: unknown) {
         // Utilisation de `unknown` pour éviter `any`
         if (error instanceof AxiosError && error.response) {
-          console.log(error.response.data.message); // Message d'erreur du backend
+          console.error(error.response.data.message); // Message d'erreur du backend
         } else {
-          console.log("Erreur serveur !");
+          console.error("Erreur serveur !");
         }
       } finally {
         setIsLoading(false); // Indiquer que le chargement est terminé

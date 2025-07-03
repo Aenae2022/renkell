@@ -12,6 +12,7 @@ import type { GroupMiniType } from "@shared/schema/group.schema";
 import { useTranslation } from "react-i18next";
 import StudentsLibrary from "@components/user/teacher/library/StudentsLibrary";
 import BooksLibrary from "@components/user/teacher/library/BooksLibrary";
+import StatsLibrary from "@components/user/teacher/library/StatsLibrary";
 
 export default function LibraryApp() {
   const user = useOutletContext<UserSessionConnectType>();
@@ -92,11 +93,11 @@ export default function LibraryApp() {
         myComponentContent = <BooksLibrary group={groupToShow} />;
         break;
       }
-      // case principalTagsList[2].ref: {
-      //   //StatsLibrary
-      //   myComponentContent = <StatsLibrary group={groupToShow} />;
-      //   break;
-      // }
+      case principalTagsList[2].ref: {
+        //StatsLibrary
+        myComponentContent = <StatsLibrary group={groupToShow} />;
+        break;
+      }
       // case principalTagsList[3].ref: {
       //   //ParamsLibrary
       //   myComponentContent = <ParamsLibrary group={groupToShow} />;

@@ -14,6 +14,7 @@ import checkBookIdExists from "@srcBack/middleware/library/checkBookIdExists";
 import checkBookToGroupListValid from "@srcBack/middleware/library/checkBookToGroupListValid";
 import checkBookToGroupListExists from "@srcBack/middleware/library/checkBookToGroupListExists";
 import checkBookWorkValid from "@srcBack/middleware/library/checkBookWorkValid";
+import { checkPeriodLocationsValid } from "@srcBack/middleware/library/checkPeriodLocationsValid";
 
 const router = express.Router();
 
@@ -114,6 +115,22 @@ router.post("/removeGroupBookFromList",
     isAuthenticated, checkRoles(["TEACHER"]),
     checkBookGroupIdExists,
     LibraryController.removeGroupBookFromList)
-    
+
+router.post("/getPeriodsList",
+    isAuthenticated, checkRoles(["TEACHER"]),
+    checkGroupIdPostExists,
+    LibraryController.getPeriodsList)
+
+router.post("/getStatsBooksDatas",
+    isAuthenticated, checkRoles(["TEACHER"]),
+    checkGroupIdPostExists, checkPeriodLocationsValid,
+    LibraryController.getStatsBooksDatas)
+
+router.post("/getStatsStudentsDatas", 
+    isAuthenticated, checkRoles(["TEACHER"]),
+    checkGroupIdPostExists, checkPeriodLocationsValid,
+    LibraryController.getStatsStudentsDatas);
+ 
+
 
 export default router;

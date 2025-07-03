@@ -184,7 +184,6 @@ function FicheBook({
       }
       //appel axios pour ajouter le livre dans library
       try {
-        console.log("verif newBook : ", newBook);
         const response = await api.post("/api/library/createBook", {
           book: newBook,
         });

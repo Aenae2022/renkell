@@ -143,8 +143,8 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
       return response.data;
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
-        console.log(error.response.data.message);
-        console.log("Erreur serveur !");
+        console.error(error.response.data.message);
+        console.error("Erreur serveur !");
       }
     }
   };
@@ -181,9 +181,9 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
       } catch (error: unknown) {
         // Utilisation de `unknown` pour éviter `any`
         if (error instanceof AxiosError && error.response) {
-          console.log(error.response.data.message); // Message d'erreur du backend
+          console.error(error.response.data.message); // Message d'erreur du backend
         } else {
-          console.log("Erreur serveur !");
+          console.error("Erreur serveur !");
         }
       }
     }
@@ -218,9 +218,9 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
     } catch (error: unknown) {
       // Utilisation de `unknown` pour éviter `any`
       if (error instanceof AxiosError && error.response) {
-        console.log(error.response.data.message); // Message d'erreur du backend
+        console.error(error.response.data.message); // Message d'erreur du backend
       } else {
-        console.log("Erreur serveur !");
+        console.error("Erreur serveur !");
       }
     }
   };

@@ -1,9 +1,13 @@
-import { BookLibraryShortSchema, BookLibraryShortType, BookSchema, BookToGroupListType, BookType, StudentLibrarySchema } from '@shared/schema/library.schema';
+import { BookLibraryShortSchema, BookLibraryShortType, BookMiniType, BookSchema, BookToGroupListType, BookType, LocationsType, PeriodType, StudentLibrarySchema, StudentLibraryType } from '@shared/schema/library.schema';
 import { prisma } from '../lib/prisma/client';
 import { group } from 'console';
 import { EntierPositifType } from '@shared/schema/fields/entierPositif.schema';
 import { StringNameTitleType } from '@shared/schema/fields/stringNameTitle.schema';
 
+type LibraryStudentResponse =
+  | { message: string; reponse: null; result: null }
+  | { message: string; reponse: false; result: StudentLibraryType[] }
+  | { message: string; reponse: true; result: StudentLibraryType[] };
 export default class LibraryModel{
 
   static async doesBookIdExist(bookId: number): Promise<boolean> {
@@ -26,6 +30,19 @@ export default class LibraryModel{
         select: { bookGroupId: true },
       });
       return !!bookGroup;
+    } catch (error) {
+      console.error("Erreur Prisma :", error);
+      throw error;
+    }
+  }
+
+  static async doesPeriodExist(periodId: EntierPositifType): Promise<boolean> {
+    try { 
+      const search = await prisma.periodlibrary.findUnique({
+        where: { periodId: periodId },
+        select: { periodId: true },
+      });
+      return !!search;
     } catch (error) {
       console.error("Erreur Prisma :", error);
       throw error;
@@ -390,6 +407,44 @@ export default class LibraryModel{
         throw error;
       } 
     }
+
+    //get list of periods boutin ha ispisal a group
+    //params groupId
+    //return message, reponse, resultat : array[periods[periodSchema]]
+    static async getPeriodsList(groupId: EntierPositifType) {
+      try {
+        const periodListReq = await prisma.periodlibrary.findMany({
+          where: {
+            OR:[
+              {groupId: groupId},
+              {groupId:null}
+            ]
+          },
+          select: {
+            periodId: true,
+            periodName: true,
+            dateStart: true,
+            dateEnd: true,
+            groupId:true,
+          }
+        })
+
+        if(!periodListReq){
+          return({message: "erreur", reponse: null, result:[]})
+        }
+
+        if(periodListReq.length === 0){
+          return({message: "noPeriod", reponse: false, result:[]})
+        }
+
+        return ({message:'okPeriods', reponse: true, result : periodListReq})
+      }
+      catch (error){
+        console.error("Erreur Prisma :", error);  
+        throw error;
+      }
+    }
+
         
     static async getReferenceBookInGroupLibrary(bookId :number, groupId :number){
       try{
@@ -449,7 +504,317 @@ export default class LibraryModel{
       }
     }  
 
-    static async getStudentsListLibraryByGroup(groupId: number) {
+    static async getStatsBooksList(groupId : EntierPositifType, period : PeriodType, locations: LocationsType) {
+      try{
+        const statsBooksSearch = await prisma.bookGroup.findMany({
+          where : {
+            AND: [
+              { groupId : groupId},
+              { dateAdd :
+                {
+                  lte : period.periodEnd
+                }
+              },
+              { OR: [
+                  { dateRemove : null},
+                  { dateRemove :
+                    {
+                      gte : period.periodEnd
+                    }
+                  }
+                ]
+              },
+              { location :
+                {
+                  in : locations
+                }
+              }
+
+            ]
+          },
+          distinct: ['bookId'],
+          select : {
+            bookId:true,
+            book : {
+              select : {
+                bookTitle : true,
+                bookAuthor: true,
+                bookPublisher:true,
+              }
+            },
+          },
+          orderBy : {
+            book :{
+              bookTitle : 'asc'
+            }
+          }
+        })
+      
+
+        if(!statsBooksSearch){
+          return({message: "erreur", reponse: null, result:[]})
+        }
+        if(statsBooksSearch.length === 0){
+          return({message: "noStats", reponse: false, result:[]})
+        }
+        const booksList : BookMiniType[]= [];
+        statsBooksSearch.map((data) => {  
+          const book = {
+            bookId: data.bookId,
+            bookTitle : data.book.bookTitle,
+            bookAuthor : data.book.bookAuthor,
+            bookPublisher : data.book.bookPublisher
+          }
+          booksList.push(book);
+        })
+
+        return({message:'livres trouvés', reponse : true, result : booksList})
+        
+      }
+      catch (error){
+        console.error("Erreur Prisma :", error);
+        throw error;
+      }
+    }
+
+    static async getStatsBookDatas(bookId : EntierPositifType, period : PeriodType, locations: LocationsType){
+      try{
+        const statsBook =  await prisma.bookEvent.findMany({
+            where : {
+              AND: [
+                { groupBook : 
+                  {bookId : bookId}
+                },
+                { bookEventDate :
+                  {
+                    gte : period.periodStart,
+                    lte : period.periodEnd
+                  }
+                },
+              ]
+            },                
+            select : {
+              bookGroupId : true,
+              bookEventType : true,
+              user : {
+                select : {
+                  userFamilyName : true,
+                  userFirstName : true,
+                }
+              },
+              groupBook : {
+                select : {
+                  book : {
+                    select : {
+                      bookTitle : true,
+                      bookAuthor: true,
+                      bookId:true,
+                    },
+                  },
+                }
+              }
+            }  
+          })
+
+        if(!statsBook){
+          return({message : 'erreur', reponse:null, result : null})
+        }
+
+        let count1 = 0;
+        let count2 = 0;
+        let count3 = 0;
+        let count4 = 0;
+        let users1 ="";
+        let users2 ="";
+        let users3 ="";
+        let users4 ="";
+
+        if(statsBook.length === 0){
+          return({message : 'empty', reponse:false, result : {
+            reading : 
+              {nbr:count1, 
+              concerned: users1},
+            readed : {
+              nbr : count2,
+              concerned : users2
+            },
+            noReaded : {
+              nbr : count3,
+              concerned : users3
+            },
+            reserved : {
+              nbr : count4,
+              concerned : users4
+            }
+            }
+          })
+        }
+        
+        statsBook.map((data)=>{
+          if(data.bookEventType === 1){
+            users1 = users1!==""? users1 +", "+data.user.userFirstName + " " + data.user.userFamilyName : (data.user.userFirstName + " " + data.user.userFamilyName);
+            count1++;
+          }
+          else if(data.bookEventType === 2){
+            users2 = users2!==""? users2 +", "+data.user.userFirstName + " " + data.user.userFamilyName : (data.user.userFirstName + " " + data.user.userFamilyName);
+            count2++;
+          }
+          else if(data.bookEventType === 3){
+            users3 = users3!==""? users3 +", "+data.user.userFirstName + " " + data.user.userFamilyName : (data.user.userFirstName + " " + data.user.userFamilyName);
+            count3++;
+          }
+          else if(data.bookEventType === 4){
+            users4 = users4!==""? users4 +", "+data.user.userFirstName + " " + data.user.userFamilyName : (data.user.userFirstName + " " + data.user.userFamilyName);
+            count4++;
+          }
+        })
+        const stats = {
+          reading : 
+            {nbr:count1, 
+            concerned: users1},
+          readed : {
+            nbr : count2,
+            concerned : users2
+          },
+          noReaded : {
+            nbr : count3,
+            concerned : users3
+          },
+          reserved : {
+            nbr : count4,
+            concerned : users4
+          }
+          }
+        return ({message: "réussite", reponse : true, result: stats})
+      }
+      catch (error){
+        console.error("Erreur Prisma :", error);
+        throw error;
+      }
+      
+    }
+
+    static async getStatsStudentDatas(userId : EntierPositifType, period : PeriodType, locations: LocationsType){
+      try{
+        const statsStudent =  await prisma.bookEvent.findMany({
+            where : {
+              AND: [
+                { userId : userId},
+                { bookEventDate :
+                  {
+                    gte : period.periodStart,
+                    lte : period.periodEnd
+                  }
+                },
+              ]
+            },                
+            select : {
+              bookGroupId : true,
+              bookEventType : true,
+              groupBook : {
+                select : {
+                  book : {
+                    select : {
+                      bookTitle : true,
+                      bookAuthor: true,
+                      bookId:true,
+                    },
+                  },
+                }
+              }
+            }  
+          })
+        
+        if(!statsStudent){
+          return({message : 'erreur', reponse:null, result : null})
+        }
+        let count2 = 0;
+        let count3 = 0;
+        let count4 = 0;
+        let books2 ="";
+        let books3 ="";
+        let books4 ="";
+      
+
+        if(statsStudent.length === 0){
+          return({message : 'empty', reponse:false, result : {
+            readed : {
+              nbr : count2,
+              concerned : books2
+            },
+            noReaded : {
+              nbr : count3,
+              concerned : books3
+            },
+            reserved : {
+              nbr : count4,
+              concerned : books4
+            },
+            distinctReaded : {
+            nbr : 0,
+            concerned : ''
+          }
+            }
+          })
+        }
+        
+        const bookMap = new Map();
+
+        statsStudent.map((data)=>{
+          if(data.bookEventType === 2){
+            books2 = books2!==""? books2 +", "+data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "") : data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "")
+            count2++;
+            //on regroupe dans bookMap les bookId distincts afin de connaitre le nombre de livres distincts lus
+            const key = data.groupBook.book.bookId;
+            if (!bookMap.has(key)) {
+              bookMap.set(key, data.groupBook.book);
+            } 
+          }
+          else if(data.bookEventType === 3){
+            books3 = books3!==""? books3 +", "+data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "") : data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "")
+            count3++;
+          }
+          else if(data.bookEventType === 4){
+            books4 = books4!==""? books4 +", "+data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "") : data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "")
+            count4++;
+          }
+
+        })
+
+        const booksList = Array.from(bookMap.values());
+        let booksConcerned = ""
+        booksList.map((book) => {
+          const info = book.bookTitle  + (book.bookAuthor !== null ? " - " + book.bookAuthor : "")
+          booksConcerned = booksConcerned === "" ? info : booksConcerned + ", " + info;
+        })
+        const stats = {
+          readed : {
+            nbr : count2,
+            concerned : books2
+          },
+          noReaded : {
+            nbr : count3,
+            concerned : books3
+          },
+          reserved : {
+            nbr : count4,
+            concerned : books4
+          },
+          distinctReaded : {
+            nbr : booksList.length,
+            concerned : booksConcerned
+          }
+          }
+        return ({message: "réussite", reponse : true, result: stats})
+      }
+      catch (error){
+        console.error("Erreur Prisma :", error);
+        throw error;
+      }
+      
+    }
+
+    static async getStudentsListLibraryByGroup(groupId: number): Promise<LibraryStudentResponse> {
         try {
           const usersWithEvents = await prisma.user.findMany({
             where: {
@@ -496,7 +861,7 @@ export default class LibraryModel{
           return { message: "Erreur du serveur", reponse: null , result :null}
         }
         if (usersWithEvents.length === 0) {
-          return { message: "library.studentsList.noStudent", reponse : false, result : usersWithEvents}
+          return { message: "library.studentsList.noStudent", reponse : false, result : []}
         }
     
         const studentsList = usersWithEvents.map((user) => {
@@ -513,11 +878,11 @@ export default class LibraryModel{
             typeEvent: typeEvents,
           }
           //on valide avec zod
-        const parsedStudent = StudentLibrarySchema.safeParse(student);
-        if (!parsedStudent.success) {
-          console.error("Erreur de validation Zod :", parsedStudent.error);
-          return { message: "Erreur de validation des données", reponse: null, result: null };
-        }
+          const parsedStudent = StudentLibrarySchema.safeParse(student);
+          if (!parsedStudent.success) {
+            console.error("Erreur de validation Zod :", parsedStudent.error);
+            return student
+          }
           return parsedStudent.data;
         })
 
@@ -753,7 +1118,6 @@ static async borrowABook(userId:number,bookGroupId:number){
       bookPublisher: book.bookPublisher,
       bookIsbn: book.bookIsbn,
     }
-    console.log('bookToCreate : ', bookToCreate)
     try {
       const addBook = await prisma.book.create({
         data: {

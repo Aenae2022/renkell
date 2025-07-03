@@ -38,9 +38,9 @@ function ReadBookBox({
     } catch (error: unknown) {
       // Utilisation de `unknown` pour éviter `any`
       if (error instanceof AxiosError && error.response) {
-        console.log("erreur Axios" + error.response.data.message); // Message d'erreur du backend
+        console.error("erreur Axios" + error.response.data.message); // Message d'erreur du backend
       } else {
-        console.log("Erreur serveur !");
+        console.error("Erreur serveur !");
       }
     }
   };
@@ -62,9 +62,9 @@ function ReadBookBox({
     } catch (error: unknown) {
       // Utilisation de `unknown` pour éviter `any`
       if (error instanceof AxiosError && error.response) {
-        console.log("erreur Axios" + error.response.data.message); // Message d'erreur du backend
+        console.error("erreur Axios" + error.response.data.message); // Message d'erreur du backend
       } else {
-        console.log("Erreur serveur return Book!");
+        console.error("Erreur serveur return Book!");
       }
     }
   };
