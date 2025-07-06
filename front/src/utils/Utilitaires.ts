@@ -43,7 +43,7 @@ export class Utilitaires {
         const isInRange = d >= min && d <= max;
         return {
           valid: isSameDate && isInRange,
-          date: dateTest
+          date: new Date(dateTest)
         };
       }
 

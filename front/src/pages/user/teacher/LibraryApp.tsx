@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import StudentsLibrary from "@components/user/teacher/library/StudentsLibrary";
 import BooksLibrary from "@components/user/teacher/library/BooksLibrary";
 import StatsLibrary from "@components/user/teacher/library/StatsLibrary";
+import ParamsLibrary from "@components/user/teacher/library/ParamsLibrary";
 
 export default function LibraryApp() {
   const user = useOutletContext<UserSessionConnectType>();
@@ -98,11 +99,11 @@ export default function LibraryApp() {
         myComponentContent = <StatsLibrary group={groupToShow} />;
         break;
       }
-      // case principalTagsList[3].ref: {
-      //   //ParamsLibrary
-      //   myComponentContent = <ParamsLibrary group={groupToShow} />;
-      //   break;
-      // }
+      case principalTagsList[3].ref: {
+        //ParamsLibrary
+        myComponentContent = <ParamsLibrary group={groupToShow} />;
+        break;
+      }
       default:
         break;
     }

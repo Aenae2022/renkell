@@ -116,6 +116,7 @@
         "error2Title":"Erreur !",
         "error2Msg":"Le nom de la période est obligatoire !",
         "errorStart":"La date de début n'est pas valide.",
-        "errorEnd":"La date de fin n'est pas valide."
+        "errorEnd":"La date de fin n'est pas valide.",
+        "errorDates": "Les dates ne sont pas correctes"
     }
 }

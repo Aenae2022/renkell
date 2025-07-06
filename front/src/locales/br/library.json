@@ -113,7 +113,8 @@
         "error1Msg":"N'eo ket bet dilamet ar prantad. Klaskit en-dro pe kit e darempred gant ar merour.",
         "error2Title":"Skoulm !",
         "error2Msg":"Anv ar prantad a zo ret !",
-        "errorStart":"N'oe ket reizh penn ar prantad.",
-        "errorEnd":"N'oe ket reizh dibenn ar prantad"
+        "errorStart":"N'eo ket reizh penn ar prantad.",
+        "errorEnd":"N'eo ket reizh dibenn ar prantad.",
+        "errorDates": "N'eo ket reizh an deiziadoù"
     }
 }

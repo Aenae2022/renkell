@@ -115,8 +115,12 @@ export const PeriodSchema = z.object({
   z.enum(["a", "p"])
 ]),
   periodName: StringNameGroupSchema,
-  periodStart: z.string().datetime(),
-  periodEnd: z.string().datetime(),
+  periodStart: z.coerce.date(),
+  periodEnd: z.coerce.date(),
+})
+.refine((data) => data.periodStart < data.periodEnd, {
+  message : "errorDates",
+  path: ["periodEnd"]
 });
 
 export const BookStatsDatasSchema = z.object({ 

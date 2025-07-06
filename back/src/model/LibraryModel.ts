@@ -426,7 +426,10 @@ export default class LibraryModel{
             dateStart: true,
             dateEnd: true,
             groupId:true,
-          }
+          },
+          orderBy: {
+            dateStart: 'asc',
+          },
         })
 
         if(!periodListReq){
@@ -1136,7 +1139,34 @@ static async borrowABook(userId:number,bookGroupId:number){
       console.error("Erreur dans createBookInLibrary :", error);
       throw error;
     }
-  }    
+  } 
+
+static async createPeriod(period : PeriodType) {
+    const periodToCreate = {
+      periodName: period.periodName,
+      dateStart: period.periodStart,
+      dateEnd: period.periodEnd,
+      groupId: typeof period.periodType === "string" ? null : period.periodType,
+    }
+    try {
+      const addPeriod = await prisma.periodlibrary.create({
+        data: {
+          periodName: periodToCreate.periodName,
+          dateStart: periodToCreate.dateStart,
+          dateEnd: periodToCreate.dateEnd,
+          groupId: periodToCreate.groupId,
+        },
+      });
+      if (!addPeriod) {
+        return ({message: "LibraryModel, createPeriod, erreur", reponse : null, result: null})
+      }
+      return ({message: "réussite" ,reponse : true, result: addPeriod.periodId});
+    }
+    catch (error) {
+      console.error("Erreur dans createPeriod :", error);
+      throw error;
+    }
+  } 
 
   //annuler l'emprunt d'un livre
     //return : message, reponse
@@ -1180,7 +1210,25 @@ static async borrowABook(userId:number,bookGroupId:number){
       }
     }
 
-  
+  static async  removePeriod(periodId : EntierPositifType) {
+    try{
+      const removePeriod = await prisma.periodlibrary.delete({
+        where: {
+          periodId: periodId,
+        },
+      });
+
+      if(!removePeriod) {
+        return({message: "libraryModel, removePeriod, aucune période supprimée", reponse : null})
+      }
+      return({message: "période supprimée", reponse : true})
+    }
+    catch (error){
+      console.error("Erreur dans removePeriod :", error);
+      throw error;
+    }
+  }
+
   static async  removeReserveABook(userId :EntierPositifType, bookGroupId : EntierPositifType) {
     try {
         const removeReserve = await prisma.bookEvent.deleteMany({
@@ -1272,6 +1320,30 @@ static async borrowABook(userId:number,bookGroupId:number){
     catch (error) {
       console.error("Erreur dans updateNoWorkAGroupBook :", error);
       throw error;
+    }
+  }
+
+  static async updatePeriod(period : PeriodType){
+
+    try{
+      const updatePeriod = await prisma.periodlibrary.update({
+        where: {
+          periodId: period.periodId,
+        },
+        data: {
+          dateStart: period.periodStart,
+          dateEnd: period.periodEnd,
+          periodName: period.periodName,
+        },
+      })
+      if(!updatePeriod) {
+        return ({message: "libraryModel, updatePeriod, erreur", reponse : false})
+      }
+      return ({message: "réussite" ,reponse : true})
+    }
+    catch (error) {
+      console.error("Erreur dans updatePeriod :", error);
+      throw error;    
     }
   }
 }

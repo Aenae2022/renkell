@@ -355,20 +355,23 @@ static async getPeriodsList(req: Request,res: Response) {
 
     const periods = periodsList.result.map((period) => {
       let periodType
+      let periodName = period.periodName
       if(period.groupId !== null){
         periodType = period.groupId
       }
       else {
         if(/^a/.test(period.periodName)){
-          periodType ="a"
+          periodType ="a",
+          periodName = period.periodName.slice(1)
         } 
         else {
-          periodType = 'p'
+          periodType = 'p',
+          periodName = period.periodName.slice(1)
         }
       }
       return {
         periodId: period.periodId,
-        periodName: period.periodName,
+        periodName: periodName,
         periodStart: period.dateStart,
         periodEnd: period.dateEnd,
         periodType: periodType,
@@ -559,6 +562,19 @@ static async getStatsStudentsDatas(req : Request, res : Response) {
     return
 }
 
+//créer une période dans periodLibrary
+  static async createPeriod(req: Request,res: Response){
+    const { period } = req.body;
+    
+    const createPeriod = await LibraryModel.createPeriod(period);
+   if (!createPeriod || createPeriod.reponse === null) {
+        res.status(400).json({ message: 'erreur', reponse : null, result : null });
+        return
+    }
+    res.status(200).json(createPeriod);
+    return
+}
+
 static async removeGroupBookFromList(req: Request,res: Response){
     const { bookGroupId } = req.body;
     
@@ -599,6 +615,26 @@ static async removeGroupBookFromList(req: Request,res: Response){
   return
   }
 
+static async removePeriod(req : Request, res : Response)  {
+    const { periodId } = req.body;
+  try{  
+    const removePeriod = await LibraryModel.removePeriod(periodId);
+    
+    if (removePeriod.reponse === null) {
+        res.status(400).json({ message: "error", reponse:false });
+        return
+    }
+
+    res.status(200).json({ message:"cancelOk", reponse: true });
+    return
+  }
+  catch (error) {
+    console.error("Erreur dans le contrôleur :", error);
+    res.status(500).json({ message: "Erreur serveur" });
+    return
+  } 
+}
+
   static async removeReserveABook(req: Request,res: Response) {
     const { userId, bookGroupId } = req.body;
     
@@ -636,6 +672,25 @@ static async removeGroupBookFromList(req: Request,res: Response){
 
     res.status(200).json({ message:"returnOk", reponse: true });
     return
+  }
+
+  static async updatePeriod(req: Request, res: Response) {
+    const { period } = req.body;
+    try{
+      const updatePeriod = await LibraryModel.updatePeriod(period);
+    
+      if (updatePeriod.reponse === null) {
+          res.status(400).json({ message: "error", reponse:false });
+          return
+      }
+
+      res.status(200).json({ message:"cancelOk", reponse: true });
+      return
+    }
+    catch (error) {
+      console.error("Erreur dans le contrôleur :", error);
+      throw error;
+    }
   }
 
 }
