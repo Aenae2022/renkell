@@ -12,6 +12,8 @@ import api from "@srcFront/api/axios";
 import BooksStatsBox from "./BooksStatsBox";
 import StudentsStatsBox from "./StudentsStatsBox";
 import StatsBoxSkeleton from "./StatsBoxSkeleton";
+import { StudentsStatsDoc } from "@srcFront/document/library/StudentsStatsDoc";
+import { pdf } from "@react-pdf/renderer";
 
 interface StatsLibraryProps {
   group: GroupMiniType;
@@ -35,10 +37,34 @@ function StatsLibrary({ group }: StatsLibraryProps) {
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const generatePdf = async () => {
+    if (periodSelected) {
+      setMessage("");
+      const blob = await pdf(
+        <StudentsStatsDoc
+          studentsDatas={statsStudentsDatas}
+          period={periodSelected}
+        />
+      ).toBlob();
+      const url = URL.createObjectURL(blob);
+      console.log("click");
+      // Crée un lien temporaire et déclenche le téléchargement
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "document.pdf";
+      link.click();
+
+      // Nettoie l'URL après utilisation
+      URL.revokeObjectURL(url);
+    } else {
+      setMessage("noPeriodSelected");
+    }
+  };
   useEffect(() => {
     const findMatchingPeriod = (testPeriodsList: PeriodType[]) => {
       const today = new Date();
       // Étape 1 : Périodes de type "6" (ou tout autre type cible)
+      console.log("type date", typeof testPeriodsList[0].periodStart);
       const periodsPersonnal = testPeriodsList
         .filter(
           (p) =>
@@ -381,6 +407,15 @@ function StatsLibrary({ group }: StatsLibraryProps) {
               </div>
             </div>
           </div>
+          {typeStatSelected === "students" ? (
+            <input
+              type="button"
+              value={t("library.statsBox.print")}
+              className={`rounded-md m-2 px-1 text-sm border-2 border-zinc-800 text-wrap
+            `}
+              onClick={generatePdf}
+            />
+          ) : null}
         </div>
       </div>
       {myComponent}

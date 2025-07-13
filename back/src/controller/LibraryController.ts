@@ -464,18 +464,14 @@ static async getStatsStudentsDatas(req : Request, res : Response) {
       res.status(400).json(studentsList);
       return
     }
-    const studentsDatas : StudentStatsType[]= [];
-
-
-    await Promise.all(studentsList.result.map(async (student) => {
+    const studentsDatas : StudentStatsType[]= await Promise.all(studentsList.result.map(async (student) => {
         //nombre de lectures
         const studentDatas = await LibraryModel.getStatsStudentDatas(student.userId, period, locations);
 
         if(!studentDatas || studentDatas.reponse === null ) {
-          res.status(400).json({ message: "erreur dans la requête", reponse: null, result : null})
-          return
+          throw new Error("Erreur dans la requête pour les données de l'élève");
         }
-        const studentToPush = {
+        return {
           userId : student.userId,
           userFirstName : student.userFirstName,
           userFamilyName : student.userFamilyName,
@@ -486,10 +482,10 @@ static async getStatsStudentsDatas(req : Request, res : Response) {
           nbNoReaded : {total : studentDatas.result.noReaded.nbr, concerned : studentDatas.result.noReaded.concerned },
         }
 
-        studentsDatas.push(studentToPush)
+       // studentsDatas.push(studentToPush)
     
       }))
-
+    console.log('studentsDatas', studentsDatas);
     res.status(200).json({ message: "liste ok", reponse: true, result: studentsDatas });
     return 
   }

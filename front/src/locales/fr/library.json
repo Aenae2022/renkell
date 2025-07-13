@@ -96,7 +96,8 @@
         "topDistinctReaders" : "Elèves ayant lu le plus de livres différents",
         "topNoReaders" : "Elèves ayant rendu le plus de livres sans les lire",
         "noStats": "Aucune stat pour les paramètres sélectionnés.",
-        "noLocationSelected": "Il faut sélectionner au moins un type de livres."
+        "noLocationSelected": "Il faut sélectionner au moins un type de livres.",
+        "print": "Créer les fiches élèves"
     },
     "paramsBox":{
         "globalTitle":"Périodes par défaut",

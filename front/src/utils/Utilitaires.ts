@@ -121,7 +121,7 @@ export class Utilitaires {
     //savoir si une date est comprise dans une période donnée
     //params : start: string, end: string, today:string
     //return : boolean
-    static isInRange(start: string, end: string, today:Date): boolean {
+    static isInRange(start: Date, end: Date, today:Date): boolean {
         const startDate = new Date(start);
         const endDate = new Date(end);
         return today >= startDate && today <= endDate;

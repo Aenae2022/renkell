@@ -709,6 +709,14 @@ export default class LibraryModel{
                     lte : period.periodEnd
                   }
                 },
+                { groupBook:
+                  {
+                    location :
+                      {
+                        in : locations
+                      }
+                  }
+              }
               ]
             },                
             select : {
