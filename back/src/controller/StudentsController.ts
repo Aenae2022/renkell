@@ -37,7 +37,6 @@ export default class StudentsController {
             })
           //validation des données
           const studentsListDatasValidated = studentsListDatasFormatted.map((student) => {
-            console.log("student dans le controller :", student);
             const parsedStudent = StudentDatasSchema.safeParse(student);
             if (!parsedStudent.success) {
             console.error("Erreur de validation des données des élèves :", parsedStudent.error);   
@@ -73,4 +72,27 @@ export default class StudentsController {
       res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
     }
 }
+
+static async addStudentToGroup(
+    req: Request,
+    res: Response) {
+    const { groupId, userId, principal } = req.body;
+    console.log('entrée dans add')
+    console.log('groupId :', groupId)
+    console.log('userId : ', userId)
+    console.log('principal : ', principal)
+    try {
+      const result = await UserModel.addStudentToGroup(groupId, userId, principal);
+      console.log('result', result)
+      if (result) {
+        res.status(200).json({ message: "successAddStudent", reponse: true, result: [] });
+      } else {
+        res.status(400).json({ message: "errorAddStudent", reponse: false, result: [] });
+      }
+    } catch (error) {
+      console.error("Erreur dans le contrôleur :", error);
+      res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
+    }
+}
+
 }

@@ -13,10 +13,8 @@ export const checkGroupIdPostExists = async(
     res.status(400).json({ message: "L'objet groupId est manquant." });
     return;
   }
-
   // ✅ Validation avec Zod
   const result =EntierPositifSchema.safeParse(groupId);
-
   if (!result.success) {
     res.status(400).json({
       message: "Validation du group échouée",

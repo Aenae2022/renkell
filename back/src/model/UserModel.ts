@@ -454,6 +454,26 @@ static async getUserMailById(userId: number) {
   }
 }
 
+static async  addStudentToGroup(groupId: EntierPositifType, userId: EntierPositifType, principal : boolean) {
+    try{
+      const action = await prisma.groupUser.create({
+        data: {
+          userId: userId,
+          groupId: groupId,
+          principal : principal,
+        },
+      });
+      if (!action) {
+        return ({message: "UserModel, addStudentToGroup, erreur", reponse : null, result: null})
+      }
+      return ({message: "réussite" ,reponse : true, result: action.userId});
+    }
+    catch (error) {
+      console.error("Erreur dans UserModel, addStudentToGroup, :", error);
+      throw error;
+    }    
+}
+
 static async removeStudentFromGroup(groupId: EntierPositifType, userId: EntierPositifType){
   try {
     const actionRemove = await prisma.groupUser.deleteMany({

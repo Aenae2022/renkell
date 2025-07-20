@@ -12,6 +12,7 @@ type MercatoStudentsProps = {
   studentsList: StudentDatasType[];
   groupRef: EntierPositifType;
 };
+
 function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
   const [studentsGroupList, setStudentsGroupList] = useState<
     StudentDatasType[]
@@ -19,6 +20,7 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
   const [studentsDisponibleList, setStudentsDisponibleList] = useState<
     StudentDatasType[]
   >([]);
+  const [groupPrincipal, setGroupPrincipal] = useState<boolean>(true);
   const user = useOutletContext<UserSessionConnectType>();
   const gradesColorVariants = {
     CP: "bg-green-200",
@@ -28,6 +30,18 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
     CM2: "bg-orange-200",
   } as const;
 
+  const sortStudentsList = (list: StudentDatasType[]) => {
+    list.sort((a, b) => {
+      if (a.grade?.gradeId !== b.grade?.gradeId) {
+        return (a.grade?.gradeId || 0) - (b.grade?.gradeId || 0);
+      }
+      if (a.userFamilyName !== b.userFamilyName) {
+        return a.userFamilyName.localeCompare(b.userFamilyName);
+      }
+      return a.userFirstName.localeCompare(b.userFirstName);
+    });
+    return list;
+  };
   const handleClickRemoveStudent = async (
     e: React.MouseEvent<HTMLImageElement>
   ) => {
@@ -52,15 +66,9 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
           );
           if (!studentDisp) return prevList; // Ne rien faire si aucun étudiant trouvé
 
-          const newList = [...prevList, studentDisp];
+          let newList = [...prevList, studentDisp];
           if (newList.length > 1) {
-            newList.sort((a, b) => {
-              if (a.userFamilyName !== b.userFamilyName) {
-                return a.userFamilyName.localeCompare(b.userFamilyName);
-              }
-              return a.userFirstName.localeCompare(b.userFirstName);
-            });
-            return newList;
+            newList = sortStudentsList(newList);
           }
           return newList;
         });
@@ -74,6 +82,46 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
       );
     }
   };
+
+  const handleClickAddStudent = async (
+    e: React.MouseEvent<HTMLImageElement>
+  ) => {
+    const studentId =
+      e.currentTarget.dataset.studentId !== undefined
+        ? parseInt(e.currentTarget.dataset.studentId)
+        : 0;
+    try {
+      const response = await api.post("/api/students/addStudentToGroup", {
+        userId: studentId,
+        groupId: groupRef,
+        principal: groupPrincipal,
+      });
+      if (response.data.reponse) {
+        //on met à jour la liste des élèves du groupe
+        setStudentsDisponibleList((prevList) =>
+          prevList.filter((student) => student.userId !== Number(studentId))
+        );
+        //on ajoute l'élève à la liste des élèves disponibles
+        setStudentsGroupList((prevList) => {
+          const studentDisp = studentsList.find(
+            (student) => student.userId === Number(studentId)
+          );
+          if (!studentDisp) return prevList; // Ne rien faire si aucun étudiant trouvé
+
+          let newList = [...prevList, studentDisp];
+          if (newList.length > 1) {
+            newList = sortStudentsList(newList);
+          }
+          return newList;
+        });
+      } else {
+        console.error("Erreur lors de l'ajout de l'élève dans le groupe");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'ajout de l'élève dans le groupe", error);
+    }
+  };
+
   useEffect(() => {
     //vérifier s'il s'agit du groupe principal ou non
     const isPrincipalGroupSelected = user.userGroups.find(
@@ -96,19 +144,12 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
         }
       });
       //on trie par grade puis par nom de famille le tableau des élèves du groupe
-      studentsGroup.sort((a, b) => {
-        if (a.grade?.gradeId !== b.grade?.gradeId) {
-          return (a.grade?.gradeId || 0) - (b.grade?.gradeId || 0);
-        }
-        if (a.userFamilyName !== b.userFamilyName) {
-          return a.userFamilyName.localeCompare(b.userFamilyName);
-        }
-        return a.userFirstName.localeCompare(b.userFirstName);
-      });
+      const studentsGroupSorted = sortStudentsList(studentsGroup);
+      const studentsDisponibleSorted = sortStudentsList(studentsDisponible);
 
-      setStudentsGroupList(studentsGroup);
-      setStudentsDisponibleList(studentsDisponible);
-      //on propose les élèves de l'école n'ayant pas de group principal
+      setStudentsGroupList(studentsGroupSorted);
+      setStudentsDisponibleList(studentsDisponibleSorted);
+      setGroupPrincipal(true);
     }
   }, [studentsList, groupRef, user]);
   return (
@@ -128,7 +169,7 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
                   <tr key={student.userId} className={studentGradeColor}>
                     <td>
                       <img
-                        className="w-5 h-5"
+                        className="min-w-5  w-5 h-5"
                         src={logoSuppr}
                         alt="supprimer"
                         onClick={handleClickRemoveStudent}
@@ -158,10 +199,11 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
                   <tr key={student.userId} className={studentGradeColor}>
                     <td>
                       <img
-                        className="w-5 h-5"
+                        className="min-w-5 w-5 h-5"
                         src={logoAdd}
                         alt="supprimer"
-                        //onClick={handleClickAddStudent}
+                        onClick={handleClickAddStudent}
+                        data-student-id={student.userId}
                       />
                     </td>
                     <td>
