@@ -12,6 +12,7 @@ import linksRoutes from "./routes/linksRoutes";
 // import linksRoutes from "./routes/linksRoutes.mjs"
 import emailRoutes from "./routes/emailRoutes"
 import libraryRoutes from "./routes/libraryRoutes";
+import studentsRoutes from "./routes/studentsRoutes";
 
 dotenv.config();
 
@@ -52,6 +53,7 @@ app.use("/api/dashboard", dashboardRoutes);// Route page d'accueil utilisateur")
 app.use("/api/links", linksRoutes);// Route page de gestion des raccourcis liens et applications
 app.use("/api/email", emailRoutes);// Route page de gestion des mails
 app.use("/api/library", libraryRoutes);// Route page de l'application librairie
+app.use("/api/students", studentsRoutes);// Route page de gestion des élèves
 
 // Lancer le serveur
 const PORT = 5000;

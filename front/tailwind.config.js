@@ -47,6 +47,7 @@ export const theme = {
       'orthographe-25': 'var(--color-orthographe-25)',
       //Vert foncé
       dictee: 'var(--color-dictee)',
+      'dictee-light': 'var(--color-dictee-light)',
       'dictee-dark': 'var(--color-dictee-dark)',
       'dictee-25': 'var(--color-dictee-25)',
       'dictee-50': 'var(--color-dictee-50)',

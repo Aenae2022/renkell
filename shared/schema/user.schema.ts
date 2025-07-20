@@ -9,6 +9,7 @@ import { GradeSchema } from "./grade.schema";
 import { SchoolSchema } from "./school.schema";
 import { StringNameGroupSchema } from "./fields/stringNameGroup.schema";
 import { UserRoleSchema } from "./role.schema";
+import { EntierPositifSchema } from "./fields/entierPositif.schema";
 
 
 export const UserPseudoSchema = StringShortRefSchema;
@@ -76,6 +77,16 @@ export const UserSessionConnectSchema = z.object({
   groupsS : z.array(GroupSecondaireInfoSchema),
 })
 
+export const StudentDatasSchema = z.object({
+  userId: EntierPositifSchema,
+  userFamilyName: StringNameSchema,
+  userFirstName: StringNameSchema,
+  grade: GradeSchema.nullable(),
+  schoolId : EntierPositifSchema.nullable(),
+  userGroups: z.array(GroupInfoSchema)
+})
+
+
 export const UserMiniSchema = z.object({
   userId: z.number().int(),
   userName: StringNameSchema,
@@ -92,3 +103,4 @@ export type UserDatasConnectType = z.infer<typeof UserDatasConnectSchema>;
 export type UserSessionConnectType = z.infer<typeof UserSessionConnectSchema>
 export type UserGroupBdType = z.infer<typeof UserGroupBdSchema>
 export type UserMiniType = z.infer<typeof UserMiniSchema>
+export type StudentDatasType = z.infer<typeof StudentDatasSchema>

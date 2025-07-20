@@ -485,7 +485,6 @@ static async getStatsStudentsDatas(req : Request, res : Response) {
        // studentsDatas.push(studentToPush)
     
       }))
-    console.log('studentsDatas', studentsDatas);
     res.status(200).json({ message: "liste ok", reponse: true, result: studentsDatas });
     return 
   }

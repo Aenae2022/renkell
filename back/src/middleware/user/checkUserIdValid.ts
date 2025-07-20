@@ -1,3 +1,4 @@
+import { UserSessionConnectSchema } from "@shared/schema/user.schema";
 import UserModel from "@srcBack/model/UserModel";
 import { Request, Response, NextFunction } from "express";
 
@@ -9,6 +10,14 @@ export function checkUserIdValid() {
       res.status(401).json({ message: "Non authentifié." });
       return;
     }
+
+    const parsedUser = UserSessionConnectSchema.safeParse(user);
+    if (!parsedUser.success) {
+      res.status(400).json({ message: "Utilisateur invalide." });
+      return;
+    }
+
+    req.user = parsedUser.data;
 
     const userValid = await UserModel.doesUserIdExist(user.userId);
     if(!userValid){

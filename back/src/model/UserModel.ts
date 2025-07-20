@@ -4,6 +4,7 @@ import { type GroupInfoType } from '@shared/schema/group.schema';
 import { type UserGroupBdType } from '@shared/schema/user.schema';
 import { type LinkShortType } from '@shared/schema/link.schema';
 import z from 'zod';
+import { EntierPositifType } from '@shared/schema/fields/entierPositif.schema';
 
 
 class UserModel {
@@ -353,11 +354,72 @@ static async getUserLinksListByUserId(userId: number) {
   }
 }
 
+static async getStudentsListBySchool(schoolId: number) {
+  try {
+    const usersDatas  = await prisma.user.findMany({
+      where: { userRoles: { some: { roleId: 1 } }, schoolId: schoolId},
+      select: {
+        userId: true,
+        userFamilyName: true,
+        userFirstName: true,
+        grade: {
+          select: {
+            gradeId: true,
+            gradeName: true,
+          },
+        },
+        schoolId: true,
+        userGroups: {
+          select: {
+            principal: true,
+            group: {
+              select: {
+                groupId: true,
+                groupName: true,
+              }
+            }
+          },
+          orderBy: {
+            principal: "desc",
+          }
+        },
+      },
+      orderBy: [
+        {userFamilyName: "asc"},
+        {userFirstName: "asc"},
+      ],
+    });
+    if (!usersDatas) {
+      return {
+        message: "erreur dans la requête",
+        reponse: null,
+        result: [],
+      };
+    }
+    if(usersDatas.length === 0) {
+      return {
+        message: "Aucun élève trouvé",
+        reponse: false,
+        result: [],
+      };
+    }
+    return {
+      message: "Liste des élèves récupérée avec succès",
+      reponse: true,
+      result: usersDatas,
+    }
+  } catch (error) {
+    console.error("Erreur Prisma :", error);  
+    throw error;
+  }
+}
+
+
 static async getUserMailById(userId: number) {
   try {
     const userDatas  = await prisma.user.findUnique({
       where: { userId : userId},
-      select: {
+      select: { 
         userMail: true,
       },      
     });
@@ -391,6 +453,26 @@ static async getUserMailById(userId: number) {
     throw error;
   }
 }
+
+static async removeStudentFromGroup(groupId: EntierPositifType, userId: EntierPositifType){
+  try {
+    const actionRemove = await prisma.groupUser.deleteMany({
+      where: {
+          userId: userId,
+          groupId: groupId
+        },
+    })
+    if(!actionRemove) {
+        return({message: "UserModel, removeStudentFromGroup, aucune association élève - groupe supprimée", reponse : null})
+      }
+      return({message: "association élève-group supprimée", reponse : true})
+    }
+    catch (error){
+      console.error("Erreur dans UserModel, removeStudentFromGroup :", error);
+      throw error;
+    }
+  }
 }
+
 
 export default UserModel;

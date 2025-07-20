@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import logoLiens from "@pictures/icons/liens.png";
+import logoStudents from "@pictures/icons/children.png";
 
 export default function Params() {
   const [principalTagActivated, setPrincipalTagActivated] =
@@ -30,31 +31,50 @@ export default function Params() {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [paramsList] = useState<
+    { logo: string; routeLink: string; title: string }[]
+  >([
+    {
+      logo: logoLiens,
+      routeLink: "/teacher/params/links",
+      title: "degemerParams.links",
+    },
+    {
+      logo: logoStudents,
+      routeLink: "/teacher/params/students",
+      title: "degemerParams.students",
+    },
+  ]);
   const myComponentContent = (
     <div>
       <h1 className="text-2xl font-bold text-grammaire text-center">
         {t("degemerParams.titlePage")}
       </h1>
-      <div
-        className={`flex flex-col justify-end items-center 
-      w-32 h-32 m-5 bg-amber-100 cursor-pointer pt-2 px-2
-      align-text-bottom text-m text-black
-      border-r-4 border-b-4 border-gray-700 rounded-[10px] 
-      `}
-      >
-        <div className="flex-1 flex items-center justify-center overflow-hidden">
-          <img
-            className="w-full h-full object-contain rounded-xl"
-            alt="logoLiens"
-            src={logoLiens}
-            onClick={() => {
-              navigate("/teacher/params/links");
-            }}
-          />
-        </div>
-        <p className="text-center px-1 text-sm whitespace-pre-wrap">
-          {t("degemerParams.links")}
-        </p>
+      <div className="flex">
+        {paramsList.map((param, index) => (
+          <div
+            key={index}
+            className={`flex flex-col justify-end items-center 
+          w-32 h-32 m-5 bg-amber-100 cursor-pointer pt-2 px-2
+          align-text-bottom text-m text-black
+          border-r-4 border-b-4 border-gray-700 rounded-[10px] 
+          `}
+          >
+            <div className="flex-1 flex items-center justify-center overflow-hidden">
+              <img
+                className="w-full h-full object-contain rounded-xl"
+                alt={param.title}
+                src={param.logo}
+                onClick={() => {
+                  navigate(param.routeLink);
+                }}
+              />
+            </div>
+            <p className="text-center px-1 text-sm whitespace-pre-wrap">
+              {t(param.title)}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

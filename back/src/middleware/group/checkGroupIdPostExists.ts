@@ -1,7 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import ClassroomModel from "../../model/ClassroomModel";
-import { ClassroomRefSchema } from "@shared/schema/classroom.schema";
-import z from "zod";
 import GroupModel from "@srcBack/model/GroupModel";
 import { EntierPositifSchema } from "@shared/schema/fields/entierPositif.schema";
 

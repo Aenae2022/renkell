@@ -17,8 +17,12 @@ model School {
   schoolId   Int    @id @default(autoincrement())
   schoolName String @db.VarChar(500)
   schoolRef  String @unique
+  schoolCp  Int
+  schoolCity String
   classrooms  Classroom[] // Relation 1-n avec Classroom
   users User[] //relation 1-n avec user
+
+  @@unique([schoolName, schoolCp, schoolCity])
 }
 
 model Classroom {
@@ -145,6 +149,8 @@ model User {
   userRoles RoleUser[]
   userLinkPermissions LienPermission[]
   bookEvents BookEvent[]
+
+  @@unique([userFirstName, userFamilyName, schoolId])
 }
 
 model Book {
