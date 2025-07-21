@@ -22,6 +22,8 @@ import dashboardBr from "./locales/br/dashboard.json";
 import dashboardFr from "./locales/fr/dashboard.json";
 import libraryBr from "./locales/br/library.json";
 import libraryFr from "./locales/fr/library.json";
+import paramsStudentsBr from "./locales/br/paramsStudents.json";
+import paramsStudentsFr from "./locales/fr/paramsStudents.json";
 const RESOURCES = {
   br: { 
     translation: {
@@ -35,6 +37,7 @@ const RESOURCES = {
       userMenu : userMenuBr,
       degemerParams : degemerParamsBr,
       library:libraryBr,
+      paramsStudents: paramsStudentsBr,
     } 
   },
   fr: { 
@@ -49,6 +52,7 @@ const RESOURCES = {
       userMenu : userMenuFr,
       degemerParams : degemerParamsFr,
       library:libraryFr,
+      paramsStudents: paramsStudentsFr,
     },
   }
 };

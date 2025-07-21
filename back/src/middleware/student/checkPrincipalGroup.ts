@@ -7,7 +7,7 @@ export const checkPrincipalGroup = async(
   next: NextFunction
 ) : Promise<void>=>{
     const { principal } = req.body;
-    if (!principal) {
+    if (principal === undefined || principal === null) {
     res.status(400).json({ message: "checkPrincipalGroup, donnée manquante" });
     return;
   }

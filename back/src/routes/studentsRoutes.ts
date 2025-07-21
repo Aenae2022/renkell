@@ -21,5 +21,10 @@ router.post("/addStudentToGroup",
     isAuthenticated, checkRoles(["TEACHER"]),
     checkUserIdPostValid(), checkGroupIdPostExists, checkPrincipalGroup,
     async (req, res) => await StudentsController.addStudentToGroup(req, res));
+   
+router.post("/getGroupById",
+    isAuthenticated, checkRoles(["TEACHER"]),
+    checkGroupIdPostExists,
+    async (req, res) => await StudentsController.getGroupById(req, res));
 
 export default router;

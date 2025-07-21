@@ -60,7 +60,7 @@ export default function ParamsStudents() {
   const [skolStudentsList, setSkolStudentsList] = useState<StudentDatasType[]>(
     []
   );
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     // Ici, vous pouvez récupérer la liste des élèves de l'école
@@ -84,7 +84,7 @@ export default function ParamsStudents() {
     };
     if (!user) return;
     fetchStudentsList();
-  }, [user]);
+  }, [user, principalTagActivated]);
   // let myComponentContent = <LinksParamsSkeleton />;
 
   useEffect(() => {
@@ -123,8 +123,6 @@ export default function ParamsStudents() {
 
   if (error !== null) {
     myComponentContent = <p>{error}</p>;
-  } else if (isLoading) {
-    myComponentContent = <Loader />;
   } else {
     myComponentContent = (
       <MercatoStudents

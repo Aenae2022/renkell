@@ -8,12 +8,16 @@ import logoAdd from "@pictures/exercice/calcul/additionner.png";
 import logoSuppr from "@pictures/exercice/faux.png";
 import type { EntierPositifType } from "@shared/schema/fields/entierPositif.schema";
 import api from "@srcFront/api/axios";
+import { useTranslation } from "react-i18next";
+import type { GroupMiniType } from "@shared/schema/group.schema";
+import { toast } from "react-toastify";
 type MercatoStudentsProps = {
   studentsList: StudentDatasType[];
   groupRef: EntierPositifType;
 };
 
 function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
+  const { t } = useTranslation();
   const [studentsGroupList, setStudentsGroupList] = useState<
     StudentDatasType[]
   >([]);
@@ -21,6 +25,7 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
     StudentDatasType[]
   >([]);
   const [groupPrincipal, setGroupPrincipal] = useState<boolean>(true);
+  const [groupToShow, setGroupToShow] = useState<GroupMiniType | null>(null);
   const user = useOutletContext<UserSessionConnectType>();
   const gradesColorVariants = {
     CP: "bg-green-200",
@@ -74,6 +79,18 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
         });
       } else {
         console.error("Erreur lors de la suppression de l'élève du groupe");
+        const studentErrorData = studentsList.find(
+          (student) => student.userId === Number(studentId)
+        );
+        const studentName = studentErrorData
+          ? studentErrorData.userFirstName +
+            " " +
+            studentErrorData.userFamilyName
+          : "";
+        notify(
+          "error",
+          t("paramsStudents." + response.data.message, { name: studentName })
+        );
       }
     } catch (error) {
       console.error(
@@ -122,25 +139,59 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
     }
   };
 
+  //message alert
+  const notify = (type: string, msg: string) => {
+    if (type === "error")
+      toast.warning(() => MsgError(msg), { autoClose: false });
+  };
+  const MsgError = (msg: string) => (
+    <div className="flex-row">
+      <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+        {t("library.libraryBox.alert")}
+      </div>
+      <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+        <p>{`${msg}`}</p>
+      </div>
+    </div>
+  );
+
   useEffect(() => {
-    //vérifier s'il s'agit du groupe principal ou non
-    const isPrincipalGroupSelected = user.userGroups.find(
-      (group) => group.groupId === groupRef
-    )
-      ? true
-      : false;
-    if (isPrincipalGroupSelected) {
-      //groupPrincipal sélectionné
+    const fetchDatas = async () => {
+      //vérifier s'il s'agit du groupe principal ou non
+      const isPrincipalGroupSelected = user.groupsP.find(
+        (group) => group.groupId === groupRef
+      )
+        ? true
+        : false;
+      let newGroupToShow: GroupMiniType | null = null;
+      //on récupère les données du group à afficher
+      //const groupData = fetchGroupData();
+      try {
+        const response = await api.post("/api/students/getGroupById", {
+          groupId: groupRef,
+        });
+        if (response.data.reponse) {
+          newGroupToShow = response.data.result;
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération du groupe :", error);
+      }
+
       //on récupère la liste des élèves du group
       const studentsGroup: StudentDatasType[] = [],
         studentsDisponible: StudentDatasType[] = [];
       studentsList.map((student) => {
         if (student.userGroups.some((group) => group.groupId === groupRef)) {
           studentsGroup.push(student);
-        } else if (
-          student.userGroups.every((group) => group.principal === false)
-        ) {
-          studentsDisponible.push(student);
+        } else {
+          if (
+            isPrincipalGroupSelected &&
+            student.userGroups.every((group) => group.principal === false)
+          ) {
+            studentsDisponible.push(student);
+          } else {
+            studentsDisponible.push(student);
+          }
         }
       });
       //on trie par grade puis par nom de famille le tableau des élèves du groupe
@@ -149,16 +200,36 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
 
       setStudentsGroupList(studentsGroupSorted);
       setStudentsDisponibleList(studentsDisponibleSorted);
-      setGroupPrincipal(true);
-    }
+      setGroupPrincipal(isPrincipalGroupSelected);
+      setGroupToShow(newGroupToShow);
+    };
+    fetchDatas();
   }, [studentsList, groupRef, user]);
+
+  const gradeStyle = "text-xs text-gray-500";
+  const titreStyle = "text-lg mt-2 text-center";
   return (
     <>
-      <h1 className="text-[1.8em] text-center">Mercato des élèves</h1>
+      <h1 className="text-3xl text-center mb-4">{t("paramsStudents.title")}</h1>
       <div className="flex">
-        <div className="w-1/2">
-          <h2>Liste des élèves du groupe {user.groupsP[0].groupName}</h2>
-          <table className="w-10/12">
+        <div className="w-1/2 mr-4 px-2 rounded-t-lg border-dashed border-2 border-b-0 border-grammaire">
+          <h2 className={titreStyle}>
+            {groupPrincipal
+              ? t("paramsStudents.listKlas")
+              : t("paramsStudents.listGroup")}{" "}
+            {groupToShow?.groupName || ""}
+          </h2>
+          <p className="text-gray-500 text-sm text-center">
+            ({studentsGroupList.length} {t("paramsStudents.students")})
+          </p>
+        </div>
+        <div className="w-1/2 ml-4 px-2 rounded-t-lg border-dashed border-2 border-b-0 border-calcul">
+          <h2 className={titreStyle}>{t("paramsStudents.listSchoolFree")}</h2>
+        </div>
+      </div>
+      <div className="flex ">
+        <div className="w-1/2 mr-4 pt-2 pl-4 rounded-b-lg border-dashed border-2 border-t-0 border-grammaire">
+          <table className="w-10/12 mx-auto">
             <tbody>
               {studentsGroupList.map((student) => {
                 const studentGradeColor =
@@ -179,16 +250,15 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
                     <td>
                       {student.userFirstName} {student.userFamilyName}
                     </td>
-                    <td>{student.grade?.gradeName}</td>
+                    <td className={gradeStyle}>{student.grade?.gradeName}</td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
         </div>
-        <div className="w-1/2">
-          <h2>Liste des élèves de l'école</h2>
-          <table className="w-10/12">
+        <div className="w-1/2 ml-4 pl-4 pt-2 rounded-b-lg border-dashed border-2 border-t-0 border-calcul">
+          <table className="w-10/12 mx-auto">
             <tbody>
               {studentsDisponibleList.map((student) => {
                 const studentGradeColor =
@@ -209,7 +279,7 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
                     <td>
                       {student.userFirstName} {student.userFamilyName}
                     </td>
-                    <td>{student.grade?.gradeName}</td>
+                    <td className={gradeStyle}>{student.grade?.gradeName}</td>
                   </tr>
                 );
               })}

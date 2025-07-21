@@ -1013,6 +1013,27 @@ export default class LibraryModel{
       }
     }
 
+    static async isBookGroupInGroupLibrary(bookGroupId: number, groupId: number) {
+      try {
+        const bookGroup = await prisma.bookGroup.findFirst({
+          where: {
+            bookGroupId: bookGroupId,
+            groupId: groupId,
+          },
+          select: {
+            bookGroupId: true,
+          },
+        });
+
+        if (!bookGroup) {
+          return {message: "Livre non trouvé dans la bibliothèque du groupe", reponse : false, result : null};
+        }
+        return {message: "Livre trouvé dans la bibliothèque du groupe" ,reponse : true, result: bookGroup.bookGroupId};
+      } catch (error) {
+        return {message: "erreur dans la requête" ,reponse : null, result: null};
+        throw error;
+      }
+    }
     //return {boolean}
     static async  isBookReservedEnableToBorrow(bookGroupId: number, userId: number) {
         try {

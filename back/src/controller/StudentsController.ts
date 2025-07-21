@@ -1,7 +1,42 @@
 import UserModel from "@srcBack/model/UserModel";
 import { Request, Response } from "express";
 import { StudentDatasSchema } from "@shared/schema/user.schema";
+import GroupModel from "@srcBack/model/GroupModel";
+import { GroupMiniSchema } from "@shared/schema/group.schema";
+import LibraryModel from "@srcBack/model/LibraryModel";
 export default class StudentsController {
+
+static async getGroupById(
+    req: Request,
+    res: Response) {
+        const { groupId } = req.body;
+    try {   
+        const groupDatas = await GroupModel.getGroupDatasById(groupId);
+          if (!groupDatas || !groupDatas.reponse) {
+            res.status(400).json({ message: "errorReqGroup", reponse: false, result: [] });
+            return;
+          }
+          
+          //on valide les données avec Zod
+          const parsed = GroupMiniSchema.safeParse(groupDatas.result);
+    
+          if (!parsed.success) {
+            console.error("Erreur de validation des données des élèves :", parsed.error);   
+            res.status(400).json({ message: "errorValidationGroup", reponse: null, result: [] });
+            return;
+            }
+            
+          
+          res.status(200).json({message : 'réussite', reponse: true, result: parsed.data});
+          return;
+        }
+        catch (error) {
+          console.error("Erreur dans le contrôleur :", error);
+          res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
+          return
+        }
+    }
+  
 
   static async getStudentsListBySchool(
     req: Request,
@@ -61,6 +96,34 @@ export default class StudentsController {
     res: Response) {
     const { groupId, userId } = req.body;
     try {
+    //avant de supprimer l'élève du groupe, vérifier que l'élève n'a pas d'actions en cours d'en d'autres applications
+    //library
+    const studentReading = await LibraryModel.getBookReadingByUser(userId);
+    if (studentReading && studentReading.reponse && studentReading.result && studentReading.result.bookLocation !== 'per') {
+        //élève lecteur d'un livre emprunté. 
+        //on vérifie que l'emprunt correspond à l'activité du group actuel
+        const bookInGroup = await LibraryModel.isBookGroupInGroupLibrary(studentReading.result.bookGroupId, groupId);
+        if(bookInGroup.reponse) {
+            //l'élève est en train de lire un livre emprunté dans le groupe.
+            //on ne peut pas le supprimer du groupe
+            res.status(200).json({ message: "errorRemoveStudentReading", reponse: false, result: [] });
+            return;
+        }
+    }
+    const studentWaiting = await LibraryModel.getBookReservedByUser(userId);
+    if (studentWaiting && studentWaiting.reponse && studentWaiting.result) {
+        //élève avec réservation. 
+        //on vérifie que l'emprunt correspond à l'activité du group actuel
+        const bookInGroup = await LibraryModel.isBookGroupInGroupLibrary(studentWaiting.result.bookGroupId, groupId);
+        if(bookInGroup.reponse) {
+            //l'élève est en train de lire un livre emprunté dans le groupe.
+            //on ne peut pas le supprimer du groupe
+            res.status(200).json({ message: "errorRemoveStudentWaiting", reponse: false, result: [] });
+            return;
+        }
+    }
+
+
       const result = await UserModel.removeStudentFromGroup(groupId, userId);
       if (result) {
         res.status(200).json({ message: "successRemoveStudent", reponse: true, result: [] });
