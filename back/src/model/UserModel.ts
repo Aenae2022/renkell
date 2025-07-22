@@ -5,9 +5,19 @@ import { type UserGroupBdType } from '@shared/schema/user.schema';
 import { type LinkShortType } from '@shared/schema/link.schema';
 import z from 'zod';
 import { EntierPositifType } from '@shared/schema/fields/entierPositif.schema';
+import { UserRoleType } from '@shared/schema/role.schema';
 
 
 class UserModel {
+
+static async doesRoleExist(role: UserRoleType): Promise<boolean> {
+    const action = await prisma.role.findUnique({
+      where: { roleId: role.roleId,
+       roleName: role.roleName },
+      select: { roleId: true },
+    });
+    return !!action;
+  }
 
   static async doesUserPseudoExist(userPseudo: string): Promise<boolean> {
     const user = await prisma.user.findUnique({

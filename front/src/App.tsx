@@ -4,9 +4,12 @@ import DegemerSkolWithKey from "./wrappers/DegemerSkolWithKey";
 import DashboardTeacher from "./pages/user/teacher/DashboardTeacher";
 import Params from "./pages/user/teacher/Params";
 import ParamsLinks from "./pages/user/teacher/ParamsLinks";
-import TeacherLayout from "./pages/user/teacher/TeacherLayout";
 import LibraryApp from "@pages/user/teacher/LibraryApp";
 import ParamsStudents from "@pages/user/teacher/ParamsStudents";
+import DashboardAdmin from "@pages/user/admin/DashboardAdmin";
+import TeacherLayout from "@pages/user/teacher/TeacherLayout";
+import AdminLayout from "@pages/user/admin/AdminLayout";
+import RoleBasedRedirect from "@components/user/RoleBasedRedirect";
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
             element={<DegemerSkolWithKey />}
           />
 
+          {/* Route de redirection post-auth */}
+          <Route path="/user" element={<RoleBasedRedirect />} />
+
           {/* Route protégée avec layout */}
           <Route path="/teacher/" element={<TeacherLayout />}>
             <Route index element={<DashboardTeacher />} />
@@ -26,7 +32,11 @@ function App() {
             <Route path="params/links" element={<ParamsLinks />} />
             <Route path="params/students" element={<ParamsStudents />} />
             <Route path="library" element={<LibraryApp />} />
+
             {/* autres pages */}
+          </Route>
+          <Route path="/admin/" element={<AdminLayout />}>
+            <Route index element={<DashboardAdmin />} />
           </Route>
         </Routes>
       </Router>

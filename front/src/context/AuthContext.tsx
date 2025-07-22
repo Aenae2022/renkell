@@ -13,6 +13,7 @@ export type AuthContextType = {
     reponse: boolean;
     result: UserSessionConnectType | undefined;
   }>;
+  reloadSessionUser: () => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -22,6 +23,7 @@ export const AuthContext = createContext<AuthContextType>({
   login: async () => {
     return { reponse: false, result: undefined };
   },
+  reloadSessionUser: async () => {},
 });
 
 export function useAuth() {

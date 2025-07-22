@@ -55,8 +55,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { reponse: false, result: undefined };
     }
   };
+
+  const reloadSessionUser = async () => {
+    setLoading(true);
+    try {
+      const session = await api.get("/api/auth/session");
+      if (session.data.success) {
+        setUser(session.data.user);
+      }
+      return session.data.user;
+    } catch (e) {
+      console.error("Erreur chargement session :", e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, login }}>
+    <AuthContext.Provider
+      value={{ user, setUser, loading, login, reloadSessionUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

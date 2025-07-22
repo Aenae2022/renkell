@@ -7,6 +7,9 @@ import { PasswordSchema } from "@shared/schema/fields/password.schema";
 import { useAuth } from "../../context/AuthContext";
 
 import iconEsc from "@pictures/icons/faux.png";
+import type { UserRoleType } from "@shared/schema/role.schema";
+import { toast } from "react-toastify";
+import RoleSelectorToast from "./RoleSelectorToast";
 
 const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
   const { t } = useTranslation();
@@ -20,7 +23,22 @@ const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, setUser } = useAuth();
+
+  const awaitUserRoleChoice = (roles: UserRoleType[]) => {
+    return new Promise<UserRoleType>((resolve) => {
+      toast(
+        <RoleSelectorToast
+          roles={roles}
+          onSelect={(selectedRole) => {
+            toast.dismiss();
+            resolve(selectedRole);
+          }}
+        />,
+        { autoClose: false, closeOnClick: false }
+      );
+    });
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,30 +51,45 @@ const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
         return;
       }
 
-      const pseudoCleaned = Utilitaires.validateStringWithZodSchema(
-        pseudo,
-        UserPseudoSchema
-      );
+      const pseudoCleaned = Utilitaires.validInputString(pseudo);
+      const pseudoParsed = UserPseudoSchema.safeParse(pseudoCleaned);
       const passwordCleaned = PasswordSchema.safeParse(password)
         ? password
         : null;
-      if (!pseudoCleaned || !passwordCleaned) {
+      if (!pseudoParsed.success || !passwordCleaned) {
         setMessage(t("header.login.errorFields"));
         return;
       }
       const success = await login(pseudoCleaned, passwordCleaned);
 
       if (success.reponse && success.result) {
-        const mainRole = success.result.roleActivated.roleName;
+        //un user a toujours un rôle. le premier est attribué par default
+        const roles = success.result.userRoles;
+        let selectedRole = success.result.roleActivated;
+
+        if (roles.length > 1) {
+          showLogin(false); // Ferme la fenêtre de login
+          const chooseRole = await awaitUserRoleChoice(roles);
+          if (chooseRole !== null && chooseRole !== undefined) {
+            selectedRole = chooseRole;
+            setUser({
+              ...success.result,
+              roleActivated: chooseRole,
+            });
+          } else {
+            console.log("pas de changement");
+          }
+        }
+
         //on redirige en fonction du role de l'utilisateur
-        switch (mainRole) {
+        switch (selectedRole.roleName) {
           case "TEACHER":
             navigate("/teacher");
             break;
-          case "SCHOOL_ADMIN":
+          case "ADMIN_SCHOOL":
             navigate("/admin");
             break;
-          case "MASTER_SCHOOL":
+          case "SUPER_ADMIN":
             navigate("/master");
             break;
           default:

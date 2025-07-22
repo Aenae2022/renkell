@@ -7,7 +7,7 @@ const icons = import.meta.glob<{ default: string }>("@pictures/iconsUser/*", {
   eager: true,
 });
 
-export function MenuTeacher({
+export function MenuAdmin({
   user,
   changeRole,
 }: {
@@ -17,7 +17,7 @@ export function MenuTeacher({
   const iconUserSrc =
     icons[`/src/assets/pictures/iconsUser/${user.userIcon}`]?.default;
 
-  const teacherFunctions = [
+  const adminFunctions = [
     {
       action: "/teacher/params",
       icon: logoReglage,
@@ -33,11 +33,11 @@ export function MenuTeacher({
   return (
     <MenuUser
       iconUserSrc={iconUserSrc}
-      myUserFunctions={teacherFunctions}
+      myUserFunctions={adminFunctions}
       user={user}
       changeRole={changeRole}
     />
   );
 }
 
-export default MenuTeacher;
+export default MenuAdmin;

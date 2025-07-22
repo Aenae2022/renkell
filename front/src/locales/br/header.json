@@ -2,12 +2,24 @@
   "header": {
       "subTitle" : "Beñvegoù evit ar c'hlas"
         },
+        "admin":{
+          "subtitle": "Merañ ar skol",
+          "subtitlePerso": "Merañ an titouroù personel"
+        },
   "login": {
       "title":"Pajenn kevreañ",
       "pseudo":"Anaouder",
       "password":"Ger-tremen",
       "errorFields":"An anaouder hag ar ger-tremen a zo ret !",
-      "badIdentification":"Ne glot ket an anaouder gant ar ger-tremen."
+      "badIdentification":"Ne glot ket an anaouder gant ar ger-tremen.",
+      "roleSelector":{
+        "select": "Kevreañ evel : ",
+        "STUDENT": "skoliad",
+        "TEACHER": "skolaer(ez)",
+        "ADMIN_SCHOOL": "rener ar skol",
+        "SUPER_ADMIN": "rener al lec'hienn",
+        "error": "N'eus ket bet posupl kevreañ gant ar rol-se !"
+      }
   },
   "buttonConnect" : "Kevreañ",
   "buttonDisconnect" : "Digevreañ",

@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import UserModel from "../model/UserModel";
 import GroupModel from "../model/GroupModel"
 import bcrypt from "bcrypt";
-import { UserDatasConnectSchema, type UserDatasConnectType } from "@shared/schema/user.schema";
+import { UserDatasConnectSchema, UserSessionConnectType, type UserDatasConnectType } from "@shared/schema/user.schema";
 // import dotenv from "dotenv";
 
 import  {toUserSession} from "../../utils/changeType"
@@ -114,6 +114,20 @@ export default class AuthController {
     res.status(500).json({ success: false, message: "Erreur serveur dans logout" });
   }
 }
+// Role activation
+  static async roleActivate(req: Request, res: Response) {
+  const { role } = req.body;
+  const userDatas = req.session.user;
+  if(userDatas){
+    const newUserDatas = { ...userDatas, roleActivated: role };
+    req.session.user = newUserDatas;
+    res.json({ message: "", reponse : true, result : role });
+  }
+  else {
+    res.json({ message: "", reponse: false, result : null });
+  }
+  }
+
 
 //return : succes, user (si réussi) / success, message (si échec)
 static async getSessionUser(req: Request, res: Response) {
