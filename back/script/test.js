@@ -40,35 +40,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = require("../src/lib/prisma/client");
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var testReq;
+        var schoolId, testReq;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, client_1.prisma.bookEvent.findFirst({
-                        where: {
-                            bookGroupId: 490,
-                            bookEventType: 1,
-                        },
-                        select: {
-                            user: {
-                                select: {
-                                    userFirstName: true,
-                                    userFamilyName: true,
-                                    userId: true,
-                                    grade: {
-                                        select: {
-                                            gradeName: true,
-                                        },
-                                    },
-                                }
+                case 0:
+                    schoolId = 1;
+                    return [4 /*yield*/, client_1.prisma.group.findMany({
+                            where: {
+                                classroom: {
+                                    schoolId: schoolId,
+                                },
+                                groupPrincipal: true,
                             },
-                            bookEventType: true,
-                        }
-                    })
-                    // const testReq = await LibraryModel.getNbReadedBook(373, 38);
-                ];
+                            select: {
+                                groupId: true,
+                                groupName: true,
+                                groupPrincipal: true,
+                            }
+                        })];
                 case 1:
                     testReq = _a.sent();
-                    // const testReq = await LibraryModel.getNbReadedBook(373, 38);
                     console.log(testReq);
                     return [2 /*return*/];
             }

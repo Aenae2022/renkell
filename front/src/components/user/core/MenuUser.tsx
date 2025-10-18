@@ -82,34 +82,9 @@ export function MenuUser({
                 onClick={async () => {
                   localStorage.setItem("principalTag", "");
                   localStorage.setItem("secondaryTag", "");
-                  let selectedRole = user.roleActivated;
-                  const chooseRole = await awaitUserRoleChoice(user.userRoles);
+                  await awaitUserRoleChoice(user.userRoles);
                   await reloadSessionUser();
                   navigate("/user");
-                  console.log("jusque là tout va bien");
-                  console.log(chooseRole);
-                  // if (chooseRole !== null && chooseRole !== undefined) {
-                  //   selectedRole = chooseRole;
-                  //   await reloadSessionUser();
-                  //   console.log("role en session");
-                  // } else {
-                  //   console.log("pas de changement");
-                  // }
-
-                  // //on redirige en fonction du role de l'utilisateur
-                  // switch (selectedRole.roleName) {
-                  //   case "TEACHER":
-                  //     navigate("/teacher");
-                  //     break;
-                  //   case "ADMIN_SCHOOL":
-                  //     navigate("/admin");
-                  //     break;
-                  //   case "SUPER_ADMIN":
-                  //     navigate("/master");
-                  //     break;
-                  //   default:
-                  //     navigate("/student");
-                  // }
                 }}
               />
             </div>

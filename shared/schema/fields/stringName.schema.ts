@@ -12,3 +12,7 @@ export const StringNameSchema = z
         "Le nom ne peut contenir que des lettres, espaces, apostrophes ou tirets.",
     }
   );
+
+export type StringNameType = z.infer<typeof StringNameSchema>;
+
+

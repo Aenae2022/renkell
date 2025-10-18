@@ -8,7 +8,7 @@ import express from "express";
 const router = express.Router();
 
 router.post("/getStudentsListBySchool",
-    isAuthenticated, checkRoles(["TEACHER"]),
+    isAuthenticated, checkRoles(["TEACHER", "ADMIN_SCHOOL"]),
     checkUserIdValid(), 
     async (req, res) => await StudentsController.getStudentsListBySchool(req, res));
 

@@ -17,6 +17,7 @@
   --color-mathematiques-25: oklch(0.591 0.293 322.896 /0.25);
   --color-lexique: oklch(0.712 0.194 13.428);
   --color-lexique-dark: oklch(0.586 0.253 17.585);
+  --color-lexique-light: oklch(78.511% 0.12209 10.006);
   --color-grammaire: oklch(0.511 0.262 276.966);
   --color-grammaire-light: oklch(0.64 0.262 276.966);
   --color-grammaire-dark: oklch(0.398 0.195 277.366);

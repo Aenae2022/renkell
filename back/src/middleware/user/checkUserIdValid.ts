@@ -1,4 +1,4 @@
-import { UserSessionConnectSchema } from "@shared/schema/user.schema";
+import { StudentDatasSchema, UserSessionConnectSchema } from "@shared/schema/user.schema";
 import UserModel from "@srcBack/model/UserModel";
 import { Request, Response, NextFunction } from "express";
 

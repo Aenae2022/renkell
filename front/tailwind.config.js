@@ -27,6 +27,7 @@ export const theme = {
       'mathematiques-25': 'var(--color-mathematiques-25)',
       lexique: 'var(--color-lexique)',
       'lexique-dark': 'var(--color-lexique-dark)',
+      'lexique-light': 'var(--color-lexique-light)',
       //bleu
       grammaire: 'var(--color-grammaire)',
       'grammaire-light': 'var(--color-grammaire-light)',

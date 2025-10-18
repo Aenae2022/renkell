@@ -63,6 +63,20 @@ export const UserDatasConnectSchema = z.object({
   groupsS : z.array(GroupSecondaireInfoSchema),
 })
 
+export const UserDatasIdentitySchema = z.object({
+  userId: z.number().int(),
+  userFamilyName: StringNameSchema,
+  userFirstName: StringNameSchema,
+  userMail: z.string().email().nullable(),
+  userPsswd: BcryptHashSchema.nullable(),
+  userPseudo: StringShortRefSchema.nullable(),
+  userRoles : z.array(UserRoleSchema),
+  userIcon: FileNameSchema,
+  grade: GradeSchema.nullable(),
+  groupsP : z.array(GroupPrincipalInfoSchema),
+  groupsS : z.array(GroupSecondaireInfoSchema),
+})
+
 export const UserSessionConnectSchema = z.object({
   userId: z.number().int(),
   userFamilyName: StringNameSchema,
@@ -104,3 +118,4 @@ export type UserSessionConnectType = z.infer<typeof UserSessionConnectSchema>
 export type UserGroupBdType = z.infer<typeof UserGroupBdSchema>
 export type UserMiniType = z.infer<typeof UserMiniSchema>
 export type StudentDatasType = z.infer<typeof StudentDatasSchema>
+export type UserDatasIdentityType = z.infer<typeof UserDatasIdentitySchema>

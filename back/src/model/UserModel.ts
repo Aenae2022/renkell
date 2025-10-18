@@ -6,6 +6,7 @@ import { type LinkShortType } from '@shared/schema/link.schema';
 import z from 'zod';
 import { EntierPositifType } from '@shared/schema/fields/entierPositif.schema';
 import { UserRoleType } from '@shared/schema/role.schema';
+import { StringNameType } from '@shared/schema/fields/stringName.schema';
 
 
 class UserModel {
@@ -424,7 +425,77 @@ static async getStudentsListBySchool(schoolId: number) {
   }
 }
 
+static async getUserIdentity(userId: EntierPositifType) {
+  try {
+    const userDatas  = await prisma.user.findUnique({
+      where: { userId : userId},
+      select: {
+        userId: true,
+        userFamilyName: true,
+        userFirstName: true,
+        userPsswd: true,
+        userPseudo: true,
+        userIcon: true,
+        userMail: true,
+        grade: {
+          select: {
+            gradeId: true,
+            gradeName: true,
+          },
+        },
+        userGroups: {
+          select: {
+            principal: true,
+            group: {
+              select: {
+                groupId: true,
+                groupName: true,
+              }
+            }
+          },
+          orderBy: {
+            principal: "desc",
+          }
+        },
+        userRoles: {
+          select: {
+            roles: {
+              select: {
+                roleId: true,
+                roleName: true,
+              }
+            }
+          },
+          orderBy: {
+            roles: {
+              roleId: "asc",
+            }
+          }
+        },
 
+      },
+      
+    });
+    if (!userDatas) {
+      return ({
+        message: "user introuvable",
+        reponse: false,
+        result: null,
+      })
+    }
+
+    return ({
+      message: "user récupéré avec succès",
+      reponse: true,
+      result: userDatas,
+    })
+
+  }
+  catch (error) {
+    console.error("Erreur dans UserModel, getUserIdentity :", error);
+    throw error;
+  }
+}
 static async getUserMailById(userId: number) {
   try {
     const userDatas  = await prisma.user.findUnique({
@@ -499,6 +570,31 @@ static async removeStudentFromGroup(groupId: EntierPositifType, userId: EntierPo
     }
     catch (error){
       console.error("Erreur dans UserModel, removeStudentFromGroup :", error);
+      throw error;
+    }
+  }
+
+static async updateFamilyName(userId: EntierPositifType, userFamilyName: StringNameType) : Promise<EntierPositifType>{
+  try {
+    const updateFamilyName = await prisma.user.update({
+      data: {
+        userFamilyName: userFamilyName,
+      },
+      where: {
+          userId: userId
+        },
+      select: {
+        userId: true,
+      }
+    
+    })
+    if(!updateFamilyName) {
+        return(0)
+      }
+      return(updateFamilyName.userId)
+    }
+  catch (error){
+      console.error("Erreur dans UserModel, updateFamilyName :", error);
       throw error;
     }
   }

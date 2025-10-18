@@ -67,4 +67,28 @@ export default class GroupModel {
     throw error;
   }
   }
+
+  static async getGroupPrincipalBySchoolId(schoolId: EntierPositifType) {
+
+    try{
+      const groups = await prisma.group.findMany({
+        where: { 
+          classroom :{
+            schoolId : schoolId,
+          },
+          groupPrincipal : true,
+        } ,
+        select: {
+          groupId: true,
+          groupName: true,
+          groupPrincipal : true,
+        }
+      })
+      return groups
+    } catch(error){
+      console.error("Erreur Prisma :", error);
+      throw error;
+    }
+  }
+        
 }

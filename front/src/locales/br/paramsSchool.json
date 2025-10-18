@@ -1,0 +1,33 @@
+{
+    "pTag":{
+        "classroom": "Ar salioù klas",
+        "user":"implijerien"
+    },
+    "sTag":{
+        "student":"ar skolidi",
+        "teacher":"ar skoalerien",
+        "admin":"ar merourien"
+    },
+    "paramsStudents":{
+        "title":"Skolidi ar skol",
+        "gradeFilter" : "Silañ dre live :",
+        "klasFilter" : "Silañ dre glas : ",
+        "name": "anv",
+        "nopeKlas": "hep klas",
+        "nopeGrade":"hep live",
+        "grade":"live",
+        "klas":"klas",
+        "identity":{
+            "familyName":"Anv",
+            "firstName":"Anv bihan",
+            "pseudo": "Anaouder",
+            "psswd":"Ger tremen",
+            "mail": "Postel",
+            "error1Title":"Fazi skritur",
+            "errorFamilyName":"An anv familh n'eo ket reizh.",
+            "errorFirstName":"An anv bihan n'eo ket reizh.",
+            "errorFirstNameBd": "C'hwitadenn ar cheñchamant.",
+            "error2Title":"Fazi servijer"
+        }
+    }
+}

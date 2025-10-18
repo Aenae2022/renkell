@@ -1,4 +1,4 @@
-import logoReglage from "@pictures/icons/reglage.webp";
+import logoEcole from "@pictures/icons/ecole.png";
 import logoLibrary from "@pictures/icons/lecture.png";
 import MenuUser from "../../core/MenuUser";
 import type { UserSessionConnectType } from "@shared/schema/user.schema";
@@ -19,9 +19,9 @@ export function MenuAdmin({
 
   const adminFunctions = [
     {
-      action: "/teacher/params",
-      icon: logoReglage,
-      title: "reglages",
+      action: "/admin/school",
+      icon: logoEcole,
+      title: "school",
     },
     {
       action: "/teacher/library",

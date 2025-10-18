@@ -40,4 +40,5 @@ export type GroupLinksType = z.infer<typeof GroupLinksSchema>;
 export type GroupInfoType = z.infer<typeof GroupInfoSchema>
 export type GroupNameType = z.infer<typeof StringNameGroupSchema>
 export type GroupMiniType = z.infer<typeof GroupMiniSchema>
+export type GroupPrincipalInfoType = z.infer<typeof GroupPrincipalInfoSchema>
 

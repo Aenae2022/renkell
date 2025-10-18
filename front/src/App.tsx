@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import DegemerSkolWithKey from "./wrappers/DegemerSkolWithKey";
 import DashboardTeacher from "./pages/user/teacher/DashboardTeacher";
 import Params from "./pages/user/teacher/Params";
+import ParamsSchool from "./pages/user/admin/ParamsSchool";
 import ParamsLinks from "./pages/user/teacher/ParamsLinks";
 import LibraryApp from "@pages/user/teacher/LibraryApp";
 import ParamsStudents from "@pages/user/teacher/ParamsStudents";
@@ -37,6 +38,7 @@ function App() {
           </Route>
           <Route path="/admin/" element={<AdminLayout />}>
             <Route index element={<DashboardAdmin />} />
+            <Route path="school" element={<ParamsSchool />} />
           </Route>
         </Routes>
       </Router>

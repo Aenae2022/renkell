@@ -10,4 +10,8 @@ export const GradeSchema = z.object({
   gradeId: EntierPositifSchema,
   gradeName: StringNameGroupSchema
 });
+
+export type GradeType = z.infer<typeof GradeSchema>;
+
+
            
