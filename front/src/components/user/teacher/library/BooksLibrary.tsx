@@ -1,11 +1,11 @@
 import GroupBooksLibrary from "./GroupBooksLibrary";
 import { useState } from "react";
 import { useEffect } from "react";
-import Loader from "@srcFront/components/core/Loader";
 import type { GroupMiniType } from "@shared/schema/group.schema";
 import type { BookType } from "@shared/schema/library.schema";
 import api from "@srcFront/api/axios";
 import { AxiosError } from "axios";
+import BooksLibrarySkeleton from "./BooksLibrarySkeleton";
 
 function BooksLibrary({ group }: { group: GroupMiniType }) {
   const [groupBooksList, setGroupBooksList] = useState<BookType[]>([]);
@@ -46,7 +46,7 @@ function BooksLibrary({ group }: { group: GroupMiniType }) {
 
   //composant à afficher
   if (isLoading) {
-    return <Loader />;
+    return <BooksLibrarySkeleton />;
   }
   if (message !== "") {
     return <p>{message}</p>;
