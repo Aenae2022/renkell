@@ -153,16 +153,6 @@ model User {
   @@unique([userFirstName, userFamilyName, schoolId])
 }
 
-model Book {
-  bookId Int @id @default(autoincrement())
-  bookTitle String @db.VarChar(255)
-  bookAuthor String? @db.VarChar(100)
-  bookPublisher String? @db.VarChar(100)
-  bookIsbn String? @db.VarChar(25) 
-
-  libraryGroup BookGroup[] 
-}
-
 model Eventlibrarytype {
   eventLibraryTypeId Int @id @default(autoincrement())
   eventLibraryTypeName String @db.VarChar(50)
@@ -194,6 +184,17 @@ model Group {
   groupPeriods Periodlibrary[]
 
 }
+
+model Book {
+  bookId Int @id @default(autoincrement())
+  bookTitle String @db.VarChar(255)
+  bookAuthor String? @db.VarChar(100)
+  bookPublisher String? @db.VarChar(100)
+  bookIsbn String? @db.VarChar(25) 
+
+  libraryGroup BookGroup[] 
+}
+
 model BookGroup {
   bookGroupId Int @id @default(autoincrement())
   bookId Int

@@ -522,7 +522,7 @@ export default class LibraryModel{
                   { dateRemove : null},
                   { dateRemove :
                     {
-                      gte : period.periodEnd
+                      gte : period.periodStart
                     }
                   }
                 ]
@@ -552,7 +552,7 @@ export default class LibraryModel{
             }
           }
         })
-      
+        
 
         if(!statsBooksSearch){
           return({message: "erreur", reponse: null, result:[]})

@@ -410,7 +410,7 @@ static async getReferenceBookInGroupLibrary(req: Request,res: Response){
 }
   
 static async getStatsBooksDatas(req: Request,res: Response) {
-    const { groupId, period, locations }: {groupId : number, period : PeriodType, locations : LocationsType[]}= req.body;
+    const { groupId, period, locations }: {groupId : number, period : PeriodType, locations : LocationsType}= req.body;
     
     try{
       const booksList = await LibraryModel.getStatsBooksList(groupId, period, locations);

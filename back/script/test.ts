@@ -3,22 +3,38 @@ import { prisma } from '../src/lib/prisma/client';
 import LibraryModel  from '../src/model/LibraryModel';
 
 async function main() {
-  const schoolId = 1;
-  
-  const testReq =  await prisma.group.findMany({
-      where: { 
-        classroom :{
-          schoolId : schoolId,
-        },
-        groupPrincipal : true,
-      } ,
-      select: {
-        groupId: true,
-        groupName: true,
-        groupPrincipal : true,
+  const groupId = 1;
+  const period= {periodStart : new Date('2026-01-04'), periodEnd : new Date('2026-02-11')};
+  const statsBooksSearch = await prisma.bookGroup.findMany({
+  where: {
+    groupId: groupId,
+    bookEvents: {
+      some: {
+        bookEventDate: {
+          gte: period.periodStart,
+          lte: period.periodEnd,
         }
-        })
-  console.log(testReq)
+      }
+    }
+  },
+  distinct: ['bookId'],
+  select: {
+    bookId: true,
+    book: {
+      select: {
+        bookTitle: true,
+        bookAuthor: true,
+        bookPublisher: true,
+      }
+    }
+  },
+  orderBy: {
+    book: {
+      bookTitle: 'asc'
+    }
+  }
+});
+    console.dir(statsBooksSearch, { depth: null, colors: true });
 
 }
 
