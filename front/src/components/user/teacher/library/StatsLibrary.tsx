@@ -44,10 +44,9 @@ function StatsLibrary({ group }: StatsLibraryProps) {
         <StudentsStatsDoc
           studentsDatas={statsStudentsDatas}
           period={periodSelected}
-        />
+        />,
       ).toBlob();
       const url = URL.createObjectURL(blob);
-      console.log("click");
       // Crée un lien temporaire et déclenche le téléchargement
       const link = document.createElement("a");
       link.href = url;
@@ -63,42 +62,51 @@ function StatsLibrary({ group }: StatsLibraryProps) {
   useEffect(() => {
     const findMatchingPeriod = (testPeriodsList: PeriodType[]) => {
       const today = new Date();
-      // Étape 1 : Périodes de type "6" (ou tout autre type cible)
-      console.log("type date", typeof testPeriodsList[0].periodStart);
+      // Étape 1 : Période propre à un groupe
       const periodsPersonnal = testPeriodsList
         .filter(
           (p) =>
             p.periodType === group.groupId &&
-            Utilitaires.isInRange(p.periodStart, p.periodEnd, today)
+            Utilitaires.isInRange(p.periodStart, p.periodEnd, today),
         )
         .sort(
           (a, b) =>
             new Date(a.periodEnd).getTime() -
             new Date(a.periodStart).getTime() -
             (new Date(b.periodEnd).getTime() -
-              new Date(b.periodStart).getTime())
+              new Date(b.periodStart).getTime()),
         );
 
       if (periodsPersonnal.length > 0) {
-        return periodsPersonnal[0]; // plus petite période de type "6"
+        return periodsPersonnal[0];
       }
 
-      // Étape 2 : Si aucune de type "6", chercher de type "p"
+      // Étape 2 : périodes par défaut de l'appli qui contiennent la date du jour
       const periodsGeneral = testPeriodsList
         .filter(
           (p) =>
-            p.periodType !== group.groupId &&
-            Utilitaires.isInRange(p.periodStart, p.periodEnd, today)
+            (p.periodType === "a" || p.periodType === "p") &&
+            Utilitaires.isInRange(p.periodStart, p.periodEnd, today),
         )
         .sort(
           (a, b) =>
             new Date(a.periodEnd).getTime() -
             new Date(a.periodStart).getTime() -
             (new Date(b.periodEnd).getTime() -
-              new Date(b.periodStart).getTime())
+              new Date(b.periodStart).getTime()),
         );
+      if (periodsGeneral.length > 0) {
+        return periodsGeneral[0];
+      }
 
-      return periodsGeneral[0] ?? null;
+      // Étape 3 : période ayant la date de fin la plus proche de la date actuelle
+      const sortedPeriods = [...testPeriodsList].sort(
+        (a, b) =>
+          Math.abs(new Date(a.periodEnd).getTime() - today.getTime()) -
+          Math.abs(new Date(b.periodEnd).getTime() - today.getTime()),
+      );
+
+      return sortedPeriods[0] ?? null;
     };
 
     const fetchPeriodsList = async () => {
@@ -112,7 +120,6 @@ function StatsLibrary({ group }: StatsLibraryProps) {
 
         if (reponse.data && reponse.data.result.length > 0) {
           setPeriodsList(reponse.data.result); // Remplir la liste avec les préiodes récupérées
-
           //on récupère la période à afficher par défaut en fonction de la date du jour
           //la plus petite période personnelle contenant la date du jour
           //sinon la période actuelle
@@ -304,7 +311,7 @@ function StatsLibrary({ group }: StatsLibraryProps) {
                 onChange={(e) =>
                   setPeriodSelected(() => {
                     const myPeriod = periodsList.find(
-                      (p) => p.periodId === parseInt(e.target.value)
+                      (p) => p.periodId === parseInt(e.target.value),
                     );
                     return myPeriod;
                   })
@@ -321,10 +328,10 @@ function StatsLibrary({ group }: StatsLibraryProps) {
                           " " +
                           period.periodName
                         : period.periodType === "p"
-                        ? t("library.statsBox.selectedPeriod") +
-                          " " +
-                          period.periodName
-                        : period.periodName}
+                          ? t("library.statsBox.selectedPeriod") +
+                            " " +
+                            period.periodName
+                          : period.periodName}
                     </option>
                   );
                 })}

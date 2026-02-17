@@ -90,7 +90,7 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
     setModifyPeriod(period);
     setModifyNameInput(period.periodName);
     setModifyStartInput(
-      new Date(period.periodStart).toISOString().split("T")[0]
+      new Date(period.periodStart).toISOString().split("T")[0],
     );
     setModifyEndInput(new Date(period.periodEnd).toISOString().split("T")[0]);
   };
@@ -105,7 +105,7 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
         if (reponse.data && reponse.data.reponse) {
           //recharger la liste en local
           setPeriodsList(
-            periodsList.filter((p) => p.periodId !== selectedPeriod.periodId)
+            periodsList.filter((p) => p.periodId !== selectedPeriod.periodId),
           );
         } else {
           //notify impossible de supprimer
@@ -142,11 +142,6 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
         .toISOString()
         .split("T")[0];
 
-      console.log(
-        "periodDatas.periodStart",
-        periodDatas.periodStart,
-        typeof periodDatas.periodStart
-      );
       //valider les inputs
       if (modifyNameInput !== periodDatas.periodName) {
         const newName = Utilitaires.validInputString(modifyNameInput);
@@ -161,11 +156,10 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
       }
 
       if (isoPeriodStart !== modifyStartInput) {
-        console.log("la date a changé");
         const validationDate = Utilitaires.validInputDate(
           modifyStartInput,
           bornes.min,
-          bornes.max
+          bornes.max,
         );
         if (validationDate.valid) {
           periodDatas.periodStart = new Date(validationDate.date);
@@ -178,7 +172,7 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
         const validationDate = Utilitaires.validInputDate(
           modifyEndInput,
           bornes.min,
-          bornes.max
+          bornes.max,
         );
         if (validationDate.valid) {
           periodDatas.periodEnd = new Date(validationDate.date);
@@ -191,14 +185,13 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
       const parsedPeriodDatas = PeriodSchema.safeParse(periodDatas);
       if (!parsedPeriodDatas.success) {
         const messages = parsedPeriodDatas.error.errors.map(
-          (err) => err.message
+          (err) => err.message,
         );
         messages.forEach((msg) =>
-          notify("errorInputDate", t("library.paramsBox." + msg))
+          notify("errorInputDate", t("library.paramsBox." + msg)),
         );
         return;
       }
-      console.log("onenvoie");
       try {
         const reponse = await api.post("/api/library/updatePeriod", {
           period: periodDatas,
@@ -215,8 +208,8 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
                     periodStart: periodDatas.periodStart,
                     periodEnd: periodDatas.periodEnd,
                   }
-                : period
-            )
+                : period,
+            ),
           );
         } else {
           //notify impossible de modifier
@@ -239,7 +232,6 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
   };
 
   const handleCreateClick = async () => {
-    console.log("click");
     const newPeriod: PeriodType = {
       periodName: "",
       periodStart: new Date(),
@@ -261,7 +253,7 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
     const newStart = Utilitaires.validInputDate(
       periodStartInput,
       bornes.min,
-      bornes.max
+      bornes.max,
     );
     if (newStart.valid) {
       newPeriod.periodStart = new Date(newStart.date);
@@ -273,7 +265,7 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
     const newEnd = Utilitaires.validInputDate(
       periodEndInput,
       bornes.min,
-      bornes.max
+      bornes.max,
     );
     if (newEnd.valid) {
       newPeriod.periodEnd = new Date(newEnd.date);
@@ -286,12 +278,10 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
     if (!parsedNewPeriod.success) {
       const messages = parsedNewPeriod.error.errors.map((err) => err.message);
       messages.forEach((msg) =>
-        notify("errorInputDate", t("library.paramsBox." + msg))
+        notify("errorInputDate", t("library.paramsBox." + msg)),
       );
       return;
     }
-
-    console.log("période envoyée ", newPeriod);
 
     try {
       const reponse = await api.post("/api/library/createPeriod", {
@@ -364,12 +354,6 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
   const buttonStyle =
     "min-w-15 min-h-6.5 text-base rounded-full border-1 border-zinc-500 m-2.5 px-1.5 bg-zinc-50 cursor-pointer hover:bg-zinc-200";
 
-  console.log(
-    "date",
-    modifyPeriod?.periodStart,
-    typeof modifyPeriod?.periodStart
-  );
-
   if (isLoading) {
     return <Loader />;
   }
@@ -400,9 +384,9 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
                       } : `}
                   <em className="text-sm text-gray-700">
                     {`${new Date(
-                      period.periodStart
+                      period.periodStart,
                     ).toLocaleDateString()} -> ${new Date(
-                      period.periodEnd
+                      period.periodEnd,
                     ).toLocaleDateString()}`}
                   </em>
                 </div>
@@ -434,9 +418,9 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
                     {`${period.periodName} : `}
                     <em className="text-sm text-gray-700">
                       {`${new Date(
-                        period.periodStart
+                        period.periodStart,
                       ).toLocaleDateString()} -> ${new Date(
-                        period.periodEnd
+                        period.periodEnd,
                       ).toLocaleDateString()}`}
                     </em>
                     <img

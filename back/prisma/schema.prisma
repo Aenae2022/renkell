@@ -168,7 +168,6 @@ model Periodlibrary {
   dateEnd DateTime
 
   group Group? @relation(fields: [groupId], references: [groupId], onDelete: SetNull)
-
 }
 
 model Group {
