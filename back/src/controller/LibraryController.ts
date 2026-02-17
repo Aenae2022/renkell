@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import LibraryModel from "@srcBack/model/LibraryModel";
-import { BookReadingSchema, BookStatType, BookType, BookWaitingSchema, StudentLibraryType, StudentStatsType } from "@shared/schema/library.schema";
+import { BookReadingSchema, BookStatType, BookType, BookWaitingSchema, StudentLibraryType, StudentStatsType, PeriodType, LocationsType } from "@shared/schema/library.schema";
 
 export default class LibraryController {
 
@@ -410,7 +410,7 @@ static async getReferenceBookInGroupLibrary(req: Request,res: Response){
 }
   
 static async getStatsBooksDatas(req: Request,res: Response) {
-    const { groupId, period, locations } = req.body;
+    const { groupId, period, locations }: {groupId : number, period : PeriodType, locations : LocationsType[]}= req.body;
     
     try{
       const booksList = await LibraryModel.getStatsBooksList(groupId, period, locations);

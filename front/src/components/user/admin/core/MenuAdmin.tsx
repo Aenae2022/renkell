@@ -24,7 +24,7 @@ export function MenuAdmin({
       title: "school",
     },
     {
-      action: "/teacher/library",
+      action: "/admin/library",
       icon: logoLibrary,
       title: "library",
     },

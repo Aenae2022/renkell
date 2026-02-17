@@ -26,6 +26,8 @@ import paramsStudentsBr from "./locales/br/paramsStudents.json";
 import paramsStudentsFr from "./locales/fr/paramsStudents.json";
 import paramsSchoolBr from "./locales/br/paramsSchool.json";
 import paramsSchoolFr from "./locales/fr/paramsSchool.json";
+import ParamsLibraryBr from "./locales/br/paramsLibrary.json";
+import ParamsLibraryFr from "./locales/fr/paramsLibrary.json";
 
 const RESOURCES = {
   br: { 
@@ -42,6 +44,7 @@ const RESOURCES = {
       library:libraryBr,
       paramsStudents: paramsStudentsBr,
       paramsSchool : paramsSchoolBr,
+      paramsLibrary : ParamsLibraryBr,
     } 
   },
   fr: { 
@@ -58,6 +61,7 @@ const RESOURCES = {
       library:libraryFr,
       paramsStudents: paramsStudentsFr,
       paramsSchool  : paramsSchoolFr,
+      paramsLibrary : ParamsLibraryFr,
     },
   }
 };

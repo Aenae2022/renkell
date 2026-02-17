@@ -2,7 +2,7 @@ import FondBook from "@pictures/fond/book.png";
 import AddLogo from "@pictures/additionner.png";
 import { Utilitaires } from "@utils/Utilitaires";
 import { useTranslation } from "react-i18next";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import type {
   BookLibraryShortType,
@@ -39,6 +39,8 @@ function FicheBook({
   updateLibrary,
 }: FicheBookProps) {
   const { t } = useTranslation();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const saveButtonRef = useRef<HTMLInputElement>(null);
   //state pour les input
   const [bookTitle, setBookTitle] = useState<{
     value: string;
@@ -63,6 +65,19 @@ function FicheBook({
     []
   );
   const [errorTitle, setErrorTitle] = useState<boolean>(false); // true si le titre est manquant
+
+  useEffect(() => {
+    if (!bookTitle.isOfficial) {
+      // focus input titre
+      inputRef.current?.focus();
+    } else {
+      // laisser React rendre, puis focus bouton save
+      setTimeout(() => {
+        saveButtonRef.current?.focus();
+      }, 0);
+    }
+  }, [bookTitle.isOfficial]);
+
   //const style
   const ficheBookPStyle = "pl-4 mb-1";
   const ficheBookLabelStyle = "italic text-gray-400 text-sm";
@@ -281,7 +296,8 @@ function FicheBook({
             </label>
             <br />
             <input
-              type="textarea"
+              type="text"
+              ref={inputRef}
               className={
                 bookTitle.isOfficial
                   ? ficheBookInputDisableStyle
@@ -446,6 +462,7 @@ function FicheBook({
             />
             <input
               type="button"
+              ref={saveButtonRef}
               className={buttonStyle}
               value={t("library.ficheBox.save")}
               onClick={handleClickSave}

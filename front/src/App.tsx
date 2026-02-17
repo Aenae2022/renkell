@@ -4,6 +4,7 @@ import DegemerSkolWithKey from "./wrappers/DegemerSkolWithKey";
 import DashboardTeacher from "./pages/user/teacher/DashboardTeacher";
 import Params from "./pages/user/teacher/Params";
 import ParamsSchool from "./pages/user/admin/ParamsSchool";
+import ParamsLibrary from "@pages/user/admin/ParamsLibrary";
 import ParamsLinks from "./pages/user/teacher/ParamsLinks";
 import LibraryApp from "@pages/user/teacher/LibraryApp";
 import ParamsStudents from "@pages/user/teacher/ParamsStudents";
@@ -39,6 +40,7 @@ function App() {
           <Route path="/admin/" element={<AdminLayout />}>
             <Route index element={<DashboardAdmin />} />
             <Route path="school" element={<ParamsSchool />} />
+            <Route path="library" element={<ParamsLibrary />} />
           </Route>
         </Routes>
       </Router>
