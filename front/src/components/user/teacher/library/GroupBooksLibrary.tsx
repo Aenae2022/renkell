@@ -41,7 +41,7 @@ export default function GroupBooksLibrary({
     orderTitle: string,
     orderAuthor: string,
     orderLocation: string,
-    order: string[]
+    order: string[],
   ) => {
     return [...books].sort((a: BookType, b: BookType) => {
       for (const criterion of order) {
@@ -123,7 +123,7 @@ export default function GroupBooksLibrary({
       orderTitle,
       orderAuthor,
       orderLocation,
-      newOrder
+      newOrder,
     );
     setMyGroupBooksList(sortedBooks);
     setActionsOrder(newOrder);
@@ -143,8 +143,8 @@ export default function GroupBooksLibrary({
       if (reponse.data.reponse) {
         setMyGroupBooksList(
           myGroupBooksList.filter(
-            (book: BookType) => book.bookGroupId !== bookGroupId
-          )
+            (book: BookType) => book.bookGroupId !== bookGroupId,
+          ),
         );
       }
     } catch (error: unknown) {
@@ -182,7 +182,7 @@ export default function GroupBooksLibrary({
 
   const updateGroupBooksList = (
     newBook: BookToGroupListType,
-    bookGroupId: number
+    bookGroupId: number,
   ) => {
     //on fait coincider les types : newBook passe de BookToGroupList à Book
     const validNewBook: BookType = {
@@ -202,7 +202,7 @@ export default function GroupBooksLibrary({
         filterTitle,
         filterAuthor,
         filterLocation,
-        actionsOrder
+        actionsOrder,
       );
 
       return sorted;
@@ -227,90 +227,95 @@ export default function GroupBooksLibrary({
     <>
       <fieldset className={groupLibraryStyle} id="groupLibrary">
         <legend className={groupLibraryLegendStyle}>{`${t(
-          "library.libraryBox.welcomeMyLibrary"
+          "library.libraryBox.welcomeMyLibrary",
         )} ${group.groupName}`}</legend>
-        <div className="overflow-x-auto">
-          <div className="max-h-[300px] overflow-y-auto ">
-            <table className={showGroupLibraryStyle} id="showGroupLibrary">
-              <thead className="sticky top-0 bg-white z-10">
-                <tr>
-                  <th
-                    className={`${showGroupLibraryThStyle} ${celStatusActionStyle}`}
-                  ></th>
-                  <th
-                    className={showGroupLibraryThStyle}
-                    id="titleBookInLibrary"
-                  >
-                    <span>{t("library.libraryBox.title")}</span>
-                    <img
-                      className={iconFilterStyle}
-                      alt="sort icon"
-                      src={filterTitle === "desc" ? FlecheBas : FlecheHaut}
-                      onClick={() => handleClickOrderFilter("title")}
-                    />
-                  </th>
-                  <th
-                    className={showGroupLibraryThStyle}
-                    id="authorBookInLibrary"
-                  >
-                    <span className="bookInLibraryClassroom">
-                      {t("library.libraryBox.author")}
-                    </span>
-                    <img
-                      className={iconFilterStyle}
-                      alt="sort icon"
-                      src={filterAuthor === "desc" ? FlecheBas : FlecheHaut}
-                      onClick={() => handleClickOrderFilter("author")}
-                    />
-                  </th>
-                  <th
-                    className={showGroupLibraryThStyle}
-                    id="locationBookInLibrary"
-                  >
-                    <span className="bookInLibraryClassroom">
-                      {t(`library.libraryBox.location.title`)}
-                    </span>
-                    <img
-                      className={iconFilterStyle}
-                      alt="sort icon"
-                      src={filterLocation === "desc" ? FlecheBas : FlecheHaut}
-                      onClick={() => handleClickOrderFilter("location")}
-                    />
-                  </th>
-                  <th
-                    className={showGroupLibraryThStyle}
-                    id="isbnBookInLibrary"
-                  >
-                    <span className="bookInLibraryClassroom">ISBN</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="myTableGroup" className="text-sm">
-                {myGroupBooksList.map((book: BookType) => (
-                  <tr
-                    key={`${book.bookGroupId}-${book.bookId}`}
-                    className={tableLibraryLineStyle}
-                  >
-                    <td className={celStatusActionStyle}>
+        {myGroupBooksList.length < 1 ? (
+          <p className="pl-1 my-2">{t("library.libraryBox.noBookInLibrary")}</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <div className="max-h-[300px] overflow-y-auto ">
+              <table className={showGroupLibraryStyle} id="showGroupLibrary">
+                <thead className="sticky top-0 bg-white z-10">
+                  <tr>
+                    <th
+                      className={`${showGroupLibraryThStyle} ${celStatusActionStyle}`}
+                    ></th>
+                    <th
+                      className={showGroupLibraryThStyle}
+                      id="titleBookInLibrary"
+                    >
+                      <span>{t("library.libraryBox.title")}</span>
                       <img
-                        src={DeleteLogo}
-                        alt="delete icon"
-                        onClick={() => handleClickRemoveBook(book.bookGroupId)}
+                        className={iconFilterStyle}
+                        alt="sort icon"
+                        src={filterTitle === "desc" ? FlecheBas : FlecheHaut}
+                        onClick={() => handleClickOrderFilter("title")}
                       />
-                    </td>
-                    <td className="pl-2">{book.bookTitle}</td>
-                    <td className="pl-2">{book.bookAuthor}</td>
-                    <td className="pl-2">
-                      {t(`library.libraryBox.location.${book.bookLocation}`)}
-                    </td>
-                    <td className="pl-2">{book.bookIsbn}</td>
+                    </th>
+                    <th
+                      className={showGroupLibraryThStyle}
+                      id="authorBookInLibrary"
+                    >
+                      <span className="bookInLibraryClassroom">
+                        {t("library.libraryBox.author")}
+                      </span>
+                      <img
+                        className={iconFilterStyle}
+                        alt="sort icon"
+                        src={filterAuthor === "desc" ? FlecheBas : FlecheHaut}
+                        onClick={() => handleClickOrderFilter("author")}
+                      />
+                    </th>
+                    <th
+                      className={showGroupLibraryThStyle}
+                      id="locationBookInLibrary"
+                    >
+                      <span className="bookInLibraryClassroom">
+                        {t(`library.libraryBox.location.title`)}
+                      </span>
+                      <img
+                        className={iconFilterStyle}
+                        alt="sort icon"
+                        src={filterLocation === "desc" ? FlecheBas : FlecheHaut}
+                        onClick={() => handleClickOrderFilter("location")}
+                      />
+                    </th>
+                    <th
+                      className={showGroupLibraryThStyle}
+                      id="isbnBookInLibrary"
+                    >
+                      <span className="bookInLibraryClassroom">ISBN</span>
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody id="myTableGroup" className="text-sm">
+                  {myGroupBooksList.map((book: BookType) => (
+                    <tr
+                      key={`${book.bookGroupId}-${book.bookId}`}
+                      className={tableLibraryLineStyle}
+                    >
+                      <td className={celStatusActionStyle}>
+                        <img
+                          src={DeleteLogo}
+                          alt="delete icon"
+                          onClick={() =>
+                            handleClickRemoveBook(book.bookGroupId)
+                          }
+                        />
+                      </td>
+                      <td className="pl-2">{book.bookTitle}</td>
+                      <td className="pl-2">{book.bookAuthor}</td>
+                      <td className="pl-2">
+                        {t(`library.libraryBox.location.${book.bookLocation}`)}
+                      </td>
+                      <td className="pl-2">{book.bookIsbn}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-
+        )}
         {showPopup && (
           <FicheBook
             groupId={group.groupId}

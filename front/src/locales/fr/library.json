@@ -52,6 +52,7 @@
     },
     "libraryBox": {
         "welcomeMyLibrary" : "Bibliothèque des ",
+        "noBookInLibrary" : "Il n'y a pas encore de livre dans la bibliothèque",
         "addBookInLibrary" : "Ajouter un livre dans la bibliothèque de classe",
         "title" : "Titre",
         "author" : "Auteur",
@@ -75,6 +76,7 @@
     },
     "ficheBox":{
         "title":"Ajouter un livre",
+        "titleModif":"Modifier les informations du livre",
         "nbBook" : "nombre d'exemplaire",
         "inDbYet" : "Ce titre existe déjà dans la bibliothèque.",
         "chooseStudent" :"Livre de ",

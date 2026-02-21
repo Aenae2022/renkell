@@ -5,6 +5,7 @@ import StudentBookBox from "./StudentBookBox";
 import type { GroupMiniType } from "@shared/schema/group.schema";
 import type { StudentLibraryType } from "@shared/schema/library.schema";
 import api from "@srcFront/api/axios";
+import { useTranslation } from "react-i18next";
 
 function StudentsLibrary({ group }: { group: GroupMiniType }) {
   const [studentsList, setStudentsList] = useState<StudentLibraryType[]>([]);
@@ -13,6 +14,7 @@ function StudentsLibrary({ group }: { group: GroupMiniType }) {
   const [studentActivate, setStudentActivate] = useState<StudentLibraryType>(
     studentsList[0],
   );
+  const { t } = useTranslation();
 
   //charger la liste des étudiants
   //elle peut changer quand : on change le groupToShow, on réalise un action de lecture ou de réservation
@@ -69,7 +71,7 @@ function StudentsLibrary({ group }: { group: GroupMiniType }) {
   if (isLoading) {
     myComponent = <Loader />;
   } else if (error) {
-    myComponent = <p className="text-red-500">{error}</p>;
+    myComponent = <p className="text-red-500">{t(error)}</p>;
   } else if (studentsList.length > 0) {
     myComponent = (
       <div className="flex">

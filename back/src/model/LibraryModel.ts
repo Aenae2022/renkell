@@ -322,7 +322,7 @@ export default class LibraryModel{
         });
 
         if (!groupLibraryData || groupLibraryData.length === 0) {
-          return {message: "Pas de livre associé getGroupsLibrary", reponse : false, result: []};
+          return {message: "noBookInLibrary", reponse : false, result: []};
         }
 
         const booksList : BookType[] = [];

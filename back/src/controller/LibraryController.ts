@@ -517,7 +517,20 @@ static async getStatsStudentsDatas(req : Request, res : Response) {
 
   static async addBookInGroupLibrary(req: Request,res: Response) {
     const { book, work } = req.body;
-    
+
+    //on met à jour la bd Book au cas où des données seraient ajoutées
+    const newBook : BookMiniType = {
+      bookId: book.bookId,
+      bookTitle : book.bookTitle,
+      bookAuthor : book.bookAuthor,
+      bookPublisher : book.bookPublisher,
+      bookIsbn : book.bookIsbn,
+    }
+    const updateBook = await LibraryModel.updateBook(newBook);
+    if (!updateBook.reponse) {
+        res.status(200).json({ message: updateBook.message, result : null });
+        return;
+    }
    const addBook = await LibraryModel.addBookInGroupLibrary(book, work);
    if (addBook.reponse === null) {
         res.status(400).json({ message: addBook.message, result : null });
@@ -691,7 +704,7 @@ static async removePeriod(req : Request, res : Response)  {
   }
 
   static async modifyBookInLibrary(req: Request, res: Response) {
-    const { book, modifyTitle} : {book : BookToGroupListType, modifyTitle : boolean}= req.body;
+    const { book} : {book : BookToGroupListType}= req.body;
     const newBook : BookMiniType= {
       bookId: book.bookId,
       bookTitle : book.bookTitle,
@@ -705,7 +718,7 @@ static async removePeriod(req : Request, res : Response)  {
       res.status(401).json({ message: "Utilisateur non connecté.", reponse: false });
       return
     }
-    if(modifyTitle) { //modification d'infos officielles
+    
       const isSuperAdmin = user.userRoles.some(
         (role) => role.roleName === "SUPER_ADMIN"
       );
@@ -748,18 +761,7 @@ static async removePeriod(req : Request, res : Response)  {
         }
       }
       
-    }
-    else {
-      try{
-        const updateBook = await LibraryModel.updateBook(newBook);
-        res.status(200).json(updateBook);
-        return
-      }
-      catch (error) {
-        console.error("Erreur dans le contrôleur :", error);
-        throw error;
-      }
-    }
+    
   }
-
 }
+

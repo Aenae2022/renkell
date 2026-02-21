@@ -50,6 +50,7 @@
     },
     "libraryBox": {
         "welcomeMyLibrary" : "Levraoueg ar re",
+        "noBookInLibrary" : "N'eus levr ebetc'hoazh el levraoueg",
         "addBookInLibrary" : "Ouzhpennañ ul levr e levraoueg ar c'hlas",
         "title" : "Titl",
         "author" : "Skrivagner",
@@ -73,6 +74,7 @@
     },
     "ficheBox":{
         "title":"Ouzhpennañ ul levr",
+        "titleModif":"Cheñch titouroù al levr",
         "nbBook" : "niver a skouerenn",
         "inDbYet" : "An titl-mañ a zo dija el levraoueg.",
         "chooseStudent" :"Levr gant",

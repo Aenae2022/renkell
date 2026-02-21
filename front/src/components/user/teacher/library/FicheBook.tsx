@@ -228,12 +228,12 @@ function FicheBook({
         console.error("Erreur lors de la création :", error);
         return;
       }
-    } else {
+    }
+    if (modifyBookData) {
       //modification d'un livre déjà présent dans la bd Book
       try {
         const responseModifBook = await api.post("/api/library/modifyBook", {
           book: newBook,
-          modifyTitle: modifyBookData,
         });
         if (!responseModifBook.data.reponse) {
           notify("errorBook");
@@ -255,9 +255,7 @@ function FicheBook({
         console.error("Erreur lors de la modification :", error);
         return;
       }
-    }
-
-    if (!modifyBookData) {
+    } else {
       //on ajoute le livre dans la bibliothèque de classe
       //en tenant compte du type de livre(personel ou collectif)
       const bookWork = newBook.bookLocation === "per" ? 0 : 1;
@@ -301,8 +299,6 @@ function FicheBook({
       } catch (error) {
         console.error("Erreur lors de la création :", error);
       }
-    } else {
-      showPopup(false);
     }
   };
 
@@ -324,12 +320,12 @@ function FicheBook({
     </div>
   );
   const MsgModifAdmin = () => (
-    <div className="bg-calcul text-white font-bold rounded-t px-4 py-2">
+    <div className="bg-orthographe-light text-white font-bold rounded-t px-4 py-2">
       {t("library.libraryBox.modifAdmin")}
     </div>
   );
   const MsgMailAdmin = () => (
-    <div className="bg-calcul text-white font-bold rounded-t px-4 py-2">
+    <div className="bg-orthographe-light text-white font-bold rounded-t px-4 py-2">
       {t("library.libraryBox.mailAdmin")}
     </div>
   );
@@ -344,7 +340,9 @@ function FicheBook({
           }}
         >
           <p className="text-center text-2xl text-conjugaison-dark mt-6 mb-7 ml-5 mr-7.5 bg-white/75 ">
-            {t("library.ficheBox.title")}
+            {modifyBookData
+              ? t("library.ficheBox.titleModif")
+              : t("library.ficheBox.title")}
           </p>
           {/*titre du livre*/}
           <p className={ficheBookPStyle}>

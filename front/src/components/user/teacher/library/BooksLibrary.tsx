@@ -6,12 +6,13 @@ import type { BookType } from "@shared/schema/library.schema";
 import api from "@srcFront/api/axios";
 import { AxiosError } from "axios";
 import BooksLibrarySkeleton from "./BooksLibrarySkeleton";
+import { useTranslation } from "react-i18next";
 
 function BooksLibrary({ group }: { group: GroupMiniType }) {
   const [groupBooksList, setGroupBooksList] = useState<BookType[]>([]);
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  const { t } = useTranslation();
   useEffect(() => {
     const fetchGroupBooksList = async () => {
       setGroupBooksList([]); // Réinitialiser la liste avant de la remplir
@@ -23,7 +24,7 @@ function BooksLibrary({ group }: { group: GroupMiniType }) {
           groupId: group.groupId,
         });
 
-        if (reponse.data && reponse.data.result.length > 0) {
+        if (reponse.data) {
           setGroupBooksList(reponse.data.result); // Remplir la liste avec les livres récupérés
         } else {
           setMessage(reponse.data.message);
@@ -49,7 +50,7 @@ function BooksLibrary({ group }: { group: GroupMiniType }) {
     return <BooksLibrarySkeleton />;
   }
   if (message !== "") {
-    return <p>{message}</p>;
+    return <p>{t("library.libraryBox." + message)}</p>;
   }
   return (
     <div>
