@@ -242,7 +242,6 @@ function StatsLibrary({ group }: StatsLibraryProps) {
     bookSchSelected,
     bookRooSelected,
     bookPerSelected,
-    message,
   ]);
 
   //const style

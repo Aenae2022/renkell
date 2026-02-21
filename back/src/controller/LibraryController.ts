@@ -463,7 +463,7 @@ static async getStatsStudentsDatas(req : Request, res : Response) {
       return;
     }
     if (!studentsList.reponse) {
-      res.status(400).json(studentsList);
+      res.status(200).json({message:"noStudent", reponse: false, result: []});
       return
     }
     const studentsDatas : StudentStatsType[]= await Promise.all(studentsList.result.map(async (student) => {
