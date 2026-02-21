@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import FicheBook from "./FicheBook";
 import type {
   BookReadingType,
+  BookToGroupListType,
   BookType,
   StudentLibraryType,
 } from "@shared/schema/library.schema";
@@ -16,8 +17,9 @@ interface BorrowBookBoxProps {
   group: GroupMiniType;
   updateStudentTypeEvent: (
     userId: EntierPositifType,
-    newTypeEvent: string
+    newTypeEvent: string,
   ) => void;
+  updateBookData: (newBookData: BookToGroupListType) => void;
 }
 
 function BorrowBookBox({
@@ -25,6 +27,7 @@ function BorrowBookBox({
   borrowableBooks,
   group,
   updateStudentTypeEvent,
+  updateBookData,
 }: BorrowBookBoxProps) {
   const { t } = useTranslation();
   const [borrowableBookSelected, setBorrowableBookSelected] =
@@ -41,6 +44,7 @@ function BorrowBookBox({
       bookReservation: undefined,
     });
   const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [bookData, setBookData] = useState<BookType | null>(null);
 
   const borrowableBookData = useCallback(
     async (book: BookType) => {
@@ -51,7 +55,7 @@ function BorrowBookBox({
           {
             book: book,
             userId: student.userId,
-          }
+          },
         );
         if (reponse.data) {
           return reponse.data.result;
@@ -59,11 +63,11 @@ function BorrowBookBox({
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données du livre :",
-          error
+          error,
         );
       }
     },
-    [student.userId]
+    [student.userId],
   );
 
   // Charger les données du livre sélectionné
@@ -83,11 +87,11 @@ function BorrowBookBox({
   //les actions sur les boutons
   //changer le livre à emprunter
   const handleChangeBorrowableBookSelected = (
-    event: React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     const selectedBookId = parseInt(event.target.value); // récupère l'ID du livre sélectionné
     const selectedBook = borrowableBooks.find(
-      (book) => book.bookGroupId === selectedBookId
+      (book) => book.bookGroupId === selectedBookId,
     );
     if (selectedBook) {
       const bookData = borrowableBookData(selectedBook);
@@ -127,6 +131,20 @@ function BorrowBookBox({
     setShowPopup(true);
   };
 
+  //modifier un livre
+  const handleClickModifyBook = async () => {
+    setShowPopup(true);
+    setBookData({
+      bookId: borrowableBookSelected.bookId,
+      bookGroupId: borrowableBookSelected.bookGroupId,
+      bookLocation: borrowableBookSelected.bookLocation,
+      bookTitle: borrowableBookSelected.bookTitle,
+      bookAuthor: borrowableBookSelected.bookAuthor,
+      bookIsbn: borrowableBookSelected.bookIsbn,
+      bookPublisher: borrowableBookSelected.bookPublisher,
+    });
+  };
+
   //const de style
   const divCommentStyle = "mt-2 text-sm";
   const fieldsetStyle =
@@ -158,7 +176,12 @@ function BorrowBookBox({
                 );
               })}
             </select>
-            {/* <p id="bookSelectedBorrowedNumberRead"><?= $studentBookBoxFormLanguage['numberRead']?><em><?= $student['nbReadedToBorrow'] ?></em></p> */}
+            <input
+              className="mt-2 mr-2 px-1 py-0.5 cursor-pointer italic underline text-center text-xs rounded-full border-1 border-gray-400"
+              type="button"
+              value={t("library.bookBox.modifyBook")}
+              onClick={handleClickModifyBook}
+            />
           </div>
           {borrowableBooks.length === 1 && (
             <p className="text-calcul font-bold">
@@ -187,13 +210,24 @@ function BorrowBookBox({
             </p>
           </div>
         </fieldset>
-        {showPopup && (
+        {showPopup && bookData === null && (
           <FicheBook
             isPersonal={true}
             student={student}
             groupId={group.groupId}
             showPopup={setShowPopup}
             updateStudentTypeEvent={updateStudentTypeEvent}
+          />
+        )}
+        {showPopup && bookData != null && (
+          <FicheBook
+            groupId={group.groupId}
+            showPopup={setShowPopup}
+            isPersonal={false}
+            student={null}
+            updateStudentTypeEvent={updateStudentTypeEvent}
+            updateBookData={updateBookData}
+            datasBook={bookData}
           />
         )}
       </>

@@ -1375,4 +1375,29 @@ static async createPeriod(period : PeriodType) {
       throw error;    
     }
   }
+
+  static async updateBook(book : BookMiniType){
+
+    try{
+      const updateBook = await prisma.book.update({
+        where: {
+          bookId: book.bookId,
+        },
+        data: {
+          bookTitle: book.bookTitle,
+          bookAuthor: book.bookAuthor,
+          bookIsbn: book.bookIsbn,
+          bookPublisher: book.bookPublisher,
+        },
+      })
+      if(!updateBook) {
+        return ({message: "libraryModel, updateBook, erreur", reponse : false})
+      }
+      return ({message: "réussite" ,reponse : true})
+    }
+    catch (error) {
+      console.error("Erreur dans updateBook :", error);
+      throw error;    
+    }
+  }
 }

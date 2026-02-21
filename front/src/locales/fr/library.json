@@ -18,6 +18,7 @@
         "bookWaiting": "Livre réservé",
         "bookNoReading": "Emprunter un livre",
         "bookNoWaiting": "Réserver un livre",
+        "modifyBook": "Modifier les informations du livre",
         "location": {
             "med":"Médiathèque",
             "roo": "Classe",
@@ -68,6 +69,8 @@
         "error1" : "Le titre est nécessaire pour l'ajout d'un livre.",
         "error2" : "Livre ajouté ! ",
         "error4" : "Erreur. Enregistrement du livre impossible.",
+        "modifAdmin" : "Livre modifié !",
+        "mailAdmin" : "Demande envoyée !",
         "chooseNewBook" : "Voici des livres qui pourraient correspondre à votre recherche. Choisissez en un ou créez un nouveau livre."
     },
     "ficheBox":{

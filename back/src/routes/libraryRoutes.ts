@@ -99,6 +99,11 @@ router.post("/addBook",
     checkBookToGroupListExists, checkBookWorkValid,
     LibraryController.addBookInGroupLibrary);
 
+router.post("/modifyBook", 
+    isAuthenticated, checkRoles(["TEACHER"]),
+    checkBookToGroupListExists,
+    LibraryController.modifyBookInLibrary);
+
 router.post("/reserveABook", 
     isAuthenticated, checkRoles(["TEACHER"]),
     checkUserIdValid(), checkBookGroupIdExists,

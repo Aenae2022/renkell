@@ -22,12 +22,12 @@ interface FicheBookProps {
   showPopup: (value: boolean) => void;
   updateStudentTypeEvent?: (
     userId: EntierPositifType,
-    newTypeEvent: string
+    newTypeEvent: string,
   ) => void;
-  updateLibrary?: (
-    newBook: BookToGroupListType,
-    bookGroupId: EntierPositifType
-  ) => void;
+  updateLibrary?: (newBook: BookToGroupListType, bookGroupId: number) => void;
+  updateBookData?: (newBookData: BookToGroupListType) => void;
+  datasBook?: BookType;
+  datasGroupBook?: BookToGroupListType;
 }
 
 function FicheBook({
@@ -37,32 +37,44 @@ function FicheBook({
   showPopup,
   updateStudentTypeEvent,
   updateLibrary,
+  updateBookData,
+  datasBook,
+  datasGroupBook,
 }: FicheBookProps) {
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const saveButtonRef = useRef<HTMLInputElement>(null);
+  //state pour les données
+  const modifyBookData = datasBook ? true : false;
+  const modifyGroupBookData = datasGroupBook ? true : false;
   //state pour les input
   const [bookTitle, setBookTitle] = useState<{
     value: string;
     isOfficial: boolean;
-  }>({ value: "", isOfficial: false });
+  }>({ value: datasBook ? datasBook.bookTitle : "", isOfficial: false });
   const [bookAuthor, setBookAuthor] = useState<{
     value: string;
     isOfficial: boolean;
-  }>({ value: "", isOfficial: false });
+  }>({ value: datasBook ? datasBook.bookAuthor || "" : "", isOfficial: false });
   const [bookIsbn, setBookIsbn] = useState<{
     value: string;
     isOfficial: boolean;
     isValid: boolean;
-  }>({ value: "", isOfficial: false, isValid: true });
+  }>({
+    value: datasBook ? datasBook.bookIsbn || "" : "",
+    isOfficial: false,
+    isValid: true,
+  });
   const [bookLocation, setBookLocation] = useState<BookLocationType>(
-    isPersonal ? "per" : "med"
+    isPersonal ? "per" : "med",
   );
   const [bookNumber, setBookNumber] = useState<EntierPositifType>(1);
-  const [bookId, setBookId] = useState<EntierPositifType>(0); //id du livre]
+  const [bookId, setBookId] = useState<EntierPositifType>(
+    datasBook ? datasBook.bookId : 0,
+  ); //id du livre]
   const [comments, setComments] = useState<BookType[]>([]);
   const [searchedBooks, setSearchedBooks] = useState<BookLibraryShortType[]>(
-    []
+    [],
   );
   const [errorTitle, setErrorTitle] = useState<boolean>(false); // true si le titre est manquant
 
@@ -99,30 +111,33 @@ function FicheBook({
       value: newValue,
     }));
 
-    // Si un timer est déjà lancé, on l'annule
-    if (debounceTimer.current) {
-      clearTimeout(debounceTimer.current);
-    }
-
-    // On redémarre un timer
-    debounceTimer.current = setTimeout(async () => {
-      const validTitle = Utilitaires.cleanString(newValue);
-      const parsedTitle = StringNameTitleSchema.safeParse(validTitle);
-      if (parsedTitle.success) {
-        try {
-          const response = await api.post(
-            "/api/library/getFilteredBooksProposition",
-            {
-              titleContent: validTitle,
-              isbnContent: 0,
-            }
-          );
-          setSearchedBooks(response.data.result);
-        } catch (error) {
-          console.error("Erreur lors de la récupération des titres :", error);
-        }
+    if (!modifyBookData) {
+      //si on modifie un livre déjà présent dans la bibliothèque de classe, on ne fait pas de proposition de titres pour éviter de perdre les données déjà renseignées
+      // Si un timer est déjà lancé, on l'annule
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
       }
-    }, 300); // délai de 300ms après la dernière frappe
+
+      // On redémarre un timer
+      debounceTimer.current = setTimeout(async () => {
+        const validTitle = Utilitaires.cleanString(newValue);
+        const parsedTitle = StringNameTitleSchema.safeParse(validTitle);
+        if (parsedTitle.success) {
+          try {
+            const response = await api.post(
+              "/api/library/getFilteredBooksProposition",
+              {
+                titleContent: validTitle,
+                isbnContent: 0,
+              },
+            );
+            setSearchedBooks(response.data.result);
+          } catch (error) {
+            console.error("Erreur lors de la récupération des titres :", error);
+          }
+        }
+      }, 300); // délai de 300ms après la dernière frappe
+    }
   };
 
   const handleIsbbnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,7 +156,7 @@ function FicheBook({
   const handleClickAdd = async (book: BookLibraryShortType) => {
     const getReferenceBookInGroupsLibrary = async (
       bookId: number,
-      groupId: number
+      groupId: number,
     ) => {
       try {
         const response = await api.post(
@@ -149,7 +164,7 @@ function FicheBook({
           {
             bookId: bookId,
             groupId: groupId,
-          }
+          },
         );
         if (response.data.reponse !== null) {
           return response.data.result;
@@ -213,51 +228,81 @@ function FicheBook({
         console.error("Erreur lors de la création :", error);
         return;
       }
-    }
-
-    //on ajoute le livre dans la bibliothèque de classe
-    //en tenant compte du type de livre(personel ou collectif)
-    const bookWork = newBook.bookLocation === "per" ? 0 : 1;
-
-    // appel axios pour ajouter le livre dans libraryGroup
-    try {
-      const response = await api.post("/api/library/addBook", {
-        book: newBook,
-        work: bookWork,
-      });
-
-      if (response.data.result === null) {
-        notify("errorBook");
+    } else {
+      //modification d'un livre déjà présent dans la bd Book
+      try {
+        const responseModifBook = await api.post("/api/library/modifyBook", {
+          book: newBook,
+          modifyTitle: modifyBookData,
+        });
+        if (!responseModifBook.data.reponse) {
+          notify("errorBook");
+          return;
+        } else {
+          //action modif
+          if (responseModifBook.data.action === "modif") {
+            notify("modifAdmin");
+            if (updateBookData !== undefined) updateBookData(newBook);
+            showPopup(false);
+            return;
+          } else {
+            notify("mailAdmin");
+            showPopup(false);
+            return;
+          }
+        }
+      } catch (error) {
+        console.error("Erreur lors de la modification :", error);
         return;
       }
+    }
 
-      //s'il s'agit d'un livre personnel, on crée l'emprunt du livre
-      if (newBook.bookLocation === "per" && student !== null) {
-        const result = await api.post("/api/library/borrowABook", {
-          userId: newBook.userId,
-          bookGroupId: response.data.result,
-          groupId: newBook.groupId,
+    if (!modifyBookData) {
+      //on ajoute le livre dans la bibliothèque de classe
+      //en tenant compte du type de livre(personel ou collectif)
+      const bookWork = newBook.bookLocation === "per" ? 0 : 1;
+      // appel axios pour ajouter le livre dans libraryGroup
+      try {
+        const response = await api.post("/api/library/addBook", {
+          book: newBook,
+          work: bookWork,
         });
 
-        if (!result.data.reponse) {
+        if (response.data.result === null) {
           notify("errorBook");
           return;
         }
 
-        //on change le statut de l'élève donc maj de studentsList (en par la suite de tout le reste du site)
-        const containsFour: boolean =
-          student.typeEvent?.split(",").map(Number).includes(4) ?? false; //vérifier si student en attente de lecture
-        const newStudentEvents = containsFour ? "1, 4" : "1";
-        if (updateStudentTypeEvent !== undefined)
-          updateStudentTypeEvent(student.userId, newStudentEvents);
-      } else {
-        if (updateLibrary !== undefined)
-          updateLibrary(newBook, response.data.result);
-      }
+        //s'il s'agit d'un livre personnel, on crée l'emprunt du livre
+        if (newBook.bookLocation === "per" && student !== null) {
+          const result = await api.post("/api/library/borrowABook", {
+            userId: newBook.userId,
+            bookGroupId: response.data.result,
+            groupId: newBook.groupId,
+          });
 
+          if (!result.data.reponse) {
+            notify("errorBook");
+            return;
+          }
+
+          //on change le statut de l'élève donc maj de studentsList (en par la suite de tout le reste du site)
+          const containsFour: boolean =
+            student.typeEvent?.split(",").map(Number).includes(4) ?? false; //vérifier si student en attente de lecture
+          const newStudentEvents = containsFour ? "1, 4" : "1";
+          if (updateStudentTypeEvent !== undefined)
+            updateStudentTypeEvent(student.userId, newStudentEvents);
+        } else {
+          if (updateLibrary !== undefined)
+            updateLibrary(newBook, response.data.result); //mettre à jour la bibliothèque de classe sans tout recharger (juste ajouter le livre ajouté)
+        }
+
+        showPopup(false);
+      } catch (error) {
+        console.error("Erreur lors de la création :", error);
+      }
+    } else {
       showPopup(false);
-    } catch (error) {
-      console.error("Erreur lors de la création :", error);
     }
   };
 
@@ -265,6 +310,8 @@ function FicheBook({
   const notify = (type: string) => {
     if (type === "title") toast.warning(MsgTitle);
     if (type === "errorBook") toast.warning(MsgErrorBook);
+    if (type === "modifAdmin") toast.success(MsgModifAdmin);
+    if (type === "mailAdmin") toast.success(MsgMailAdmin);
   };
   const MsgTitle = () => (
     <div className="bg-calcul text-white font-bold rounded-t px-4 py-2">
@@ -274,6 +321,16 @@ function FicheBook({
   const MsgErrorBook = () => (
     <div className="bg-calcul text-white font-bold rounded-t px-4 py-2">
       {t("library.libraryBox.error4")}
+    </div>
+  );
+  const MsgModifAdmin = () => (
+    <div className="bg-calcul text-white font-bold rounded-t px-4 py-2">
+      {t("library.libraryBox.modifAdmin")}
+    </div>
+  );
+  const MsgMailAdmin = () => (
+    <div className="bg-calcul text-white font-bold rounded-t px-4 py-2">
+      {t("library.libraryBox.mailAdmin")}
     </div>
   );
 
@@ -302,8 +359,8 @@ function FicheBook({
                 bookTitle.isOfficial
                   ? ficheBookInputDisableStyle
                   : errorTitle
-                  ? ficheBookInputInvalidStyle
-                  : ficheBookInputStyle
+                    ? ficheBookInputInvalidStyle
+                    : ficheBookInputStyle
               }
               value={bookTitle.value}
               disabled={bookTitle.isOfficial}
@@ -369,8 +426,8 @@ function FicheBook({
                 bookIsbn.isOfficial
                   ? ficheBookInputDisableStyle
                   : bookIsbn.isValid
-                  ? ficheBookInputStyle
-                  : ficheBookInputInvalidStyle
+                    ? ficheBookInputStyle
+                    : ficheBookInputInvalidStyle
               }
               value={bookIsbn.value}
               disabled={bookIsbn.isOfficial ? true : false}
@@ -399,40 +456,42 @@ function FicheBook({
           )}
 
           {/*emplacement*/}
-          <div className={ficheBookPStyle}>
-            <label className={ficheBookLabelStyle}>
-              {t("library.libraryBox.location.title")}
-            </label>
-            <br />
-            {/*Livre personnel*/}
-            {isPersonal && student !== null ? (
-              <p className={ficheBookInputStyle}>
-                {t("library.ficheBox.chooseStudent")} {student.userFirstName}{" "}
-                {student.userFamilyName}
-              </p>
-            ) : (
-              <select
-                className="text-base w-75 bg-white pl-1"
-                defaultValue={bookLocation}
-                onChange={(evt) => {
-                  setBookLocation(evt.target.value as BookLocationType);
-                }}
-              >
-                <option value="med">
-                  {t("library.libraryBox.location.med")}
-                </option>
-                <option value="sch">
-                  {t("library.libraryBox.location.sch")}
-                </option>
-                <option value="roo">
-                  {t("library.libraryBox.location.roo")}
-                </option>
-              </select>
-            )}
-          </div>
+          {(!modifyBookData || modifyGroupBookData) && (
+            <div className={ficheBookPStyle}>
+              <label className={ficheBookLabelStyle}>
+                {t("library.libraryBox.location.title")}
+              </label>
+              <br />
+              {/*Livre personnel*/}
+              {isPersonal && student !== null ? (
+                <p className={ficheBookInputStyle}>
+                  {t("library.ficheBox.chooseStudent")} {student.userFirstName}{" "}
+                  {student.userFamilyName}
+                </p>
+              ) : (
+                <select
+                  className="text-base w-75 bg-white pl-1"
+                  defaultValue={bookLocation}
+                  onChange={(evt) => {
+                    setBookLocation(evt.target.value as BookLocationType);
+                  }}
+                >
+                  <option value="med">
+                    {t("library.libraryBox.location.med")}
+                  </option>
+                  <option value="sch">
+                    {t("library.libraryBox.location.sch")}
+                  </option>
+                  <option value="roo">
+                    {t("library.libraryBox.location.roo")}
+                  </option>
+                </select>
+              )}
+            </div>
+          )}
 
           {/*nombre de livres à ajouter*/}
-          {!isPersonal && (
+          {!isPersonal && (!modifyBookData || modifyGroupBookData) && (
             <p className={ficheBookPStyle}>
               <label className={ficheBookLabelStyle}>
                 {t("library.ficheBox.nbBook")}

@@ -11,7 +11,7 @@ function StudentsLibrary({ group }: { group: GroupMiniType }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [studentActivate, setStudentActivate] = useState<StudentLibraryType>(
-    studentsList[0]
+    studentsList[0],
   );
 
   //charger la liste des étudiants
@@ -33,7 +33,7 @@ function StudentsLibrary({ group }: { group: GroupMiniType }) {
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données du livre :",
-          setError("library.studentsList.noStudent" + error)
+          setError("library.studentsList.noStudent" + error),
         );
       } finally {
         setIsLoading(false);
@@ -52,11 +52,11 @@ function StudentsLibrary({ group }: { group: GroupMiniType }) {
       const updatedList = prevList.map((student) =>
         student.userId === userId
           ? { ...student, typeEvent: newTypeEvent }
-          : student
+          : student,
       );
       // 🔥 Ici on met aussi à jour studentActivate
       const updatedStudent = updatedList.find(
-        (student) => student.userId === userId
+        (student) => student.userId === userId,
       );
       if (updatedStudent) {
         setStudentActivate(updatedStudent);

@@ -9,6 +9,7 @@ import ReserveBookBoxSkeleton from "./ReserveBookBoxSkeleton";
 import WaitBookBoxSkeleton from "./WaitBookBoxSkeleton";
 import type {
   BookReadingType,
+  BookToGroupListType,
   BookType,
   BookWaitingType,
   StudentLibraryType,
@@ -32,11 +33,11 @@ function StudentBookBox({
 }: StudentBookBoxProps) {
   const containsOne = useMemo(
     () => student.typeEvent?.split(",").map(Number).includes(1) ?? false,
-    [student.typeEvent]
+    [student.typeEvent],
   );
   const containsFour = useMemo(
     () => student.typeEvent?.split(",").map(Number).includes(4) ?? false,
-    [student.typeEvent]
+    [student.typeEvent],
   );
 
   const [bookReading, setBookReading] = useState<BookReadingType | null>(null);
@@ -56,7 +57,7 @@ function StudentBookBox({
             userId: student.userId,
             groupId: group.groupId,
             waiting: containsFour,
-          }
+          },
         );
         return booksToBorrow.data.result;
       } catch (error) {
@@ -70,7 +71,7 @@ function StudentBookBox({
           "/api/library/getBooksListToReserveByGroup",
           {
             groupId: group.groupId,
-          }
+          },
         );
 
         return booksResponse.data.result;
@@ -126,24 +127,24 @@ function StudentBookBox({
 
         if (containsOne) {
           tasks.push(
-            fetchBookReading().then((data) => (bookReadingData = data))
+            fetchBookReading().then((data) => (bookReadingData = data)),
           );
         } else {
           tasks.push(
             fetchBorrowableBooks().then(
-              (data) => (borrowableBooksData = data || [])
-            )
+              (data) => (borrowableBooksData = data || []),
+            ),
           );
         }
         if (containsFour) {
           tasks.push(
-            fetchBookWaiting().then((data) => (bookWaitingData = data))
+            fetchBookWaiting().then((data) => (bookWaitingData = data)),
           );
         } else {
           tasks.push(
             fetchReservableBooks().then(
-              (data) => (reservableBooksData = data || [])
-            )
+              (data) => (reservableBooksData = data || []),
+            ),
           );
         }
 
@@ -164,6 +165,26 @@ function StudentBookBox({
 
     fetchDataLibrary();
   }, [containsFour, containsOne, group.groupId, student.userId]);
+
+  //action qui modifie les infos des livres empuntables : on modifie la bd dans FicheBook
+  // mais on change les données en local sans tout recharger
+  //cette fonction sera utilisée dans FicheBook
+  const updateBorrowableBooks = (newBook: BookToGroupListType) => {
+    setBorrowableBooks((prevList) => {
+      const updatedList = prevList.map((book) =>
+        book.bookId === newBook.bookId
+          ? {
+              ...book,
+              bookTitle: newBook.bookTitle,
+              bookAuthor: newBook.bookAuthor,
+              bookPublisher: newBook.bookPublisher,
+              bookIsbn: newBook.bookIsbn,
+            }
+          : book,
+      );
+      return updatedList;
+    });
+  };
 
   // Fonction pour afficher la bonne box lecture
   const renderReadingBox = () => {
@@ -191,6 +212,7 @@ function StudentBookBox({
             borrowableBooks={borrowableBooks}
             group={group}
             updateStudentTypeEvent={updateStudentTypeEvent}
+            updateBookData={updateBorrowableBooks}
           />
         );
       }

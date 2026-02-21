@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 
 import LibraryModel from "@srcBack/model/LibraryModel";
-import { BookReadingSchema, BookStatType, BookType, BookWaitingSchema, StudentLibraryType, StudentStatsType, PeriodType, LocationsType } from "@shared/schema/library.schema";
+import { BookReadingSchema, BookStatType, BookType, BookWaitingSchema, StudentLibraryType, StudentStatsType, PeriodType, LocationsType, BookToGroupListType, BookMiniType } from "@shared/schema/library.schema";
+import UtilitiesModel from "@srcBack/model/UtilitiesModel";
+import UserModel from "@srcBack/model/UserModel";
 
 export default class LibraryController {
 
@@ -685,6 +687,78 @@ static async removePeriod(req : Request, res : Response)  {
     catch (error) {
       console.error("Erreur dans le contrôleur :", error);
       throw error;
+    }
+  }
+
+  static async modifyBookInLibrary(req: Request, res: Response) {
+    const { book, modifyTitle} : {book : BookToGroupListType, modifyTitle : boolean}= req.body;
+    const newBook : BookMiniType= {
+      bookId: book.bookId,
+      bookTitle : book.bookTitle,
+      bookAuthor : book.bookAuthor,
+      bookIsbn : book.bookIsbn,
+      bookPublisher : book.bookPublisher,
+    }
+    const user = req.user;
+    console.log("user dans le controller :", user);
+    if (!user) {
+      res.status(401).json({ message: "Utilisateur non connecté.", reponse: false });
+      return
+    }
+    if(modifyTitle) { //modification d'infos officielles
+      const isSuperAdmin = user.userRoles.some(
+        (role) => role.roleName === "SUPER_ADMIN"
+      );
+
+      if (isSuperAdmin) {
+        // action spécifique pour super_admin : on modifie directement la bd
+        try{
+          const updateBook = await LibraryModel.updateBook(newBook);
+          res.status(200).json({ message: updateBook.message, reponse: updateBook.reponse, action: 'modif' });
+          return
+        }
+        catch (error) {
+          console.error("Erreur dans le contrôleur :", error);
+          throw error;
+        }
+        
+      } else {
+        // action pour les autres utilisateurs : on envoie un mail avec les données
+        try {
+          const recipient : string = "marenkell@marenkell.com";
+          const senderMail = await UserModel.getUserMailById(user.userId);
+          if(!senderMail || senderMail.reponse === null || senderMail.result === "") {
+            res.status(200).json({ message: "erreurEnvoiDemande", reponse: false });
+            return
+          }
+          const subject = `Demande de modification de livre`;
+          const  message =`Demande de : ${user.userFirstName} ${user.userFamilyName} (id:${user.userId}). \n
+          Merci de modifier le livre ayant pour id ${book.bookId} avec les nouvelles données suivantes : \n
+          Titre : ${book.bookTitle} \n
+          Auteur : ${book.bookAuthor} \n
+          Isbn : ${book.bookIsbn} \n
+          Editeur : ${book.bookPublisher}`;
+
+          const reponseMail = await UtilitiesModel.newMail(recipient,senderMail.result,subject,message)
+          res.status(200).json({ message: reponseMail.message, reponse: reponseMail.reponse, action: 'mail' });
+        } 
+        catch (error) {
+          console.error("Erreur lors de l'envoi de l'e-mail :", error);
+          throw error;
+        }
+      }
+      
+    }
+    else {
+      try{
+        const updateBook = await LibraryModel.updateBook(newBook);
+        res.status(200).json(updateBook);
+        return
+      }
+      catch (error) {
+        console.error("Erreur dans le contrôleur :", error);
+        throw error;
+      }
     }
   }
 

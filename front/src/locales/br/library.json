@@ -17,6 +17,7 @@
         "bookWaiting": "Levr miret",
         "bookNoReading": "Amprestañ ul levr",
         "bookNoWaiting": "Mirout ul levr",
+        "modifyBook": "Cheñch titouroù al levr",
         "location": {
             "med":"Mediaoueg",
             "roo": "Klas",
@@ -66,6 +67,8 @@
         "error1" : "Ret eo deoc\"h skrivañ un titl evit ouzhpennañ ul levr el levraoueg.",
         "error2" : "Levr ouzhpennet ! ",
         "error4" : "Ur skoulm a zo. N\"eo ket posupl enrollañ al levr.",
+        "modifAdmin" : "Levr cheñchet !",
+        "mailAdmin" : "Goulenn kaset !",
         "chooseNewBook" : "Setu levrioù a c\"hellfe kevred gant ho koulenn. Dibabit unan pe krouiit ul levr nevez."
     },
     "ficheBox":{
