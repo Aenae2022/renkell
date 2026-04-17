@@ -16,6 +16,8 @@ import PublicLayout from "@pages/blog/PublicLayout";
 import Home from "@pages/blog/Home";
 import MaJbdbHome from "@pages/appli/MaJbdbHome";
 import JbdbExercise from "@pages/appli/JbdbExercise";
+import Applies from "@pages/user/teacher/Applies";
+import MaJbdbHomeContainer from "@pages/appli/MaJbdbHomeContainer";
 
 function App() {
   return (
@@ -43,7 +45,10 @@ function App() {
             <Route path="params" element={<Params />} />
             <Route path="params/links" element={<ParamsLinks />} />
             <Route path="params/students" element={<ParamsStudents />} />
+            <Route path="applies" element={<Applies />} />
             <Route path="library" element={<LibraryApp />} />
+            <Route path="jbdb/" element={<MaJbdbHomeContainer />} />
+            <Route path="jbdb/:exId" element={<JbdbExercise />} />
 
             {/* autres pages */}
           </Route>

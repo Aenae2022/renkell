@@ -141,15 +141,15 @@ export default class LinkModel {
     const myDatas = datas.map((l : any) => ({
         linkId: l.linkId,
         linkName: l.linkName,
-        titleFr: l.linkTitleFr === "" ? null : l.linkTitleFr,
-        titleBr: l.linkTitleBr === "" ? null : l.linkTitleBr,
-        fullnameFr: l.linkFullNameFr === "" ? null : l.linkFullNameFr,
-        fullnameBr: l.linkFullNameBr === "" ? null : l.linkFullNameBr,
+        titleFr: l.linkTitleFr?.trim() || null,
+        titleBr: l.linkTitleBr?.trim()|| null,
+        fullnameFr: l.linkFullNameFr?.trim() || null,
+        fullnameBr: l.linkFullNameBr?.trim()|| null,
         redirection: l.linkRedirection,
         icon: l.linkIcon,
         matter: l.linkMatter,
-        descriptionFr: l.linkDescriptionFr === "" ? null : l.linkDescriptionFr,
-        descriptionBr: l.linkDescriptionBr === "" ? null : l.linkDescriptionBr,
+        descriptionFr: l.linkDescriptionFr?.trim()|| null,
+        descriptionBr: l.linkDescriptionBr?.trim()|| null,
         typeLink: l.linkType,
         isPrivate: l.linkUserPermission.length >0 ? true : false,
         isAssociated: l.userLinks.length >0 ? true : false,
@@ -161,6 +161,15 @@ export default class LinkModel {
     
     if (!parsed.success) {
         console.error("Validation Zod échouée :", parsed.error.errors);
+        parsed.error.errors.forEach((e) => {
+          const value = e.path.reduce((acc, key) => acc?.[key], myDatas)
+
+          console.log("----- ERREUR ZOD -----")
+          console.log("Path :", e.path.join("."))
+          console.log("Message :", e.message)
+          console.log("Valeur reçue :", value)
+          console.log("Chars :", [...String(value)])
+        })
         throw new Error("Données utilisateur invalides");
     }
     

@@ -5,7 +5,7 @@ export function checkRoles(allowedRoles: string[]) {
     const user = req.user;
     
     if (!user || !allowedRoles.includes(user.roleActivated.roleName)) {
-      console.error("Accès interdit : rôle non autorisé")
+      console.error("Accès interdit : rôle non autorisé middleware checkRoles");
       res.status(400).json({ message: "Accès interdit." });
       return;
     }

@@ -9,12 +9,11 @@
         "question": "Petra eo da anv ?",
         "error": "Dav eo dit skrivañ 2 lizherenn d'an nebeutañ 🙂"
     },
-    "domaines": {
-        "mathematiques": "Matematik",
-        "langue": "Yezh"
-    },
-    "sousdomaines": {
-        "dictee": "Skrivadenn",
-        "calculmental": "Jed dre benn"
-    }
+    "mathematiques": "Matematik",
+    "langue": "Yezh",
+    "dictee": "Skrivadenn",
+    "calculmental": "Jed dre benn",
+    "titlePageApplies": "Aplikadennoù"
+
+    
 }

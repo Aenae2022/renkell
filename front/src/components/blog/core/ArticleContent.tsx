@@ -39,7 +39,7 @@ function ArticleContent({ article }: ArticleContentProps) {
     <div className="ml-2.5">
       {paragraphs &&
         paragraphs.split("\n").map((_, index) => (
-          <div key={index} className="mb-2">
+          <div key={index} className="mb-2 text-black text-sm">
             <Trans
               i18nKey={article.descriptionKey}
               components={{

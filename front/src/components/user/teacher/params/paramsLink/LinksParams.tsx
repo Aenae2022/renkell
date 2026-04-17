@@ -157,10 +157,7 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
 
       return response.data;
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des données du livre :",
-        error,
-      );
+      console.error("Erreur lors de la récupération des liens :", error);
     }
   };
 

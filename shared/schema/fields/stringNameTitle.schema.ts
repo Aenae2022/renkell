@@ -6,7 +6,7 @@ export const StringNameTitleSchema = z
   .min(1, { message: "Le titre ne peut pas être vide" })
   .max(100, { message: "Le titre est trop long" })
   .regex(
-    /^[\p{L}0-9'’\-–°,%:\.!\?()\/ ]+$/u,
+    /^[\p{L}0-9'’\-–°,%:@\.!\?()\/ ]+$/u,
     {
       message:
         "Le titre ne peut contenir que des lettres, espaces, chiffres, apostrophes, tirets ou ponctuation simple (/:, . ! ? °).",
