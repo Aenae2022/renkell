@@ -45,7 +45,7 @@ function ReserveBookBox({
           {
             book: book,
             userId: student.userId,
-          }
+          },
         );
         if (reponse.data) {
           return reponse.data.result;
@@ -53,11 +53,11 @@ function ReserveBookBox({
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données du livre :",
-          error
+          error,
         );
       }
     },
-    [student.userId]
+    [student.userId],
   );
 
   // Charger les données du livre sélectionné
@@ -77,11 +77,11 @@ function ReserveBookBox({
   //les événements
   //changer le livre à emprunter
   const handleChangeReservableBookSelected = (
-    event: React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     const selectedBookId = parseInt(event.target.value); // récupère l'ID du livre sélectionné
     const selectedBook = reservableBooks.find(
-      (book) => book.bookGroupId === selectedBookId
+      (book) => book.bookGroupId === selectedBookId,
     );
     if (selectedBook) {
       const bookData = reservableBookData(selectedBook);
@@ -121,7 +121,7 @@ function ReserveBookBox({
   const fieldsetStyle =
     "border-2 border-resolution-dark mb-2 ml-2 px-2 py-1 bg-white max-w-full overflow-x-auto rounded-md";
   const legendStyle =
-    "border border-resolution rounded-2xl ml-3 p-2 text-[1.1em] bg-resolution-50";
+    "border border-resolution rounded-2xl ml-3 p-2 text-[1.1em] bg-resolution/50";
 
   return (
     <fieldset className={fieldsetStyle}>

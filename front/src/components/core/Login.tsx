@@ -35,7 +35,7 @@ const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
             resolve(selectedRole);
           }}
         />,
-        { autoClose: false, closeOnClick: false }
+        { autoClose: false, closeOnClick: false },
       );
     });
   };
@@ -105,7 +105,7 @@ const Login = ({ showLogin }: { showLogin: (value: boolean) => void }) => {
   };
 
   return (
-    <div className="fixed z-[9998] w-full h-full top-0 left-0 bg-dictee-50">
+    <div className="fixed z-[9998] w-full h-full top-0 left-0 bg-dictee/50">
       <div className="fixed z-[9999] w-[450px] p-2.5 bg-cover bg-conjugaison-light rounded-lg bg-center top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col items-center ">
         <h2 className="text-2xl font-bold mb-4">{titlePage}</h2>
         <img

@@ -28,7 +28,8 @@ import paramsSchoolBr from "./locales/br/paramsSchool.json";
 import paramsSchoolFr from "./locales/fr/paramsSchool.json";
 import ParamsLibraryBr from "./locales/br/paramsLibrary.json";
 import ParamsLibraryFr from "./locales/fr/paramsLibrary.json";
-
+import articleBr from "./locales/br/article.json";
+import articleFr from "./locales/fr/article.json";
 const RESOURCES = {
   br: { 
     translation: {
@@ -45,6 +46,7 @@ const RESOURCES = {
       paramsStudents: paramsStudentsBr,
       paramsSchool : paramsSchoolBr,
       paramsLibrary : ParamsLibraryBr,
+      article : articleBr,
     } 
   },
   fr: { 
@@ -62,6 +64,7 @@ const RESOURCES = {
       paramsStudents: paramsStudentsFr,
       paramsSchool  : paramsSchoolFr,
       paramsLibrary : ParamsLibraryFr,
+      article : articleFr,
     },
   }
 };

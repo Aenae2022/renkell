@@ -48,7 +48,7 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
     return list;
   };
   const handleClickRemoveStudent = async (
-    e: React.MouseEvent<HTMLImageElement>
+    e: React.MouseEvent<HTMLImageElement>,
   ) => {
     const studentId =
       e.currentTarget.dataset.studentId !== undefined
@@ -62,12 +62,12 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
       if (response.data.reponse) {
         //on met à jour la liste des élèves du groupe
         setStudentsGroupList((prevList) =>
-          prevList.filter((student) => student.userId !== Number(studentId))
+          prevList.filter((student) => student.userId !== Number(studentId)),
         );
         //on ajoute l'élève à la liste des élèves disponibles
         setStudentsDisponibleList((prevList) => {
           const studentDisp = studentsList.find(
-            (student) => student.userId === Number(studentId)
+            (student) => student.userId === Number(studentId),
           );
           if (!studentDisp) return prevList; // Ne rien faire si aucun étudiant trouvé
 
@@ -80,7 +80,7 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
       } else {
         console.error("Erreur lors de la suppression de l'élève du groupe");
         const studentErrorData = studentsList.find(
-          (student) => student.userId === Number(studentId)
+          (student) => student.userId === Number(studentId),
         );
         const studentName = studentErrorData
           ? studentErrorData.userFirstName +
@@ -89,19 +89,19 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
           : "";
         notify(
           "error",
-          t("paramsStudents." + response.data.message, { name: studentName })
+          t("paramsStudents." + response.data.message, { name: studentName }),
         );
       }
     } catch (error) {
       console.error(
         "Erreur lors de la suppression de l'élève du groupe :",
-        error
+        error,
       );
     }
   };
 
   const handleClickAddStudent = async (
-    e: React.MouseEvent<HTMLImageElement>
+    e: React.MouseEvent<HTMLImageElement>,
   ) => {
     const studentId =
       e.currentTarget.dataset.studentId !== undefined
@@ -116,12 +116,12 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
       if (response.data.reponse) {
         //on met à jour la liste des élèves du groupe
         setStudentsDisponibleList((prevList) =>
-          prevList.filter((student) => student.userId !== Number(studentId))
+          prevList.filter((student) => student.userId !== Number(studentId)),
         );
         //on ajoute l'élève à la liste des élèves disponibles
         setStudentsGroupList((prevList) => {
           const studentDisp = studentsList.find(
-            (student) => student.userId === Number(studentId)
+            (student) => student.userId === Number(studentId),
           );
           if (!studentDisp) return prevList; // Ne rien faire si aucun étudiant trouvé
 
@@ -159,7 +159,7 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
     const fetchDatas = async () => {
       //vérifier s'il s'agit du groupe principal ou non
       const isPrincipalGroupSelected = user.groupsP.find(
-        (group) => group.groupId === groupRef
+        (group) => group.groupId === groupRef,
       )
         ? true
         : false;
@@ -189,7 +189,7 @@ function MercatoStudents({ studentsList, groupRef }: MercatoStudentsProps) {
             student.userGroups.every((group) => group.principal === false)
           ) {
             studentsDisponible.push(student);
-          } else {
+          } else if (!isPrincipalGroupSelected) {
             studentsDisponible.push(student);
           }
         }

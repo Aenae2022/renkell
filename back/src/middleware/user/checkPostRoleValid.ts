@@ -32,6 +32,6 @@ export const checkPostRoleValid = async(
 
     next(); // continuer si tout est OK
   };
-export default checkPostRoleValid
+
 
 

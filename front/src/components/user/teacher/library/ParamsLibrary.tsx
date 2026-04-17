@@ -348,7 +348,7 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
   const fieldsetStyle =
     "border-2 border-mesure-dark mb-2 px-2 py-1 bg-white max-w-full  rounded-md";
   const legendStyle =
-    "border border-mesure rounded-2xl ml-3 p-2 text-base bg-mesure-50";
+    "border border-mesure rounded-2xl ml-3 p-2 text-base bg-mesure/50";
   const periodContainerStyle = "flex flex-wrap justify-space-around";
   const iconActionStyle = "w-5 h-5 inline-block ml-2 cursor-pointer";
   const buttonStyle =
@@ -440,7 +440,7 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
               } else {
                 return (
                   <div
-                    className="text-base text-mesure-dark bg-mesure-25 p-2 rounded-xl"
+                    className="text-base text-mesure-dark bg-mesure/25 p-2 rounded-xl"
                     key={period.periodId}
                   >
                     <input
@@ -492,7 +492,7 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
             }
           })}
         </div>
-        <div className="mt-4 bg-mesure-25 p-2 rounded-xl">
+        <div className="mt-4 bg-mesure/25 p-2 rounded-xl">
           <span>{t("library.paramsBox.addTitle")}</span>
           <p className="my-2">
             {t("library.paramsBox.periodName")}

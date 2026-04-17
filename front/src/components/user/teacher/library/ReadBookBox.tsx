@@ -74,7 +74,7 @@ function ReadBookBox({
   const fieldsetStyle =
     "border-2 border-grammaire-dark mb-2 ml-2 px-2 py-1 bg-white max-w-full overflow-x-auto rounded-md";
   const legendStyle =
-    "border border-grammaire rounded-2xl ml-3 p-2 text-[1.1em] bg-grammaire-50";
+    "border border-grammaire rounded-2xl ml-3 p-2 text-[1.1em] bg-grammaire/50";
   //composant à afficher
   let boxToShow = null;
 

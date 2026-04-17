@@ -7,6 +7,7 @@ import z from 'zod';
 import { EntierPositifType } from '@shared/schema/fields/entierPositif.schema';
 import { UserRoleType } from '@shared/schema/role.schema';
 import { StringNameType } from '@shared/schema/fields/stringName.schema';
+import { GradeType } from '@shared/schema/grade.schema';
 
 
 class UserModel {
@@ -31,6 +32,14 @@ static async doesRoleExist(role: UserRoleType): Promise<boolean> {
   static async doesUserIdExist(userId: number): Promise<boolean> {
     const user = await prisma.user.findUnique({
       where: { userId: userId },
+      select: { userId: true },
+    });
+    return !!user;
+  }
+
+  static async doesUserIdStudentExist(userId: number): Promise<boolean> {
+    const user = await prisma.user.findUnique({
+      where: { userId: userId, userRoles: { some: { roleId: 1 } } },
       select: { userId: true },
     });
     return !!user;
@@ -598,7 +607,69 @@ static async updateFamilyName(userId: EntierPositifType, userFamilyName: StringN
       throw error;
     }
   }
+
+static async updateFirstName(userId: EntierPositifType, userFirstName: StringNameType) : Promise<EntierPositifType>{
+  try {
+    const updateFirstName = await prisma.user.update({
+      data: {
+        userFirstName: userFirstName,
+      },
+      where: {
+          userId: userId
+        },
+      select: {
+        userId: true,
+      }
+    
+    })
+    if(!updateFirstName) {
+        return(0)
+      }
+      return(updateFirstName.userId)
+    }
+  catch (error){
+      console.error("Erreur dans UserModel, updateFirstName :", error);
+      throw error;
+    }
+  }
+
+static async updateGrade(userId: EntierPositifType, gradeId: EntierPositifType) : Promise<{userId: EntierPositifType, grade: GradeType}>{
+  try {
+    const updateGrade = await prisma.user.update({
+      data: {
+        gradeId: gradeId,
+      },
+      where: {
+          userId: userId
+        },
+      select: {
+        userId: true,
+        grade: {
+          select: {
+            gradeId: true,
+            gradeName: true,
+          }
+        }
+      }
+    
+    })
+    if(!updateGrade || updateGrade.grade==null) {
+        return({userId: 0, grade: {gradeId: 0, gradeName: ""}})
+      }
+    const grade = updateGrade.grade;
+      return({
+        userId: updateGrade.userId,
+        grade,
+      })
+    }
+  catch (error){
+      console.error("Erreur dans UserModel, updateGrade :", error);
+      throw error;
+    }
+  }
 }
+
+
 
 
 export default UserModel;

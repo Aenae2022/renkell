@@ -2,7 +2,8 @@
 import type z from "zod";
 import { Matematik } from "./Matematik";
 import DOMPurify from "dompurify";
-
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale/fr';
 export class Utilitaires {
   
   
@@ -155,4 +156,35 @@ static capitalize(word: string): string {
         const endDate = new Date(end);
         return today >= startDate && today <= endDate;
       }
+
+    //connaitre le moment actuel sous divers format : 12/04/26 ou 11:12:36 ou iso
+    //return : obket { date: string, time: string, iso: string }
+    static getCurrentMoment() : { date: string, time: string, iso: string, dateFr: string, dateBr: string} {
+        const now = new Date();
+        const date = now.toLocaleDateString('fr-FR');
+        const time = now.toLocaleTimeString('fr-FR');
+        const iso = now.toISOString();
+        // Français
+        const dateFr = format(now, "d MMMM yyyy HH:mm", { locale: fr });
+        // "16 avril 2026 17:21"
+
+        // Breton
+        const months = ["Genver","C’hwevrer","Meurzh","Ebrel","Mae","Mezheven","Gouere","Eost","Gwengolo","Here","Du","Kerzu"];
+        const d = now.getDate();
+        const m = months[now.getMonth()];
+        const y = now.getFullYear();
+        const h = now.getHours();
+        const min = String(now.getMinutes()).padStart(2, "0");
+        let prefix = "d'an";
+        const unanenn = d%10;
+        if(unanenn === 4 || unanenn === 5 || unanenn === 6 || unanenn === 7){ 
+            prefix = "d'ar";
+        }
+        const dateBr = `${prefix} ${d} a viz ${m} ${y} ${h > 12 ? (h - 12) : h}e${min} ${h > 12 ? 'gm' : ''}`;
+        // "d'an 16 a viz Ebrel 2026 5:21 gm"
+        
+        return { date, time, iso , dateFr, dateBr};
+    }
+
+   
 }

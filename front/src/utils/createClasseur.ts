@@ -32,7 +32,7 @@ export class SecondaryTag {
     this.title = title;
     this.tagStyle = `mr-2 mb-1 pr-2 pl-2 pb-1 pt-1 text-center cursor-pointer m-h-20 rounded-r-lg bg-${color}-light hover:bg-${color}`;
     this.tagStyleSelected = `mr-2 mb-1 pr-2 pl-2 pb-1 pt-1 text-center cursor-pointer m-h-20 rounded-r-lg bg-${color} font-bold z-2 border-y-2 border-r-2 border-${color}-dark`;
-    this.tagStyleTagAdd =`absolute left-[-10px] top-0 bottom-0 h-[calc(100%-4px)] bg-${color} z-5 w-[10px] border-y-2 border-${color}-dark`
+    this.tagStyleTagAdd =`absolute left-[-10px] top-0 bottom-0 h-[calc(100%-4px)] bg-${color} z-[999] w-[10px] border-y-2 border-${color}-dark`
     this.tagSource = source;
     }
 }

@@ -100,6 +100,15 @@ export const StudentDatasSchema = z.object({
   userGroups: z.array(GroupInfoSchema)
 })
 
+export const ParamsUsersDatasSchema = z.object({
+  userId: EntierPositifSchema,
+  userFamilyName: StringNameSchema,
+  userFirstName: StringNameSchema,
+  grade: GradeSchema.nullable(),
+  schoolId : EntierPositifSchema.nullable(),
+  userGroups: z.array(GroupInfoSchema).nullable()
+})
+
 
 export const UserMiniSchema = z.object({
   userId: z.number().int(),
@@ -119,3 +128,4 @@ export type UserGroupBdType = z.infer<typeof UserGroupBdSchema>
 export type UserMiniType = z.infer<typeof UserMiniSchema>
 export type StudentDatasType = z.infer<typeof StudentDatasSchema>
 export type UserDatasIdentityType = z.infer<typeof UserDatasIdentitySchema>
+export type ParamsUsersDatasType = z.infer<typeof ParamsUsersDatasSchema>

@@ -33,10 +33,12 @@ export default function ParamsStudents() {
       user.userGroups.forEach((group) => {
         const groupColor = group.principal ? "grammaire" : "conjugaison";
         list.push(
-          new PrincipalTag(group.groupId, group.groupName, "group", groupColor)
+          new PrincipalTag(group.groupId, group.groupName, "group", groupColor),
         );
       });
     }
+    //3. ajouter l'onglet pour créer un groupe
+    list.push(new PrincipalTag(0, "+", "group", "calculmental"));
     return list;
   }, [user.userGroups]);
 
@@ -50,7 +52,7 @@ export default function ParamsStudents() {
   useEffect(() => {
     const { startPrincipalTag, startSecondaryTag } = defineActiveTags(
       principalTagsList,
-      secondaryTagsList
+      secondaryTagsList,
     );
     setPrincipalTagActivated(startPrincipalTag);
     setSecondaryTagActivated(startSecondaryTag);
@@ -58,7 +60,7 @@ export default function ParamsStudents() {
 
   let myComponentContent = <Loader />;
   const [skolStudentsList, setSkolStudentsList] = useState<StudentDatasType[]>(
-    []
+    [],
   );
   const [, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -72,7 +74,7 @@ export default function ParamsStudents() {
           "/api/students/getStudentsListBySchool",
           {
             user: user,
-          }
+          },
         );
         console.log("résultat de la récupération des élèves :", response.data);
         setSkolStudentsList(response.data.result);
@@ -94,7 +96,7 @@ export default function ParamsStudents() {
 
     //vérifier s'il s'agit du groupe principal ou non
     const isPrincipalGroupSelected = user.groupsP.find(
-      (group) => group.groupId === Number(idGroupSelected)
+      (group) => group.groupId === Number(idGroupSelected),
     )
       ? true
       : false;
@@ -103,8 +105,8 @@ export default function ParamsStudents() {
       //on récupère la liste des élèves du grou
       const studentsListGroupSelected = skolStudentsList.filter((student) =>
         student.userGroups.some(
-          (group) => group.groupId === Number(idGroupSelected)
-        )
+          (group) => group.groupId === Number(idGroupSelected),
+        ),
       );
       //on trie par grade puis par nom de famille
       studentsListGroupSelected.sort((a, b) => {
@@ -124,14 +126,16 @@ export default function ParamsStudents() {
   if (error !== null) {
     myComponentContent = <p>{error}</p>;
   } else {
-    myComponentContent = (
-      <MercatoStudents
-        studentsList={skolStudentsList}
-        groupRef={
-          parseInt((principalTagActivated.match(/group(\d+)/) || [])[1]) || 0
-        } // On récupère l'id du groupe à partir de l'onglet actif
-      />
-    );
+    if (principalTagActivated !== "group0") {
+      myComponentContent = (
+        <MercatoStudents
+          studentsList={skolStudentsList}
+          groupRef={
+            parseInt((principalTagActivated.match(/group(\d+)/) || [])[1]) || 0
+          } // On récupère l'id du groupe à partir de l'onglet actif
+        />
+      );
+    }
   }
 
   return (

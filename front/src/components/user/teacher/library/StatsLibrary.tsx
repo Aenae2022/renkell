@@ -59,6 +59,7 @@ function StatsLibrary({ group }: StatsLibraryProps) {
       setMessage("noPeriodSelected");
     }
   };
+
   useEffect(() => {
     const findMatchingPeriod = (testPeriodsList: PeriodType[]) => {
       const today = new Date();

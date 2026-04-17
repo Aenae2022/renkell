@@ -136,5 +136,64 @@ static async updateFamilyName(
     }
 }
 
+static async updateFirstName(
+    req: Request,
+    res: Response) {
+        const { userId, userFirstName } = req.body;
+    try {
+        const result = await UserModel.updateFirstName(userId, userFirstName);
+
+        if (result === 0) {
+          res.status(400).json({message:"noUpdateFirstName", reponse: false, result:"noUpdateFirstName"})
+          return
+        }
+          
+        //on valide les données avec Zod
+        const parsedResult = EntierPositifSchema.safeParse(result);
+        if(!parsedResult.success){
+          res.status(200).json({message:"userId invalide", reponse: false, result:"userId invalide"})
+          return 
+        }
+        res.status(200).json({message : 'réussite', reponse: true, result: result});
+          return;
+    }
+    
+    catch (error) {
+        console.error("Erreur dans le contrôleur :", error);
+        res.status(500).json({ message: "Erreur serveur schoolController, getListGroupPrincipalBySchool", reponse: null, result: [] });
+        return
+    }
+}
+
+
+static async updateGrade(
+    req: Request,
+    res: Response) {
+        const { userId, gradeId } = req.body;
+    try {
+        const result = await UserModel.updateGrade(userId, gradeId);
+
+        if (result.userId === 0) {
+          res.status(400).json({message:"noUpdateGrade", reponse: false, result:"noUpdateGrade"})
+          return
+        }
+          //TODO
+        //on valide les données avec Zod
+        const parsedResult = EntierPositifSchema.safeParse(result.userId);
+        if(!parsedResult.success){
+          res.status(200).json({message:"userId invalide", reponse: false, result:"userId invalide"})
+          return 
+        }
+        res.status(200).json({message : 'réussite', reponse: true, result: result});
+          return;
+    }
+    
+    catch (error) {
+        console.error("Erreur dans le contrôleur :", error);
+        res.status(500).json({ message: "Erreur serveur schoolController, getListGroupPrincipalBySchool", reponse: null, result: [] });
+        return
+    }
+}
+
 }
 

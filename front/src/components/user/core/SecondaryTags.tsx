@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { type SecondaryTagType } from "@shared/schema/tags.schema";
+import TagLabel from "./TagLabel";
 
 type GeneralProps = {
   secondaryTagsList: SecondaryTagType[];
@@ -15,10 +16,10 @@ function SecondaryTags({
 }: GeneralProps) {
   const { t } = useTranslation();
   const mySecondaryTagsList = secondaryTagsList.filter(
-    (tag) => tag.tagSource === activatedPrincipal
+    (tag) => tag.tagSource === activatedPrincipal,
   );
   return (
-    <div className="flex flex-col pt-5">
+    <div className="flex flex-col pt-5 max-w-[15%] overflow-hidden min-w-0">
       {mySecondaryTagsList.map((tag) => {
         const isSelected = activatedSecondary === tag.type ? true : false;
         const secondaryTagsStyle = isSelected
@@ -28,7 +29,7 @@ function SecondaryTags({
           ? tag.tagStyleTagAdd
           : "absolute left-0 right-0 bottom-[-10px] bg-blue-500 h-0";
         return (
-          <div className="relative" key={tag.type}>
+          <div className="relative z-50" key={tag.type}>
             <div
               className={`${secondaryTagsStyle}`}
               onClick={() => {
@@ -36,7 +37,7 @@ function SecondaryTags({
                 localStorage.setItem("secondaryTag", tag.type);
               }}
             >
-              {t(tag.title)}
+              <TagLabel label={t(tag.title)} />
             </div>
             <div className={`${secondaryTagsStyleTag}`}></div>
           </div>

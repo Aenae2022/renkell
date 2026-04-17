@@ -35,7 +35,7 @@ function WaitBookBox({
     } catch (error) {
       console.error(
         "Erreur lors de la récupération des données du livre :",
-        error
+        error,
       );
     }
   };
@@ -44,7 +44,7 @@ function WaitBookBox({
   const fieldsetStyle =
     "border-2 border-resolution-dark mb-2 ml-2 px-2 py-1 bg-white max-w-full overflow-x-auto rounded-md";
   const legendStyle =
-    "border border-resolution rounded-2xl ml-3 p-2 text-[1.1em] bg-resolution-50";
+    "border border-resolution rounded-2xl ml-3 p-2 text-[1.1em] bg-resolution/50";
   //composant à afficher
   let boxToShow = null;
 

@@ -1,26 +1,23 @@
 import type { EntierPositifType } from "@shared/schema/fields/entierPositif.schema";
-import type { GradeType } from "@shared/schema/grade.schema";
-import type { GroupPrincipalInfoType } from "@shared/schema/group.schema";
+
 import type { StudentDatasType } from "@shared/schema/user.schema";
-import { useState } from "react";
+
 import { useTranslation } from "react-i18next";
 
 interface ParamsStudentsListProps {
-  grades: GradeType[];
+  gradesSelected: EntierPositifType[];
+  klasSelected: EntierPositifType[];
   students: StudentDatasType[];
-  klasou: GroupPrincipalInfoType[];
   selectStudent: (student: StudentDatasType) => void;
 }
 
 function ParamsStudentsList({
-  grades,
+  gradesSelected,
   students,
-  klasou,
+  klasSelected,
   selectStudent,
 }: ParamsStudentsListProps) {
   const { t } = useTranslation();
-  const [gradesSelected, setGradesSelected] = useState<EntierPositifType[]>([]);
-  const [klasSelected, setKLasSelected] = useState<EntierPositifType[]>([]);
 
   const gradesColorVariants = {
     CP: "bg-green-200",
@@ -33,146 +30,6 @@ function ParamsStudentsList({
 
   return (
     <div>
-      <div className="text-sm">
-        <div className="flex">
-          <p>{t("paramsSchool.paramsStudents.gradeFilter")}</p>
-          <div className="flex flex-wrap">
-            {grades.map((grade) => {
-              return (
-                <div key={grade.gradeId} className="mt-1 ml-1 flex">
-                  <input
-                    className="w-5 h-5"
-                    type="checkbox"
-                    id={grade.gradeName}
-                    name="grades"
-                    value={grade.gradeName}
-                    checked={
-                      gradesSelected.length === 0
-                        ? false
-                        : gradesSelected.find((g) => g === grade.gradeId) ===
-                          undefined
-                        ? false
-                        : true
-                    }
-                    onChange={(e) =>
-                      setGradesSelected((prev) => {
-                        if (e.target.checked) {
-                          return [...prev, grade.gradeId];
-                        } else {
-                          return prev.filter((g) => g !== grade.gradeId);
-                        }
-                      })
-                    }
-                  />
-                  <label
-                    className="px-2 text-sm h-5 "
-                    htmlFor={grade.gradeName}
-                  >
-                    {grade.gradeName}
-                  </label>
-                </div>
-              );
-            })}
-            <div className="m-2 flex items-center">
-              <input
-                className="w-5 h-5"
-                type="checkbox"
-                id="nope"
-                name="grades"
-                value="nope"
-                checked={
-                  gradesSelected.length === 0
-                    ? false
-                    : gradesSelected.find((g) => g === 0) === undefined
-                    ? false
-                    : true
-                }
-                onChange={(e) =>
-                  setGradesSelected((prev) => {
-                    if (e.target.checked) {
-                      return [...prev, 0];
-                    } else {
-                      return prev.filter((g) => g !== 0);
-                    }
-                  })
-                }
-              />
-              <label className="px-2 text-sm h-5 " htmlFor="nope">
-                {t("paramsSchool.paramsStudents.nopeGrade")}
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="flex mt-1 mb-2">
-          <p>{t("paramsSchool.paramsStudents.klasFilter")}</p>
-          <div className="flex flex-wrap">
-            {klasou.map((klas) => {
-              return (
-                <div key={klas.groupId} className="mt-1 ml-1 flex items-center">
-                  <input
-                    className="w-5 h-5"
-                    type="checkbox"
-                    id={klas.groupName}
-                    name="klasou"
-                    value={klas.groupName}
-                    checked={
-                      klasSelected.length === 0
-                        ? false
-                        : klasSelected.find((k) => k === klas.groupId) ===
-                          undefined
-                        ? false
-                        : true
-                    }
-                    onChange={(e) =>
-                      setKLasSelected((prev) => {
-                        if (e.target.checked) {
-                          return [...prev, klas.groupId];
-                        } else {
-                          return prev.filter((k) => k !== klas.groupId);
-                        }
-                      })
-                    }
-                  />
-                  <label
-                    className="pl-1 mr-3 text-sm h-5 "
-                    htmlFor={klas.groupName}
-                  >
-                    {klas.groupName}
-                  </label>
-                </div>
-              );
-            })}
-            <div className="mt-1 ml-1 flex items-center">
-              <input
-                className="w-5 h-5"
-                type="checkbox"
-                id="nopek"
-                name="klas"
-                value="nope"
-                checked={
-                  klasSelected.length === 0
-                    ? false
-                    : klasSelected.find((g) => g === 0) === undefined
-                    ? false
-                    : true
-                }
-                onChange={(e) =>
-                  setKLasSelected((prev) => {
-                    if (e.target.checked) {
-                      return [...prev, 0];
-                    } else {
-                      return prev.filter((g) => g !== 0);
-                    }
-                  })
-                }
-              />
-              <label className="px-2 text-sm h-5 " htmlFor="nopek">
-                {t("paramsSchool.paramsStudents.nopeKlas")}
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
       <table className=" mx-auto">
         <thead>
           <tr>
@@ -216,14 +73,14 @@ function ParamsStudentsList({
                 if (
                   g === 0 &&
                   student.userGroups.find(
-                    (group) => group.principal === true
+                    (group) => group.principal === true,
                   ) === undefined
                 ) {
                   showStudentKlas = true;
                 }
                 if (
                   student.userGroups.find(
-                    (group) => group.principal === true && group.groupId === g
+                    (group) => group.principal === true && group.groupId === g,
                   )
                 ) {
                   showStudentKlas = true;

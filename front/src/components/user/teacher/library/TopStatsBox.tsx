@@ -20,7 +20,7 @@ function TopStatsBox({
   const fieldsetStyle =
     "border-2 border-resolution-dark mb-2 px-2 py-1 bg-white max-w-full  rounded-md";
   const legendStyle =
-    "border border-resolution rounded-2xl ml-3 p-2 text-base bg-resolution-25";
+    "border border-resolution rounded-2xl ml-3 p-2 text-base bg-resolution/25";
   const topStyleVariantsSelected = {
     first: "bg-amber-500",
     second: "bg-neutral-500",

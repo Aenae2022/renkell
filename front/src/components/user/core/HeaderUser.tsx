@@ -24,7 +24,7 @@ function HeaderUser({ title, subTitle, redirection }: HeaderUserProps) {
   const [showLogin, setShowLogin] = useState<boolean>(false);
 
   return (
-    <div className="flex mb-3 pb-3 pl-4 justify-between items-center bg-conjugaison-25 relative top-2 left-2">
+    <div className="flex mb-3 pb-3 pl-4 justify-between items-center bg-conjugaison/25 relative top-2 left-2">
       <div className="mr-header-element">
         <div id="ReturnMenu">
           <img

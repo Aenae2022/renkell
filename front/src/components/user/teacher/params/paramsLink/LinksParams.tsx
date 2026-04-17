@@ -30,10 +30,10 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
   const [error, setError] = useState<string | null>(null);
 
   const linksContainerColorVariants = {
-    mathematiques: "rounded-md p-2 bg-mathematiques-25",
-    francais: "rounded-md p-2 bg-francais-25",
-    multidomaine: "rounded-md p-2 bg-conjugaison-25",
-    autre: "rounded-md p-2 bg-orthographe-25",
+    mathematiques: "rounded-md p-2 bg-mathematiques/25",
+    francais: "rounded-md p-2 bg-francais/25",
+    multidomaine: "rounded-md p-2 bg-conjugaison/25",
+    autre: "rounded-md p-2 bg-orthographe/25",
   } as const;
 
   const handleChange = async (linkId: number, isChecked: boolean) => {
@@ -56,8 +56,8 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
             prevLinks.map((link) =>
               link.linkId === linkId
                 ? { ...link, isAssociated: isChecked }
-                : link
-            )
+                : link,
+            ),
           );
         }
       }
@@ -83,8 +83,8 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
                 groupId: idRef,
               })
             : typeRef === "user" && idRef !== undefined
-            ? getGlobalLinksListTeacher({ userId: user.userId })
-            : null;
+              ? getGlobalLinksListTeacher({ userId: user.userId })
+              : null;
 
         const userPromise = getUsersList({
           userId: user.userId,
@@ -137,7 +137,7 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
         {
           userId,
           groupId,
-        }
+        },
       );
 
       return response.data;
@@ -159,7 +159,7 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
     } catch (error) {
       console.error(
         "Erreur lors de la récupération des données du livre :",
-        error
+        error,
       );
     }
   };
@@ -251,7 +251,7 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
 
     myListComponent = matters.map((matter, index) => {
       const linksByMatter = linksList.filter(
-        (link) => link.matter.toLowerCase() === matter
+        (link) => link.matter.toLowerCase() === matter,
       );
       const linksContainerStyle =
         linksContainerColorVariants[
@@ -259,7 +259,7 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
         ];
 
       const publicLinksByMatter = linksByMatter.filter(
-        (link) => link.totalUsersWithAccess === 0
+        (link) => link.totalUsersWithAccess === 0,
       );
       const publicContainer = (
         <MatterLinksList
@@ -271,7 +271,7 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
       );
 
       const privateGroupLinksByMatter = linksByMatter.filter(
-        (link) => link.totalUsersWithAccess > 1
+        (link) => link.totalUsersWithAccess > 1,
       );
       const privateGroupContainer = (
         <MatterLinksList
@@ -283,7 +283,7 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
       );
 
       const privatePersonnalLinksByMatter = linksByMatter.filter(
-        (link) => link.totalUsersWithAccess === 1
+        (link) => link.totalUsersWithAccess === 1,
       );
       const privatePersonalContainer = (
         <MatterLinksList

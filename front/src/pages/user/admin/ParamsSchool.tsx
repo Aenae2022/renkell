@@ -9,7 +9,8 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import type { UserSessionConnectType } from "@shared/schema/user.schema";
 import { useOutletContext } from "react-router-dom";
-import ParamsStudents from "@components/user/admin/paramsSchool/ParamsStudents";
+//import ParamsStudents from "@components/user/admin/paramsSchool/ParamsStudents";
+import ParamsUsers from "@components/user/admin/paramsSchool/paramsUsers";
 
 export default function ParamsSchool() {
   const user = useOutletContext<UserSessionConnectType>();
@@ -32,14 +33,14 @@ export default function ParamsSchool() {
           user.userSchool.schoolId,
           "paramsSchool.pTag.classroom",
           "school",
-          "calculmental"
-        )
+          "calculmental",
+        ),
       ); //id, title, concerned, color
     }
 
     //on crée les onglets suivants
     list.push(
-      new PrincipalTag(2, "paramsSchool.pTag.user", "user", "geometrie")
+      new PrincipalTag(2, "paramsSchool.pTag.user", "user", "geometrie"),
     );
 
     return list;
@@ -79,7 +80,7 @@ export default function ParamsSchool() {
   useEffect(() => {
     const { startPrincipalTag, startSecondaryTag } = defineActiveTags(
       principalTagsList,
-      secondaryTagsList
+      secondaryTagsList,
     );
     setPrincipalTagActivated(startPrincipalTag);
     setSecondaryTagActivated(startSecondaryTag);
@@ -91,7 +92,7 @@ export default function ParamsSchool() {
   if (principalTagActivated === "user2") {
     switch (secondaryTagActivated) {
       case "student":
-        myComponentContent = <ParamsStudents />;
+        myComponentContent = <ParamsUsers typeUser="student" />;
         break;
       case "teacher":
         myComponentContent = <Loader />;

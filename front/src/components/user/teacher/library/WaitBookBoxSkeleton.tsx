@@ -4,7 +4,7 @@ function WaitBookBoxSkeleton() {
   const fieldsetStyle =
     "border-2 border-resolution-dark mb-2 ml-2 px-2 py-1 bg-white max-w-full overflow-x-auto rounded-md";
   const legendStyle =
-    "border border-resolution rounded-2xl ml-3 p-2 text-[1.1em] h-11 animate-pulse bg-resolution-50 h-7 w-32 rounded";
+    "border border-resolution rounded-2xl ml-3 p-2 text-[1.1em] h-11 animate-pulse bg-resolution/50 h-7 w-32 rounded";
   return (
     <fieldset className={fieldsetStyle}>
       <legend className={legendStyle}></legend>

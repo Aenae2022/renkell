@@ -104,6 +104,7 @@
             "jbdb-div-rest-2-3-4-5": "Tables de division par 2, 3, 4 et 5 avec reste",
             "jbdb-div-rest-6-7-8-9": "Tables de division par 6, 7, 8 et 9 avec reste",
             "jbdb-div-rest-all": "Tables de division par 6, 7, 8 et 9 avec reste"
-        }                 
+        },
+        "printButton": "Imprimer"                 
     }    
   }

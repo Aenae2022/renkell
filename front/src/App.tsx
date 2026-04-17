@@ -12,6 +12,10 @@ import DashboardAdmin from "@pages/user/admin/DashboardAdmin";
 import TeacherLayout from "@pages/user/teacher/TeacherLayout";
 import AdminLayout from "@pages/user/admin/AdminLayout";
 import RoleBasedRedirect from "@components/user/RoleBasedRedirect";
+import PublicLayout from "@pages/blog/PublicLayout";
+import Home from "@pages/blog/Home";
+import MaJbdbHome from "@pages/appli/MaJbdbHome";
+import JbdbExercise from "@pages/appli/JbdbExercise";
 
 function App() {
   return (
@@ -19,6 +23,12 @@ function App() {
       <Router>
         <Routes>
           {/*Routes publiques*/}
+          <Route path="/" element={<PublicLayout />}>
+            <Route index element={<Home />} />
+            <Route path="jbdb/" element={<MaJbdbHome category="nope" />} />
+            <Route path="jbdb/:exId" element={<JbdbExercise />} />
+          </Route>
+
           <Route
             path="/degemer/:skol/:type?/:idft?"
             element={<DegemerSkolWithKey />}

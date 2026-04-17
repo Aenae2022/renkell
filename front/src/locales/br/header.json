@@ -1,8 +1,9 @@
 {
-  "header": {
-      "subTitle" : "Beñvegoù evit ar c'hlas"
-        },
-        "admin":{
+  "public": {
+        "title": "Ma renkell",
+        "subTitle" : "Beñvegoù evit ar c'hlas"
+      },
+  "admin":{
           "subtitle": "Merañ ar skol",
           "subtitlePerso": "Merañ an titouroù personel"
         },

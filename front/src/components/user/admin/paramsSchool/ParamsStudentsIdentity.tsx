@@ -13,6 +13,7 @@ import { Utilitaires } from "@utils/Utilitaires";
 import { StringNameSchema } from "@shared/schema/fields/stringName.schema";
 import { toast } from "react-toastify";
 import api from "@srcFront/api/axios";
+import { EntierPositifSchema } from "@shared/schema/fields/entierPositif.schema";
 interface ParamsStudentsIdentityProps {
   student: UserDatasIdentityType;
   grades: GradeType[];
@@ -31,31 +32,31 @@ function ParamsStudentsIdentity({
   const { t } = useTranslation();
   const [modifyFamilyName, setModifiyFamilyName] = useState(false);
   const [inputFamilyName, setInputFamilyName] = useState(
-    student.userFamilyName
+    student.userFamilyName,
   );
   const [inputFirstName, setInputFirstName] = useState(student.userFirstName);
   const [modifyFirstName, setModifiyFirstName] = useState(false);
 
   const [modifyGrade, setModifyGrade] = useState(false);
-  const [selectedGrade, setSelectedGrade] = useState(student.grade?.gradeName);
+  const [selectedGrade, setSelectedGrade] = useState(student.grade?.gradeId);
 
   const [modifyKlas, setModifyKlas] = useState(false);
   const [selectedKlas, setSelectedKlas] = useState<string>(
-    student.groupsP.length > 0 ? student.groupsP[0].groupName : ""
+    student.groupsP.length > 0 ? student.groupsP[0].groupName : "",
   );
 
   const [modifyPseudo, setModifyPseudo] = useState(false);
   const [inputPseudo, setInputPseudo] = useState(
-    student.userPseudo ? student.userPseudo : ""
+    student.userPseudo ? student.userPseudo : "",
   );
 
   const [modifyMail, setModifyMail] = useState(false);
   const [inputMail, setInputMail] = useState(
-    student.userMail ? student.userMail : ""
+    student.userMail ? student.userMail : "",
   );
 
   const [inputPassword, setInputPassword] = useState(
-    student.userPsswd ? "*********" : ""
+    student.userPsswd ? "*********" : "",
   );
   const [modifyPassword, setModifyPassword] = useState(false);
 
@@ -119,7 +120,7 @@ function ParamsStudentsIdentity({
         {
           userId: student.userId,
           userFamilyName: formatedString,
-        }
+        },
       );
       if (!updateFamilyName.data.reponse) {
         notify("errorBd", updateFamilyName.data.message);
@@ -166,7 +167,7 @@ function ParamsStudentsIdentity({
         {
           userId: student.userId,
           userFirstName: formatedString,
-        }
+        },
       );
       if (!updateFirstName.data.reponse) {
         notify("errorBd", updateFirstName.data.message);
@@ -187,6 +188,48 @@ function ParamsStudentsIdentity({
     student.userFirstName = formatedString;
     setStudents(newList);
     setModifiyFirstName(false);
+  };
+  const handleChangeGrade = async () => {
+    //on valide les données
+    const verifGradeId = EntierPositifSchema.safeParse(selectedGrade);
+    if (!verifGradeId.success) {
+      notify("errorInput", "errorGrade");
+      return;
+    }
+
+    //on vérifie si changement
+    if (student.grade?.gradeId === verifGradeId.data) {
+      setSelectedGrade(student.grade.gradeId);
+      setModifyGrade(false);
+      return;
+    }
+
+    //on modifie la bd
+    try {
+      const updateGrade = await api.post("/api/paramsStudents/updateGrade", {
+        userId: student.userId,
+        gradeId: verifGradeId.data,
+      });
+      if (!updateGrade.data.reponse) {
+        notify("errorBd", updateGrade.data.message);
+      }
+
+      //on modifie la liste en front
+      const newList = [...students];
+      newList.map((s) => {
+        if (s.userId === student.userId) {
+          s.grade = updateGrade.data.result.grade;
+        }
+        return s;
+      });
+      student.grade = updateGrade.data.result.grade;
+      setStudents(newList);
+      setModifyGrade(false);
+    } catch (error) {
+      console.log(error);
+      notify("errorBd", "errorGradeBd");
+      return;
+    }
   };
 
   return (
@@ -288,16 +331,13 @@ function ParamsStudentsIdentity({
                 <>
                   <select
                     name="grades"
+                    value={selectedGrade}
                     id="grade-select"
-                    onChange={(e) => setSelectedGrade(e.target.value)}
+                    onChange={(e) => setSelectedGrade(parseInt(e.target.value))}
                   >
                     {grades.map((grade) => {
                       return (
-                        <option
-                          key={grade.gradeId}
-                          value={grade.gradeName}
-                          selected={grade.gradeName === selectedGrade}
-                        >
+                        <option key={grade.gradeId} value={grade.gradeId}>
                           {grade.gradeName}
                         </option>
                       );
@@ -307,7 +347,16 @@ function ParamsStudentsIdentity({
                     className="w-5 h-5 cursor-pointer ml-1 inline-block relative top-[-2px]"
                     src={ValidIcon}
                     alt="valid icon"
-                    onClick={() => setModifyGrade(false)}
+                    onClick={handleChangeGrade}
+                  />
+                  <img
+                    className="w-5 h-5 cursor-pointer ml-1 inline-block relative top-[-2px]"
+                    src={AbortIcon}
+                    alt="abort icon"
+                    onClick={() => {
+                      setSelectedGrade(student.grade?.gradeId);
+                      setModifyGrade(false);
+                    }}
                   />
                 </>
               ) : (

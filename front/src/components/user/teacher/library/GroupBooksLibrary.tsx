@@ -214,7 +214,7 @@ export default function GroupBooksLibrary({
   const groupLibraryStyle =
     "border-2 border-orthographe-dark mb-2 bg-white max-w-full overflow-x-auto rounded-md";
   const groupLibraryLegendStyle =
-    "border border-orthographe rounded-2xl ml-3 p-2 text-[1.1em] bg-orthographe-25";
+    "border border-orthographe rounded-2xl ml-3 p-2 text-[1.1em] bg-orthographe/25";
   const showGroupLibraryStyle =
     "w-full table-auto border-collapse rounded-lg bg-white ml-2";
   const celStatusActionStyle = "w-6 text-center mr-2";
@@ -222,7 +222,7 @@ export default function GroupBooksLibrary({
     "text-left font-normal italic text-[0.8em] px-2";
   const iconFilterStyle = "w-2.5 inline-block ml-2 cursor-pointer";
   const tableLibraryLineStyle =
-    "border-b border-orthographe-25 hover:bg-orthographe-25";
+    "border-b border-orthographe/25 hover:bg-orthographe/25";
   return (
     <>
       <fieldset className={groupLibraryStyle} id="groupLibrary">
@@ -327,7 +327,7 @@ export default function GroupBooksLibrary({
         )}
       </fieldset>
       <div
-        className="cursor-pointer px-2 mt-4 border-t-1 border-l-1 border-r-2 border-b-2 border-gray-700 rounded-[10px] bg-calculmental-25 hover:font-bold"
+        className="cursor-pointer px-2 mt-4 border-t-1 border-l-1 border-r-2 border-b-2 border-gray-700 rounded-[10px] bg-calculmental/25 hover:font-bold"
         onClick={() => setShowPopup(true)}
       >
         <img

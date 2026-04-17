@@ -35,11 +35,11 @@ function HeaderDegemer({
   const subTitle = classroom
     ? t("header.skol.classroom") + " " + classroom.group.groupName
     : user
-    ? `${user.userFirstName} ${user.userFamilyName}`
-    : "";
+      ? `${user.userFirstName} ${user.userFamilyName}`
+      : "";
 
   return (
-    <div className="flex mb-3 pb-3 pl-4 justify-between items-center bg-conjugaison-25">
+    <div className="flex mb-3 pb-3 pl-4 justify-between items-center bg-conjugaison/25">
       <div className="mr-header-element">
         <div id="ReturnMenu">
           <img

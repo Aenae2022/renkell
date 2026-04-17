@@ -4,7 +4,7 @@ function BorrowBookBoxSkeleton() {
   const fieldsetStyle =
     "border-2 border-grammaire-dark mb-2 ml-2 px-2 py-1 bg-white max-w-full overflow-x-auto rounded-md";
   const legendStyle =
-    "border border-grammaire rounded-2xl ml-3 p-2 text-[1.1em] h-11 animate-pulse bg-grammaire-50 h-[45px] w-[154px] rounded";
+    "border border-grammaire rounded-2xl ml-3 p-2 text-[1.1em] h-11 animate-pulse bg-grammaire/50 h-[45px] w-[154px] rounded";
   return (
     <fieldset className={fieldsetStyle}>
       <legend className={legendStyle}></legend>

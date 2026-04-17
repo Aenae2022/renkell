@@ -15,7 +15,7 @@ import libraryRoutes from "./routes/libraryRoutes";
 import studentsRoutes from "./routes/studentsRoutes";
 import paramsSchoolRoutes from "./routes/paramsStudentsRoutes";
 import paramsStudentsRoutes from "./routes/paramsStudentsRoutes";
-
+import articlesRoutes from "./routes/articlesRoutes";
 dotenv.config();
 
 
@@ -57,6 +57,7 @@ app.use("/api/email", emailRoutes);// Route page de gestion des mails
 app.use("/api/library", libraryRoutes);// Route page de l'application librairie
 app.use("/api/students", studentsRoutes);// Route page de gestion des élèves par enseignant
 app.use('/api/paramsStudents', paramsStudentsRoutes) //Route de page de gestion des élèves par admin
+app.use('/api/articles', articlesRoutes) //Route de page de gestion des élèves par admin
 
 // Lancer le serveur
 const PORT = 5000;
