@@ -4,8 +4,9 @@
 
 :root {
 
-  background-image: url('./assets/pictures/fond/render-3.png');
-  background-color: rgb(8, 124, 85);
+  background-image: url('./assets/pictures/fond/ardoise.jpg');
+  /* background-image: url('./assets/pictures/fond/ardoise.png'); */
+  background-color: black;
   background-repeat : repeat;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 

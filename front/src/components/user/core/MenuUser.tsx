@@ -37,7 +37,7 @@ export function MenuUser({
             resolve(selectedRole);
           }}
         />,
-        { autoClose: false, closeOnClick: false }
+        { autoClose: false, closeOnClick: false },
       );
     });
   };

@@ -1,5 +1,7 @@
-import { Outlet } from "react-router-dom";
+import type { UserSessionConnectType } from "@shared/schema/user.schema";
+import { Outlet, useOutletContext } from "react-router-dom";
 
 export default function StudentRoutes() {
-  return <Outlet />;
+  const user = useOutletContext<UserSessionConnectType>();
+  return <Outlet context={user} />;
 }

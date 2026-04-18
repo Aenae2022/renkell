@@ -26,13 +26,13 @@ export default function DegemerParamsLinks() {
         user.userId,
         "userParamsLinks.sTag.link",
         "link",
-        "geometrie"
+        "geometrie",
       ),
       new PrincipalTag(
         user.userId,
         "userParamsLinks.sTag.appli",
         "appli",
-        "resolution"
+        "resolution",
       ), //id, title, concerned, color
     ];
     return list;
@@ -48,7 +48,7 @@ export default function DegemerParamsLinks() {
   useEffect(() => {
     const { startPrincipalTag, startSecondaryTag } = defineActiveTags(
       principalTagsList,
-      secondaryTagsList
+      secondaryTagsList,
     );
     setPrincipalTagActivated(startPrincipalTag);
     setSecondaryTagActivated(startSecondaryTag);
