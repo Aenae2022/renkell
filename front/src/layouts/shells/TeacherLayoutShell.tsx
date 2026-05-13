@@ -10,7 +10,9 @@ type TeacherLayoutShellProps = {
 function TeacherLayoutShell({ user, changeRole }: TeacherLayoutShellProps) {
   const location = useLocation();
 
-  const hideMenu = location.pathname.includes("/jbdb/");
+  const hiddenPaths = ["/jbdb/", "/nbre/"];
+
+  const hideMenu = hiddenPaths.some((path) => location.pathname.includes(path));
   return (
     <div className="flex flex-col h-screen">
       <HeaderTeacher user={user} />

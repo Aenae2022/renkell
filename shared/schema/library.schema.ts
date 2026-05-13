@@ -86,7 +86,7 @@ export const BookWaitingSchema = z.object({
 })
 
 export const BookToGroupListSchema = z.object({
-    bookId: EntierPositifSchema,
+    bookId: EntierPositifSchema ,
     bookTitle: StringNameTitleSchema,
     bookAuthor: z.preprocess((val) => (val === "" ? null : val), StringNameSchema.nullable().optional()),
     bookPublisher: StringNameTitleSchema.nullable().optional(),

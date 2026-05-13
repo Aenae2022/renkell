@@ -1,0 +1,13 @@
+{
+    "den1" : {
+        "title" : "An niveroù betek 1 000",
+        "consigne": "Skriv an niver skeudennet."
+    },
+    "ecrireNombre" : {
+        "title" : "An niveroù betek 1 000",
+        "consigne1": "Skriv an niver gant al lizherennoù.",
+        "consigne2": "Skriv an niver gant ar sifroù.",
+        "conseil1": "Diwall ouzh an tiredennoù. :)",
+         "conseil2": "Dav eo dit dispartiañ ar rummadoù gant ur spas. :)"
+    }
+}

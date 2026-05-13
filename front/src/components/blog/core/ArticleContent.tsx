@@ -1,4 +1,4 @@
-import MaJbdbHome from "@pages/appli/MaJbdbHome";
+import MaJbdbHome from "@pages/appli/maths/jbdb/MaJbdbHome";
 import type { ArticleType } from "@shared/schema/article.schema";
 import { Trans } from "react-i18next";
 type ArticleContentProps = {

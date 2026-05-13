@@ -5,6 +5,9 @@
     "exit" : "Quitter",
     "cancel": "Annuler",
     "submit": "Soumettre",
+    "verify": "Vérifier",
+    "verify2": "2ème essai",
+    "next" : "Suivant",
     "nameDialog": {
         "question": "Quel est ton prénom ?",
         "error": "Tu dois écrire au moins 2 lettres 🙂"

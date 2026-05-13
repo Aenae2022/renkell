@@ -1,10 +1,11 @@
 import MaJbdbCorrection from "./MaJbdbCorrection";
 import MaJbdbdRond from "./MaJbdbRond";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useNameDialog } from "@hook/useNameDialog";
 import MaJbdbResultPrint from "../../../document/library/MaJbdbResultPrint";
 import { pdf } from "@react-pdf/renderer";
+import type { UserSessionConnectType } from "@shared/schema/user.schema";
 
 type GeneralResultsProps = {
   items: {
@@ -46,6 +47,7 @@ export default function MaJbdbResult({
   //on transforme pour avoir un résultat sur 100
   monScore = Math.round((monScore / items.length) * 100);
   const { askName, dialog } = useNameDialog();
+  const user = useOutletContext<UserSessionConnectType>();
 
   //définir le logo en fonction du résultat et des attentes
   let sourceLogo = "/src/assets/pictures/exercice/";
@@ -137,11 +139,14 @@ export default function MaJbdbResult({
     URL.revokeObjectURL(url);
   };
   async function handlePrint() {
-    const name = await askName();
-
-    if (!name) return; // utilisateur a annulé
-
-    generatePdf(name);
+    console.log("user", user);
+    if (user) {
+      generatePdf(`${user.userFirstName} ${user.userFamilyName}`);
+    } else {
+      const name = await askName();
+      if (!name) return; // utilisateur a annulé
+      generatePdf(name);
+    }
   }
 
   return (

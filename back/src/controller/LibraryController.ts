@@ -517,7 +517,7 @@ static async getStatsStudentsDatas(req : Request, res : Response) {
 
   static async addBookInGroupLibrary(req: Request,res: Response) {
     const { book, work } = req.body;
-
+    console.log("----------------controller adBookInGroupLibrary", book)
     //on met à jour la bd Book au cas où des données seraient ajoutées
     const newBook : BookMiniType = {
       bookId: book.bookId,
@@ -526,11 +526,13 @@ static async getStatsStudentsDatas(req : Request, res : Response) {
       bookPublisher : book.bookPublisher,
       bookIsbn : book.bookIsbn,
     }
+    
     const updateBook = await LibraryModel.updateBook(newBook);
     if (!updateBook.reponse) {
         res.status(200).json({ message: updateBook.message, result : null });
         return;
     }
+    console.log("------------------- on va ajouter le livre au groupe")
    const addBook = await LibraryModel.addBookInGroupLibrary(book, work);
    if (addBook.reponse === null) {
         res.status(400).json({ message: addBook.message, result : null });
@@ -562,7 +564,7 @@ static async getStatsStudentsDatas(req : Request, res : Response) {
   //créer un livre dans book
   static async createBookInLibrary(req: Request,res: Response){
     const { book } = req.body;
-    
+    console.log("📥 Reçu dans createBookInLibrary :", req.body.book);
     const createBook = await LibraryModel.createBookInLibrary(book);
    if (!createBook || createBook.reponse === null) {
         res.status(400).json({ message: 'erreur', reponse : null, result : null });
@@ -705,6 +707,7 @@ static async removePeriod(req : Request, res : Response)  {
 
   static async modifyBookInLibrary(req: Request, res: Response) {
     const { book} : {book : BookToGroupListType}= req.body;
+    console.log('book aui arrive dans controller/modify', book)
     const newBook : BookMiniType= {
       bookId: book.bookId,
       bookTitle : book.bookTitle,
@@ -712,6 +715,7 @@ static async removePeriod(req : Request, res : Response)  {
       bookIsbn : book.bookIsbn,
       bookPublisher : book.bookPublisher,
     }
+
     const user = req.user;
     console.log("user dans le controller :", user);
     if (!user) {
@@ -725,6 +729,8 @@ static async removePeriod(req : Request, res : Response)  {
 
       if (isSuperAdmin) {
         // action spécifique pour super_admin : on modifie directement la bd
+        console.log("action spécifique pour super_admin")
+        console.log('envoie en bd de', newBook)
         try{
           const updateBook = await LibraryModel.updateBook(newBook);
           res.status(200).json({ message: updateBook.message, reponse: updateBook.reponse, action: 'modif' });

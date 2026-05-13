@@ -5,6 +5,9 @@
     "exit" : "Kuitaat",
     "cancel": "Nullañ",
     "submit": "Kas",
+    "verify": "Gwiriañ",
+    "verify2": "eil chañs",
+    "next": "Da heul",
     "nameDialog": {
         "question": "Petra eo da anv ?",
         "error": "Dav eo dit skrivañ 2 lizherenn d'an nebeutañ 🙂"

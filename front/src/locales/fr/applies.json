@@ -1,0 +1,13 @@
+{
+    "den1" : {
+        "title" : "Les nombres jusqu'à 1 000",
+        "consigne": "Ecris le nombre représenté."
+    },
+    "ecrireNombre" : {
+        "title" : "Les nombres jusqu'à 1 000",
+        "consigne1": "Ecris le nombre en lettres.",
+        "consigne2": "Ecris le nombre en chiffres.",
+        "conseil1": "Fais attention aux tirets. :)",
+        "conseil2": "N'oublie pas de séparer les classes par un espace. :)"
+    }
+}

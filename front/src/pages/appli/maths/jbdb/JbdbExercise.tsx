@@ -161,7 +161,7 @@ export function JbdbExercise() {
 
   //const de style
   const exerciseContainer =
-    "bg-white overflow-auto ml-4 mr-4 pr-0 pl-0 pb-5 text-center rounded-10xl mw-150 rounded-2xl border-2 border-calculmental";
+    "bg-white overflow-auto ml-4 mr-4 pr-0 pl-0 pb-5 text-center rounded-10xl mw-150 rounded-2xl border-2 border-calculmental ridge";
   const jbdbButton =
     "h-12 bg-gray-200 mt-8 p2 mx-2 cursor-pointer text-center rounded-full text-3xl border border-black";
 

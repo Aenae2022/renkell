@@ -100,8 +100,8 @@ function FicheBook({
   const buttonStyle =
     "px-2 py-1 mr-3 cursor-pointer text-base bg-gray-400 hover:bg-gray-600 text-center rounded-full border-2 border-gray-500";
 
-  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
-
+  // const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const handleTitleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = evt.target.value;
 
@@ -203,9 +203,10 @@ function FicheBook({
       groupId: groupId,
       nbBook: bookNumber,
     };
-
+    console.log("📤 Envoi newBook :", newBook);
     if (newBook.bookId === 0) {
       //création d'un nouveau livre dans le répertoire en bd
+      console.log("création d'un nouveau livre dans le répertoire en bd");
       if (newBook.bookTitle === "") {
         //on vérifie qu'un titre est renseigné
         setErrorTitle(true);
@@ -213,6 +214,7 @@ function FicheBook({
         return;
       }
       //appel axios pour ajouter le livre dans library
+
       try {
         const response = await api.post("/api/library/createBook", {
           book: newBook,
@@ -231,6 +233,7 @@ function FicheBook({
     }
     if (modifyBookData) {
       //modification d'un livre déjà présent dans la bd Book
+      console.log("modification d'un livre déjà présent dans la bd Book");
       try {
         const responseModifBook = await api.post("/api/library/modifyBook", {
           book: newBook,
@@ -257,6 +260,7 @@ function FicheBook({
       }
     } else {
       //on ajoute le livre dans la bibliothèque de classe
+      console.log("livre existant non modifié, on envoie : ", newBook);
       //en tenant compte du type de livre(personel ou collectif)
       const bookWork = newBook.bookLocation === "per" ? 0 : 1;
       // appel axios pour ajouter le livre dans libraryGroup

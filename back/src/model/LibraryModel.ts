@@ -1058,15 +1058,18 @@ export default class LibraryModel{
     }
 
   static async  addBookInGroupLibrary(book : BookToGroupListType, bookWork : number) {
-    try{
-      const addBook = await prisma.bookGroup.create({
-        data: {
+    const datas = {
           groupId: book.groupId,
           bookId: book.bookId,
           location: book.bookLocation,
           onWork: bookWork ===1 ? true : false,
           dateAdd: new Date(),
-        },
+        }
+    console.log("--------- data pour addBook ", datas)
+    console.log("🔥 datas complet AVANT create:", JSON.stringify(datas, null, 2));
+    try{
+      const addBook = await prisma.bookGroup.create({
+        data: datas,
       });
       if (!addBook) {
         return ({message: "LibraryModel, addBookInGroupLibrary, erreur", reponse : null, result: null})
@@ -1151,6 +1154,13 @@ static async borrowABook(userId:number,bookGroupId:number){
       bookIsbn: book.bookIsbn,
     }
     try {
+      console.log("🔥 VERSION CREATE BOOK v2");
+      console.log("📦 Data envoyée à Prisma :", {
+          bookTitle: bookToCreate.bookTitle,
+          bookAuthor: bookToCreate.bookAuthor,
+          bookPublisher: bookToCreate.bookPublisher,
+          bookIsbn: bookToCreate.bookIsbn,
+        },);
       const addBook = await prisma.book.create({
         data: {
           bookTitle: bookToCreate.bookTitle,

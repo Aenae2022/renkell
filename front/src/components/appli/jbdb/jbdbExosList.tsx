@@ -21,7 +21,7 @@ export const jbdbExosList = [
                 shortTitle: "+2",
                 exampleQuestion: "5 + 2 = ?",
                 logo: "/src/assets/pictures/exercice/calcul/additionner.png",
-                duration: 10,
+                duration: 1,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
                 eca: 50, //score en dessous du quel on indique le résultat en rouge

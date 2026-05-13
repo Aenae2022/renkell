@@ -11,14 +11,15 @@ import ParamsStudents from "@pages/user/teacher/ParamsStudents";
 import DashboardAdmin from "@pages/user/admin/DashboardAdmin";
 import RoleBasedRedirect from "@components/user/RoleBasedRedirect";
 import Home from "@pages/blog/Home";
-import MaJbdbHome from "@pages/appli/MaJbdbHome";
-import JbdbExercise from "@pages/appli/JbdbExercise";
+import JbdbExercise from "@pages/appli/maths/jbdb/JbdbExercise";
 import Applies from "@pages/user/teacher/Applies";
-import MaJbdbHomeContainer from "@pages/appli/MaJbdbHomeContainer";
+import MaJbdbHomeContainer from "@pages/appli/maths/jbdb/MaJbdbHomeContainer";
 import SuperLayout from "./layouts/SuperLayout";
 import TeacherRoutes from "./router/routes/TeacherRoutes";
 import PublicRoutes from "./router/routes/PublicRoutes";
 import AdminRoutes from "./router/routes/AdminRoutes";
+import Denombre1 from "@pages/appli/maths/nombre/Denombre1";
+import EcrireNombre from "@pages/appli/maths/nombre/EcrireNombre";
 
 function App() {
   return (
@@ -44,8 +45,9 @@ function App() {
             {/* PUBLIC */}
             <Route path="/" element={<PublicRoutes />}>
               <Route index element={<Home />} />
-              <Route path="jbdb" element={<MaJbdbHome category="nope" />} />
               <Route path="jbdb/:exId" element={<JbdbExercise />} />
+              <Route path="nbre/den1" element={<Denombre1 />} />
+              <Route path="nbre/ecrire" element={<EcrireNombre />} />
             </Route>
 
             {/* TEACHER */}

@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import type { UserSessionConnectType } from "@shared/schema/user.schema";
 type GeneralBoutonProps = {
   couleur: string;
   data: {
@@ -24,10 +25,23 @@ export function MaToolTip({ couleur, data }: GeneralBoutonProps) {
   const exampleQuestion = t("jbdb.home.questions." + data.exId, {
     defaultValue: data.exampleQuestion,
   });
+  const user = useOutletContext<UserSessionConnectType>();
+
   const handleClick = (exId: string) => {
-    sessionStorage.setItem("generalTag", "2ma");
-    sessionStorage.setItem("specificTag", "2ma_calm");
-    navigate(`/jbdb/${exId}`);
+    if (user) {
+      switch (user.roleActivated.roleName) {
+        case "TEACHER":
+          navigate(`/teacher/jbdb/${exId}`);
+          break;
+        case "STUDENT":
+          navigate(`/student/jbdb/${exId}`);
+          break;
+        default:
+          navigate(`/jbdb/${exId}`);
+      }
+    } else {
+      navigate(`/jbdb/${exId}`);
+    }
   };
 
   const boutonContainerStyle = `relative group h-6 m-2 text-center text-black pl-1 pr-1  cursor-pointer inline-block bg-${couleur}-light mw-6 border-2 border-gray-300 rounded-md`;

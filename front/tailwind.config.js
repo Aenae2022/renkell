@@ -10,7 +10,7 @@ export const safelist = [
     variants: ['hover'],
   },
   {
-    pattern: /border-(base|francais|mathematiques|lexique|grammaire|conjugaison|orthographe|dictee|nombre|calcul|calculmental|geometrie|mesure|resolution)(-(dark|25|50|light))?/,
+    pattern: /border(-(t|b|l|r|x|y))?-(base|francais|mathematiques|lexique|grammaire|conjugaison|orthographe|dictee|nombre|calcul|calculmental|geometrie|mesure|resolution)(-(dark|25|50|light))?/,
   },
   {
     pattern: /text-(base|francais|mathematiques|lexique|grammaire|conjugaison|orthographe|dictee|nombre|calcul|calculmental|geometrie|mesure|resolution)(-(dark|25|50|light))?/,

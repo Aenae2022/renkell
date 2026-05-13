@@ -16,7 +16,8 @@
       "@pages/*": ["./src/pages/*"],
       "@pictures/*":["./src/assets/pictures/*"],
       "@utils/*": ["./src/utils/*"],
-      "@srcFront/*":["./src/*"]
+      "@srcFront/*":["./src/*"],
+      "@features/*": ["./src/features/*"],
     },
 
     /* Bundler mode */
