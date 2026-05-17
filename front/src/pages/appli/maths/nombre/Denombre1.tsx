@@ -1,7 +1,7 @@
-import ExerciseAnswer1 from "@components/appli/core/ExerciseAnswer1";
-import ExerciseCard from "@components/appli/core/ExerciseCard";
-import ExerciseItemContainer from "@components/appli/core/ExerciseItemContainer";
-import ArdoiseCubes from "@components/appli/nombre/ArdoiseCubes";
+import ExerciseAnswer1 from "@components/appli/exercise/core/ExerciseAnswer1";
+import ExerciseCard from "@components/appli/exercise/core/ExerciseCard";
+import ExerciseItemContainer from "@components/appli/exercise/core/ExerciseItemContainer";
+import ArdoiseCubes from "@components/appli/exercise/nombre/ArdoiseCubes";
 import Loader from "@components/core/Loader";
 import { useDenombre1 } from "@features/exercises/denombre1/useDenombre1";
 import type {
@@ -11,22 +11,21 @@ import type {
 
 export function Denombre1() {
   const { exercise, state, dispatch } = useDenombre1(5);
-  console.log("data");
-  console.log(exercise);
-  console.log("state");
-  console.log(state);
 
   let componentToShow = <Loader />;
 
   if (state.status === "run") {
     const item = state.items[state.indexItem];
     componentToShow = (
-      <ExerciseItemContainer>
+      <ExerciseItemContainer
+        itemStatus={item.itemStatus}
+        isCorrect={item.isCorrect}
+      >
         <DenombreQuestion consigne={exercise.consigne} item={item} />
         <DenombreAnswer item={item} dispatch={dispatch} />
       </ExerciseItemContainer>
     );
-  } else if (state.status === "finish") {
+  } else if (state.status === "finished") {
     componentToShow = <p>Coucou</p>;
   }
   return <ExerciseCard exercise={exercise}>{componentToShow}</ExerciseCard>;

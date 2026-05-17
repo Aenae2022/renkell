@@ -1,47 +1,53 @@
-import ArdoiseGenerique from "@components/appli/core/ArdoiseGenerique";
-import ExerciseAnswerString from "@components/appli/core/ExerciseAnswerString";
-import ExerciseCard from "@components/appli/core/ExerciseCard";
-import ExerciseItemContainer from "@components/appli/core/ExerciseItemContainer";
+import ArdoiseGenerique from "@components/appli/exercise/core/ArdoiseGenerique";
+import ExerciseAnswerString from "@components/appli/exercise/core/ExerciseAnswerString";
+import ExerciseCard from "@components/appli/exercise/core/ExerciseCard";
+import ExerciseGeneriqueResultContainer from "@components/appli/exercise/core/ExerciseGeneriqueResultContainer";
+import ExerciseItemContainer from "@components/appli/exercise/core/ExerciseItemContainer";
 import Loader from "@components/core/Loader";
 import type {
-  EcrireNombreAction,
-  EcrireNombreItem,
-} from "@srcFront/features/exercises/maths/nombre/ecrireNombre/ecrireNombre.types";
+  ExerciseGeneriqueAction,
+  ExerciseGeneriqueItem,
+} from "@srcFront/features/exercises/core/exerciseGenerique.type";
 import { useEcrireNombre } from "@srcFront/features/exercises/maths/nombre/ecrireNombre/useEcrireNombre";
 import React from "react";
 
 function EcrireNombre() {
-  const { exercise, state, dispatch } = useEcrireNombre(1);
+  const { exercise, state, dispatch } = useEcrireNombre(3);
 
   let componentToShow = <Loader />;
 
   if (state.status === "run") {
     const item = state.items[state.indexItem];
     componentToShow = (
-      <ExerciseItemContainer>
+      <ExerciseItemContainer
+        itemStatus={item.itemStatus}
+        isCorrect={item.isCorrect}
+      >
         <EcrireQuestion item={item} />
         <EcrireAnswer item={item} dispatch={dispatch} />
       </ExerciseItemContainer>
     );
-  } else if (state.status === "finish") {
-    componentToShow = <p>Coucou</p>;
+  } else if (state.status === "finished") {
+    componentToShow = (
+      <ExerciseGeneriqueResultContainer exercise={exercise} state={state} />
+    );
   }
   return <ExerciseCard exercise={exercise}>{componentToShow}</ExerciseCard>;
 }
 
-function EcrireQuestion({ item }: { item: EcrireNombreItem }) {
+function EcrireQuestion({ item }: { item: ExerciseGeneriqueItem }) {
   const consigne =
     item.typeQuestion === 1
       ? "applies.ecrireNombre.consigne1"
       : "applies.ecrireNombre.consigne2";
   return (
     <ArdoiseGenerique
-      itemId={item.id}
       consigne={consigne}
-      langue={item.typeLangue}
-      question={item.question}
-      itemStatus={item.itemStatus}
-      isCorrect={item.isCorrect}
+      // langue={item.typeLangue}
+      // question={item.question}
+      // itemStatus={item.itemStatus}
+      // isCorrect={item.isCorrect}
+      item={item}
     />
   );
 }
@@ -50,8 +56,8 @@ function EcrireAnswer({
   item,
   dispatch,
 }: {
-  item: EcrireNombreItem;
-  dispatch: React.Dispatch<EcrireNombreAction>;
+  item: ExerciseGeneriqueItem;
+  dispatch: React.Dispatch<ExerciseGeneriqueAction>;
 }) {
   const handleVerify = (answer: string) => {
     if (answer !== "") {
@@ -70,13 +76,7 @@ function EcrireAnswer({
   };
   return (
     <ExerciseAnswerString
-      reponse={item.reponse}
-      itemStatus={item.itemStatus}
-      isCorrect={item.isCorrect}
-      correctionToShow={item.correction.toShow}
-      itemId={item.id}
-      typeLangue={item.typeLangue}
-      conseil={item.conseil}
+      item={item}
       handleVerify={handleVerify}
       handleNextItem={handleNextItem}
     />

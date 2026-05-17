@@ -1,6 +1,7 @@
 {
     "welcome" : "Accueil",
     "start" : "Démarrer",
+    "restart" : "Recommencer",
     "save" : "Enregistrer",
     "exit" : "Quitter",
     "cancel": "Annuler",

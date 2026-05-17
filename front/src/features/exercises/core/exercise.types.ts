@@ -7,7 +7,6 @@ export type Exercise<TState, TAction> = {
   consigne: string;
   nbExercice : number;
   nbReponse : number;
-  score : number;
   acquis : number;
   eca : number;
   state: TState;

@@ -8,6 +8,10 @@
         "consigne1": "Skriv an niver gant al lizherennoù.",
         "consigne2": "Skriv an niver gant ar sifroù.",
         "conseil1": "Diwall ouzh an tiredennoù. :)",
-         "conseil2": "Dav eo dit dispartiañ ar rummadoù gant ur spas. :)"
+        "conseil2": "Dav eo dit dispartiañ ar rummadoù gant ur spas. :)",
+        "conseilParfait": "Mat-kenañ ! Gourc'hemennoù !",
+        "conseilAcquis": "Mat-tre ! Komprenet hoc'h eus ar labour goulennet.",
+        "conseilEca": "Fazioù a zo c'hoazh. Kendalc'h labourat hag e vezo gwelloc'h an disoc'h !",
+        "conseilNonAcquis": "N'eo ket bet komprenet al labour. Adlenn ar gentel pe goulenn sikour !"
     }
 }

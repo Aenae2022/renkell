@@ -5,9 +5,9 @@ export const ecrireNombreMeta = {
   logo: "/src/assets/pictures/icons/nombre-2.png",
   title : "applies.ecrireNombre.title",
   consigne: "applies.ecrireNombre.consigne",
-  nbExercice: 5,
+  nbExercice: 3,
   nbReponse :2,
   score : 0,
-  acquis: 0.7,
-  eca: 0.4,
+  acquis: 70,
+  eca: 40,
 } as const;

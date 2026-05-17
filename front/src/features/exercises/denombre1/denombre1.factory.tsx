@@ -1,7 +1,7 @@
 import { Matematik } from "@utils/Matematik";
-import { type Denombre1State } from "./denombre1.types";
+import { type Denombre1Item, type Denombre1State } from "./denombre1.types";
 
-const createItem = (id: number) => {
+const createItem = (id: number): Denombre1Item => {
   const nbUnite = Matematik.entierAleatoire(0, 15);
   const nbDizaine = Matematik.entierAleatoire(0, 15);
   const nbCentaine = Matematik.entierAleatoire(0, 7);

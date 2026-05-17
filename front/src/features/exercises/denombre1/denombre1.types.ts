@@ -13,7 +13,7 @@ export type Denombre1Item = {
     toShow: React.ReactNode;
   };
   isCorrect: boolean;
-  itemStatus : string
+  itemStatus : "question" | "essai2" | "correction"
 };
 
 export type Cube = {
@@ -27,7 +27,7 @@ export type Cube = {
 
 export type Denombre1State = {
   items: Denombre1Item[];
-  status :string,
+  status :"run" | "finished",
   indexItem : number,
 };
 

@@ -8,6 +8,10 @@
         "consigne1": "Ecris le nombre en lettres.",
         "consigne2": "Ecris le nombre en chiffres.",
         "conseil1": "Fais attention aux tirets. :)",
-        "conseil2": "N'oublie pas de séparer les classes par un espace. :)"
+        "conseil2": "N'oublie pas de séparer les classes par un espace. :)",
+        "conseilParfait": "Bravo ! Tu as tout juste !",
+        "conseilAcquis": "C'est très bien ! Tu as compris le travail demandé.",
+        "conseilEca": "Il reste des erreurs. Continue à travailler et tes résultats s'amélioreront !",
+        "conseilNonAcquis": "Tu n'as pas encore compris le travail demandé. Relis ta leçon ou demande de l'aide."
     }
 }

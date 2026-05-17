@@ -1,8 +1,9 @@
 import { useExercise } from "@features/exercises/core/useExercise";
-import { ecireNombreReducer } from "./ecrireNombre.reducer.ts";
 import { useMemo } from "react";
 import { ecrireNombreMeta } from "./ecrireNombre.meta.ts";
 import { createEcrireNombreInitialState } from "./ecrireNombre.factory.tsx";
+import { ecrireNombreValidator } from "./ecrireNombre.validator.ts";
+import { exerciseGeneriqueReducer } from "@srcFront/features/exercises/core/exerciseGenerique.reducer.ts";
 
 export function useEcrireNombre(n: number) {
 
@@ -12,7 +13,7 @@ export function useEcrireNombre(n: number) {
   );
 
   const [exercise, dispatch] = useExercise(
-    ecireNombreReducer,
+    exerciseGeneriqueReducer(ecrireNombreValidator),
     initialState
   );
 
