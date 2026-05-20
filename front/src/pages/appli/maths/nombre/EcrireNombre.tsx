@@ -12,7 +12,17 @@ import { useEcrireNombre } from "@srcFront/features/exercises/maths/nombre/ecrir
 import React from "react";
 
 function EcrireNombre() {
-  const { exercise, state, dispatch } = useEcrireNombre(3);
+  const ecrireNombreMeta = {
+    exId: "den_max_1000",
+    domaine: "mathematiques",
+    sousDomaine: "nombre",
+    logo: "/src/assets/pictures/icons/nombre-2.png",
+    title: "applies.ecrireNombre.title",
+    consigne: "applies.ecrireNombre.consigne",
+  };
+  const { exercise, state, dispatch } = useEcrireNombre(ecrireNombreMeta);
+  console.log("exercise", exercise);
+  console.log("state", state);
 
   let componentToShow = <Loader />;
 

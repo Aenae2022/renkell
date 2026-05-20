@@ -1,22 +1,14 @@
-import type { ExerciseGeneriqueState } from "@srcFront/features/exercises/core/exerciseGenerique.type";
+import type {
+  ExerciseGenerique,
+  ExerciseGeneriqueState,
+} from "@srcFront/features/exercises/core/exerciseGenerique.type";
 import { useTranslation } from "react-i18next";
 import ExerciseShowWork from "./ExerciseShowWork";
 import Button from "@components/UI/Button";
 //import { useNavigate } from "react-router-dom";
 
 type Props = {
-  exercise: {
-    exId: string;
-    domaine: string;
-    sousDomaine: string;
-    logo: string;
-    title: string;
-    consigne: string;
-    nbExercice: number;
-    acquis: number;
-    eca: number;
-    nbReponse: number;
-  };
+  exercise: ExerciseGenerique;
   state: ExerciseGeneriqueState;
 };
 
@@ -24,14 +16,16 @@ function ExerciseGeneriqueResultContainer({ exercise, state }: Props) {
   const { t } = useTranslation();
   //const navigate = useNavigate();
   const monScore = Math.round(
-    (state.score / (exercise.nbExercice * exercise.nbReponse)) * 100,
+    (state.score /
+      (exercise.params.config.nbExercice * exercise.params.config.nbReponse)) *
+      100,
   );
   const monResultat: "parfait" | "acquis" | "eca" | "non acquis" =
     monScore === 100
       ? "parfait"
-      : monScore >= exercise.acquis
+      : monScore >= exercise.params.config.acquis
         ? "acquis"
-        : monScore >= exercise.eca
+        : monScore >= exercise.params.config.eca
           ? "eca"
           : "non acquis";
   //définir le logo en fonction du résultat et des attentes

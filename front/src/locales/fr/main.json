@@ -17,5 +17,6 @@
     "langue": "Langue",
     "dictee": "Dictée",
     "calculmental": "Calcul mental",
-    "titlePageApplies": "Applications"
+    "titlePageApplies": "Applications",
+    "lesson" : "Leçon"
 }

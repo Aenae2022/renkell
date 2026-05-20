@@ -11,7 +11,12 @@ type ExerciseValidator = (
   item: ExerciseGeneriqueItem,
 ) => ValidatorResult;
 
-export const exerciseGeneriqueReducer = (validator: ExerciseValidator) =>
+type ReducerDependencies = {
+  validator: ExerciseValidator;
+
+  nbEssaisMax?: number;
+};
+export const exerciseGeneriqueReducer = ({ validator, nbEssaisMax = 2 }: ReducerDependencies) =>
 (
   state: ExerciseGeneriqueState, //EcrireNombreState,
   action: ExerciseGeneriqueAction
@@ -38,7 +43,12 @@ export const exerciseGeneriqueReducer = (validator: ExerciseValidator) =>
         }
       } else {
         if(item.itemStatus === "question"){
-          newItemStatus = "essai2"
+          if(nbEssaisMax === 1){
+            newItemStatus = "correction";
+          } else {
+            newItemStatus = "essai2";
+          }
+          
         } else if(item.itemStatus === "essai2"){
           newItemStatus = "correction";
         }

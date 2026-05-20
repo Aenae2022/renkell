@@ -1,17 +1,8 @@
+import type { ExerciseGenerique } from "@srcFront/features/exercises/core/exerciseGenerique.type";
 import { useTranslation } from "react-i18next";
 
 type ExerciseCardProps = {
-  exercise: {
-    exId: string;
-    domaine: string;
-    sousDomaine: string;
-    logo: string;
-    title: string;
-    consigne: string;
-    nbExercice: number;
-    acquis: number;
-    eca: number;
-  };
+  exercise: ExerciseGenerique;
   children: React.ReactNode;
 };
 function ExerciseCard({ exercise, children }: ExerciseCardProps) {
@@ -21,17 +12,22 @@ function ExerciseCard({ exercise, children }: ExerciseCardProps) {
       className={`bg-white overflow-auto rounded-[30px] 
         pr-[50px] pl-[20px] pb-[20px] 
         border-t-[6px] border-b-[6px] border-l-[6px] border-r-[6px]
-        border-t-${exercise.domaine} border-l-${exercise.domaine}
-        border-b-${exercise.sousDomaine} border-r-${exercise.sousDomaine}
+        border-t-${exercise.meta.domaine} border-l-${exercise.meta.domaine}
+        border-b-${exercise.meta.sousDomaine} border-r-${exercise.meta.sousDomaine}
         [border-style:ridge]
       `}
     >
       <div className="flex flex-row pt-2">
-        <img alt="logo nombre" src={`${exercise.logo}`} className="w-10" />
+        <img alt="logo nombre" src={`${exercise.meta.logo}`} className="w-10" />
         <p
-          className={`ml-2 grow-1 w-full h-10 flex items-center text-${exercise.sousDomaine}`}
+          className={`ml-2 grow-1 w-full h-10 flex items-center text-${exercise.meta.sousDomaine}`}
         >
-          {t(exercise.title)}
+          {t(exercise.meta.title)}
+        </p>
+        <p className={`text-${exercise.meta.sousDomaine} text-sm`}>
+          {exercise.params.config.refLecon !== ""
+            ? t("main.lesson") + " " + exercise.params.config.refLecon
+            : ""}
         </p>
       </div>
 

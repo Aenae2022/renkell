@@ -1,17 +1,28 @@
-export type ExerciseGenerique<TState, TAction> = {
-  exId: string;
-  domaine: string;
-  sousDomaine: string;
-  logo: string;
-  title : string;
-  consigne: string;
+export type ExerciseGenerique<TUserData = unknown> = {
+    meta : ExerciseGeneriqueMeta;
+  
+  params: 
+    {config: ExerciseGeneriqueConfig,
+    userData: TUserData};
+
+};
+
+export type ExerciseGeneriqueMeta = {
+    exId: string;
+    domaine: string;
+    sousDomaine: string;
+    logo: string;
+    title : string;
+    consigne: string;
+  }
+
+export type ExerciseGeneriqueConfig = {
+  refLecon : string;
   nbExercice : number;
   nbReponse : number;
   acquis : number;
   eca : number;
-  state: TState;
-  dispatch: React.Dispatch<TAction>;
-};
+}
 
 export type ExerciseGeneriqueItem = {
   id: number;
