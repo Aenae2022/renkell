@@ -22,6 +22,21 @@ export class Utilitaires {
         .replace(/\s+/g, " ") // Remplace les multiples espaces par un seul
     }
 
+    //compare deux nombres
+    //params : deux nombres
+    //return : (nbMax : number, nbMin : number)
+    static compareTwoNumbers(nb1: number, nb2: number) : {nbMax : number, nbMin : number} {
+        if(nb1 > nb2){
+            return {nbMax : nb1, nbMin : nb2};
+        }
+        else if(nb1 === nb2){
+            return {nbMax : nb1+10, nbMin : nb2};
+        }
+        else{
+            return {nbMax : nb2, nbMin : nb1};
+        }
+    }
+
     //vérifie une date saisie par un utilisateur dans un input pour sécurité
     //on vérifie la saisie, la validité de la date, on borne entre deux extrêmes "aaaa-mm-dd"
     static validInputDate(dateTest: string, dateMin: string, dateMax: string) {
@@ -148,6 +163,14 @@ static capitalize(word: string): string {
         }
     }
 
+    //savoir si un string est un nombre entier compris entre deux bornes
+    //params : string, min: number, max: number
+    //return : boolean
+    static isIntegerInRange(str: string, min: number, max: number): boolean {
+        const num = parseInt(str, 10);
+        return !isNaN(num) && num >= min && num <= max;
+      }
+
     //savoir si une date est comprise dans une période donnée
     //params : start: string, end: string, today:string
     //return : boolean
@@ -156,6 +179,18 @@ static capitalize(word: string): string {
         const endDate = new Date(end);
         return today >= startDate && today <= endDate;
       }
+
+    //vérifier que le pourcentage pour acquis est bien supérieur à celui pour eca
+    //params : acquis: number, eca: number
+    //return :  {acquis: number, eca: number}
+    static getAcquisEca(acquis: number, eca: number): {acquis: number, eca: number} {
+        if (acquis > eca) {
+            return { acquis, eca };
+        } else {
+            return { acquis: 70, eca: 40 };
+        }
+    }
+
 
     //connaitre le moment actuel sous divers format : 12/04/26 ou 11:12:36 ou iso
     //return : obket { date: string, time: string, iso: string }

@@ -13,6 +13,7 @@
       "@shared/*": ["../shared/*"],
       "@components/*": ["./src/components/*"],
       "@hook/*": ["./src/hook/*"],
+      "@librairies/*": ["./src/librairies/*"],
       "@pages/*": ["./src/pages/*"],
       "@pictures/*":["./src/assets/pictures/*"],
       "@utils/*": ["./src/utils/*"],

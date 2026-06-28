@@ -41,5 +41,4 @@ export async function createUser(params: UserParams) {
     data: user,
   });
 
-  console.log('Created classroom:', newUser);
 }

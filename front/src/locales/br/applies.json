@@ -4,6 +4,7 @@
         "consigne": "Skriv an niver skeudennet."
     },
     "ecrireNombre" : {
+        "globalTitle" : "Lenn ha skrivañ an niveroù",
         "title" : "An niveroù betek 1 000",
         "consigne1": "Skriv an niver gant al lizherennoù.",
         "consigne2": "Skriv an niver gant ar sifroù.",

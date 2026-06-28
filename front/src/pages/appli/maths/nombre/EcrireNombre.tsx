@@ -21,8 +21,6 @@ function EcrireNombre() {
     consigne: "applies.ecrireNombre.consigne",
   };
   const { exercise, state, dispatch } = useEcrireNombre(ecrireNombreMeta);
-  console.log("exercise", exercise);
-  console.log("state", state);
 
   let componentToShow = <Loader />;
 

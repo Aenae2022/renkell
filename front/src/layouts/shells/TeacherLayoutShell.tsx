@@ -10,7 +10,7 @@ type TeacherLayoutShellProps = {
 function TeacherLayoutShell({ user, changeRole }: TeacherLayoutShellProps) {
   const location = useLocation();
 
-  const hiddenPaths = ["/jbdb/", "/nbre/"];
+  const hiddenPaths = ["/jbdb/", "/nbre/ex/"];
 
   const hideMenu = hiddenPaths.some((path) => location.pathname.includes(path));
   return (

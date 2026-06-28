@@ -20,6 +20,8 @@ import PublicRoutes from "./router/routes/PublicRoutes";
 import AdminRoutes from "./router/routes/AdminRoutes";
 import Denombre1 from "@pages/appli/maths/nombre/Denombre1";
 import EcrireNombre from "@pages/appli/maths/nombre/EcrireNombre";
+import EcrireNombreParams from "@pages/appli/maths/nombre/EcrireNombreParams";
+import EcrireNombreParamsContainer from "@pages/appli/maths/nombre/EcrireNombreParamsContainer";
 
 function App() {
   return (
@@ -46,8 +48,12 @@ function App() {
             <Route path="/" element={<PublicRoutes />}>
               <Route index element={<Home />} />
               <Route path="jbdb/:exId" element={<JbdbExercise />} />
-              <Route path="nbre/den1" element={<Denombre1 />} />
-              <Route path="nbre/ecrire" element={<EcrireNombre />} />
+              <Route path="nbre/ex/den1" element={<Denombre1 />} />
+              <Route path="nbre/ex/ecrire" element={<EcrireNombre />} />
+              <Route
+                path="nbre/ecrireParams"
+                element={<EcrireNombreParams />}
+              />
             </Route>
 
             {/* TEACHER */}
@@ -60,6 +66,11 @@ function App() {
               <Route path="library" element={<LibraryApp />} />
               <Route path="jbdb" element={<MaJbdbHomeContainer />} />
               <Route path="jbdb/:exId" element={<JbdbExercise />} />
+              <Route path="nbre/ex/ecrire" element={<EcrireNombre />} />
+              <Route
+                path="nbre/ecrireParams"
+                element={<EcrireNombreParamsContainer />}
+              />
             </Route>
 
             {/* ADMIN */}
