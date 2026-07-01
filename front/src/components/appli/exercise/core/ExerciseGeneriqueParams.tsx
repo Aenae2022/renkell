@@ -4,6 +4,7 @@ import type {
 } from "@srcFront/features/exercises/core/exerciseGenerique.type";
 import { Utilitaires } from "@utils/Utilitaires";
 import { refLeconSchema } from "@shared/schema/fields/refLecon.schema";
+import { useTranslation } from "react-i18next";
 type Props = {
   paramsGenerique: ExerciseGeneriqueParamsState;
   dispatchGenerique: React.Dispatch<ExerciseGeneriqueParamsAction>;
@@ -15,6 +16,7 @@ function ExerciseGeneriqueParams({
   dispatchGenerique,
   domaine,
 }: Props) {
+  const { t } = useTranslation();
   const fieldsetStyle = `border-2 border-${domaine}-dark mb-2 ml-2 px-2 py-1 bg-white max-w-full overflow-x-auto rounded-md`;
   const legendStyle = `border border-${domaine} rounded-2xl ml-3 p-2 text-[1.1em] bg-${domaine}/50`;
   const inputStyle = "border-2 border-gray-300 rounded-md px-1 py-0.5 ml-2 ";
@@ -77,10 +79,10 @@ function ExerciseGeneriqueParams({
       <form>
         <fieldset className={fieldsetStyle}>
           <legend className={legendStyle}>
-            Réglages généraux de l'exercice
+            {t("applies.generique.exerciseGenericSettings")}
           </legend>
           <div className={divStyle}>
-            <label htmlFor="refLecon">Référence de la leçon</label>
+            <label htmlFor="refLecon">{t("applies.generique.refLecon")}</label>
             <input
               className={`w-[100px] ${
                 paramsGenerique.refLecon.isValid
@@ -95,7 +97,9 @@ function ExerciseGeneriqueParams({
             />
           </div>
           <div className={divStyle}>
-            <label htmlFor="nbExercice">Nombre d'exercices</label>
+            <label htmlFor="nbExercice">
+              {t("applies.generique.nbExercice")}
+            </label>
             <input
               className={`w-[50px] ${
                 paramsGenerique.nbExercice.isValid
@@ -111,7 +115,7 @@ function ExerciseGeneriqueParams({
               onChange={handleChangeNbExercice}
             />
             <label htmlFor="nbReponse" className="ml-6">
-              Nombre d'essais
+              {t("applies.generique.nbReponse")}
             </label>
             <input
               className={`w-[50px] ${
@@ -129,12 +133,9 @@ function ExerciseGeneriqueParams({
             />
           </div>
           <div className={divStyle}>
-            <p>
-              Pourcentage de réussite à atteindre pour considérer l'exercice
-              comme
-            </p>
+            <p>{t("applies.generique.reussiteText")}</p>
             <div>
-              <label htmlFor="acquis">- acquis</label>
+              <label htmlFor="acquis">- {t("applies.generique.acquis")}</label>
               <input
                 className={`w-[50px] ${
                   paramsGenerique.acquis.isValid
@@ -151,7 +152,7 @@ function ExerciseGeneriqueParams({
               />
             </div>
             <div>
-              <label htmlFor="eca">- en cours d'acquisition</label>
+              <label htmlFor="eca">- {t("applies.generique.eca")}</label>
               <input
                 className={`w-[50px] ${
                   paramsGenerique.eca.isValid ? inputStyle : inputStyleUnvalid

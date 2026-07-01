@@ -1,5 +1,19 @@
 {
-    "den1" : {
+    "generique":{
+        "resetParams": "Réinitialiser les paramètres",
+        "generateLink": "Générer le lien",
+        "exerciseGenericSettings": "Réglages généraux",
+        "exerciseSettings": "Réglages de l'exercice",
+        "refLecon": "Référence de la leçon",
+        "nbExercice": "Nombre d'exercices",
+        "nbReponse": "Nombre d'essais",
+        "reussiteText": "Pourcentage de réussite à atteindre pour considérer l'exercice comme",
+        "acquis": "acquis",
+        "eca": "en cours d'acquisition",
+        "typeLangue1" : "Brezhoneg",
+        "typeLangue2" : "Galleg",   
+        "aleatoire" : "Dargouezhek"
+    },"den1" : {
         "title" : "Les nombres jusqu'à 1 000",
         "consigne": "Ecris le nombre représenté."
     },
@@ -13,6 +27,12 @@
         "conseilParfait": "Bravo ! Tu as tout juste !",
         "conseilAcquis": "C'est très bien ! Tu as compris le travail demandé.",
         "conseilEca": "Il reste des erreurs. Continue à travailler et tes résultats s'amélioreront !",
-        "conseilNonAcquis": "Tu n'as pas encore compris le travail demandé. Relis ta leçon ou demande de l'aide."
+        "conseilNonAcquis": "Tu n'as pas encore compris le travail demandé. Relis ta leçon ou demande de l'aide.",
+        "nbMin":"Nombre minimum",
+        "nbMax":"Nombre maximum",
+        "typeLangue" : "Langue",
+        "typeQuestion" : "Type de question",
+        "typeQuestion1" : "Ecrire en lettres",
+        "typeQuestion2" : "Ecrire en chiffres"
     }
 }

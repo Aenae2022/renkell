@@ -1,4 +1,5 @@
 import type { EcrireNombreExerciseParams, EcrireNombreParamsAction } from "./ecrireNombre.type";
+import { initialParamsSpecifique } from "./ecrireNombreParams.defaults";
 
 export const ecrireNombreParamsReducer = () =>
 (
@@ -65,6 +66,11 @@ export const ecrireNombreParamsReducer = () =>
           saisie : value
         }
       };
+    }
+    case "RESET": {
+      return {
+        ...initialParamsSpecifique
+      }
     }
     default:
       return state;

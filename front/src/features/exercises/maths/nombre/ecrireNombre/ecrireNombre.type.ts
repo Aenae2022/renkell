@@ -1,3 +1,4 @@
+
 export type EcrireNombreExerciseData={
     nMin : number;
     nMax : number;
@@ -19,10 +20,12 @@ export type EcrireNombreExerciseParams={
     typeLangue : {// 1 : breton, 2 : français, 3 : aléatoire
         default : string;
         saisie : string;
+        isValid : boolean;
     }
     typeQuestion : {// 1 : chiffre -> lettre, 2 : lettre -> chiffre, 3 : aléatoire
         default : string;
         saisie : string;
+        isValid: boolean;
     } 
     
 }
@@ -34,3 +37,4 @@ export type EcrireNombreParamsAction =
   | { type: "SET_NBMAXVALID"; value: boolean}  
   |  { type: "SET_TYPELANGUE"; value: string}
   |  { type: "SET_TYPEQUESTION"; value: string}
+  |  { type: "RESET" }

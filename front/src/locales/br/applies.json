@@ -1,11 +1,26 @@
 {
+    "generique":{
+        "resetParams": "Nullañ ar cheñchamntoù",
+        "generateLink": "Krouiñ al liamm",
+        "exerciseSettings": "Arventennoù hollek",
+        "exerciseGenericSettings": "Arventennoù ar boelladenn",
+        "refLecon": "Evezhiadenn ar gentel",
+        "nbExercice": "Niver a boelladennoù",
+        "nbReponse": "Niver a esaeoù",
+        "reussiteText": "Dregantad gounit ret ma vo sellet ouzh ar boelladenn evel",
+        "acquis": "mestroniet",
+        "eca": "o vont da vezañ mestroniet",
+        "typeLangue1" : "Brezhoneg",
+        "typeLangue2" : "Galleg",   
+        "aleatoire" : "Dargouezhek"
+    },
     "den1" : {
         "title" : "An niveroù betek 1 000",
         "consigne": "Skriv an niver skeudennet."
     },
     "ecrireNombre" : {
         "globalTitle" : "Lenn ha skrivañ an niveroù",
-        "title" : "An niveroù betek 1 000",
+        "title" : "An niveroù betek ",
         "consigne1": "Skriv an niver gant al lizherennoù.",
         "consigne2": "Skriv an niver gant ar sifroù.",
         "conseil1": "Diwall ouzh an tiredennoù. :)",
@@ -13,6 +28,12 @@
         "conseilParfait": "Mat-kenañ ! Gourc'hemennoù !",
         "conseilAcquis": "Mat-tre ! Komprenet hoc'h eus ar labour goulennet.",
         "conseilEca": "Fazioù a zo c'hoazh. Kendalc'h labourat hag e vezo gwelloc'h an disoc'h !",
-        "conseilNonAcquis": "N'eo ket bet komprenet al labour. Adlenn ar gentel pe goulenn sikour !"
+        "conseilNonAcquis": "N'eo ket bet komprenet al labour. Adlenn ar gentel pe goulenn sikour !",
+        "nbMin":"Niver bihanañ",
+        "nbMax":"Niver brasañ",
+        "typeLangue" : "Yezh",
+        "typeQuestion" : "Seurt goulennoù",
+        "typeQuestion1" : "Skriv gant al lizherennoù",
+        "typeQuestion2" : "Skriv gant ar sifroù"
     }
 }

@@ -1,6 +1,6 @@
 import type { ExerciseGeneriqueParamsAction, ExerciseGeneriqueParamsState } from "./exerciseGenerique.type";
 
-export const exerciseGeneriqueParamsReducer = () =>
+export const exerciseGeneriqueParamsReducer = (defaultState : ExerciseGeneriqueParamsState) =>
 (
   state: ExerciseGeneriqueParamsState, //EcrireNombreState,
   action: ExerciseGeneriqueParamsAction
@@ -163,6 +163,11 @@ export const exerciseGeneriqueParamsReducer = () =>
         linkGenerated: value,
       };
     }
+    case "RESET": {
+      
+      return {
+        ...defaultState,}
+      }
 
     default:
       return state;
