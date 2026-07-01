@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import logoLibrary from "@pictures/icons/lecture.png";
 import logoJbdb from "@pictures/exercice/chronometre.webp";
+import logoNumber from "@pictures/icons/nombre-2.png";
 
 export default function Applies() {
   const [principalTagActivated, setPrincipalTagActivated] =
@@ -45,6 +46,11 @@ export default function Applies() {
       logo: logoJbdb,
       routeLink: "/teacher/jbdb",
       title: "jbdb.home.title",
+    },
+    {
+      logo: logoNumber,
+      routeLink: "/teacher/nbre/ecrireParams",
+      title: "applies.ecrireNombre.globalTitle",
     },
   ]);
   const myComponentContent = (

@@ -56,11 +56,11 @@ const formatDate = (isoDate: string): string => {
   return `${day}/${month}/${year}`;
 };
 
-const estimateHeight = (livresArray: string[]) => 95 + livresArray.length * 5;
+const estimateHeight = (livresArray: string[]) => 95 + livresArray.length * 22;
 
 const distributeByHeight = (
   data: StudentStatsType[],
-  maxHeight = 500
+  maxHeight = 500,
 ): ColumnPage[] => {
   const pages: ColumnPage[] = [];
   let currentPage: ColumnPage = { left: [], right: [] };
@@ -69,7 +69,9 @@ const distributeByHeight = (
 
   for (const student of data) {
     const h = estimateHeight(
-      student.nbDistinctReaded.concerned.split(",").map((livre) => livre.trim())
+      student.nbDistinctReaded.concerned
+        .split(",")
+        .map((livre) => livre.trim()),
     );
 
     if (leftHeight + h <= maxHeight) {

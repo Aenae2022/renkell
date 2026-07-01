@@ -167,7 +167,8 @@ static capitalize(word: string): string {
     //params : string, min: number, max: number
     //return : boolean
     static isIntegerInRange(str: string, min: number, max: number): boolean {
-        const num = parseInt(str, 10);
+        const clean = str.replace(/\s/g, "")
+        const num = parseInt(clean, 10);
         return !isNaN(num) && num >= min && num <= max;
       }
 

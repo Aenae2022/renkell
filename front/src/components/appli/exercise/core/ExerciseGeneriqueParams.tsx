@@ -40,48 +40,24 @@ function ExerciseGeneriqueParams({
 
     const cleanSaisie = Utilitaires.validInputString(value);
     const isValid = Utilitaires.isIntegerInRange(cleanSaisie, 1, 10);
-    if (isValid) {
-      dispatchGenerique({ type: "SET_NBEXERCICE", value: cleanSaisie });
-    } else {
-      dispatchGenerique({
-        type: "SET_NBEXERCICE",
-        value: paramsGenerique.nbExercice.default,
-      });
-    }
     dispatchGenerique({ type: "SET_NBEXERCICEVALID", value: isValid });
   };
 
   const handleChangeNbReponse = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     dispatchGenerique({ type: "SET_NBREPONSESAISIE", value });
-
     const cleanSaisie = Utilitaires.validInputString(value);
     const isValid = Utilitaires.isIntegerInRange(cleanSaisie, 1, 2);
-    if (isValid) {
-      dispatchGenerique({ type: "SET_NBREPONSE", value: cleanSaisie });
-    } else {
-      dispatchGenerique({
-        type: "SET_NBREPONSE",
-        value: paramsGenerique.nbReponse.default,
-      });
-    }
     dispatchGenerique({ type: "SET_NBREPONSEVALID", value: isValid });
   };
 
   const handleChangeAcquis = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     dispatchGenerique({ type: "SET_ACQUISSAISIE", value });
-
     const cleanSaisie = Utilitaires.validInputString(value);
-    const isValid = Utilitaires.isIntegerInRange(cleanSaisie, 1, 100);
-    if (isValid) {
-      dispatchGenerique({ type: "SET_ACQUIS", value: cleanSaisie });
-    } else {
-      dispatchGenerique({
-        type: "SET_ACQUIS",
-        value: paramsGenerique.acquis.default,
-      });
-    }
+    const isValid =
+      Utilitaires.isIntegerInRange(cleanSaisie, 1, 100) &&
+      parseInt(cleanSaisie) > parseInt(paramsGenerique.eca.saisie);
     dispatchGenerique({ type: "SET_ACQUISVALID", value: isValid });
   };
 
@@ -92,15 +68,7 @@ function ExerciseGeneriqueParams({
     const cleanSaisie = Utilitaires.validInputString(value);
     const isValid =
       Utilitaires.isIntegerInRange(cleanSaisie, 1, 100) &&
-      cleanSaisie < paramsGenerique.acquis.valeur;
-    if (isValid) {
-      dispatchGenerique({ type: "SET_ECA", value: cleanSaisie });
-    } else {
-      dispatchGenerique({
-        type: "SET_ECA",
-        value: paramsGenerique.eca.default,
-      });
-    }
+      parseInt(cleanSaisie) < parseInt(paramsGenerique.acquis.saisie);
     dispatchGenerique({ type: "SET_ECAVALID", value: isValid });
   };
 

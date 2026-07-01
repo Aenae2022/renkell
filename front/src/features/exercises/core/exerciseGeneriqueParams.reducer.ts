@@ -6,17 +6,17 @@ export const exerciseGeneriqueParamsReducer = () =>
   action: ExerciseGeneriqueParamsAction
 ): ExerciseGeneriqueParamsState => {
   switch (action.type) {
-    case "SET_REFLECON":   {
-      const { value } = action;
+    // case "SET_REFLECON":   {
+    //   const { value } = action;
       
-      return {
-        ...state,
-        refLecon: {
-          ...state.refLecon,
-          valeur: value
-        }
-      };
-    }
+    //   return {
+    //     ...state,
+    //     refLecon: {
+    //       ...state.refLecon,
+    //       valeur: value
+    //     }
+    //   };
+    // }
     case "SET_REFLECONSAISIE":   {
       const { value } = action;
       
@@ -37,16 +37,16 @@ export const exerciseGeneriqueParamsReducer = () =>
           isValid: value}
       };
     }
-    case "SET_NBEXERCICE":   {
-      const { value } = action;
-      return {
-        ...state,
-        nbExercice: {
-          ...state.nbExercice,
-          valeur: value
-        }
-      };
-    }
+    // case "SET_NBEXERCICE":   {
+    //   const { value } = action;
+    //   return {
+    //     ...state,
+    //     nbExercice: {
+    //       ...state.nbExercice,
+    //       valeur: value
+    //     }
+    //   };
+    // }
     case "SET_NBEXERCICESAISIE":   {
       const { value } = action;
       return {
@@ -67,15 +67,15 @@ export const exerciseGeneriqueParamsReducer = () =>
         }
       };
     }
-    case "SET_NBREPONSE":   {
-      const { value } = action;
-      return {
-        ...state,
-        nbReponse: {
-          ...state.nbReponse,
-          valeur: value},
-      };
-    }
+    // case "SET_NBREPONSE":   {
+    //   const { value } = action;
+    //   return {
+    //     ...state,
+    //     nbReponse: {
+    //       ...state.nbReponse,
+    //       valeur: value},
+    //   };
+    // }
     case "SET_NBREPONSESAISIE":   {
       const { value } = action;
       return {
@@ -96,16 +96,16 @@ export const exerciseGeneriqueParamsReducer = () =>
         }
       };
     }
-    case "SET_ACQUIS":   {
-      const { value } = action;
-      return {
-        ...state,
-        acquis: {
-          ...state.acquis,
-          valeur: value
-        }
-      };
-    }
+    // case "SET_ACQUIS":   {
+    //   const { value } = action;
+    //   return {
+    //     ...state,
+    //     acquis: {
+    //       ...state.acquis,
+    //       valeur: value
+    //     }
+    //   };
+    // }
     case "SET_ACQUISSAISIE":   {
       const { value } = action;
       return {
@@ -126,16 +126,16 @@ export const exerciseGeneriqueParamsReducer = () =>
         }
       };
     }
-    case "SET_ECA":   {
-      const { value } = action;
-      return {
-        ...state,
-        eca: {
-          ...state.eca,
-          valeur: value
-        }
-      };
-    }
+    // case "SET_ECA":   {
+    //   const { value } = action;
+    //   return {
+    //     ...state,
+    //     eca: {
+    //       ...state.eca,
+    //       valeur: value
+    //     }
+    //   };
+    // }
     case "SET_ECASAISIE":   {
       const { value } = action;
       return {

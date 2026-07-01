@@ -2,31 +2,29 @@ import { exerciseGeneriqueParamsReducer } from "@srcFront/features/exercises/cor
 import { useExercise } from "@srcFront/features/exercises/core/useExercise";
 import type { EcrireNombreExerciseParams } from "./ecrireNombre.type";
 import { ecrireNombreParamsReducer } from "./ecrireNombreParams.reducer";
+import { useMemo } from "react";
+import { createGeneriqueParamsInitialState } from "@srcFront/features/exercises/core/exerciseGeneriqueParams.factory";
 import { initialParamsGenerique } from "@srcFront/features/exercises/core/exerciseGeneriqueParams.defaults";
 
 
 const initialParamsSpecifique  : EcrireNombreExerciseParams= {
         nbMin : {
             default : "1000",
-            valeur : "1000",
             saisie : "1000",
             isValid : true,
         },
         nbMax : {
             default : "10000",
-            valeur : "10000",
             saisie : "10000",
             isValid : true,
         },
         typeLangue : {
             default : "2",
             saisie : "2",
-            isValid : true,
         },
         typeQuestion : {
             default : "3",
             saisie : "3",
-            isValid : true,
         }   
     }
 
@@ -34,9 +32,13 @@ const initialParamsSpecifique  : EcrireNombreExerciseParams= {
 export function useEcrireNombreParams() {
 
 
+    const initalParamsGeneriqueDefaults = useMemo(
+        () => createGeneriqueParamsInitialState(initialParamsGenerique),
+        []
+      );
     const [paramsGenerique, dispatchGenerique] = useExercise(
         exerciseGeneriqueParamsReducer(),
-        initialParamsGenerique,
+        initalParamsGeneriqueDefaults,
       );
 
     const [paramsExercise, dispatchExercise] = useExercise(

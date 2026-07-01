@@ -2,6 +2,7 @@ import type {
   EcrireNombreExerciseParams,
   EcrireNombreParamsAction,
 } from "@srcFront/features/exercises/maths/nombre/ecrireNombre/ecrireNombre.type";
+import { Utilitaires } from "@utils/Utilitaires";
 import React from "react";
 type Props = {
   paramsExercise: EcrireNombreExerciseParams;
@@ -19,24 +20,32 @@ function EcrireNombreParamsExercises({
   const inputStyle =
     "border-2 border-gray-300 rounded-md px-1 py-0.5 ml-2  w-[150px]";
   const inputStyleUnvalid =
-    "border-2 border-red-500  rounded-md px-1 py-0.5 ml-2  bg-red-100";
-
-  const handleChangeTypeLangue = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    dispatchExercise({ type: "SET_TYPELANGUESAISIE", value });
-    const isValid = ["1", "2", "3"].includes(value);
-    if (isValid) {
-      dispatchExercise({ type: "SET_TYPELANGUE", value });
-    } else {
-      dispatchExercise({
-        type: "SET_TYPELANGUE",
-        value: paramsExercise.typeLangue.default,
-      });
-    }
-    dispatchExercise({ type: "SET_TYPELANGUEVALID", value: isValid });
-  };
+    "border-2 border-red-500  rounded-md px-1 py-0.5 ml-2  bg-red-100 w-[150px]";
 
   const divStyle = "mt-2";
+
+  const handleChangeNbMin = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    dispatchExercise({ type: "SET_NBMIN", value });
+
+    const cleanSaisie = Utilitaires.validInputString(value);
+    const isValid =
+      Utilitaires.isIntegerInRange(cleanSaisie, 1, 1_000_000_000) &&
+      parseInt(cleanSaisie) < parseInt(paramsExercise.nbMax.saisie);
+    dispatchExercise({ type: "SET_NBMINVALID", value: isValid });
+  };
+
+  const handleChangeNbMax = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    dispatchExercise({ type: "SET_NBMAX", value });
+
+    const cleanSaisie = Utilitaires.validInputString(value);
+    const isValid =
+      Utilitaires.isIntegerInRange(cleanSaisie, 1, 1_000_000_000) &&
+      parseInt(cleanSaisie) > parseInt(paramsExercise.nbMin.saisie);
+    dispatchExercise({ type: "SET_NBMAXVALID", value: isValid });
+  };
+
   return (
     <div>
       <form>
@@ -47,37 +56,29 @@ function EcrireNombreParamsExercises({
           <div className={divStyle}>
             <label htmlFor="nbMin">Nombre minimum</label>
             <input
-              className={inputStyle}
-              type="number"
+              className={`${
+                paramsExercise.nbMin.isValid ? inputStyle : inputStyleUnvalid
+              }`}
+              type="text"
               id="nbMin"
               name="nbMin"
-              value={paramsExercise.nbMin}
-              min="1"
-              max="100000000000"
-              onChange={(e) =>
-                dispatchExercise({
-                  type: "SET_NBMIN",
-                  value: e.target.value,
-                })
-              }
+              value={paramsExercise.nbMin.saisie}
+              onChange={handleChangeNbMin}
             />
             <label className="ml-6" htmlFor="nbMax">
               Nombre maximum
             </label>
             <input
-              className={inputStyle}
-              type="number"
+              className={`${
+                paramsExercise.nbMax.isValid ? inputStyle : inputStyleUnvalid
+              }`}
+              type="text"
               id="nbMax"
               name="nbMax"
               min="1"
               max="10"
-              value={paramsExercise.nbMax}
-              onChange={(e) =>
-                dispatchExercise({
-                  type: "SET_NBMAX",
-                  value: e.target.value,
-                })
-              }
+              value={paramsExercise.nbMax.saisie}
+              onChange={handleChangeNbMax}
             />
           </div>
           <div className={divStyle}>
@@ -86,7 +87,12 @@ function EcrireNombreParamsExercises({
               className="border-2 border-gray-300 rounded-md px-1 py-0.5 ml-2"
               id="typeLangue"
               value={paramsExercise.typeLangue.default}
-              onChange={handleChangeTypeLangue}
+              onChange={(e) =>
+                dispatchExercise({
+                  type: "SET_TYPELANGUE",
+                  value: e.target.value,
+                })
+              }
             >
               <option value="1">Breton</option>
               <option value="2">Français</option>
@@ -98,7 +104,7 @@ function EcrireNombreParamsExercises({
             <select
               className="border-2 border-gray-300 rounded-md px-1 py-0.5 ml-2"
               id="typeQuestion"
-              value={paramsExercise.typeQuestion}
+              value={paramsExercise.typeQuestion.saisie}
               onChange={(e) =>
                 dispatchExercise({
                   type: "SET_TYPEQUESTION",

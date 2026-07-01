@@ -4,6 +4,7 @@ import { buttonStyle } from "@srcFront/librairies/buttonStyle";
 import { useEcrireNombreParams } from "@srcFront/features/exercises/maths/nombre/ecrireNombre/useEcrireNombreParams";
 import { QRCodeCanvas } from "qrcode.react";
 import { useRef } from "react";
+import { Utilitaires } from "@utils/Utilitaires";
 
 function EcrireNombreParams() {
   const {
@@ -43,10 +44,10 @@ function EcrireNombreParams() {
         key: "nbPa",
         param: paramsGenerique.eca,
       },
-      // {
-      //   key: "nbMin",
-      //   param: paramsExercise.nbMin,
-      // },
+      {
+        key: "nbMin",
+        param: paramsExercise.nbMin,
+      },
       // {
       //   key: "nbMax",
       //   param: paramsExercise.nbMax,
@@ -64,13 +65,9 @@ function EcrireNombreParams() {
     const searchParams = new URLSearchParams();
 
     params.forEach(({ key, param }) => {
-      if (
-        param.isValid &&
-        // param.valeur !== "" &&
-        // param.valeur !== param.default
-        param.saisie !== param.default
-      ) {
-        searchParams.append(key, param.saisie);
+      const value = Utilitaires.validInputString(param.saisie);
+      if (param.isValid && value !== param.default) {
+        searchParams.append(key, value);
       }
     });
 

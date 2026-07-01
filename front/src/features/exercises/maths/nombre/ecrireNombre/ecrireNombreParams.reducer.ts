@@ -10,28 +10,60 @@ export const ecrireNombreParamsReducer = () =>
       const { value } = action;
       return {
         ...state,
-        nbMin: value,
+        nbMin: {
+          ...state.nbMin,
+          saisie: value
+        }
+      };
+    }
+    case "SET_NBMINVALID":   {
+      const { value } = action;
+      return {
+        ...state,
+        nbMin: {
+          ...state.nbMin,
+          isValid: value
+        }
       };
     }
     case "SET_NBMAX":   {
       const { value } = action;
       return {
         ...state,
-        nbMax: value,
+        nbMax: {
+          ...state.nbMax,
+          saisie: value
+        },
+      };
+    }
+    case "SET_NBMAXVALID":   {
+      const { value } = action;
+      return {
+        ...state,
+        nbMax: {
+          ...state.nbMax,
+          isValid: value,
+        },
       };
     }
     case "SET_TYPELANGUE":   {
       const { value } = action;
       return {
         ...state,
-        typeLangue: value,
+        typeLangue: {
+          ...state.typeLangue,
+          saisie : value
+        }
+        }
       };
-    }
     case "SET_TYPEQUESTION":   {
       const { value } = action;
       return {
         ...state,
-        typeQuestion: value,
+        typeQuestion: {
+          ...state.typeQuestion,
+          saisie : value
+        }
       };
     }
     default:
