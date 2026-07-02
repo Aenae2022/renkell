@@ -12,7 +12,11 @@
         "eca": "o vont da vezañ mestroniet",
         "typeLangue1" : "Brezhoneg",
         "typeLangue2" : "Galleg",   
-        "aleatoire" : "Dargouezhek"
+        "aleatoire" : "Dargouezhek",
+        "generatedLink" : "Liamm krouet",
+        "copyLink" : "Kopiañ al liamm",
+        "downloadQr" : "Pellgargañ ar c'hod QR",
+        "copyQr" : "Kopiañ ar c'hod QR"
     },
     "den1" : {
         "title" : "An niveroù betek 1 000",

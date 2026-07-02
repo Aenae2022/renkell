@@ -1,8 +1,10 @@
 import { QRCodeCanvas } from "qrcode.react";
 import { useRef } from "react";
 import { buttonStyle } from "@srcFront/librairies/buttonStyle";
+import { useTranslation } from "react-i18next";
 
 function GenerateLink({ linkGenerated }: { linkGenerated: string }) {
+  const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const copyLink = async () => {
     await navigator.clipboard.writeText(linkGenerated);
@@ -36,7 +38,7 @@ function GenerateLink({ linkGenerated }: { linkGenerated: string }) {
   };
   return (
     <div className="bg-nombre-light border-2 border-nombre-dark mb-4 px-2">
-      <p>Lien généré :</p>
+      <p>{t("applies.generique.generatedLink")}</p>
       <div //div contenant le QR code, positionné hors de l'écran pour ne pas être visible
         style={{
           position: "absolute",
@@ -48,15 +50,15 @@ function GenerateLink({ linkGenerated }: { linkGenerated: string }) {
       </div>
       <div className="flex items-center justify-around text-base">
         <button className={`${buttonStyle} mr-4 mb-4`} onClick={copyLink}>
-          Copier le lien
+          {t("applies.generique.copyLink")}
         </button>
 
         <button className={`${buttonStyle} mr-4 mb-4`} onClick={downloadQr}>
-          Télécharger le QR Code
+          {t("applies.generique.downloadQr")}
         </button>
 
         <button className={`${buttonStyle} mr-4 mb-4`} onClick={copyQr}>
-          Copier le QR Code
+          {t("applies.generique.copyQr")}
         </button>
       </div>
     </div>

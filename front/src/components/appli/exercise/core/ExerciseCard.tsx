@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 
 type ExerciseCardProps = {
   exercise: ExerciseGenerique;
+  title: string;
   children: React.ReactNode;
 };
-function ExerciseCard({ exercise, children }: ExerciseCardProps) {
+function ExerciseCard({ exercise, title, children }: ExerciseCardProps) {
   const { t } = useTranslation();
   return (
     <div
@@ -22,7 +23,7 @@ function ExerciseCard({ exercise, children }: ExerciseCardProps) {
         <p
           className={`ml-2 grow-1 w-full h-10 flex items-center text-${exercise.meta.sousDomaine}`}
         >
-          {t(exercise.meta.title)}
+          {title}
         </p>
         <p className={`text-${exercise.meta.sousDomaine} text-sm`}>
           {exercise.params.config.refLecon !== ""

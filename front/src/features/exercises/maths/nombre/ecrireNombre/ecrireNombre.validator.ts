@@ -33,7 +33,7 @@ export const ecrireNombreValidator = (
 
 function isCorrectResponse1(reponse:string, correction:string) : {isCorrect : boolean, conseil:string} {
   //réponse en lettres
-  if(reponse === correction){
+  if(reponse.toLowerCase() === correction.toLowerCase()){
     return {isCorrect:true, conseil:""}
   }
   else {
@@ -47,7 +47,7 @@ function isCorrectResponse1(reponse:string, correction:string) : {isCorrect : bo
 }
 
 function isCorrectResponse2(reponse:string, correction:string) : {isCorrect : boolean, conseil:string} {
-  //réponse en lettres
+  //réponse en chiffres
   if(reponse === correction){
     return {isCorrect:true, conseil:""}
   }

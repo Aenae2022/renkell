@@ -1,14 +1,19 @@
 import type { ExerciseGeneriqueItem } from "@srcFront/features/exercises/core/exerciseGenerique.type";
-import carnetSpiral from "@pictures/fond/CarnetSpirale.jpg";
+import CarnetSpiraleMini from "@pictures/fond/CarnetSpiraleMini.jpg";
+import CarnetSpiraleFond from "@pictures/fond/CarnetSpiraleFond.jpg";
 function ExerciseShowWork({ items }: { items: ExerciseGeneriqueItem[] }) {
   return (
     <div
       className="mt-4 py-2"
-      style={{ backgroundImage: `url(${carnetSpiral})` }}
+      style={{
+        backgroundImage: `url(${CarnetSpiraleMini}), url(${CarnetSpiraleFond})`,
+        backgroundRepeat: "repeat-y, repeat",
+        backgroundPosition: "top left, top left",
+      }}
     >
       {items.map((item) => {
         return (
-          <div key={item.id} className="pl-36 mb-2">
+          <div key={item.id} className="pl-20 mb-2">
             <p>{`n°${item.id + 1}. ${item.question.model}`}</p>
             <div className="ml-2"></div>
             {item.reponse.map((reponse, index) => {

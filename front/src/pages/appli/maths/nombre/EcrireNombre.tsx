@@ -8,20 +8,20 @@ import type {
   ExerciseGeneriqueAction,
   ExerciseGeneriqueItem,
 } from "@srcFront/features/exercises/core/exerciseGenerique.type";
+import { ecrireNombreMeta } from "@srcFront/features/exercises/maths/nombre/ecrireNombre/ecrireNombre.meta";
 import { useEcrireNombre } from "@srcFront/features/exercises/maths/nombre/ecrireNombre/useEcrireNombre";
+import { Matematik } from "@utils/Matematik";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 function EcrireNombre() {
-  const ecrireNombreMeta = {
-    exId: "den_max_1000",
-    domaine: "mathematiques",
-    sousDomaine: "nombre",
-    logo: "/src/assets/pictures/icons/nombre-2.png",
-    title: "applies.ecrireNombre.title",
-    consigne: "applies.ecrireNombre.consigne",
-  };
   const { exercise, state, dispatch } = useEcrireNombre(ecrireNombreMeta);
-
+  const { t } = useTranslation();
+  const title =
+    t(exercise.meta.title) +
+    " " +
+    Matematik.ecrireNombreEnChiffreEspace(exercise.params.userData.nMax)
+      .nombreEnchiffre;
   let componentToShow = <Loader />;
 
   if (state.status === "run") {
@@ -40,7 +40,11 @@ function EcrireNombre() {
       <ExerciseGeneriqueResultContainer exercise={exercise} state={state} />
     );
   }
-  return <ExerciseCard exercise={exercise}>{componentToShow}</ExerciseCard>;
+  return (
+    <ExerciseCard exercise={exercise} title={title}>
+      {componentToShow}
+    </ExerciseCard>
+  );
 }
 
 function EcrireQuestion({ item }: { item: ExerciseGeneriqueItem }) {

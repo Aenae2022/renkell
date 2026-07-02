@@ -67,15 +67,15 @@ export default function Applies() {
           align-text-bottom text-m text-black
           border-r-4 border-b-4 border-gray-700 rounded-[10px] 
           `}
+            onClick={() => {
+              navigate(apply.routeLink);
+            }}
           >
             <div className="flex-1 flex items-center justify-center overflow-hidden">
               <img
                 className="w-full h-full object-contain rounded-xl"
                 alt={apply.title}
                 src={apply.logo}
-                onClick={() => {
-                  navigate(apply.routeLink);
-                }}
               />
             </div>
             <p className="text-center px-1 text-sm whitespace-pre-wrap">

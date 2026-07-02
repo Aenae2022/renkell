@@ -10,16 +10,20 @@
         "reussiteText": "Pourcentage de réussite à atteindre pour considérer l'exercice comme",
         "acquis": "acquis",
         "eca": "en cours d'acquisition",
-        "typeLangue1" : "Brezhoneg",
-        "typeLangue2" : "Galleg",   
-        "aleatoire" : "Dargouezhek"
+        "typeLangue1" : "Breton",
+        "typeLangue2" : "Français",   
+        "aleatoire" : "Aléatoire",
+        "generatedLink" : "Lien généré",
+        "copyLink" : "Copier le lien",
+        "downloadQr" : "Télécharger le QR Code",
+        "copyQr" : "Copier le QR Code"
     },"den1" : {
         "title" : "Les nombres jusqu'à 1 000",
         "consigne": "Ecris le nombre représenté."
     },
     "ecrireNombre" : {
         "globalTitle" : "Lire et écrire les nombres",
-        "title" : "Les nombres jusqu'à 1 000",
+        "title" : "Les nombres jusqu'à ",
         "consigne1": "Ecris le nombre en lettres.",
         "consigne2": "Ecris le nombre en chiffres.",
         "conseil1": "Fais attention aux tirets. :)",
