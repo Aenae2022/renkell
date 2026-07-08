@@ -16,7 +16,8 @@
         "generatedLink" : "Lien généré",
         "copyLink" : "Copier le lien",
         "downloadQr" : "Télécharger le QR Code",
-        "copyQr" : "Copier le QR Code"
+        "copyQr" : "Copier le QR Code",
+        "printResult" : "Imprimer"
     },"den1" : {
         "title" : "Les nombres jusqu'à 1 000",
         "consigne": "Ecris le nombre représenté."
