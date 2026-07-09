@@ -257,7 +257,7 @@ const renderCorrection = (
       textReponse += textAdd;
       textReponse +=
         typeof rep === "number"
-          ? Matematik.ecrireNombreEnChiffreEspace(rep)
+          ? Matematik.ecrireNombreEnChiffreEspace(rep).nombreEnchiffre
           : `${rep}   `;
       return textReponse;
     });
@@ -274,7 +274,7 @@ const renderCorrection = (
 
   const resultats = item.resultats.map(
     (quest) =>
-      `${quest.texte} ${Matematik.ecrireNombreEnChiffreEspace(quest.valeurRep)} `,
+      `${quest.texte} ${Matematik.ecrireNombreEnChiffreEspace(quest.valeurRep).nombreEnchiffre} `,
   );
 
   return (

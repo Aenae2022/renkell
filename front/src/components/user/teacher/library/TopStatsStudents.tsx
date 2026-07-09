@@ -52,15 +52,24 @@ function TopStatsStudents({
                   switch (typeTop) {
                     case "reader":
                       nbTotal = student.nbReaded.total;
-                      concerned = student.nbReaded.concerned;
+                      concerned = student.nbReaded.concerned.replace(
+                        /§/g,
+                        ", ",
+                      );
                       break;
                     case "distinctReader":
                       nbTotal = student.nbDistinctReaded.total;
-                      concerned = student.nbDistinctReaded.concerned;
+                      concerned = student.nbDistinctReaded.concerned.replace(
+                        /§/g,
+                        ", ",
+                      );
                       break;
                     case "noReader":
                       nbTotal = student.nbNoReaded.total;
-                      concerned = student.nbNoReaded.concerned;
+                      concerned = student.nbNoReaded.concerned.replace(
+                        /§/g,
+                        ", ",
+                      );
                       break;
                     default:
                       break;

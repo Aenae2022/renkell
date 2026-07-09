@@ -12,10 +12,21 @@ import type {
 } from "@shared/schema/library.schema";
 import logo from "@pictures/icons/lecture.png";
 
+// type ColumnPage = {
+//   left: StudentStatsType[];
+//   right: StudentStatsType[];
+// };
+
 type ColumnPage = {
-  left: StudentStatsType[];
-  right: StudentStatsType[];
+  left: StudentBlock[];
+  right: StudentBlock[];
 };
+
+type StudentBlock = StudentStatsType & {
+  booksChunk: string[];
+  isContinuation?: boolean;
+};
+
 // Create styles
 const styles = StyleSheet.create({
   page: {},
@@ -56,10 +67,31 @@ const formatDate = (isoDate: string): string => {
   return `${day}/${month}/${year}`;
 };
 
+const chunkBooks = (
+  student: StudentStatsType,
+  maxBooksPerBlock = 18,
+): StudentBlock[] => {
+  const books = student.nbDistinctReaded.concerned
+    .split("§")
+    .map((livre) => livre.trim());
+
+  const result: StudentBlock[] = [];
+
+  for (let i = 0; i < books.length; i += maxBooksPerBlock) {
+    result.push({
+      ...student,
+      booksChunk: books.slice(i, i + maxBooksPerBlock),
+      isContinuation: i > 0,
+    });
+  }
+
+  return result;
+};
+
 const estimateHeight = (livresArray: string[]) => 95 + livresArray.length * 22;
 
 const distributeByHeight = (
-  data: StudentStatsType[],
+  data: StudentBlock[],
   maxHeight = 500,
 ): ColumnPage[] => {
   const pages: ColumnPage[] = [];
@@ -68,11 +100,12 @@ const distributeByHeight = (
   let rightHeight = 0;
 
   for (const student of data) {
-    const h = estimateHeight(
-      student.nbDistinctReaded.concerned
-        .split(",")
-        .map((livre) => livre.trim()),
-    );
+    // const h = estimateHeight(
+    //   student.nbDistinctReaded.concerned
+    //     .split("§")
+    //     .map((livre) => livre.trim()),
+    // );
+    const h = estimateHeight(student.booksChunk);
 
     if (leftHeight + h <= maxHeight) {
       currentPage.left.push(student);
@@ -100,7 +133,12 @@ export const StudentsStatsDoc = ({
   studentsDatas: StudentStatsType[];
   period: PeriodType;
 }) => {
-  const pages = distributeByHeight(studentsDatas);
+  const studentBlocks = studentsDatas.flatMap((student) =>
+    chunkBooks(student, 20),
+  );
+
+  const pages = distributeByHeight(studentBlocks);
+  //const pages = distributeByHeight(studentsDatas);
 
   return (
     <Document>
@@ -120,10 +158,12 @@ export const StudentsStatsDoc = ({
   );
 };
 
-const renderStudentBlock = (student: StudentStatsType, period: PeriodType) => {
-  const livresArray = student.nbDistinctReaded.concerned
-    .split(",")
-    .map((livre) => livre.trim());
+const renderStudentBlock = (student: StudentBlock, period: PeriodType) => {
+  // const livresArray = student.nbDistinctReaded.concerned
+  //   .split("§")
+  //   .map((livre) => livre.trim());
+  const livresArray = student.booksChunk;
+
   const dateStart = formatDate(period.periodStart.toString());
   const dateEnd = formatDate(period.periodEnd.toString());
   return (
@@ -132,9 +172,15 @@ const renderStudentBlock = (student: StudentStatsType, period: PeriodType) => {
         <Image style={styles.logo} src={logo} />
         <View style={styles.section3}>
           <Text style={styles.titre}>Lecture autonome</Text>
-          <Text
+          {/* <Text
             style={styles.name}
-          >{`${student.userFirstName} ${student.userFamilyName}`}</Text>
+          >{`${student.userFirstName} ${student.userFamilyName}`}</Text> */}
+
+          <Text style={styles.name}>
+            {student.userFirstName} {student.userFamilyName}
+            {student.isContinuation ? " (suite)" : ""}
+          </Text>
+
           <Text
             style={styles.description}
           >{`${period.periodName} : du ${dateStart} au ${dateEnd}`}</Text>
@@ -147,43 +193,6 @@ const renderStudentBlock = (student: StudentStatsType, period: PeriodType) => {
       ))}
     </View>
   );
-  // return (
-  // <Document>
-  //   <Page size="A4" orientation="portrait" style={styles.page}>
-  //     {studentsDatas.map((student) => {
-  //       const livresArray = student.nbDistinctReaded.concerned
-  //         .split(",")
-  //         .map((livre) => livre.trim());
-
-  //       const dateStart = formatDate(period.periodStart.toString());
-  //       const dateEnd = formatDate(period.periodEnd.toString());
-
-  //       return (
-  //         <View key={student.userId} style={styles.section1}>
-  //           <View style={styles.section2}>
-  //             <Image style={styles.logo} src={logo} />
-  //             <View style={styles.section3}>
-  //               <Text style={styles.titre}>Lecture autonome</Text>
-  //               <Text
-  //                 style={styles.name}
-  //               >{`${student.userFirstName}  ${student.userFamilyName}`}</Text>
-  //               <Text
-  //                 style={styles.description}
-  //               >{`${period.periodName} : du ${dateStart} au ${dateEnd}`}</Text>
-  //             </View>
-  //           </View>
-  //           {livresArray.map((livre, idx) => {
-  //             return (
-  //               <Text key={idx} style={styles.book}>
-  //                 • {livre}
-  //               </Text>
-  //             );
-  //           })}
-  //         </View>
-  //       );
-  //     })}
-  //   </Page>
-  // </Document>
 };
 
 export default StudentsStatsDoc;

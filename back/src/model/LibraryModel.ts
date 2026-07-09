@@ -773,7 +773,7 @@ export default class LibraryModel{
 
         statsStudent.map((data)=>{
           if(data.bookEventType === 2){
-            books2 = books2!==""? books2 +", "+data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "") : data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "")
+            books2 = books2!==""? books2 +"§"+data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "") : data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "")
             count2++;
             //on regroupe dans bookMap les bookId distincts afin de connaitre le nombre de livres distincts lus
             const key = data.groupBook.book.bookId;
@@ -782,11 +782,11 @@ export default class LibraryModel{
             } 
           }
           else if(data.bookEventType === 3){
-            books3 = books3!==""? books3 +", "+data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "") : data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "")
+            books3 = books3!==""? books3 +"§"+data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "") : data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "")
             count3++;
           }
           else if(data.bookEventType === 4){
-            books4 = books4!==""? books4 +", "+data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "") : data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "")
+            books4 = books4!==""? books4 +"§"+data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "") : data.groupBook.book.bookTitle + (data.groupBook.book.bookAuthor !== null ? " - " + data.groupBook.book.bookAuthor : "")
             count4++;
           }
 
@@ -796,7 +796,7 @@ export default class LibraryModel{
         let booksConcerned = ""
         booksList.map((book) => {
           const info = book.bookTitle  + (book.bookAuthor !== null ? " - " + book.bookAuthor : "")
-          booksConcerned = booksConcerned === "" ? info : booksConcerned + ", " + info;
+          booksConcerned = booksConcerned === "" ? info : booksConcerned + "§" + info;
         })
         const stats = {
           readed : {
