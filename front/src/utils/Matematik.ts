@@ -6,6 +6,38 @@ type ClasseNombre = {
 }
 export class Matematik {
 
+    //uniquement pour les nombres à 3 chiffres
+    //Proposer une décomposition d'un nombre avec ou sans regroupement
+    //params : nombre (number): le nombre à décomposer, groups (boolean) : des regroupements sont possibles
+    //return {nbUnite:number, nbDizaine:number, nbCentaine:number} : un objet avec le nombre d'unités, de dizaines et de centaines
+    static decomposeNombre(nombre : number, groups : boolean) : {nbUnite:number, nbDizaine:number, nbCentaine:number} {
+        const nombreDecoupe = this.decoupeRangClasseNombre(nombre);
+        const nombreDecoupeRetour = {
+            nbUnite : nombreDecoupe.unite,
+            nbDizaine : nombreDecoupe.dizaine,
+            nbCentaine : nombreDecoupe.centaine
+        }
+        console.log('groups', groups)
+        if(groups){
+            //regroupement d'unités
+            if(Matematik.entierAleatoire(0,2) === 2 && nombreDecoupe.unite <= 7 && nombreDecoupe.dizaine >0){
+                nombreDecoupeRetour.nbUnite = nombreDecoupe.unite +10;
+                nombreDecoupeRetour.nbDizaine = nombreDecoupe.dizaine -1;
+
+            } 
+            //regroupement de dizaines
+            if(Matematik.entierAleatoire(0,2) === 2 && nombreDecoupe.dizaine <= 5 && nombreDecoupe.centaine >0){
+                nombreDecoupeRetour.nbDizaine = nombreDecoupe.dizaine +10;
+                nombreDecoupeRetour.nbCentaine = nombreDecoupe.centaine -1;
+            }
+            
+
+        }
+        
+        return nombreDecoupeRetour;
+    }
+    
+
     //Découper un nombre en classe (milliard, million, mille, simple)
     // entree : Le nombre à décomposer
     // sortie : un objet avec les classes

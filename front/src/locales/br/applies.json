@@ -10,18 +10,28 @@
         "reussiteText": "Dregantad gounit ret ma vo sellet ouzh ar boelladenn evel",
         "acquis": "mestroniet",
         "eca": "o vont da vezañ mestroniet",
+        "typeLangue" : "Yezh",
         "typeLangue1" : "Brezhoneg",
         "typeLangue2" : "Galleg",   
         "aleatoire" : "Dargouezhek",
         "generatedLink" : "Liamm krouet",
         "copyLink" : "Kopiañ al liamm",
+        "goLink" : "Mont d'ar boelladenn",
         "downloadQr" : "Pellgargañ ar c'hod QR",
         "copyQr" : "Kopiañ ar c'hod QR",
         "printResult" : "Moullañ"
     },
-    "den1" : {
-        "title" : "An niveroù betek 1 000",
-        "consigne": "Skriv an niver skeudennet."
+    "denombre1" : {
+        "globalTitle" : "Adkenaozañ an niveroù",
+        "title" : "An niveroù betek ",
+        "consigne": "Skriv an niver skeudennet.",
+        "regroupement" : "Ret e vo strollañ ?",
+        "regroupement1" : "Ket",
+        "regroupement2" : "Ya",
+        "typeQuestion" : "Seurt goulenn",
+        "typeQuestion1" : "diskouez gant ar c'huboù",
+        "typeQuestion2" : "diskouez gant ar monneiz",
+        "typeQuestion3" : "diskouez gant ur sammadenn"
     },
     "ecrireNombre" : {
         "globalTitle" : "Lenn ha skrivañ an niveroù",

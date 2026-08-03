@@ -10,6 +10,10 @@ function GenerateLink({ linkGenerated }: { linkGenerated: string }) {
     await navigator.clipboard.writeText(linkGenerated);
   };
 
+  const goLink = () => {
+    window.open(linkGenerated, "_blank");
+  };
+
   const downloadQr = () => {
     //const canvas = getCanvas();
     if (!canvasRef.current) return;
@@ -49,6 +53,10 @@ function GenerateLink({ linkGenerated }: { linkGenerated: string }) {
         <QRCodeCanvas ref={canvasRef} value={linkGenerated} size={50} />
       </div>
       <div className="flex items-center justify-around text-base">
+        <button className={`${buttonStyle} mr-4 mb-4`} onClick={goLink}>
+          {t("applies.generique.goLink")}
+        </button>
+
         <button className={`${buttonStyle} mr-4 mb-4`} onClick={copyLink}>
           {t("applies.generique.copyLink")}
         </button>

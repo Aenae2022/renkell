@@ -3,29 +3,21 @@ import { useTranslation } from "react-i18next";
 import LogoValid from "@pictures/icons/vrai.png";
 import LogoUnvalid from "@pictures/icons/faux.png";
 import type { ExerciseGeneriqueItem } from "@srcFront/features/exercises/core/exerciseGenerique.type";
-import ColoredNumberClasse from "./ColoredNumberClasse";
 
 type ExerciseAnswerStringProps = {
-  item: ExerciseGeneriqueItem;
+  item: ExerciseGeneriqueItem<unknown>;
+  correctionToShow: React.ReactNode;
   handleVerify: (answer: string) => void;
   handleNextItem: (index: number) => void;
 };
 function ExerciseAnswerString({
   item,
+  correctionToShow,
   handleVerify,
   handleNextItem,
 }: ExerciseAnswerStringProps) {
   const { t } = useTranslation();
   const [myAnswer, setMyAnswer] = useState<string>("");
-  const renderers = {
-    numberClasseColoree: ColoredNumberClasse,
-  } as const;
-  const ComponentCorrection =
-    renderers[item.correction.type as keyof typeof renderers];
-
-  const correctionToShow = (
-    <ComponentCorrection nbrDec={item.correction.data} />
-  );
 
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);

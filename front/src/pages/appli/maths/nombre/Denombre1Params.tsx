@@ -1,19 +1,19 @@
 import ExerciseGeneriqueParams from "@components/appli/exercise/core/ExerciseGeneriqueParams";
-import EcrireNombreParamsExercises from "@components/appli/exercise/nombre/ecrireNombre/EcrireNombreParamsExercises";
 import { buttonStyle } from "@srcFront/librairies/buttonStyle";
-import { useEcrireNombreParams } from "@srcFront/features/exercises/maths/nombre/ecrireNombre/useEcrireNombreParams";
 import { Utilitaires } from "@utils/Utilitaires";
 import { useTranslation } from "react-i18next";
 import GenerateLink from "@components/appli/exercise/core/GenerateLink";
+import { useDenombre1Params } from "@srcFront/features/exercises/maths/nombre/denombre1/useDenombre1Params";
+import Denombre1ParamsExercises from "@components/appli/exercise/nombre/denombre1/Denombre1ParamsExercises";
 
-function EcrireNombreParams() {
+function Denombre1Params() {
   const { t } = useTranslation();
   const {
     paramsGenerique,
     paramsExercise,
     dispatchGenerique,
     dispatchExercise,
-  } = useEcrireNombreParams();
+  } = useDenombre1Params();
 
   const handleCreateLink = () => {
     const params = [
@@ -53,18 +53,26 @@ function EcrireNombreParams() {
         key: "tQu",
         param: paramsExercise.typeQuestion,
       },
+      {
+        key: "rgp",
+        param: paramsExercise.regroupement,
+      },
     ];
 
     const searchParams = new URLSearchParams();
 
     params.forEach(({ key, param }) => {
-      const value = Utilitaires.validInputString(param.saisie);
+      let valueToUse = param.saisie;
+      if (Array.isArray(valueToUse)) {
+        valueToUse = valueToUse.join(",");
+      }
+      const value = Utilitaires.validInputString(valueToUse);
       if (param.isValid && value !== param.default) {
         searchParams.append(key, value);
       }
     });
 
-    const lien = `${window.location.origin}/nbre/ex/ecrire?${searchParams.toString()}`;
+    const lien = `${window.location.origin}/nbre/ex/den1?${searchParams.toString()}`;
 
     dispatchGenerique({
       type: "SET_LINKGENERATED",
@@ -96,7 +104,7 @@ function EcrireNombreParams() {
         dispatchGenerique={dispatchGenerique}
         domaine="nombre"
       />
-      <EcrireNombreParamsExercises
+      <Denombre1ParamsExercises
         paramsExercise={paramsExercise}
         dispatchExercise={dispatchExercise}
       />
@@ -104,4 +112,4 @@ function EcrireNombreParams() {
   );
 }
 
-export default EcrireNombreParams;
+export default Denombre1Params;

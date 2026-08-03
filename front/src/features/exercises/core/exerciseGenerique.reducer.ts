@@ -6,21 +6,20 @@ type ValidatorResult = {
   cleanedAnswer: string;
 };
 
-type ExerciseValidator = (
+type ExerciseValidator<TItemData> = (
   answer: string,
-  item: ExerciseGeneriqueItem,
+  item: ExerciseGeneriqueItem<TItemData>,
 ) => ValidatorResult;
 
-type ReducerDependencies = {
-  validator: ExerciseValidator;
-
+type ReducerDependencies<TItemData> = {
+  validator: ExerciseValidator<TItemData>;
   nbEssaisMax?: number;
 };
-export const exerciseGeneriqueReducer = ({ validator, nbEssaisMax = 2 }: ReducerDependencies) =>
+export const exerciseGeneriqueReducer = <TItemData>({ validator, nbEssaisMax = 2 }: ReducerDependencies<TItemData>) =>
 (
-  state: ExerciseGeneriqueState, //EcrireNombreState,
+  state: ExerciseGeneriqueState<TItemData>,
   action: ExerciseGeneriqueAction
-): ExerciseGeneriqueState => {
+): ExerciseGeneriqueState<TItemData> => {
   switch (action.type) {
     case "SET_REPONSE":   {
       const { index, value } = action;

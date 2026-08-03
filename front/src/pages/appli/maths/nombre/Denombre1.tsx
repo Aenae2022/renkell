@@ -1,19 +1,31 @@
-import ExerciseAnswer1 from "@components/appli/exercise/core/ExerciseAnswer1";
+import ColoredNumberRang from "@components/appli/exercise/core/ColoredNumberRang";
+import ExerciseAnswerString from "@components/appli/exercise/core/ExerciseAnswerString";
 import ExerciseCard from "@components/appli/exercise/core/ExerciseCard";
+import ExerciseGeneriqueResultContainer from "@components/appli/exercise/core/ExerciseGeneriqueResultContainer";
 import ExerciseItemContainer from "@components/appli/exercise/core/ExerciseItemContainer";
 import ArdoiseCubes from "@components/appli/exercise/nombre/ArdoiseCubes";
 import Loader from "@components/core/Loader";
-import { useDenombre1 } from "@features/exercises/denombre1/useDenombre1";
+import { useDenombre1 } from "@srcFront/features/exercises/maths/nombre/denombre1/useDenombre1";
 import type {
-  Denombre1Action,
-  Denombre1Item,
-} from "@srcFront/features/exercises/denombre1/denombre1.types";
+  ExerciseGeneriqueAction,
+  ExerciseGeneriqueItem,
+} from "@srcFront/features/exercises/core/exerciseGenerique.type";
+import { denombre1Meta } from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.meta";
+import type { Denombre1ItemData } from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.types";
+import { Matematik } from "@utils/Matematik";
+import { useTranslation } from "react-i18next";
 
 export function Denombre1() {
-  const { exercise, state, dispatch } = useDenombre1(5);
-
+  const { t } = useTranslation();
+  const { exercise, state, dispatch } = useDenombre1(denombre1Meta);
+  console.log("exercise", exercise, "state", state);
   let componentToShow = <Loader />;
 
+  const title =
+    t(exercise.meta.title) +
+    " " +
+    Matematik.ecrireNombreEnChiffreEspace(exercise.params.userData.nMax)
+      .nombreEnchiffre;
   if (state.status === "run") {
     const item = state.items[state.indexItem];
     componentToShow = (
@@ -21,14 +33,20 @@ export function Denombre1() {
         itemStatus={item.itemStatus}
         isCorrect={item.isCorrect}
       >
-        <DenombreQuestion consigne={exercise.consigne} item={item} />
+        <DenombreQuestion consigne={exercise.meta.consigne} item={item} />
         <DenombreAnswer item={item} dispatch={dispatch} />
       </ExerciseItemContainer>
     );
   } else if (state.status === "finished") {
-    componentToShow = <p>Coucou</p>;
+    componentToShow = (
+      <ExerciseGeneriqueResultContainer exercise={exercise} state={state} />
+    );
   }
-  return <ExerciseCard exercise={exercise}>{componentToShow}</ExerciseCard>;
+  return (
+    <ExerciseCard exercise={exercise} title={title}>
+      {componentToShow}
+    </ExerciseCard>
+  );
 }
 
 function DenombreQuestion({
@@ -36,14 +54,14 @@ function DenombreQuestion({
   item,
 }: {
   consigne: string;
-  item: Denombre1Item;
+  item: ExerciseGeneriqueItem<Denombre1ItemData>;
 }) {
-  if (item.typeRepresentation === 1) {
+  if (item.typeQuestion === 1) {
     return (
       <ArdoiseCubes
         consigne={consigne}
         langue={item.typeLangue}
-        nombreDec={item.question}
+        nombreDec={item.question.data}
         itemStatus={item.itemStatus}
       />
     );
@@ -56,15 +74,20 @@ function DenombreAnswer({
   item,
   dispatch,
 }: {
-  item: Denombre1Item;
-  dispatch: React.Dispatch<Denombre1Action>;
+  item: ExerciseGeneriqueItem<Denombre1ItemData>;
+  dispatch: React.Dispatch<ExerciseGeneriqueAction>;
 }) {
+  const ComponentCorrection = ColoredNumberRang;
+  const correctionToShow = (
+    <ComponentCorrection nbrDec={item.correction.data} />
+  );
+
   const handleVerify = (answer: string) => {
     if (answer !== "") {
       dispatch({
         type: "SET_REPONSE",
         index: item.id,
-        value: parseInt(answer),
+        value: answer,
       });
     }
   };
@@ -75,13 +98,9 @@ function DenombreAnswer({
     });
   };
   return (
-    <ExerciseAnswer1
-      itemStatus={item.itemStatus}
-      isCorrect={item.isCorrect}
-      reponse={item.reponse}
-      correctionToShow={item.correction.toShow}
-      itemId={item.id}
-      typeLangue={item.typeLangue}
+    <ExerciseAnswerString
+      item={item}
+      correctionToShow={correctionToShow}
       handleVerify={handleVerify}
       handleNextItem={handleNextItem}
     />

@@ -1,6 +1,8 @@
 import { Utilitaires } from "@utils/Utilitaires";
 import DOMPurify from "dompurify";
 import type { ExerciseGeneriqueItem } from "@srcFront/features/exercises/core/exerciseGenerique.type";
+import type { EcrireNombreItemData } from "./ecrireNombre.type";
+// import type { EcrireNombreExerciseData } from "./ecrireNombre.type";
 type ValidatorResult = {
   isCorrect: boolean;
   conseil: string;
@@ -10,7 +12,7 @@ type ValidatorResult = {
 
 export const ecrireNombreValidator = (
     value : string,
-    item : ExerciseGeneriqueItem
+    item : ExerciseGeneriqueItem<EcrireNombreItemData>
 ) : ValidatorResult => {
     const secureStr = DOMPurify.sanitize(value)
 

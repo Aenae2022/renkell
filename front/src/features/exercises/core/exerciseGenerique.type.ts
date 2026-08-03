@@ -1,3 +1,4 @@
+
 export type ExerciseGenerique<TUserData = unknown> = {
     meta : ExerciseGeneriqueMeta;
   
@@ -26,20 +27,18 @@ export type ExerciseGeneriqueConfig = {
 
 
 
-export type ExerciseGeneriqueItem = {
+export type ExerciseGeneriqueItem<TItemData = unknown> = {
   id: number;
   question: {
     model : string;
-    type : string;
-    data : {model : string; type : string}[];
+    data : TItemData;
   };
   typeQuestion : number;
   typeLangue : string;
   reponse : string[];
   correction: {
     model : string;
-    type : string;
-    data : {model : string; type : string}[];
+    data : TItemData;
   };
   isCorrect: boolean;
   itemStatus: "question" | "essai2" | "correction";
@@ -48,8 +47,8 @@ export type ExerciseGeneriqueItem = {
 
 
 
-export type ExerciseGeneriqueState = {
-  items: ExerciseGeneriqueItem[];
+export type ExerciseGeneriqueState<TItemData = unknown> = {
+  items: ExerciseGeneriqueItem<TItemData>[];
   status :"run" | "finished";
   indexItem : number,
   score : number;

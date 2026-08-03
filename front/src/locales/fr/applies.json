@@ -10,17 +10,27 @@
         "reussiteText": "Pourcentage de réussite à atteindre pour considérer l'exercice comme",
         "acquis": "acquis",
         "eca": "en cours d'acquisition",
+        "typeLangue" : "Langue",
         "typeLangue1" : "Breton",
         "typeLangue2" : "Français",   
         "aleatoire" : "Aléatoire",
         "generatedLink" : "Lien généré",
         "copyLink" : "Copier le lien",
+        "goLink" : "Aller à l'exercice",
         "downloadQr" : "Télécharger le QR Code",
         "copyQr" : "Copier le QR Code",
         "printResult" : "Imprimer"
-    },"den1" : {
-        "title" : "Les nombres jusqu'à 1 000",
-        "consigne": "Ecris le nombre représenté."
+    },"denombre1" : {
+        "globalTitle" : "Recomposer les nombres",
+        "title" : "Les nombres jusqu'à ",
+        "consigne": "Ecris le nombre représenté.",
+        "regroupement" : "Avec regroupement ?",
+        "regroupement1" : "Non",
+        "regroupement2" : "Oui",
+        "typeQuestion" : "Type de représentation",
+        "typeQuestion1" : "cubes",
+        "typeQuestion2" : "monnaie",
+        "typeQuestion3" : "addition"
     },
     "ecrireNombre" : {
         "globalTitle" : "Lire et écrire les nombres",

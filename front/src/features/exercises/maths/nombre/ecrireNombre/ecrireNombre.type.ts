@@ -6,6 +6,11 @@ export type EcrireNombreExerciseData={
     typeQuestion : number; // 1 : chiffre -> lettre, 2 : lettre -> chiffre, 3 : aléatoire
 }
 
+export type EcrireNombreItemData = {
+    model: string;
+    type: string;
+}[]
+
 export type EcrireNombreExerciseParams={
     nbMin : {
         default : string;

@@ -27,6 +27,11 @@ function ExerciseShowWork({
                 const showResult = getShowResult(item, reponse, index);
                 return showResult;
               })}
+              {!item.isCorrect && (
+                <div className="text-sm italic ml-2">
+                  ({item.correction.model})
+                </div>
+              )}
             </div>
           );
         })}
@@ -41,6 +46,11 @@ function ExerciseShowWork({
                 const showResult = getShowResult(item, reponse, index);
                 return showResult;
               })}
+              {!item.isCorrect && (
+                <div className="text-sm italic ml-2">
+                  ({item.correction.model})
+                </div>
+              )}
             </div>
           );
         })}

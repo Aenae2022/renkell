@@ -4,12 +4,15 @@ import type {
   ExerciseGeneriqueItem,
   ExerciseGeneriqueState,
 } from "@srcFront/features/exercises/core/exerciseGenerique.type";
-import type { EcrireNombreExerciseData } from "./ecrireNombre.type";
+import type {
+  EcrireNombreExerciseData,
+  EcrireNombreItemData,
+} from "./ecrireNombre.type";
 
 const createItem = (
   id: number,
   userData: EcrireNombreExerciseData,
-): ExerciseGeneriqueItem => {
+): ExerciseGeneriqueItem<EcrireNombreItemData> => {
   const nb = Matematik.entierAleatoire(userData.nMin, userData.nMax);
   const typeLangue =
     userData.typeLangue === 3
@@ -43,7 +46,6 @@ const createItem = (
     id: id,
     question: {
       model: question,
-      type: "numberClasseColoree",
       data: questionDec,
     },
     typeQuestion: typeQuestion,
@@ -51,7 +53,6 @@ const createItem = (
     reponse: [],
     correction: {
       model: reponse,
-      type: "numberClasseColoree",
       data: reponseDec,
     },
     isCorrect: false,
@@ -63,7 +64,7 @@ const createItem = (
 export const createEcrireNombreInitialState = (params: {
   config: ExerciseGeneriqueConfig;
   userData: EcrireNombreExerciseData;
-}): ExerciseGeneriqueState => ({
+}): ExerciseGeneriqueState<EcrireNombreItemData> => ({
   items: Array.from({ length: params.config.nbExercice }, (_, i) =>
     createItem(i, params.userData),
   ),

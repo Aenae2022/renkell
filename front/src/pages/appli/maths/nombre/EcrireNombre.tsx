@@ -1,4 +1,5 @@
 import ArdoiseGenerique from "@components/appli/exercise/core/ArdoiseGenerique";
+import ColoredNumberClasse from "@components/appli/exercise/core/ColoredNumberClasse";
 import ExerciseAnswerString from "@components/appli/exercise/core/ExerciseAnswerString";
 import ExerciseCard from "@components/appli/exercise/core/ExerciseCard";
 import ExerciseGeneriqueResultContainer from "@components/appli/exercise/core/ExerciseGeneriqueResultContainer";
@@ -9,6 +10,7 @@ import type {
   ExerciseGeneriqueItem,
 } from "@srcFront/features/exercises/core/exerciseGenerique.type";
 import { ecrireNombreMeta } from "@srcFront/features/exercises/maths/nombre/ecrireNombre/ecrireNombre.meta";
+import type { EcrireNombreItemData } from "@srcFront/features/exercises/maths/nombre/ecrireNombre/ecrireNombre.type";
 import { useEcrireNombre } from "@srcFront/features/exercises/maths/nombre/ecrireNombre/useEcrireNombre";
 import { Matematik } from "@utils/Matematik";
 import React from "react";
@@ -47,20 +49,25 @@ function EcrireNombre() {
   );
 }
 
-function EcrireQuestion({ item }: { item: ExerciseGeneriqueItem }) {
+function EcrireQuestion({
+  item,
+}: {
+  item: ExerciseGeneriqueItem<EcrireNombreItemData>;
+}) {
   const consigne =
     item.typeQuestion === 1
       ? "applies.ecrireNombre.consigne1"
       : "applies.ecrireNombre.consigne2";
+  const ComponentCorrection = ColoredNumberClasse;
+  const questionShow =
+    item.itemStatus === "correction" && !item.isCorrect ? (
+      <ComponentCorrection nbrDec={item.question.data} />
+    ) : (
+      <span>{item.question.model}</span>
+    );
+
   return (
-    <ArdoiseGenerique
-      consigne={consigne}
-      // langue={item.typeLangue}
-      // question={item.question}
-      // itemStatus={item.itemStatus}
-      // isCorrect={item.isCorrect}
-      item={item}
-    />
+    <ArdoiseGenerique consigne={consigne} item={item} children={questionShow} />
   );
 }
 
@@ -68,9 +75,14 @@ function EcrireAnswer({
   item,
   dispatch,
 }: {
-  item: ExerciseGeneriqueItem;
+  item: ExerciseGeneriqueItem<EcrireNombreItemData>;
   dispatch: React.Dispatch<ExerciseGeneriqueAction>;
 }) {
+  const ComponentCorrection = ColoredNumberClasse;
+
+  const correctionToShow = (
+    <ComponentCorrection nbrDec={item.correction.data} />
+  );
   const handleVerify = (answer: string) => {
     if (answer !== "") {
       dispatch({
@@ -89,6 +101,7 @@ function EcrireAnswer({
   return (
     <ExerciseAnswerString
       item={item}
+      correctionToShow={correctionToShow}
       handleVerify={handleVerify}
       handleNextItem={handleNextItem}
     />

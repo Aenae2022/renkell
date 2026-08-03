@@ -22,6 +22,7 @@ import Denombre1 from "@pages/appli/maths/nombre/Denombre1";
 import EcrireNombre from "@pages/appli/maths/nombre/EcrireNombre";
 import EcrireNombreParams from "@pages/appli/maths/nombre/EcrireNombreParams";
 import EcrireNombreParamsContainer from "@pages/appli/maths/nombre/EcrireNombreParamsContainer";
+import Denombre1ParamsContainer from "@pages/appli/maths/nombre/Denombre1ParamsContainer";
 
 function App() {
   return (
@@ -67,9 +68,14 @@ function App() {
               <Route path="jbdb" element={<MaJbdbHomeContainer />} />
               <Route path="jbdb/:exId" element={<JbdbExercise />} />
               <Route path="nbre/ex/ecrire" element={<EcrireNombre />} />
+              <Route path="nbre/ex/den1" element={<Denombre1 />} />
               <Route
                 path="nbre/ecrireParams"
                 element={<EcrireNombreParamsContainer />}
+              />
+              <Route
+                path="nbre/denombre1Params"
+                element={<Denombre1ParamsContainer />}
               />
             </Route>
 
