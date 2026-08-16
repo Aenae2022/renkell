@@ -11,7 +11,7 @@ export  function buildCandidatePositions(
 ): Position[] {
     const positions: Position[] = [];
 
-    const STEP = 5;
+    const STEP = 10;
     const JITTER = STEP * 0.5;
     const PADDING = 5;
     

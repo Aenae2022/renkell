@@ -1,6 +1,6 @@
-import type { Cube } from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.types";
-import { CUBE_SIZE } from "@components/appli/exercise/nombre/cube.constants";
+import type { BaseSizeType, RepresentationType } from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.types";
 import { buildCandidatePositions } from "@utils/design/buildCandidatePositions";
+import { stayInBorder } from "@utils/design/stayInBorder";
 import { Matematik } from "@utils/Matematik";
 
 type Position = {
@@ -9,21 +9,28 @@ type Position = {
 };
 
 export function layoutScatter(
-  cubes: Omit<Cube, "x" | "y" | "visible">[],
+  elts: Omit<RepresentationType, "x" | "y" | "visible">[],
   boardWidth: number,
-  boardHeight: number
-): Cube[] {
+  boardHeight: number,
+  baseSize: BaseSizeType,
+): RepresentationType[] {
 
+  console.log({
+  boardWidth,
+  boardHeight,
+  elts: elts.length,
+});
   const positions: Position[] = buildCandidatePositions(boardWidth, boardHeight);
-  const placedCubes: Cube[] = [];
+  console.log('positions au début', positions)
+  const placedElts: RepresentationType[] = [];
 
-  for (const [index, cube] of cubes.entries()) {
-  if (!cube) {
-    console.error("Cube undefined", { index, cubes });
+  for (const [index, elt] of elts.entries()) {
+  if (!elt) {
+    console.error("Cube undefined", { index, elts });
   }
 
-  if (!CUBE_SIZE[cube.type]) {
-    console.error("Type inconnu", { index, cube });
+  if (!baseSize[elt.type]) {
+    console.error("Type inconnu", { index, elt });
   }
 
   
@@ -35,25 +42,26 @@ export function layoutScatter(
 
       // le cube doit rester dans l'ardoise
       if (
-        position.x + CUBE_SIZE[cube.type].width > boardWidth ||
-        position.y + CUBE_SIZE[cube.type].height > boardHeight
+        position.x + baseSize[elt.type].width > boardWidth ||
+        position.y + baseSize[elt.type].height > boardHeight
       ) {
         continue;
       }
 
       if (
         isColliding(
-          cube.type,
+          elt.type,
           position.x,
           position.y,
-          placedCubes
+          placedElts,
+          baseSize
         )
       ) {
         continue;
       }
 
-      placedCubes.push({
-        ...cube,
+      placedElts.push({
+        ...elt,
         x: position.x,
         y: position.y,
         visible: true,
@@ -65,45 +73,52 @@ export function layoutScatter(
       break;
     }
     if (!placed) {
-        console.warn("Impossible de placer", cube);
-        const place = positions[Matematik.entierAleatoire(0, positions.length-1)]
-        placedCubes.push({
-        ...cube,
-        x: place.x,
-        y: place.y,
+        console.warn("Impossible de placer", elt);
+        const indexAlea = Matematik.entierAleatoire(0, positions.length)
+        console.log('indexAlea', indexAlea)
+        console.log('positions', positions)
+        const place = positions[indexAlea]
+        console.log("place", place)
+        const newPlace = stayInBorder(place.x, place.y, boardWidth, boardHeight, baseSize[elt.type].width, baseSize[elt.type].height)
+        placedElts.push({
+        ...elt,
+        x: newPlace.x,
+        y: newPlace.y,
         visible: true,
       });
+      positions.splice(indexAlea, 1);
     }
   }
   console.log(
-  "Placés :", placedCubes.length,
-  "Demandés :", cubes.length
+  "Placés :", placedElts.length,
+  "Demandés :", elts.length
 );
 console.log(
   "Positions restantes :", positions.length,
-  "Cubes placés :", placedCubes.length
+  "Cubes placés :", placedElts.length
 );
-  return placedCubes;
+  return placedElts;
 }
 
 const MARGIN = 6;
 
 function isColliding(
-  type: Cube["type"],
+  type: RepresentationType["type"],
   x: number,
   y: number,
-  placedCubes: Cube[]
+  placedElts: RepresentationType[],
+  baseSize: BaseSizeType,
 ) {
-  const size = CUBE_SIZE[type];
+  const size = baseSize[type];
 
-  return placedCubes.some((cube) => {
-    const other = CUBE_SIZE[cube.type];
+  return placedElts.some((elt) => {
+    const other = baseSize[elt.type];
 
     return !(
-      x + size.width + MARGIN < cube.x ||
-      x > cube.x + other.width + MARGIN ||
-      y + size.height + MARGIN < cube.y ||
-      y > cube.y + other.height + MARGIN
+      x + size.width + MARGIN < elt.x ||
+      x > elt.x + other.width + MARGIN ||
+      y + size.height + MARGIN < elt.y ||
+      y > elt.y + other.height + MARGIN
     );
   });
 }

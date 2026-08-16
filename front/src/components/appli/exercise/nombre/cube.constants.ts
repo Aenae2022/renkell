@@ -6,19 +6,32 @@ import LogoDizaineCouleur from "@pictures/exercice/nombre/dizaineCouleur.png"
 import LogoCentaineCouleur from "@pictures/exercice/nombre/centaineCouleur.png"
 import LogoUniteCouleurGroup from "@pictures/exercice/nombre/uniteCouleurdizaineGroupe.png"
 import LogoDizaineCouleurGroup from "@pictures/exercice/nombre/dizaineCouleurcentaineGroupe.png"
+import type { BaseSizeType } from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.types";
 
-export const CUBE_SIZE = {
+export const CUBE_SIZE : BaseSizeType= {
   unite: {
     width: 20,
     height: 25,
+    group : {
+      modifX : 0,
+      modifY : -8
+    }
   },
   dizaine: {
     width: 67,
     height: 64,
+    group : {
+      modifX : 10,
+      modifY : 0,
+    }
   },
   centaine: {
     width: 87,
     height: 85,
+    group : {
+      modifX : 20,
+      modifY : -20
+    }
   },
 } as const;
 

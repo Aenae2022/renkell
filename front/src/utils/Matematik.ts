@@ -17,7 +17,7 @@ export class Matematik {
             nbDizaine : nombreDecoupe.dizaine,
             nbCentaine : nombreDecoupe.centaine
         }
-        console.log('groups', groups)
+        
         if(groups){
             //regroupement d'unités
             if(Matematik.entierAleatoire(0,2) === 2 && nombreDecoupe.unite <= 7 && nombreDecoupe.dizaine >0){

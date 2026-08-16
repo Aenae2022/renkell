@@ -14,6 +14,7 @@ import { denombre1Meta } from "@srcFront/features/exercises/maths/nombre/denombr
 import type { Denombre1ItemData } from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.types";
 import { Matematik } from "@utils/Matematik";
 import { useTranslation } from "react-i18next";
+import ArdoiseGenerique from "@components/appli/exercise/core/ArdoiseGenerique";
 
 export function Denombre1() {
   const { t } = useTranslation();
@@ -56,18 +57,27 @@ function DenombreQuestion({
   consigne: string;
   item: ExerciseGeneriqueItem<Denombre1ItemData>;
 }) {
-  if (item.typeQuestion === 1) {
-    return (
+  let questionToShow = null;
+
+  if (item.typeQuestion === 3) {
+    questionToShow = <span>{item.question.model}</span>;
+  } else {
+    questionToShow = (
       <ArdoiseCubes
-        consigne={consigne}
-        langue={item.typeLangue}
         nombreDec={item.question.data}
         itemStatus={item.itemStatus}
+        typeQuestion={item.typeQuestion}
       />
     );
   }
 
-  return null;
+  return (
+    <ArdoiseGenerique
+      consigne={consigne}
+      item={item}
+      children={questionToShow}
+    />
+  );
 }
 
 function DenombreAnswer({

@@ -10,18 +10,7 @@ type ArdoiseGeneriqueProps = {
 
 function ArdoiseGenerique({ consigne, item, children }: ArdoiseGeneriqueProps) {
   const { t } = useTranslation();
-  // const renderers = {
-  //   numberClasseColoree: ColoredNumberClasse,
-  // } as const;
-  // const ComponentCorrection =
-  //   renderers[item.question.type as keyof typeof renderers];
 
-  // const questionShow =
-  //   item.itemStatus === "correction" && !item.isCorrect ? (
-  //     <ComponentCorrection nbrDec={item.question.data} />
-  //   ) : (
-  //     <span>{item.question.model}</span>
-  //   );
   return (
     <>
       <div className="flex justify-items-start pl-24 mt-4">
@@ -37,9 +26,9 @@ function ArdoiseGenerique({ consigne, item, children }: ArdoiseGeneriqueProps) {
         ) : null}
       </div>
 
-      <div className="mt-2 flex justify-center">
+      <div className="mt-2 flex justify-center pt-4">
         <div className="w-[32px] mr-2 invisible"></div>
-        <p className="mt-2 text-xl text-center">{children}</p>
+        <div className="mt-2 text-xl text-center w-full">{children}</div>
       </div>
     </>
   );

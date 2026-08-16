@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { Cube } from "./denombre1.types";
+import type { BaseSizeType, RepresentationKind, RepresentationType } from "./denombre1.types";
+import { stayInBorder } from "@utils/design/stayInBorder";
 
 type NombreDecType = {
   nbUnite: number;
@@ -7,7 +8,6 @@ type NombreDecType = {
   nbCentaine: number;
 };
 
-type DenombreType = "unite" | "dizaine" | "centaine";
 
 const NEXT_TYPE = {
   unite: "dizaine",
@@ -16,96 +16,108 @@ const NEXT_TYPE = {
 } as const;
 
 
-export function isInGroupZone(col: number, row: number) {
-  return (
-    (col === 9 && row === 1) ||
-    (col === 9 && row === 2)
-  );
-}
+// export function isInGroupZone(col: number, row: number) {
+//   return (
+//     (col === 9 && row === 1) ||
+//     (col === 9 && row === 2)
+//   );
+// }
 
-export async function animeCorrection(setCubes: Dispatch<SetStateAction<Cube[]>>, nbDec : NombreDecType) {
-     colorType(setCubes)
-     
+export async function animeCorrection(setRepresentations: Dispatch<SetStateAction<RepresentationType[]>>, 
+    nbDec : NombreDecType, baseSize: BaseSizeType, boardWidth : number, boardHeight : number) {
+     colorType(setRepresentations)
     
     if(nbDec.nbUnite > 9){
-        await regroup(setCubes, "unite")
-        await transform(setCubes, "unite")
+        await regroup(setRepresentations, "unite", baseSize['unite'].group.modifX, baseSize['unite'].group.modifY)
+        await transform(setRepresentations, "unite", boardWidth, boardHeight, baseSize)
     }
 
     const dizaineCree = nbDec.nbUnite > 9 ? 1 : 0
     if((nbDec.nbDizaine + dizaineCree) > 9){
-        await regroup(setCubes, "dizaine")
-        await transform(setCubes, "dizaine")
+        await regroup(setRepresentations, "dizaine", baseSize['dizaine'].group.modifX, baseSize['dizaine'].group.modifY)
+        await transform(setRepresentations, "dizaine", boardWidth, boardHeight, baseSize)
     }
     
 }
 
-function colorType(setCubes: Dispatch<SetStateAction<Cube[]>>){
-    setCubes(prev => {
-        return prev.map(cube => {
+function colorType(setRepresentations: Dispatch<SetStateAction<RepresentationType[]>>){
+    setRepresentations(prev => {
+        return prev.map(elt => {
             
             return {
-                ...cube,
+                ...elt,
                 image : "correction",                    
             };
         })
     });
 }
 
-async function regroup(setCubes: Dispatch<SetStateAction<Cube[]>>, type : DenombreType) {
-    setCubes(prev => {
+async function regroup(setRepresentations: Dispatch<SetStateAction<RepresentationType[]>>, 
+    type : RepresentationKind,
+modifX : number, modifY : number) {
+    setRepresentations(prev => {
         let typeIndex = 0;
-        const premierCube = {
+        const premierElt = {
             x : 0,
             y : 0,
         }
-        return prev.map(cube => {
-            if (cube.type !== type) return cube;
+        //valeur de disposition en fonction du type et du rang
+        return prev.map(elt => {
+            if (elt.type !== type) return elt;
             
             if(typeIndex === 0){
-                premierCube.x = cube.x;
-                premierCube.y = cube.y;
+                premierElt.x = elt.x;
+                premierElt.y = elt.y;
             }
             const i = typeIndex++;
             if(i<10){
                 return {
-                    ...cube,
-                    x: premierCube.x + i * 4,
-                    y: premierCube.y - i * 4,
+                    ...elt,
+                    x: premierElt.x + i * modifX,
+                    y: premierElt.y - i * modifY,
                     isMoving : true
                 };
             }
             return {
-                ...cube,    
+                ...elt,    
                 isMoving: false
             };
         });
     });
 
-    await new Promise(r => setTimeout(r, 800));
+    await new Promise(r => setTimeout(r, 1000));
 }
 
-async function transform(setCubes: Dispatch<SetStateAction<Cube[]>>, type : DenombreType ) {
+async function transform(setRepresentations: Dispatch<SetStateAction<RepresentationType[]>>, 
+    type : RepresentationKind, boardWidth : number, boardHeight : number, baseSize: BaseSizeType, ) {
 
-    setCubes(prev => {
+    setRepresentations(prev => {
         let movingIndex = 0;        
-        return prev.map(cube => {
-            if (!cube.isMoving) return cube;
+        return prev.map(elt => {
+            if (!elt.isMoving) return elt;
 
             const i = movingIndex++;
             // 👉 le premier devient dizaine
             if (i === 0) {
                 const nextType = NEXT_TYPE[type];
+                //on vérifie que la nouvelle image reste dans le cadre
+                console.log('les coordonnées du nouvel élément', elt.x, elt.y)
+                console.log("la taille du nouvel élémnent", baseSize[nextType].width, baseSize[nextType].height)
+                console.log('la taille du composant', boardWidth, boardHeight)
+                const newCoordonnees = stayInBorder(elt.x, elt.y,baseSize[nextType].width, baseSize[nextType].height , boardWidth, boardHeight)
+                console.log('les nouvelles coordonnées du nouvel élément', newCoordonnees.x, newCoordonnees.y)
                 return {
-                    ...cube,
+                    ...elt,
                     type: nextType,
                     image : "group",
                     isMoving: false,
+                    x : newCoordonnees.x,
+                    y : newCoordonnees.y,
                 };
             }
             
             return {
-                ...cube,
+                ...elt,
                 visible: false,
                 isMoving: false,
             };
@@ -116,4 +128,6 @@ async function transform(setCubes: Dispatch<SetStateAction<Cube[]>>, type : Deno
     })
     await new Promise(r => setTimeout(r, 800));
 }
+
+
 

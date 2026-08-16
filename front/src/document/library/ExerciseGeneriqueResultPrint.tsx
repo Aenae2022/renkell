@@ -165,7 +165,7 @@ const renderCorrection = (
     return (
       <Text
         style={getReponseStyle(validation)}
-        key={`${validation ? "valid" : "unvalid"}-${indice}`}
+        key={`${validation ? "valid" : "unvalid"}-${indice}-${index}`}
       >
         {textReponse}
       </Text>
@@ -176,10 +176,11 @@ const renderCorrection = (
 
   return (
     <View style={styles.row} key={`correction-${indice}`}>
-      <Text style={styles.cel1}>{counter}</Text> //le compteur de l'exercice
-      <Text style={styles.cel2}>{item.question.model}</Text> //la question
+      {/*le compteur de l'exercice*/}
+      <Text style={styles.cel1}>{counter}</Text>
+      {/*//la question*/}
+      <Text style={styles.cel2}>{item.question.model}</Text>
       <View style={styles.cel3}>
-        {" "}
         {reponses}
         {!item.isCorrect && <Text style={styles.textCel3}>({resultats})</Text>}
       </View>

@@ -8,6 +8,7 @@ import type {
   Denombre1ExerciseData,
   Denombre1ItemData,
 } from "./denombre1.types";
+import { Utilitaires } from "@utils/Utilitaires";
 
 const createItem = (
   id: number,
@@ -29,7 +30,6 @@ const createItem = (
     userData.typeQuestion[
       Matematik.entierAleatoire(1, userData.typeQuestion.length) - 1
     ];
-  console.log("typereprésentation", typeRepresentation);
   const typeLangue =
     userData.typeLangue === 3
       ? Matematik.entierAleatoire(1, 2)
@@ -41,27 +41,41 @@ const createItem = (
   const lexiqueRepresentationBR = ["kuboù", "monneiz", "sammadenn"];
   const lexiqueRepresentation =
     typeLangue === 1 ? lexiqueRepresentationBR : lexiqueRepresentationFR;
-  let questionModel =
-    nbDecoupeExo.nbCentaine > 0
-      ? nbDecoupeExo.nbCentaine + " " + lexiqueRang[0]
-      : "";
-  questionModel +=
-    nbDecoupeExo.nbCentaine !== 0 &&
-    (nbDecoupeExo.nbDizaine > 0 || nbDecoupeExo.nbUnite > 0)
-      ? " + "
-      : "";
-  questionModel +=
-    nbDecoupeExo.nbDizaine > 0
-      ? "" + nbDecoupeExo.nbDizaine + " " + lexiqueRang[1]
-      : "";
-  questionModel +=
-    nbDecoupeExo.nbUnite > 0 && nbDecoupeExo.nbDizaine > 0 ? " + " : "";
-  questionModel +=
-    nbDecoupeExo.nbUnite > 0
-      ? "" + nbDecoupeExo.nbUnite + " " + lexiqueRang[2]
-      : "";
-  console.log("typereprésenation", typeRepresentation);
-  questionModel += ", " + lexiqueRepresentation[Number(typeRepresentation) - 1];
+  let questionModel = "";
+  if (typeRepresentation === "3") {
+    const termes = [];
+    if (nbDecoupeExo.nbCentaine > 0)
+      termes.push(nbDecoupeExo.nbCentaine + " " + lexiqueRang[0]);
+    if (nbDecoupeExo.nbDizaine > 0)
+      termes.push(nbDecoupeExo.nbDizaine + " " + lexiqueRang[1]);
+    if (nbDecoupeExo.nbUnite > 0)
+      termes.push(nbDecoupeExo.nbUnite + " " + lexiqueRang[2]);
+    const shuffleTermes = Utilitaires.shuffleArray(termes);
+    const question = shuffleTermes.join(" + ") + " = ";
+    questionModel = question;
+  } else {
+    questionModel =
+      nbDecoupeExo.nbCentaine > 0
+        ? nbDecoupeExo.nbCentaine + " " + lexiqueRang[0]
+        : "";
+    questionModel +=
+      nbDecoupeExo.nbCentaine !== 0 &&
+      (nbDecoupeExo.nbDizaine > 0 || nbDecoupeExo.nbUnite > 0)
+        ? " + "
+        : "";
+    questionModel +=
+      nbDecoupeExo.nbDizaine > 0
+        ? "" + nbDecoupeExo.nbDizaine + " " + lexiqueRang[1]
+        : "";
+    questionModel +=
+      nbDecoupeExo.nbUnite > 0 && nbDecoupeExo.nbDizaine > 0 ? " + " : "";
+    questionModel +=
+      nbDecoupeExo.nbUnite > 0
+        ? "" + nbDecoupeExo.nbUnite + " " + lexiqueRang[2]
+        : "";
+    questionModel +=
+      ", " + lexiqueRepresentation[Number(typeRepresentation) - 1];
+  }
   return {
     id: id,
     question: {

@@ -5,11 +5,11 @@ import type {
 import { useTranslation } from "react-i18next";
 import ExerciseShowWork from "./ExerciseShowWork";
 import Button from "@components/UI/Button";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ExerciseGeneriqueResultPrint from "@srcFront/document/library/ExerciseGeneriqueResultPrint";
 import { pdf } from "@react-pdf/renderer";
-import type { UserSessionConnectType } from "@shared/schema/user.schema";
 import { useNameDialog } from "@hook/useNameDialog";
+import { useAuthStrict } from "@hook/useAuthStrict";
 
 type Props = {
   exercise: ExerciseGenerique;
@@ -19,7 +19,10 @@ type Props = {
 function ExerciseGeneriqueResultContainer({ exercise, state }: Props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const user = useOutletContext<UserSessionConnectType>();
+  //const user = useOutletContext<UserSessionConnectType>();
+  const auth = useAuthStrict();
+
+  const user = auth.status === "authenticated" ? auth.user : undefined;
   const { askName, dialog } = useNameDialog();
 
   const monScore = Math.round(

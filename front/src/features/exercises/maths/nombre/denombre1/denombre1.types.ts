@@ -47,23 +47,6 @@ export type Denombre1ExerciseData={
     typeQuestion : string[]; //1 : cube, 2 : monnaie, 3: unités
     regroupement : number; //1 : sans regroupement, 2 : avec regroupement
 };
-// export type Denombre1Item = {
-//   id: number;
-//   question: {
-//     nbUnite : number,
-//     nbDizaine : number,
-//     nbCentaine : number,
-//   };
-//   typeRepresentation : number,
-//   typeLangue : string,
-//   reponse: number[];
-//   correction: {
-//     nb: number;
-//     toShow: React.ReactNode;
-//   };
-//   isCorrect: boolean;
-//   itemStatus : "question" | "essai2" | "correction"
-// };
 
 export type Denombre1ItemData = {
   
@@ -74,21 +57,40 @@ export type Denombre1ItemData = {
   };
 
 
-export type Cube = {
+export type RepresentationKind = "unite" | "dizaine" | "centaine";
+export type RepresentationImage = "normal" | "correction" | "group";
+
+export type RepresentationType = {
   id: string;
-  type: "unite" | "dizaine" | "centaine";
-  image : "normal" | "correction" | "group";
+  type: RepresentationKind;
+  image: RepresentationImage;
   x: number;
   y: number;
   visible: boolean;
-  isMoving? : boolean;
+  isMoving?: boolean;
 };
 
-// export type Denombre1State = {
-//   items: Denombre1Item[];
-//   status :"run" | "finished",
-//   indexItem : number,
-// };
+export type BaseSizeType = Record<
+  RepresentationKind,
+  {
+    width: number;
+    height: number;
+    group : {
+      modifX : number;
+      modifY : number;
+    }
+  }
+>;
+
+export type BaseSrcType = Record<
+  RepresentationKind,
+  {
+    src: Record<RepresentationImage, string>;
+    alt: string;
+  }
+>;
+
+
 
 export type Denombre1Action =
   | { type: "SET_REPONSE"; index: number; value: number}

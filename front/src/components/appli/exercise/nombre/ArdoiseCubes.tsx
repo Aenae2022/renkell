@@ -1,29 +1,40 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import type { Cube } from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.types";
+import {
+  type RepresentationType,
+  type BaseSizeType,
+  type BaseSrcType,
+} from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.types";
 import { animeCorrection } from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.engine";
 import { layoutScatter } from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.layoutScatter";
 import { CUBE_SIZE, CUBE_SRC } from "./cube.constants";
+import { MONNAIE_SIZE, MONNAIE_SRC } from "./monnaie.constants";
 type NombreDecType = {
   nbUnite: number;
   nbDizaine: number;
   nbCentaine: number;
 };
 type ArdoiseCubesProps = {
-  consigne: string;
-  langue: string;
   nombreDec: NombreDecType;
   itemStatus: string;
+  typeQuestion: number;
 };
 
 function ArdoiseCubes({
-  consigne,
-  langue,
   nombreDec,
   itemStatus,
+  typeQuestion,
 }: ArdoiseCubesProps) {
-  const { t } = useTranslation();
-  const [cubes, setCubes] = useState<Cube[]>([]);
+  // const { t } = useTranslation();
+  let baseSize = CUBE_SIZE;
+  let baseSrc = CUBE_SRC;
+  if (typeQuestion === 2) {
+    baseSize = MONNAIE_SIZE;
+    baseSrc = MONNAIE_SRC;
+  }
+  const [representations, setRepresentations] = useState<RepresentationType[]>(
+    [],
+  );
 
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +43,7 @@ function ArdoiseCubes({
     height: 0,
   });
 
-  const boardHeight = defineHeight(nombreDec, boardSize.width, CUBE_SIZE);
+  const boardHeight = defineHeight(nombreDec, boardSize.width, baseSize);
 
   useLayoutEffect(() => {
     if (!boardRef.current) return;
@@ -47,48 +58,60 @@ function ArdoiseCubes({
 
   useEffect(() => {
     if (itemStatus === "correction") {
-      animeCorrection(setCubes, nombreDec);
+      animeCorrection(
+        setRepresentations,
+        nombreDec,
+        baseSize,
+        boardSize.width,
+        boardHeight,
+      );
     }
-  }, [itemStatus, nombreDec]);
+  }, [baseSize, boardHeight, boardSize.width, itemStatus, nombreDec]);
 
   useLayoutEffect(() => {
     if (boardSize.width === 0) return;
-    setCubes(
-      layoutScatter(createCubes(nombreDec), boardSize.width, boardHeight),
+    setRepresentations(
+      layoutScatter(
+        createRepresentations(nombreDec),
+        boardSize.width,
+        boardHeight,
+        baseSize,
+      ),
     );
-  }, [nombreDec, boardSize.width, boardHeight]);
+  }, [nombreDec, boardSize.width, boardHeight, baseSize]);
 
   return (
-    <>
-      {consigne !== "" ? (
-        <h2 className="text-lg text-center">{t(consigne, { lng: langue })}</h2>
-      ) : null}
-
-      <div
-        ref={boardRef}
-        className="relative w-full border overflow-hidden"
-        style={{ height: boardHeight }}
-      >
-        {cubes.map((cube) => {
-          if (cube.visible) {
-            return <Cube key={cube.id} cube={cube} />;
-          }
-          return null;
-        })}
-      </div>
-    </>
+    <div
+      ref={boardRef}
+      className="relative w-full border overflow-hidden"
+      style={{ height: boardHeight }}
+    >
+      {representations.map((representation) => {
+        if (representation.visible) {
+          return (
+            <Representation
+              key={representation.id}
+              elt={representation}
+              baseSize={baseSize}
+              baseSrc={baseSrc}
+            />
+          );
+        }
+        return null;
+      })}
+    </div>
   );
 }
 
-function createCubes(
+function createRepresentations(
   nombreDec: NombreDecType,
-): Omit<Cube, "x" | "y" | "visible">[] {
-  const cubes: Omit<Cube, "x" | "y" | "visible">[] = [];
+): Omit<RepresentationType, "x" | "y" | "visible">[] {
+  const elts: Omit<RepresentationType, "x" | "y" | "visible">[] = [];
   let id = 0;
 
   // 1. création brute (logique métier uniquement)
   for (let i = 0; i < nombreDec.nbCentaine; i++) {
-    cubes.push({
+    elts.push({
       id: `c-${id++}`,
       type: "centaine",
       image: "normal",
@@ -96,7 +119,7 @@ function createCubes(
   }
 
   for (let i = 0; i < nombreDec.nbDizaine; i++) {
-    cubes.push({
+    elts.push({
       id: `d-${id++}`,
       type: "dizaine",
       image: "normal",
@@ -104,37 +127,41 @@ function createCubes(
   }
 
   for (let i = 0; i < nombreDec.nbUnite; i++) {
-    cubes.push({
+    elts.push({
       id: `u-${id++}`,
       type: "unite",
       image: "normal",
     });
   }
 
-  // 2. shuffle pédagogique (désordre volontaire)
-  //const shuffled = Utilitaires.shuffleArray(cubes);
-
-  // 3. layout stable (grille)
-  return cubes;
+  return elts;
 }
 
-function Cube({ cube }: { cube: Cube }) {
+function Representation({
+  elt,
+  baseSize,
+  baseSrc,
+}: {
+  elt: RepresentationType;
+  baseSize: BaseSizeType;
+  baseSrc: BaseSrcType;
+}) {
   const { t } = useTranslation();
   return (
     <div
       className={`absolute ${
-        cube.isMoving ? "transition-transform duration-700" : ""
+        elt.isMoving ? "transition-transform duration-700" : ""
       }`}
       style={{
-        transform: `translate(${cube.x}px, ${cube.y}px)`,
+        transform: `translate(${elt.x}px, ${elt.y}px)`,
       }}
     >
       <img
-        src={CUBE_SRC[cube.type].src[cube.image]}
-        alt={t(CUBE_SRC[cube.type].alt)}
+        src={baseSrc[elt.type].src[elt.image]}
+        alt={t(baseSrc[elt.type].alt)}
         style={{
-          width: CUBE_SIZE[cube.type].width,
-          height: CUBE_SIZE[cube.type].height,
+          width: baseSize[elt.type].width,
+          height: baseSize[elt.type].height,
         }}
       />{" "}
     </div>
