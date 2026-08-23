@@ -7,13 +7,13 @@ import { useTranslation } from "react-i18next";
 import ModifyIcon from "@pictures/icons/modifier.png";
 import ValidIcon from "@pictures/icons/vrai.png";
 import AbortIcon from "@pictures/icons/faux.png";
-import type { GradeType } from "@shared/schema/grade.schema";
-import type { GroupPrincipalInfoType } from "@shared/schema/group.schema";
+// import type { GradeType } from "@shared/schema/grade.schema";
+// import type { GroupPrincipalInfoType } from "@shared/schema/group.schema";
 import { Utilitaires } from "@utils/Utilitaires";
 import { StringNameSchema } from "@shared/schema/fields/stringName.schema";
 import { toast } from "react-toastify";
 import api from "@srcFront/api/axios";
-import { EntierPositifSchema } from "@shared/schema/fields/entierPositif.schema";
+// import { EntierPositifSchema } from "@shared/schema/fields/entierPositif.schema";
 
 interface ParamsNameProps {
   userToShow: UserDatasIdentityType;

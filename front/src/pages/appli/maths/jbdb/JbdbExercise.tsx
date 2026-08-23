@@ -46,7 +46,9 @@ export function JbdbExercise() {
   const [stade, setStade] = useState("nope"); //go/finish/result
   let myStade = <></>;
 
-  const timeoutRef = useRef<number | null>(null); // Stocke l'ID du timeout
+  // const timeoutRef = useRef<number | null>(null); // Stocke l'ID du timeout
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   let timeWork = 0;
   const [startWork, setStartWork] = useState(new Date());
   const [endWork, setEndWork] = useState(new Date());
@@ -70,7 +72,7 @@ export function JbdbExercise() {
     setStade("go");
     setStartWork(new Date());
     // Annule un timeout en cours s'il existe
-    if (timeoutRef.current) {
+    if (timeoutRef.current !== null) {
       clearTimeout(timeoutRef.current);
     }
 

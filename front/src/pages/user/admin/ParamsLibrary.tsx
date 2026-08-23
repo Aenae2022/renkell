@@ -7,13 +7,12 @@ import {
   SecondaryTag,
 } from "../../../utils/createClasseur";
 import { useEffect, useMemo, useState } from "react";
-import type { UserSessionConnectType } from "@shared/schema/user.schema";
-import { useOutletContext } from "react-router-dom";
-import ParamsStudents from "@components/user/admin/paramsSchool/ParamsStudents";
+// import type { UserSessionConnectType } from "@shared/schema/user.schema";
+// import { useOutletContext } from "react-router-dom";
 import ParamsBook from "@components/user/admin/paramsLibrary/ParamsBook";
 
 export default function ParamsSchool() {
-  const user = useOutletContext<UserSessionConnectType>();
+  // const user = useOutletContext<UserSessionConnectType>();
 
   const [principalTagActivated, setPrincipalTagActivated] =
     useState<string>("");
@@ -28,10 +27,10 @@ export default function ParamsSchool() {
 
     //on crée les onglets
     list.push(
-      new PrincipalTag(1, "paramsLibrary.pTag.books", "user", "orthographe")
+      new PrincipalTag(1, "paramsLibrary.pTag.books", "user", "orthographe"),
     );
     list.push(
-      new PrincipalTag(2, "paramsLibrary.pTag.periods", "user", "resolution")
+      new PrincipalTag(2, "paramsLibrary.pTag.periods", "user", "resolution"),
     );
 
     return list;
@@ -71,7 +70,7 @@ export default function ParamsSchool() {
   useEffect(() => {
     const { startPrincipalTag, startSecondaryTag } = defineActiveTags(
       principalTagsList,
-      secondaryTagsList
+      secondaryTagsList,
     );
     setPrincipalTagActivated(startPrincipalTag);
     setSecondaryTagActivated(startSecondaryTag);

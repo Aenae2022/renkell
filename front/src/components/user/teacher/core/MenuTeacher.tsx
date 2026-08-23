@@ -1,5 +1,4 @@
 import logoReglage from "@pictures/icons/reglage.webp";
-import logoLibrary from "@pictures/icons/lecture.png";
 import MenuUser from "../../core/MenuUser";
 import logoApply from "@pictures/icons/apply.png";
 import type { UserSessionConnectType } from "@shared/schema/user.schema";

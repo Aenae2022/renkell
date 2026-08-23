@@ -6,7 +6,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "ignoreDeprecations": "6.0",
+    //"ignoreDeprecations": "6.0",
 
     "baseUrl": ".", // ← nécessaire pour que "paths" fonctionne
     "paths": {
@@ -37,5 +37,14 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/features/exercises/maths/nombre/denombre1/exdenombre1.reducer.ts",
+    "src/features/exercises/maths/nombre/denombre1/denombre1.engine copy.ts",
+    "src/pages/school/DegemerSkol workflow.tsx",
+    "src/components/appli/exercise/nombre/ArdoiseCubes copy.tsx",
+    "src/components/user/admin/**/*",
+    "src/pages/user/admin/**/*",
+    "src/features/degemer/**/*",
+    ]
 }

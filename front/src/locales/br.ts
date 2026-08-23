@@ -58,6 +58,21 @@ export const br: Locale = {
      */
     ordinalNumber: (n) => `${n}`,
 
+    dayPeriod: (type) => {
+    switch (type) {
+      case "am":
+        return "mintin";
+      case "pm":
+        return "abardaez";
+      case "midnight":
+        return "hanternoz";
+      case "noon":
+        return "kreisteiz";
+      default:
+        return "";
+    }
+  },
+
     /**
      * Époques (avant/après JC)
      */
@@ -137,6 +152,7 @@ export const br: Locale = {
     quarter: () => null,
     month: () => null,
     day: () => null,
+    dayPeriod: () => null,
   },
 
   /**

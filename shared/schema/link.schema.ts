@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { StringShortRefSchema } from "./fields/stringShortRef.schema";
-import { StringNameSchema } from "./fields/stringName.schema";
 import {StringNamePictureSchema} from "./fields/stringNamePicture.schema" 
 import { EntierPositifSchema } from "./fields/entierPositif.schema";
 import { StringNameTitleSchema } from "./fields/stringNameTitle.schema";

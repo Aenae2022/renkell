@@ -3,12 +3,12 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import DegemerSkolWithKey from "./wrappers/DegemerSkolWithKey";
 import DashboardTeacher from "./pages/user/teacher/DashboardTeacher";
 import Params from "./pages/user/teacher/Params";
-import ParamsSchool from "./pages/user/admin/ParamsSchool";
-import ParamsLibrary from "@pages/user/admin/ParamsLibrary";
+// import ParamsSchool from "./pages/user/admin/ParamsSchool";
+// import ParamsLibrary from "@pages/user/admin/ParamsLibrary";
 import ParamsLinks from "./pages/user/teacher/ParamsLinks";
 import LibraryApp from "@pages/user/teacher/LibraryApp";
 import ParamsStudents from "@pages/user/teacher/ParamsStudents";
-import DashboardAdmin from "@pages/user/admin/DashboardAdmin";
+// import DashboardAdmin from "@pages/user/admin/DashboardAdmin";
 import RoleBasedRedirect from "@components/user/RoleBasedRedirect";
 import Home from "@pages/blog/Home";
 import JbdbExercise from "@pages/appli/maths/jbdb/JbdbExercise";
@@ -17,7 +17,7 @@ import MaJbdbHomeContainer from "@pages/appli/maths/jbdb/MaJbdbHomeContainer";
 import SuperLayout from "./layouts/SuperLayout";
 import TeacherRoutes from "./router/routes/TeacherRoutes";
 import PublicRoutes from "./router/routes/PublicRoutes";
-import AdminRoutes from "./router/routes/AdminRoutes";
+// import AdminRoutes from "./router/routes/AdminRoutes";
 import Denombre1 from "@pages/appli/maths/nombre/Denombre1";
 import EcrireNombre from "@pages/appli/maths/nombre/EcrireNombre";
 import EcrireNombreParams from "@pages/appli/maths/nombre/EcrireNombreParams";
@@ -80,11 +80,11 @@ function App() {
             </Route>
 
             {/* ADMIN */}
-            <Route path="/admin" element={<AdminRoutes />}>
+            {/* <Route path="/admin" element={<AdminRoutes />}>
               <Route index element={<DashboardAdmin />} />
               <Route path="school" element={<ParamsSchool />} />
               <Route path="library" element={<ParamsLibrary />} />
-            </Route>
+            </Route> */}
           </Route>
         </Routes>
       </Router>

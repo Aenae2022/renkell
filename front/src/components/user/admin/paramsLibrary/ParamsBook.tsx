@@ -1,5 +1,3 @@
-import React from "react";
-
 function ParamsBook() {
   //Récupérer la liste des livres
   //pour limiter le nombre de données récupérer les 50 premiers
