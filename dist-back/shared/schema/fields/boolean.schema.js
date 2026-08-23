@@ -1,0 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BooleanSchema = void 0;
+const zod_1 = require("zod");
+exports.BooleanSchema = zod_1.z.boolean();

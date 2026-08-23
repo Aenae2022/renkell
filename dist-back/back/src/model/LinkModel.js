@@ -1,0 +1,250 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const link_schema_1 = require("@shared/schema/link.schema");
+const client_1 = require("../lib/prisma/client");
+class LinkModel {
+    //associer ou disassocier des liens
+    static async associateLink({ refId, linkId, type, operation }) {
+        try {
+            if (type === "group") {
+                if (operation === 'addAssociation') {
+                    const groupAddAssociation = await client_1.prisma.groupLink.create({
+                        data: {
+                            groupId: refId,
+                            linkId: linkId,
+                        },
+                    });
+                    if (!groupAddAssociation) {
+                        return { message: "échec de l'association", reponse: false };
+                    }
+                    return { message: "association réussie", reponse: true };
+                }
+                if (operation === 'removeAssociation') {
+                    const groupDelAssociation = await client_1.prisma.groupLink.delete({
+                        where: {
+                            groupId_linkId: {
+                                groupId: refId,
+                                linkId: linkId,
+                            },
+                        }
+                    });
+                    if (!groupDelAssociation) {
+                        return { message: "échec de la suppression", reponse: false };
+                    }
+                    return { message: "suppression réussie", reponse: true };
+                }
+            }
+            if (type === "user") {
+                if (operation === 'addAssociation') {
+                    const userAddAssociation = await client_1.prisma.linkUser.create({
+                        data: {
+                            userId: refId,
+                            linkId: linkId,
+                        },
+                    });
+                    if (!userAddAssociation) {
+                        return { message: "échec de l'association", reponse: false };
+                    }
+                    return { message: "association réussie", reponse: true };
+                }
+                if (operation === 'removeAssociation') {
+                    const userDelAssociation = await client_1.prisma.linkUser.delete({
+                        where: {
+                            userId_linkId: {
+                                userId: refId,
+                                linkId: linkId,
+                            },
+                        }
+                    });
+                    if (!userDelAssociation) {
+                        return { message: "échec de la suppression", reponse: false };
+                    }
+                    return { message: "suppression réussie", reponse: true };
+                }
+            }
+        }
+        catch (error) {
+            console.error("Erreur Prisma :", error);
+            throw error;
+        }
+    }
+    static async getTeacherLinksListData(userId) {
+        try {
+            const datas = await client_1.prisma.link.findMany({
+                where: {
+                    OR: [
+                        { linkUserPermission: { some: { userId: userId } } },
+                        { linkUserPermission: { none: {} } }, // lien public
+                    ],
+                    linkType: { in: ['all', 'teacher'] }
+                },
+                select: {
+                    linkId: true,
+                    linkName: true,
+                    linkTitleFr: true,
+                    linkTitleBr: true,
+                    linkFullNameFr: true,
+                    linkFullNameBr: true,
+                    linkRedirection: true,
+                    linkIcon: true,
+                    linkMatter: true,
+                    linkDescriptionFr: true,
+                    linkDescriptionBr: true,
+                    linkType: true,
+                    // is_private
+                    linkUserPermission: {
+                        select: {
+                            userId: true
+                        }
+                    },
+                    // is_associated
+                    userLinks: {
+                        where: {
+                            userId: userId
+                        },
+                        select: {
+                            userId: true
+                        }
+                    },
+                    // total_users_with_access
+                    _count: {
+                        select: {
+                            linkUserPermission: true
+                        }
+                    }
+                }
+            });
+            if (!datas) {
+                return { message: "nolink", reponse: false, result: [] };
+            }
+            //on traite les données pour correspondre à LinkDataType
+            const myDatas = datas.map((l) => ({
+                linkId: l.linkId,
+                linkName: l.linkName,
+                titleFr: l.linkTitleFr?.trim() || null,
+                titleBr: l.linkTitleBr?.trim() || null,
+                fullnameFr: l.linkFullNameFr?.trim() || null,
+                fullnameBr: l.linkFullNameBr?.trim() || null,
+                redirection: l.linkRedirection,
+                icon: l.linkIcon,
+                matter: l.linkMatter,
+                descriptionFr: l.linkDescriptionFr?.trim() || null,
+                descriptionBr: l.linkDescriptionBr?.trim() || null,
+                typeLink: l.linkType,
+                isPrivate: l.linkUserPermission.length > 0 ? true : false,
+                isAssociated: l.userLinks.length > 0 ? true : false,
+                totalUsersWithAccess: l._count.linkUserPermission,
+            }));
+            //on valide les données avec Zod
+            const parsed = link_schema_1.LinksDataSchema.safeParse(myDatas);
+            if (!parsed.success) {
+                console.error("Validation Zod échouée :", parsed.error.errors);
+                parsed.error.errors.forEach((e) => {
+                    const value = e.path.reduce((acc, key) => acc !== null && typeof acc === "object"
+                        ? acc[key]
+                        : undefined, myDatas);
+                    console.log("----- ERREUR ZOD -----");
+                    console.log("Path :", e.path.join("."));
+                    console.log("Message :", e.message);
+                    console.log("Valeur reçue :", value);
+                    console.log("Chars :", [...String(value)]);
+                });
+                throw new Error("Données utilisateur invalides");
+            }
+            return {
+                message: "Liens récupérés avec succès",
+                reponse: true,
+                result: myDatas,
+            };
+        }
+        catch (error) {
+            console.error("Erreur Prisma :", error);
+            throw error;
+        }
+    }
+    static async getGroupLinksListData(userId, groupId) {
+        try {
+            const datas = await client_1.prisma.link.findMany({
+                where: {
+                    OR: [
+                        { linkUserPermission: { some: { userId: userId } } },
+                        { linkUserPermission: { none: {} } }, // lien public
+                    ],
+                    linkType: { in: ['all', 'student'] }
+                },
+                select: {
+                    linkId: true,
+                    linkName: true,
+                    linkTitleFr: true,
+                    linkTitleBr: true,
+                    linkFullNameFr: true,
+                    linkFullNameBr: true,
+                    linkRedirection: true,
+                    linkIcon: true,
+                    linkMatter: true,
+                    linkDescriptionFr: true,
+                    linkDescriptionBr: true,
+                    linkType: true,
+                    // is_private
+                    linkUserPermission: {
+                        select: {
+                            userId: true
+                        }
+                    },
+                    // is_associated
+                    groupLinks: {
+                        where: {
+                            groupId: groupId
+                        },
+                        select: {
+                            groupId: true
+                        }
+                    },
+                    // total_users_with_access
+                    _count: {
+                        select: {
+                            linkUserPermission: true
+                        }
+                    }
+                }
+            });
+            if (!datas) {
+                return { message: "nolink", reponse: false, result: [] };
+            }
+            //on traite les données pour correspondre à LinkDataType
+            const myDatas = datas.map((l) => ({
+                linkId: l.linkId,
+                linkName: l.linkName,
+                titleFr: l.linkTitleFr === "" ? null : l.linkTitleFr,
+                titleBr: l.linkTitleBr === "" ? null : l.linkTitleBr,
+                fullnameFr: l.linkFullNameFr === "" ? null : l.linkFullNameFr,
+                fullnameBr: l.linkFullNameBr === "" ? null : l.linkFullNameBr,
+                redirection: l.linkRedirection,
+                icon: l.linkIcon,
+                matter: l.linkMatter,
+                descriptionFr: l.linkDescriptionFr === "" ? null : l.linkDescriptionFr,
+                descriptionBr: l.linkDescriptionBr === "" ? null : l.linkDescriptionBr,
+                typeLink: l.linkType,
+                isPrivate: l.linkUserPermission.length > 0 ? true : false,
+                isAssociated: l.groupLinks.length > 0 ? true : false,
+                totalUsersWithAccess: l._count.linkUserPermission,
+            }));
+            //on valide les données avec Zod
+            const parsed = link_schema_1.LinksDataSchema.safeParse(myDatas);
+            if (!parsed.success) {
+                console.error("Validation Zod échouée :", parsed.error.errors);
+                throw new Error("Données utilisateur invalides");
+            }
+            return {
+                message: "Liens récupérés avec succès",
+                reponse: true,
+                result: myDatas,
+            };
+        }
+        catch (error) {
+            console.error("Erreur Prisma :", error);
+            throw error;
+        }
+    }
+}
+exports.default = LinkModel;
