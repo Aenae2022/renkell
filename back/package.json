@@ -7,12 +7,7 @@
     "dev": "nodemon --watch src --exec tsx src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "tsx script/test.ts",
-    "create:school": "tsx prisma/seed/createSchool.ts",
-    "create:classroom": "tsx prisma/seed/createClassroom.ts",
-    "create:roles": "tsx prisma/seed/cli/role/createRoleCLI.ts",
-    "assoc:roles": "tsx prisma/seed/cli/user/associateUserRoleCLI.ts",
-    "seed": "tsx prisma/seed/cli/main.ts"
+    "test": "tsx script/test.ts"
   },
   "keywords": [],
   "author": "",

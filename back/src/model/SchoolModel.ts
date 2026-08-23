@@ -17,9 +17,16 @@ class SchoolModel {
     return !!school;
   }
 
-  static async createSchool(schoolName: string, schoolRef: string) {
+  static async createSchool(schoolName: string, schoolRef: string,
+  schoolCp: number,
+  schoolCity: string) {
     return prisma.school.create({
-      data: { schoolName, schoolRef }
+      data: {
+      schoolName,
+      schoolRef,
+      schoolCp,
+      schoolCity,
+    },
     });
   }
 

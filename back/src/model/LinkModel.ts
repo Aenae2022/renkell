@@ -162,7 +162,13 @@ export default class LinkModel {
     if (!parsed.success) {
         console.error("Validation Zod échouée :", parsed.error.errors);
         parsed.error.errors.forEach((e) => {
-          const value = e.path.reduce((acc, key) => acc?.[key], myDatas)
+          const value = e.path.reduce(
+            (acc: unknown, key) =>
+              acc !== null && typeof acc === "object"
+                ? (acc as Record<string | number, unknown>)[key]
+                : undefined,
+            myDatas as unknown
+          );
 
           console.log("----- ERREUR ZOD -----")
           console.log("Path :", e.path.join("."))

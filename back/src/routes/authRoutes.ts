@@ -3,8 +3,7 @@ import checkInputUserPseudoValid from "../middleware/user/checkInputUserPseudoVa
 import checkInputUserPsswdValid from "../middleware/user/checkInputUserPsswdValid";
 import AuthController from "../controller/AuthController";
 import { isAuthenticated } from "@srcBack/middleware/authMiddleware";
-import checkPostRoleValid from "@srcBack/middleware/user/checkPostRoleValid";
-
+import { checkPostRoleValid } from "@srcBack/middleware/user/checkPostRoleValid";
 const router = express.Router();
 
 
