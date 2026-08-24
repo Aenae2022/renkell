@@ -11,7 +11,11 @@ const router = express.Router();
 // Route de connexion
 router.post("/login",
     checkInputUserPseudoValid,checkInputUserPsswdValid,
-    async (req, res) => await AuthController.validateConnection(req, res));
+    //async (req, res) => await AuthController.validateConnection(req, res));
+    async (req, res) => {
+    console.log("🔥 LOGIN ROUTE ATTEINTE");
+    await AuthController.validateConnection(req, res);
+  })
     
 router.post("/logout", (req, res)=>  AuthController.logout(req, res));
 router.get("/session", (req, res)=>  AuthController.getSessionUser(req, res));
