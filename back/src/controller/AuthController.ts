@@ -65,24 +65,12 @@ export default class AuthController {
        
         req.session.user = userSession;
 
-        console.log("SESSION APRÈS LOGIN :", req.session);
+        console.log("LOGIN SESSION ID :", req.sessionID);
+console.log("LOGIN SESSION USER :", req.session.user);
 
-req.session.save((err) => {
-  if (err) {
-    console.error("ERREUR SAUVEGARDE SESSION :", err);
-
-    return res.status(500).json({
-      message: "Erreur sauvegarde session",
-      reponse: false,
-    });
-  }
-
-  console.log("SESSION SAUVÉE :", req.session);
-
-  res.status(200).json({
-    message: "header.login.goodIdentification",
-    reponse: true,
-  });
+res.status(200).json({
+  message: "header.login.goodIdentification",
+  reponse: true,
 });
 
       // res.status(200).json({
