@@ -65,6 +65,10 @@ app.get("/test", (req, res) => {
     res.send("Test de connexion réussi !");
 });
 // Utilisation des routes
+app.use("/api/auth", (req, res, next) => {
+  console.log("🔥 API AUTH ATTEINTE :", req.method, req.originalUrl);
+  next();
+});
 app.use("/api/auth", authRoute);// Route d'inscription
 app.use("/api/degemer", degemerRoutes);// Route page d'accueil classes/école
 app.use("/api/dashboard", dashboardRoutes);// Route page d'accueil utilisateur")
