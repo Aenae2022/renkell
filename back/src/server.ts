@@ -60,8 +60,8 @@ app.use('/api/paramsStudents', paramsStudentsRoutes) //Route de page de gestion 
 app.use('/api/articles', articlesRoutes) //Route de page de gestion des élèves par admin
 
 // Lancer le serveur
-const PORT = 5000;
+const PORT = Number(process.env.PORT) || 5000;
 app.listen(PORT, () => {
-    console.log(`🚀 Serveur lancé sur http://localhost:${PORT}`);
+    console.log(`🚀 Serveur lancé sur le port ${PORT}`);
 });
 console.log("Début serveur");
