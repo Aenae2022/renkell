@@ -21,10 +21,25 @@ dotenv.config();
 
  
 const app = express();
+// app.use(cors({
+//   origin: "http://localhost:5173", // <-- ton frontend
+//   credentials: true               // <-- autorise les cookies
+// }));app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:4173",
+];
+
 app.use(cors({
-  origin: "http://localhost:5173", // <-- ton frontend
-  credentials: true               // <-- autorise les cookies
-}));app.use(express.json());
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || "dev-secret",
