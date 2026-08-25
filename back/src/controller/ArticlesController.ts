@@ -15,7 +15,6 @@ export class ArticlesController {
            return
         }
 
-        console.log("articlesList", articlesList);
 
         //traitement du résultat en bd pour le mettre dans le format attendu par le front
         const formattedArticles = articlesList.result.map((article: any) => {

@@ -75,7 +75,6 @@ function Denombre1ParamsExercises({ paramsExercise, dispatchExercise }: Props) {
   const handleChangeTypeQuestion = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const isChecked = e.target.checked;
-    console.log("coucou", value, isChecked);
     const actualSelection = paramsExercise.typeQuestion.saisie;
     if (isChecked) {
       dispatchExercise({

@@ -1,7 +1,7 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { Utilitaires } from "../../utils/Utilitaires";
 import { SchoolRefSchema, type SchoolType } from "@shared/schema/school.schema";
 import { TypeCTSchema } from "@shared/schema/typeUser.schema";
@@ -13,6 +13,7 @@ import {
 import { type UserWithLinksType } from "@shared/schema/user.schema";
 import HeaderDegemer from "../../components/degemer/HeaderDegemer";
 import LinkItem from "../../components/core/LinkItem";
+import api from "@srcFront/api/axios";
 
 export function DegemerSkol() {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ export function DegemerSkol() {
 
   const [school, setSchool] = useState<SchoolType | null>(null); //11
   const [classroom, setClassroom] = useState<ClassroomWithLinksType | null>(
-    null
+    null,
   ); //12
   const [user, setUser] = useState<UserWithLinksType | null>(null); //13
   const [classrooms, setClassrooms] = useState<ClassroomType[]>([]); //14
@@ -48,9 +49,9 @@ export function DegemerSkol() {
         let schoolTmp = null;
         let classroomsTmp: ClassroomType[] | null = null;
         try {
-          const classroomsListSearched = await axios.post(
-            "http://localhost:5000/api/degemer/classrooms",
-            { schoolRef: skolCleaned }
+          const classroomsListSearched = await api.post(
+            "/api/degemer/classrooms",
+            { schoolRef: skolCleaned },
           );
 
           schoolTmp = {
@@ -76,12 +77,12 @@ export function DegemerSkol() {
         let classroomTmp: ClassroomWithLinksType | null = null;
         let messageTmp = "Chargement...";
         try {
-          const linksListSearched = await axios.post(
-            "http://localhost:5000/api/degemer/classroomLinksList",
+          const linksListSearched = await api.post(
+            "/api/degemer/classroomLinksList",
             {
               classroomRef: idftCleaned,
               school: school,
-            }
+            },
           );
           classroomTmp = linksListSearched.data.result;
           messageTmp = linksListSearched.data.message;
@@ -100,12 +101,12 @@ export function DegemerSkol() {
         let userTmp: UserWithLinksType | null = null;
         let messageTmp = "Chargement...";
         try {
-          const linksListSearched = await axios.post(
-            "http://localhost:5000/api/degemer/userLinksList",
+          const linksListSearched = await api.post(
+            "/api/degemer/userLinksList",
             {
               userPseudo: idftCleaned,
               school: school,
-            }
+            },
           );
           userTmp = linksListSearched.data.result;
           messageTmp = linksListSearched.data.message;
@@ -138,9 +139,8 @@ export function DegemerSkol() {
           localMessage = "degemerSkol.noSchool";
         } else {
           //vérification de l'école et récupération des classes
-          const { schoolTmp, classroomsTmp } = await getClassroomsList(
-            skolCleaned
-          );
+          const { schoolTmp, classroomsTmp } =
+            await getClassroomsList(skolCleaned);
           if (!schoolTmp) {
             //pas d'école trouvée, on affiche un message et on quitte le useEffect
             localMessage = "degemerSkol.noSchoolDesc";
@@ -176,9 +176,8 @@ export function DegemerSkol() {
         //cas type et idft définis
         if (typeCleaned && idftCleaned && localSchool) {
           if (typeCleaned === "c") {
-            const { classroomTmp, messageTmp } = await getClassroomLinksList(
-              localSchool
-            );
+            const { classroomTmp, messageTmp } =
+              await getClassroomLinksList(localSchool);
             if (!classroomTmp) {
               //pas de classe trouvée, on met à jour le message et on quitte le useEffect
               localMessage = "degemerSkol.noClassroomDesc";
@@ -280,7 +279,9 @@ export function DegemerSkol() {
               key={classe.classroomId}
               onClick={() => handleClick(classe.classroomRef)}
             >
-              {classe.group ? classe.group.groupName : classe.classroomNumber}{" "}
+              {classe.group
+                ? classe.group.groupName
+                : classe.classroomNumber}{" "}
             </button>
           );
         })}

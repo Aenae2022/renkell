@@ -15,13 +15,8 @@ export function layoutScatter(
   baseSize: BaseSizeType,
 ): RepresentationType[] {
 
-  console.log({
-  boardWidth,
-  boardHeight,
-  elts: elts.length,
-});
+  
   const positions: Position[] = buildCandidatePositions(boardWidth, boardHeight);
-  console.log('positions au début', positions)
   const placedElts: RepresentationType[] = [];
 
   for (const [index, elt] of elts.entries()) {
@@ -73,12 +68,9 @@ export function layoutScatter(
       break;
     }
     if (!placed) {
-        console.warn("Impossible de placer", elt);
         const indexAlea = Matematik.entierAleatoire(0, positions.length)
-        console.log('indexAlea', indexAlea)
-        console.log('positions', positions)
+        
         const place = positions[indexAlea]
-        console.log("place", place)
         const newPlace = stayInBorder(place.x, place.y, boardWidth, boardHeight, baseSize[elt.type].width, baseSize[elt.type].height)
         placedElts.push({
         ...elt,
@@ -89,14 +81,7 @@ export function layoutScatter(
       positions.splice(indexAlea, 1);
     }
   }
-  console.log(
-  "Placés :", placedElts.length,
-  "Demandés :", elts.length
-);
-console.log(
-  "Positions restantes :", positions.length,
-  "Cubes placés :", placedElts.length
-);
+  
   return placedElts;
 }
 

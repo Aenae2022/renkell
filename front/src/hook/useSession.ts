@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+
 
 import { type UserSessionConnectType } from "@shared/schema/user.schema";
+import api from "@srcFront/api/axios";
 
 export const useSession = () => {
   const [user, setUser] = useState<UserSessionConnectType | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/auth/session", { withCredentials: true })
+    api.get("/api/auth/session")
       .then((res) => {
         setUser(res.data.user);
       })

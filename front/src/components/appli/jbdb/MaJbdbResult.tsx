@@ -139,7 +139,6 @@ export default function MaJbdbResult({
     URL.revokeObjectURL(url);
   };
   async function handlePrint() {
-    console.log("user", user);
     if (user) {
       generatePdf(`${user.userFirstName} ${user.userFamilyName}`);
     } else {

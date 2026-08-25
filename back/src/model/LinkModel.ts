@@ -170,11 +170,7 @@ export default class LinkModel {
             myDatas as unknown
           );
 
-          console.log("----- ERREUR ZOD -----")
-          console.log("Path :", e.path.join("."))
-          console.log("Message :", e.message)
-          console.log("Valeur reçue :", value)
-          console.log("Chars :", [...String(value)])
+         
         })
         throw new Error("Données utilisateur invalides");
     }

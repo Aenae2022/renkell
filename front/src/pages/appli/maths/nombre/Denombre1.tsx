@@ -19,7 +19,6 @@ import ArdoiseGenerique from "@components/appli/exercise/core/ArdoiseGenerique";
 export function Denombre1() {
   const { t } = useTranslation();
   const { exercise, state, dispatch } = useDenombre1(denombre1Meta);
-  console.log("exercise", exercise, "state", state);
   let componentToShow = <Loader />;
 
   const title =

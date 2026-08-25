@@ -24,7 +24,6 @@ function Articles({
 
         if (reponseArticles.data && reponseArticles.data.reponse) {
           setArticlesList(reponseArticles.data.result); // Remplir la liste avec les articles récupérés
-          console.log(reponseArticles.data.result);
         } else {
           setMessage(reponseArticles.data.message);
         }
@@ -49,7 +48,6 @@ function Articles({
 
         if (reponse.data && reponse.data.reponse) {
           setArticlesList(reponse.data.result); // Remplir la liste avec les articles récupérés
-          console.log(reponse.data.result[0]);
         } else {
           setMessage(reponse.data.message);
         }
@@ -79,7 +77,6 @@ function Articles({
 
         if (reponse.data && reponse.data.reponse) {
           setArticlesList(reponse.data.result); // Remplir la liste avec les articles récupérés
-          console.log(reponse.data.result[0]);
         } else {
           setMessage(reponse.data.message);
         }
@@ -103,7 +100,6 @@ function Articles({
     setIsLoading(true); // Indiquer que le chargement est en cours
     //on regarde le degré de filtrage : si on a une tag secondaire, on affiche les articles qui ont cette tag secondaire, sinon on affiche les articles qui ont la tag principale
     if (principalTagActivated === "blog0") {
-      console.log("fetching all articles");
       fetchArticlesList();
     } else if (secondaryTagActivated !== "") {
       //on charge les articles du sous domaine

@@ -76,7 +76,6 @@ export default function ParamsStudents() {
             user: user,
           },
         );
-        console.log("résultat de la récupération des élèves :", response.data);
         setSkolStudentsList(response.data.result);
         setIsLoading(false);
         //myComponentContent = <StudentsList students={response.data.result} />;
@@ -118,8 +117,6 @@ export default function ParamsStudents() {
         }
         return a.userFirstName.localeCompare(b.userFirstName);
       });
-
-      console.log("studentsListGroupSelected :", studentsListGroupSelected);
     }
   }, [principalTagActivated, skolStudentsList, user.groupsP]);
 

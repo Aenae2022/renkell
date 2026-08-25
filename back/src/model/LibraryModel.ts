@@ -1065,8 +1065,6 @@ export default class LibraryModel{
           onWork: bookWork ===1 ? true : false,
           dateAdd: new Date(),
         }
-    console.log("--------- data pour addBook ", datas)
-    console.log("🔥 datas complet AVANT create:", JSON.stringify(datas, null, 2));
     try{
       const addBook = await prisma.bookGroup.create({
         data: datas,
@@ -1154,13 +1152,7 @@ static async borrowABook(userId:number,bookGroupId:number){
       bookIsbn: book.bookIsbn,
     }
     try {
-      console.log("🔥 VERSION CREATE BOOK v2");
-      console.log("📦 Data envoyée à Prisma :", {
-          bookTitle: bookToCreate.bookTitle,
-          bookAuthor: bookToCreate.bookAuthor,
-          bookPublisher: bookToCreate.bookPublisher,
-          bookIsbn: bookToCreate.bookIsbn,
-        },);
+      
       const addBook = await prisma.book.create({
         data: {
           bookTitle: bookToCreate.bookTitle,

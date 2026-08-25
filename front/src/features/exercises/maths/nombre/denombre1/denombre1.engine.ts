@@ -101,11 +101,7 @@ async function transform(setRepresentations: Dispatch<SetStateAction<Representat
             if (i === 0) {
                 const nextType = NEXT_TYPE[type];
                 //on vérifie que la nouvelle image reste dans le cadre
-                console.log('les coordonnées du nouvel élément', elt.x, elt.y)
-                console.log("la taille du nouvel élémnent", baseSize[nextType].width, baseSize[nextType].height)
-                console.log('la taille du composant', boardWidth, boardHeight)
                 const newCoordonnees = stayInBorder(elt.x, elt.y,baseSize[nextType].width, baseSize[nextType].height , boardWidth, boardHeight)
-                console.log('les nouvelles coordonnées du nouvel élément', newCoordonnees.x, newCoordonnees.y)
                 return {
                     ...elt,
                     type: nextType,

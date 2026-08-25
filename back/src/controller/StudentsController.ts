@@ -140,13 +140,8 @@ static async addStudentToGroup(
     req: Request,
     res: Response) {
     const { groupId, userId, principal } = req.body;
-    console.log('entrée dans add')
-    console.log('groupId :', groupId)
-    console.log('userId : ', userId)
-    console.log('principal : ', principal)
     try {
       const result = await UserModel.addStudentToGroup(groupId, userId, principal);
-      console.log('result', result)
       if (result) {
         res.status(200).json({ message: "successAddStudent", reponse: true, result: [] });
       } else {

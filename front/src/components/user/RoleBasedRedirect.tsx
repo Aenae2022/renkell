@@ -9,7 +9,6 @@ export default function RoleBasedRedirect() {
 
   if (auth.status === "unauthenticated")
     return <Navigate to="/login" replace />;
-  console.log("roleActived", auth.user.roleActivated);
   switch (auth.user.roleActivated.roleName) {
     case "ADMIN_SCHOOL":
       return <Navigate to="/admin" replace />;

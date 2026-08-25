@@ -3,9 +3,7 @@
 //params : string param, number rangeMax, number rangeMin, number defaultValue
 //return : number
 export const verifParamsNumber = (param: string | null, rangeMin: number, rangeMax: number, defaultValue: number): number => {
-    // console.log("verifParamsNumber", {param, rangeMin, rangeMax, defaultValue});
-    // console.log("Number(param)", Number(param));
-    if(param === null || isNaN(Number(param))){
+   if(param === null || isNaN(Number(param))){
         return defaultValue;
     }
     if(Number(param) >= rangeMin && Number(param) <= rangeMax){

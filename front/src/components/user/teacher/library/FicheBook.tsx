@@ -203,10 +203,8 @@ function FicheBook({
       groupId: groupId,
       nbBook: bookNumber,
     };
-    console.log("📤 Envoi newBook :", newBook);
     if (newBook.bookId === 0) {
       //création d'un nouveau livre dans le répertoire en bd
-      console.log("création d'un nouveau livre dans le répertoire en bd");
       if (newBook.bookTitle === "") {
         //on vérifie qu'un titre est renseigné
         setErrorTitle(true);
@@ -233,7 +231,6 @@ function FicheBook({
     }
     if (modifyBookData) {
       //modification d'un livre déjà présent dans la bd Book
-      console.log("modification d'un livre déjà présent dans la bd Book");
       try {
         const responseModifBook = await api.post("/api/library/modifyBook", {
           book: newBook,
@@ -260,7 +257,6 @@ function FicheBook({
       }
     } else {
       //on ajoute le livre dans la bibliothèque de classe
-      console.log("livre existant non modifié, on envoie : ", newBook);
       //en tenant compte du type de livre(personel ou collectif)
       const bookWork = newBook.bookLocation === "per" ? 0 : 1;
       // appel axios pour ajouter le livre dans libraryGroup
