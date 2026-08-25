@@ -73,7 +73,7 @@ app.use('/api/paramsStudents', paramsStudentsRoutes) //Route de page de gestion 
 app.use('/api/articles', articlesRoutes) //Route de page de gestion des élèves par admin
 
 
-const frontendPath = path.join(__dirname, "../../..", "front");
+const frontendPath = path.join(__dirname, "../../front");
 console.log("📁 frontendPath =", frontendPath);
 app.use(express.static(frontendPath));
 
