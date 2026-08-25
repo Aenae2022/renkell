@@ -5,7 +5,7 @@ import LogoUniteCouleur from "@pictures/exercice/nombre/uniteCouleur.png"
 import LogoDizaineCouleur from "@pictures/exercice/nombre/dizaineCouleur.png"
 import LogoCentaineCouleur from "@pictures/exercice/nombre/centaineCouleur.png"
 import LogoUniteCouleurGroup from "@pictures/exercice/nombre/uniteCouleurdizaineGroupe.png"
-import LogoDizaineCouleurGroup from "@pictures/exercice/nombre/dizaineCouleurcentaineGroupe.png"
+import LogoDizaineCouleurGroup from "@pictures/exercice/nombre/dizaineCouleurCentaineGroupe.png"
 import type { BaseSizeType } from "@srcFront/features/exercises/maths/nombre/denombre1/denombre1.types";
 
 export const CUBE_SIZE : BaseSizeType= {
