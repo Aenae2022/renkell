@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --watch src --exec tsx src/server.ts",
-    "build:front": "npm --prefix ../front run build",
+    "build:front": "npm --prefix ../front install && npm --prefix ../front run build",
     "build": "tsc -p tsconfig.hostinger.json && tsc-alias -p tsconfig.hostinger.json && npm run build:front && node build-production.js",
     "start": "node dist/server.js",
     "test": "tsx script/test.ts"
