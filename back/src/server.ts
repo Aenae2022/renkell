@@ -27,6 +27,7 @@ app.use(express.json());
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:4173",
+  "https://beige-whale-764783.hostingersite.com",
 ];
 
 app.use(cors({
@@ -49,7 +50,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "none",
+    sameSite: "strict",
     maxAge: 1000 * 60 * 30, // 30 min
   }
 }));
