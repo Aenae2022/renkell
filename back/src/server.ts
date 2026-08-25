@@ -16,6 +16,7 @@ import studentsRoutes from "./routes/studentsRoutes";
 import paramsSchoolRoutes from "./routes/paramsStudentsRoutes";
 import paramsStudentsRoutes from "./routes/paramsStudentsRoutes";
 import articlesRoutes from "./routes/articlesRoutes";
+import path from "path";
 dotenv.config();
 
 
@@ -53,14 +54,8 @@ app.use(session({
   }
 }));
 
-// Route test
-app.get("/", (req, res) => {
-    res.send("🚀 API fonctionnelle !");
-}); 
 
-app.get("/test", (req, res) => {
-    res.send("Test de connexion réussi !");
-});
+
 // Utilisation des routes
 app.use("/api/auth", (req, res, next) => {
   console.log("🔥 API AUTH ATTEINTE :", req.method, req.originalUrl);
@@ -76,6 +71,18 @@ app.use("/api/library", libraryRoutes);// Route page de l'application librairie
 app.use("/api/students", studentsRoutes);// Route page de gestion des élèves par enseignant
 app.use('/api/paramsStudents', paramsStudentsRoutes) //Route de page de gestion des élèves par admin
 app.use('/api/articles', articlesRoutes) //Route de page de gestion des élèves par admin
+
+const frontendPath = path.join(__dirname, "../front");
+
+app.use(express.static(frontendPath));
+
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api/")) {
+    return next();
+  }
+
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
 
 // Lancer le serveur
 const PORT = Number(process.env.PORT) || 5000;
