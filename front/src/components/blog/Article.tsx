@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import type { ArticleType } from "@shared/schema/article.schema";
 import ArticleContent from "./core/ArticleContent";
+import { getAssetUrl } from "@utils/assetResolver";
 type Props = {
   article: ArticleType;
 };
@@ -30,7 +31,7 @@ function Article({ article }: Props) {
       <legend className="flex items-center">
         <img
           className="h-20 ml-1 rounded-full"
-          src={article.logoSrc}
+          src={getAssetUrl(`pictures/${article.logoSrc}`)}
           alt={article.logoAlt}
         />
         <p className={titleArticleStyle}>{t(article.titleKey)}</p>
