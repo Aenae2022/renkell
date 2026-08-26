@@ -1,5 +1,5 @@
 const assets = import.meta.glob(
-  "/src/assets/pictures/**/*.{png,jpg,jpeg,jfif,webp,gif,svg}",
+  "/src/assets/pictures/**/*.{png,jpg,jpeg,jfif,webp,gif,svg,PNG}",
   {
     eager: true,
     query: "?url",
