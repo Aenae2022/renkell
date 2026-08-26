@@ -41,7 +41,7 @@ app.use(cors({
   credentials: true,
 }));
 
-console.log("NODE_ENV =", process.env.NODE_ENV);
+
 app.use(session({
   secret: process.env.SESSION_SECRET || "dev-secret",
   resave: false,
@@ -58,10 +58,7 @@ app.use(session({
 
 
 // Utilisation des routes
-app.use("/api/auth", (req, res, next) => {
-  console.log("🔥 API AUTH ATTEINTE :", req.method, req.originalUrl);
-  next();
-});
+
 app.use("/api/auth", authRoute);// Route d'inscription
 app.use("/api/degemer", degemerRoutes);// Route page d'accueil classes/école
 app.use("/api/dashboard", dashboardRoutes);// Route page d'accueil utilisateur")
@@ -75,7 +72,6 @@ app.use('/api/articles', articlesRoutes) //Route de page de gestion des élèves
 
 
 const frontendPath = path.join(__dirname, "../../front");
-console.log("📁 frontendPath =", frontendPath);
 app.use(express.static(frontendPath));
 
 app.use((req, res, next) => {
@@ -91,4 +87,3 @@ const PORT = Number(process.env.PORT) || 5000;
 app.listen(PORT, () => {
     console.log(`🚀 Serveur lancé sur le port ${PORT}`);
 });
-console.log("Début serveur");

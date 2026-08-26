@@ -1,8 +1,6 @@
 //front/src/aopi/axios.ts
 import axios from "axios";
-
 const api = axios.create({
-  //baseURL: "http://localhost:5000", // URL de ton backend
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true, // 🔴 C’est ça qui envoie les cookies !
 });
