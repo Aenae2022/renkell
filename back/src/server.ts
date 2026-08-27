@@ -77,9 +77,12 @@ const frontendPath = path.join(__dirname, "../../front");
 app.use(express.static(frontendPath));
 
 app.use((req, res, next) => {
+  console.log(req.method, req.originalUrl);
   if (req.path.startsWith("/api/")) {
     return next();
   }
+
+
 
   res.sendFile(path.join(frontendPath, "index.html"));
 });

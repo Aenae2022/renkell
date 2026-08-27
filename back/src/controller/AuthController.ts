@@ -65,8 +65,7 @@ export default class AuthController {
        
         req.session.user = userSession;
 
-        console.log("LOGIN SESSION ID :", req.sessionID);
-console.log("LOGIN SESSION USER :", req.session.user);
+       
 
 res.status(200).json({
   message: "header.login.goodIdentification",
