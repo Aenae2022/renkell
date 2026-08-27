@@ -28,7 +28,8 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:4173",
   "https://beige-whale-764783.hostingersite.com",
-  "https://marenkell.com"
+  "https://marenkell.com",
+  "https://www.marenkell.com",
 ];
 
 app.use(cors({
