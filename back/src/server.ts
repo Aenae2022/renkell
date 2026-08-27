@@ -57,7 +57,10 @@ app.use(session({
   }
 }));
 
-
+app.use((req, res, next) => {
+  console.log("REQUEST", req.method, req.originalUrl);
+  next();
+});
 
 // Utilisation des routes
 
@@ -77,7 +80,6 @@ const frontendPath = path.join(__dirname, "../../front");
 app.use(express.static(frontendPath));
 
 app.use((req, res, next) => {
-  console.log(req.method, req.originalUrl);
   if (req.path.startsWith("/api/")) {
     return next();
   }

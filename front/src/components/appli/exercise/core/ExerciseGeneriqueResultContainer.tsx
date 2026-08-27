@@ -10,6 +10,7 @@ import ExerciseGeneriqueResultPrint from "@srcFront/document/library/ExerciseGen
 import { pdf } from "@react-pdf/renderer";
 import { useNameDialog } from "@hook/useNameDialog";
 import { useAuthStrict } from "@hook/useAuthStrict";
+import { getAssetUrl } from "@utils/assetResolver";
 
 type Props = {
   exercise: ExerciseGenerique;
@@ -39,7 +40,7 @@ function ExerciseGeneriqueResultContainer({ exercise, state }: Props) {
           ? "eca"
           : "non acquis";
   //définir le logo en fonction du résultat et des attentes
-  let sourceLogo = "/src/assets/pictures/exercice/";
+  let sourceLogo = "exercice/";
   const resultsScoreColorVariants = {
     neutral: "block relative text-center text-black z-30 text-5xl top-[-100px]",
     vert: "block relative text-center text-lime-500 z-30 text-5xl top-[-100px]",
@@ -99,7 +100,7 @@ function ExerciseGeneriqueResultContainer({ exercise, state }: Props) {
     const blob = await pdf(
       <ExerciseGeneriqueResultPrint
         name={name}
-        sourceLogo={sourceLogo}
+        sourceLogo={getAssetUrl(`pictures/${sourceLogo}`)}
         monScore={monScore}
         tableau1={tableau1}
         tableau2={tableau2}
@@ -134,7 +135,11 @@ function ExerciseGeneriqueResultContainer({ exercise, state }: Props) {
   return (
     <>
       <div className="mt-3">
-        <img src={sourceLogo} alt="laurier" className="w-48 block m-auto" />
+        <img
+          src={getAssetUrl(`pictures/${sourceLogo}`)}
+          alt="laurier"
+          className="w-48 block m-auto"
+        />
         <div className={`${resultsScoreStyle}`}>{monScore}</div>
       </div>
       <div className="text-center mt-2">

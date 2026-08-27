@@ -20,7 +20,7 @@ export const jbdbExosList = [
                 description: "ouzhpennañ 2",
                 shortTitle: "+2",
                 exampleQuestion: "5 + 2 = ?",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 1,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -44,7 +44,7 @@ export const jbdbExosList = [
                 description: "ouzhpennañ 3",
                 shortTitle: "+3",
                 exampleQuestion: "5 + 3 = ?",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -68,7 +68,7 @@ export const jbdbExosList = [
                 description: "ouzhpennañ 4",
                 shortTitle: "+4",
                 exampleQuestion: "5 + 4 = ?",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -92,7 +92,7 @@ export const jbdbExosList = [
                 description: "ouzhpennañ 5",
                 shortTitle: "+5",
                 exampleQuestion: "5 + 5 = ?",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -116,7 +116,7 @@ export const jbdbExosList = [
                 description: "ouzhpennañ 6",
                 shortTitle: "+6",
                 exampleQuestion: "5 + 6 = ?",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -140,7 +140,7 @@ export const jbdbExosList = [
                 description: "ouzhpennañ 7",
                 shortTitle: "+7",
                 exampleQuestion: "5 + 7 = ?",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -164,7 +164,7 @@ export const jbdbExosList = [
                 description: "ouzhpennañ 8",
                 shortTitle: "+8",
                 exampleQuestion: "5 + 8 = ?",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -188,7 +188,7 @@ export const jbdbExosList = [
                 description: "ouzhpennañ 9",
                 shortTitle: "+9",
                 exampleQuestion: "5 + 9 = ?",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -218,7 +218,7 @@ export const jbdbExosList = [
                 description: "Taolioù sammañ",
                 shortTitle: "an holl",
                 exampleQuestion: "5 + 2 = ?",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -248,7 +248,7 @@ export const jbdbExosList = [
                 description: "Taolioù sammañ 2 gant toulloù",
                 shortTitle: "+2",
                 exampleQuestion: "2 + ? = 7",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -279,7 +279,7 @@ export const jbdbExosList = [
                 description: "Taolioù sammañ 3 gant toulloù",
                 shortTitle: "+3",
                 exampleQuestion: "3 + ? = 7",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -310,7 +310,7 @@ export const jbdbExosList = [
                 description: "Taolioù sammañ 4 gant toulloù",
                 shortTitle: "+4",
                 exampleQuestion: "4 + ? = 7",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -341,7 +341,7 @@ export const jbdbExosList = [
                 description: "Taolioù sammañ 5 gant toulloù",
                 shortTitle: "+5",
                 exampleQuestion: "5 + ? = 7",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -372,7 +372,7 @@ export const jbdbExosList = [
                 description: "Taolioù sammañ 6 gant toulloù",
                 shortTitle: "+6",
                 exampleQuestion: "6 + ? = 7",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -403,7 +403,7 @@ export const jbdbExosList = [
                 description: "Taolioù sammañ 7 gant toulloù",
                 shortTitle: "+7",
                 exampleQuestion: "7 + ? = 7",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -434,7 +434,7 @@ export const jbdbExosList = [
                 description: "Taolioù sammañ 8 gant toulloù",
                 shortTitle: "+8",
                 exampleQuestion: "8 + ? = 7",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -465,7 +465,7 @@ export const jbdbExosList = [
                 description: "Taolioù sammañ 9 gant toulloù",
                 shortTitle: "+9",
                 exampleQuestion: "9 + ? = 7",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -496,7 +496,7 @@ export const jbdbExosList = [
                 description: "Taolioù sammañ gant toulloù",
                 shortTitle: "an holl",
                 exampleQuestion: "3 + ? = 7",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -539,7 +539,7 @@ export const jbdbExosList = [
                 description: "sammañ degadoù",
                 shortTitle: "d - d",
                 exampleQuestion: "50 + 20 = ",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -563,7 +563,7 @@ export const jbdbExosList = [
                 description: "sammañ kantadoù",
                 shortTitle: "d - d",
                 exampleQuestion: "500 + 200 = ",
-                logo: "/src/assets/pictures/exercice/calcul/additionner.png",
+                logo: "exercice/calcul/additionner.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -593,7 +593,7 @@ export const jbdbExosList = [
                 description: "disrannadenn an niveroù betek 999",
                 shortTitle: "betek 999",
                 exampleQuestion: "500 + 20 + 5 = ",
-                logo: "/src/assets/pictures/icons/nombre.png",
+                logo: "icons/nombre.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -636,7 +636,7 @@ export const jbdbExosList = [
                 description: "disrannadenn an niveroù betek 999",
                 shortTitle: "betek 999 -1",
                 exampleQuestion: "5 kantad + 2 zedag + 5 unanenn = ",
-                logo: "/src/assets/pictures/icons/nombre.png",
+                logo: "icons/nombre.png",
                 duration: 180,
                 exerciseNumber: 20,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -733,7 +733,7 @@ export const jbdbExosList = [
                 description: "disrannadenn an niveroù betek 999",
                 shortTitle: "betek 999 -2",
                 exampleQuestion: "5 unanenn + 5 kantad + 2 zedag = ",
-                logo: "/src/assets/pictures/icons/nombre.png",
+                logo: "icons/nombre.png",
                 duration: 180,
                 exerciseNumber: 15,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -830,7 +830,7 @@ export const jbdbExosList = [
                 description: "disrannadenn an niveroù betek 9 999",
                 shortTitle: "betek 9 999",
                 exampleQuestion: "5 000 + 200 + 5 = ",
-                logo: "/src/assets/pictures/icons/nombre.png",
+                logo: "icons/nombre.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -880,7 +880,7 @@ export const jbdbExosList = [
                 description: "dilemel",
                 shortTitle: "u - u",
                 exampleQuestion: "5 - 2 = ",
-                logo: "/src/assets/pictures/exercice/calcul/soustraire.png",
+                logo: "exercice/calcul/soustraire.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -930,7 +930,7 @@ export const jbdbExosList = [
                 description: "lies 2",
                 shortTitle: "x2",
                 exampleQuestion: "5 x 2 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -954,7 +954,7 @@ export const jbdbExosList = [
                 description: "lies 3",
                 shortTitle: "x3",
                 exampleQuestion: "5 x 3 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -978,7 +978,7 @@ export const jbdbExosList = [
                 description: "lies 4",
                 shortTitle: "x4",
                 exampleQuestion: "5 x 4 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1002,7 +1002,7 @@ export const jbdbExosList = [
                 description: "lies 5",
                 shortTitle: "x5",
                 exampleQuestion: "5 x 5 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1026,7 +1026,7 @@ export const jbdbExosList = [
                 description: "lies 6",
                 shortTitle: "x6",
                 exampleQuestion: "5 x 6 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1050,7 +1050,7 @@ export const jbdbExosList = [
                 description: "lies 7",
                 shortTitle: "x7",
                 exampleQuestion: "5 x 7 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1074,7 +1074,7 @@ export const jbdbExosList = [
                 description: "lies 8",
                 shortTitle: "x8",
                 exampleQuestion: "5 x 8 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1098,7 +1098,7 @@ export const jbdbExosList = [
                 description: "lies 9",
                 shortTitle: "x9",
                 exampleQuestion: "5 x 9 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1128,7 +1128,7 @@ export const jbdbExosList = [
                 description: "lies 2, 3, 4 ha 5",
                 shortTitle: "x2x3x4x5",
                 exampleQuestion: "5 x 3 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1152,7 +1152,7 @@ export const jbdbExosList = [
                 description: "lies 6, 7, 8 ha 9",
                 shortTitle: "x6x7x8x9",
                 exampleQuestion: "4 x 8 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1176,7 +1176,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat",
                 shortTitle: "an holl",
                 exampleQuestion: "4 x 8 = ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1206,7 +1206,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat 2 gant toulloù",
                 shortTitle: "x2",
                 exampleQuestion: "2 x ? = 10 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1237,7 +1237,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat 3 gant toulloù",
                 shortTitle: "x3",
                 exampleQuestion: "3 x ? = 27 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1268,7 +1268,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat 4 gant toulloù",
                 shortTitle: "x4",
                 exampleQuestion: "4 x ? = 36 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1299,7 +1299,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat 5 gant toulloù",
                 shortTitle: "x5",
                 exampleQuestion: "5 x ? = 45 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1330,7 +1330,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat 2, 3, 4 ha 5 gant toulloù",
                 shortTitle: "x2x3x4x5",
                 exampleQuestion: "3 x ? = 24 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1361,7 +1361,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat 6 gant toulloù",
                 shortTitle: "x6",
                 exampleQuestion: "6 x ? = 54 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1392,7 +1392,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat 7 gant toulloù",
                 shortTitle: "x7",
                 exampleQuestion: "7 x ? = 49 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1423,7 +1423,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat 8 gant toulloù",
                 shortTitle: "x8",
                 exampleQuestion: "8 x ? = 64 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1454,7 +1454,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat 9 gant toulloù",
                 shortTitle: "x9",
                 exampleQuestion: "9 x ? = 81 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1485,7 +1485,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat 6, 7, 8, et 9 gant toulloù",
                 shortTitle: "x6x7x8x9",
                 exampleQuestion: "6 x ? = 24 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1516,7 +1516,7 @@ export const jbdbExosList = [
                 description: "taolioù liesaat gant toulloù",
                 shortTitle: "an holl",
                 exampleQuestion: "6 x ? = 24 ",
-                logo: "/src/assets/pictures/exercice/calcul/multiplier.png",
+                logo: "exercice/calcul/multiplier.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1559,7 +1559,7 @@ export const jbdbExosList = [
                 description: "rannañ dre 2, 3, 4 ha 5",
                 shortTitle: ":2:3:4:5",
                 exampleQuestion: "8 : 2 ?",
-                logo: "/src/assets/pictures/exercice/calcul/diviser.png",
+                logo: "exercice/calcul/diviser.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1581,7 +1581,7 @@ export const jbdbExosList = [
                 description: "rannañ dre 6, 7, 8 ha 9",
                 shortTitle: ":6:7:8:9",
                 exampleQuestion: "56 : 7 ?",
-                logo: "/src/assets/pictures/exercice/calcul/diviser.png",
+                logo: "exercice/calcul/diviser.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1609,7 +1609,7 @@ export const jbdbExosList = [
                 description: "taolioù rannañ",
                 shortTitle: "an holl",
                 exampleQuestion: "56 : 7 ?",
-                logo: "/src/assets/pictures/exercice/calcul/diviser.png",
+                logo: "exercice/calcul/diviser.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1637,7 +1637,7 @@ export const jbdbExosList = [
                 description: "taolioù rannañ dre 2, 3, 4 ha 5 gant ur rest",
                 shortTitle: ":2:3:4:5",
                 exampleQuestion: "19 : 2 ? q=? r=?",
-                logo: "/src/assets/pictures/exercice/calcul/diviser.png",
+                logo: "exercice/calcul/diviser.png",
                 duration: 100,
                 exerciseNumber: 20,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1673,7 +1673,7 @@ export const jbdbExosList = [
                 description: "taolioù rannañ dre 6, 7, 8 ha 9 gant ur rest",
                 shortTitle: ":6:7:8:9",
                 exampleQuestion: "19 : 9 ? q=? r=?",
-                logo: "/src/assets/pictures/exercice/calcul/diviser.png",
+                logo: "exercice/calcul/diviser.png",
                 duration: 100,
                 exerciseNumber: 20,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1709,7 +1709,7 @@ export const jbdbExosList = [
                 description: "taolioù rannañ gant ur rest",
                 shortTitle: "an holl",
                 exampleQuestion: "19 : 2 ? q=? r=?",
-                logo: "/src/assets/pictures/exercice/calcul/diviser.png",
+                logo: "exercice/calcul/diviser.png",
                 duration: 100,
                 exerciseNumber: 20,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)

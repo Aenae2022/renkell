@@ -54,13 +54,13 @@ const styles = StyleSheet.create({
     marginBottom: 4, // mb-1 (≈ 4px)
   },
   logo: {
-    width: 96,
+    width: 46,
   },
   scoreOverlay: {
     position: "absolute",
     justifyContent: "center",
     textAlign: "center",
-    fontSize: 24,
+    fontSize: 16,
   },
   row: {
     flexDirection: "row",

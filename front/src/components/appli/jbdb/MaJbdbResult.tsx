@@ -6,7 +6,7 @@ import { useNameDialog } from "@hook/useNameDialog";
 import MaJbdbResultPrint from "../../../document/library/MaJbdbResultPrint";
 import { pdf } from "@react-pdf/renderer";
 import type { UserSessionConnectType } from "@shared/schema/user.schema";
-
+import { getAssetUrl } from "@utils/assetResolver";
 type GeneralResultsProps = {
   items: {
     question: string;
@@ -50,7 +50,7 @@ export default function MaJbdbResult({
   const user = useOutletContext<UserSessionConnectType>();
 
   //définir le logo en fonction du résultat et des attentes
-  let sourceLogo = "/src/assets/pictures/exercice/";
+  let sourceLogo = "exercice/";
 
   // -------------------------------- STYLE --------------------------------------------------------
   const resultsScoreColorVariants = {
@@ -115,7 +115,7 @@ export default function MaJbdbResult({
     const blob = await pdf(
       <MaJbdbResultPrint
         name={name}
-        sourceLogo={sourceLogo}
+        sourceLogo={getAssetUrl(`pictures/${sourceLogo}`)}
         monScore={monScore}
         minute={minute}
         seconde={seconde}
@@ -152,7 +152,11 @@ export default function MaJbdbResult({
     <div>
       <MaJbdbdRond items={items} itemSelected={itemSelected} />
       <div className="mt-3">
-        <img src={sourceLogo} alt="laurier" className="w-48 block m-auto" />
+        <img
+          src={getAssetUrl(`pictures/${sourceLogo}`)}
+          alt="laurier"
+          className="w-48 block m-auto"
+        />
         <div className={resultsScoreStyle}>{monScore}</div>
       </div>
       <p className="mb-3">

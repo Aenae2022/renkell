@@ -1,6 +1,6 @@
 import type { ExerciseGenerique } from "@srcFront/features/exercises/core/exerciseGenerique.type";
 import { useTranslation } from "react-i18next";
-
+import { getAssetUrl } from "@utils/assetResolver";
 type ExerciseCardProps = {
   exercise: ExerciseGenerique;
   title: string;
@@ -19,7 +19,11 @@ function ExerciseCard({ exercise, title, children }: ExerciseCardProps) {
       `}
     >
       <div className="flex flex-row pt-2">
-        <img alt="logo nombre" src={`${exercise.meta.logo}`} className="w-10" />
+        <img
+          alt="logo nombre"
+          src={getAssetUrl(`pictures/${exercise.meta.logo}`)}
+          className="w-10"
+        />
         <p
           className={`ml-2 grow-1 w-full h-10 flex items-center text-${exercise.meta.sousDomaine}`}
         >

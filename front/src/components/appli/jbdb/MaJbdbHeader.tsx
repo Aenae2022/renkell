@@ -1,5 +1,6 @@
 import jbdbLogo from "@pictures/exercice/chronometre.webp";
 import { useTranslation } from "react-i18next";
+import { getAssetUrl } from "@utils/assetResolver";
 export function MaJbdbHeader({
   myExercise,
 }: {
@@ -28,7 +29,10 @@ export function MaJbdbHeader({
         <br />
         <span className="text-[0.7em]"> {description}</span>
       </p>
-      <img className="w-[60px] h-[60px] mr-5" src={myExercise.logo} />
+      <img
+        className="w-[60px] h-[60px] mr-5"
+        src={getAssetUrl(`pictures/${myExercise.logo}`)}
+      />
     </div>
   );
 }
