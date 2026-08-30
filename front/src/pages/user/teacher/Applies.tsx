@@ -52,6 +52,11 @@ export default function Applies() {
       routeLink: "/teacher/nbre/ecrireParams",
       title: "applies.ecrireNombre.globalTitle",
     },
+    {
+      logo: logoNumber,
+      routeLink: "/teacher/nbre/denombre1Params",
+      title: "applies.denombre1.globalTitle",
+    },
   ]);
   const myComponentContent = (
     <div>

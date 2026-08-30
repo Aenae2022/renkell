@@ -12,7 +12,8 @@ function MaJbdbHome({ category }: { category: string }) {
   const { t } = useTranslation();
   const jbdbHomeAddTitle = t("jbdb.home.domaines.add");
   const jbdbHomeMultiTitle = t("jbdb.home.domaines.multi");
-  const [categoryToShow, setCategoryToShow] = useState(category);
+  const jbdbHomeMaterTitle = t("jbdb.home.domaines.mater");
+const [categoryToShow, setCategoryToShow] = useState(category);
 
   //obtenir les exercices du champ Sammañ ha dilemel
   const jbdbExosListAdd = jbdbExosList.filter(
@@ -28,6 +29,13 @@ function MaJbdbHome({ category }: { category: string }) {
   )[0].categories;
   const categoriesMulti = [
     ...new Set(jbdbExosListMulti.map((exo) => exo.category)),
+  ];
+  //obtenir les exercices du champ Liesaat ha rannañ
+  const jbdbExosListMater = jbdbExosList.filter(
+    (exo) => exo.champs === "Mat er",
+  )[0].categories;
+  const categoriesMater = [
+    ...new Set(jbdbExosListMater.map((exo) => exo.category)),
   ];
 
   let myCategoryContainer = null;
@@ -49,10 +57,20 @@ function MaJbdbHome({ category }: { category: string }) {
       />
     );
   }
+  if (categoryToShow === "mater") {
+    myCategoryContainer = (
+      <CategoryContainer
+        categories={categoriesMater}
+        jbdbExosList={jbdbExosListMater}
+        couleur="geometrie"
+      />
+    );
+  }
 
   //const de style
   const isSelectedAdd = categoryToShow === "add" ? true : false;
   const isSelectedMulti = categoryToShow === "multi" ? true : false;
+  const isSelectedMater = categoryToShow === "mater" ? true : false;
   const champsAddStyleVariantsSelected = {
     unselected:
       "flex items-center justify-center flex-row p-1 m-2 cursor-pointer rounded-md bg-calculmental-light",
@@ -79,6 +97,19 @@ function MaJbdbHome({ category }: { category: string }) {
     : champsMultiStyleVariantsSelected[
         "unselected" as keyof typeof champsMultiStyleVariantsSelected
       ];
+  const champsMaterStyleVariantsSelected = {
+    unselected:
+      "flex items-center justify-center flex-row p-1 m-2 cursor-pointer rounded-md bg-geometrie-light",
+    selected:
+      "flex items-center justify-center flex-row p-1 m-2 cursor-pointer rounded-md bg-geometrie font-bold ring-2 ring-gray-500",
+  } as const;
+  const champsMaterStyle = isSelectedMater
+    ? champsMaterStyleVariantsSelected[
+        "selected" as keyof typeof champsMaterStyleVariantsSelected
+      ]
+    : champsMaterStyleVariantsSelected[
+        "unselected" as keyof typeof champsMaterStyleVariantsSelected
+      ];
   const logoChampStyle = "w-8 ml-2";
 
   return (
@@ -99,6 +130,12 @@ function MaJbdbHome({ category }: { category: string }) {
           {jbdbHomeMultiTitle}
           <img className={logoChampStyle} src={multiplierLogo} alt="fois" />
           <img className={logoChampStyle} src={diviserLogo} alt="divisé" />
+        </div>
+        <div
+          className={champsMaterStyle}
+          onClick={() => setCategoryToShow("mater")}
+        >
+          {jbdbHomeMaterTitle}
         </div>
       </div>
 

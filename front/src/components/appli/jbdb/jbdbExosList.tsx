@@ -1745,4 +1745,248 @@ export const jbdbExosList = [
       },
     ],
   },
+  {
+    champs : "Mat er",
+    categories: [
+      {
+        category: "matercm1",
+        subCategories: [
+          {
+            //séquence 1
+            subCategory: "matercm1sequence1",
+            exercises: [
+              {
+                //S1
+                exId: "jbdb-matercm1-0101",
+                description: "séance 1",
+                shortTitle: "S1",
+                exampleQuestion: "5 x 2 = ",
+                logo: "exercice/calcul/multiplier.png",
+                duration: 180,
+                exerciseNumber: 30,
+                objectif: 100, //objectif visé (ration temps/nb réponses attendu)
+                eca: 40, //score en dessous du quel on indique le résultat en rouge
+                calculAGenerer(): {
+                  question: string;
+                  resultats: { texte: string; valeurRep: number }[];
+                } {
+                  const nombre1 = 2;
+                  const nombre2 = Matematik.entierAleatoire(1, 9);
+                  const reponse = nombre1 * nombre2;
+                  const variableQuestion = Matematik.entierAleatoire(1, 3);
+                  let question = "";
+                  const resultats = [{ texte: "", valeurRep: 0 }];
+                  if (variableQuestion < 3) {
+                    question = nombre1 + " x ? = " + reponse;
+                    resultats[0].valeurRep = nombre2;
+                  } else {
+                    question = nombre1 + " x " + nombre2 + " = ?";
+                    resultats[0].valeurRep = reponse;
+                  }
+                  return { question, resultats };
+                },
+              },
+              {
+                //S2
+                exId: "jbdb-matercm1-0102",
+                description: "séance 2",
+                shortTitle: "S2",
+                exampleQuestion: "5 x 2 = ",
+                logo: "exercice/calcul/multiplier.png",
+                duration: 180,
+                exerciseNumber: 30,
+                objectif: 100, //objectif visé (ration temps/nb réponses attendu)
+                eca: 40, //score en dessous du quel on indique le résultat en rouge
+                calculAGenerer(): {
+                  question: string;
+                  resultats: { texte: string; valeurRep: number }[];
+                } {
+                  const nombre1 = 2;
+                  const nombre2 = Matematik.entierAleatoire(1, 9);
+                  const reponse = nombre1 * nombre2;
+                  const variableQuestion = Matematik.entierAleatoire(1, 3);
+                  let question = "";
+                  const resultats = [{ texte: "", valeurRep: 0 }];
+                  if (variableQuestion < 3) {
+                    question = nombre1 + " x ? = " + reponse;
+                    resultats[0].valeurRep = nombre2;
+                  } else {
+                    question = nombre1 + " x " + nombre2 + " = ?";
+                    resultats[0].valeurRep = reponse;
+                  }
+                  return { question, resultats };
+                },
+              },
+              {
+                //S3
+                exId: "jbdb-matercm1-0103",
+                description: "séance 3",
+                shortTitle: "S3",
+                exampleQuestion: "5 x 2 = ",
+                logo: "exercice/calcul/multiplier.png",
+                duration: 180,
+                exerciseNumber: 30,
+                objectif: 100, //objectif visé (ration temps/nb réponses attendu)
+                eca: 40, //score en dessous du quel on indique le résultat en rouge
+                calculAGenerer(): {
+                  question: string;
+                  resultats: { texte: string; valeurRep: number }[];
+                } {
+                  const nombre1 = 2;
+                  const nombre2 = Matematik.entierAleatoire(1, 9);
+                  const reponse = nombre1 * nombre2;
+                  const variableQuestion = Matematik.entierAleatoire(1, 3);
+                  let question = "";
+                  const resultats = [{ texte: "", valeurRep: 0 }];
+                  if (variableQuestion < 3) {
+                    question = nombre1 + " x ? = " + reponse;
+                    resultats[0].valeurRep = nombre2;
+                  } else {
+                    question = nombre1 + " x " + nombre2 + " = ?";
+                    resultats[0].valeurRep = reponse;
+                  }
+                  return { question, resultats };
+                },
+              },
+              {
+                //S4
+                exId: "jbdb-matercm1-0104",
+                description: "séance 4",
+                shortTitle: "S4",
+                exampleQuestion: "5 x 2 = ",
+                logo: "exercice/calcul/multiplier.png",
+                duration: 180,
+                exerciseNumber: 30,
+                objectif: 100, //objectif visé (ration temps/nb réponses attendu)
+                eca: 40, //score en dessous du quel on indique le résultat en rouge
+                calculAGenerer(): {
+                  question: string;
+                  resultats: { texte: string; valeurRep: number }[];
+                } {
+                  const nombre1 = 2;
+                  const nombre2 = Matematik.entierAleatoire(1, 9);
+                  const reponse = nombre1 * nombre2;
+                  const variableQuestion = Matematik.entierAleatoire(1, 3);
+                  let question = "";
+                  const resultats = [{ texte: "", valeurRep: 0 }];
+                  if (variableQuestion < 3) {
+                    question = nombre1 + " x ? = " + reponse;
+                    resultats[0].valeurRep = nombre2;
+                  } else {
+                    question = nombre1 + " x " + nombre2 + " = ?";
+                    resultats[0].valeurRep = reponse;
+                  }
+                  return { question, resultats };
+                },
+              },
+            ]
+          }
+        ]
+      },
+      {
+        category: "matercm2",
+        subCategories: [
+          {
+            //séquence 1
+            subCategory: "matercm1sequence1",
+            exercises: [
+              {
+                //S1
+                exId: "jbdb-matercm1-0101",
+                description: "séance 1",
+                shortTitle: "S1",
+                exampleQuestion: "5 x 2 = ",
+                logo: "exercice/calcul/multiplier.png",
+                duration: 180,
+                exerciseNumber: 30,
+                objectif: 100, //objectif visé (ration temps/nb réponses attendu)
+                eca: 40, //score en dessous du quel on indique le résultat en rouge
+                calculAGenerer(): {
+                  question: string;
+                  resultats: { texte: string; valeurRep: number }[];
+                } {
+                  const nombre1 = 2;
+                  const nombre2 = Matematik.entierAleatoire(1, 9);
+                  const reponse = nombre1 * nombre2;
+                  const variableQuestion = Matematik.entierAleatoire(1, 3);
+                  let question = "";
+                  const resultats = [{ texte: "", valeurRep: 0 }];
+                  if (variableQuestion < 3) {
+                    question = nombre1 + " x ? = " + reponse;
+                    resultats[0].valeurRep = nombre2;
+                  } else {
+                    question = nombre1 + " x " + nombre2 + " = ?";
+                    resultats[0].valeurRep = reponse;
+                  }
+                  return { question, resultats };
+                },
+              },
+              {
+                //S1
+                exId: "jbdb-matercm1-0102",
+                description: "séance 2",
+                shortTitle: "S2",
+                exampleQuestion: "5 x 2 = ",
+                logo: "exercice/calcul/multiplier.png",
+                duration: 180,
+                exerciseNumber: 30,
+                objectif: 100, //objectif visé (ration temps/nb réponses attendu)
+                eca: 40, //score en dessous du quel on indique le résultat en rouge
+                calculAGenerer(): {
+                  question: string;
+                  resultats: { texte: string; valeurRep: number }[];
+                } {
+                  const nombre1 = 2;
+                  const nombre2 = Matematik.entierAleatoire(1, 9);
+                  const reponse = nombre1 * nombre2;
+                  const variableQuestion = Matematik.entierAleatoire(1, 3);
+                  let question = "";
+                  const resultats = [{ texte: "", valeurRep: 0 }];
+                  if (variableQuestion < 3) {
+                    question = nombre1 + " x ? = " + reponse;
+                    resultats[0].valeurRep = nombre2;
+                  } else {
+                    question = nombre1 + " x " + nombre2 + " = ?";
+                    resultats[0].valeurRep = reponse;
+                  }
+                  return { question, resultats };
+                },
+              },
+              {
+                //S1
+                exId: "jbdb-matercm1-0104",
+                description: "séance 4",
+                shortTitle: "S4",
+                exampleQuestion: "5 x 2 = ",
+                logo: "exercice/calcul/multiplier.png",
+                duration: 180,
+                exerciseNumber: 30,
+                objectif: 100, //objectif visé (ration temps/nb réponses attendu)
+                eca: 40, //score en dessous du quel on indique le résultat en rouge
+                calculAGenerer(): {
+                  question: string;
+                  resultats: { texte: string; valeurRep: number }[];
+                } {
+                  const nombre1 = 2;
+                  const nombre2 = Matematik.entierAleatoire(1, 9);
+                  const reponse = nombre1 * nombre2;
+                  const variableQuestion = Matematik.entierAleatoire(1, 3);
+                  let question = "";
+                  const resultats = [{ texte: "", valeurRep: 0 }];
+                  if (variableQuestion < 3) {
+                    question = nombre1 + " x ? = " + reponse;
+                    resultats[0].valeurRep = nombre2;
+                  } else {
+                    question = nombre1 + " x " + nombre2 + " = ?";
+                    resultats[0].valeurRep = reponse;
+                  }
+                  return { question, resultats };
+                },
+              },
+            ]
+          }
+        ]
+      }
+    ],
+  },
 ];

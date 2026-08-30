@@ -6,14 +6,17 @@
         "domaines":
         {
             "add":"Sammañ ha dilemel",
-            "multi":"Liesaat ha rannañ"
+            "multi":"Liesaat ha rannañ",
+            "mater" : "Mat er ..."
         },
         "categories":
         {
             "tableAdd":"Taolioù sammañ",
             "others":"Traoù all",
             "tableMulti":"Taolioù liesaat",
-            "tablediv":"Taolioù rannañ"
+            "tablediv":"Taolioù rannañ",
+            "matercm1":"Mat er CM1",
+            "matercm2":"Mat er CM2"
         },
         "subCategories":{
             "memory":"envoriñ",
@@ -21,7 +24,8 @@
             "master":"mestroniañ",
             "addition":"sammañ",
             "subtraction":"dilemel",
-            "decompositionNumber":"disrannadenn un niver"
+            "decompositionNumber":"disrannadenn un niver",
+            "matercm1sequence1":"sekañs 1 : taolioù liesaat"
         },
         "buttons":{
             "jbdb-add-all" :"an holl",
@@ -104,7 +108,11 @@
             "jbdb-div-all":"Taolioù rannañ",
             "jbdb-div-rest-2-3-4-5": "taolioù rannañ dre 2, 3, 4 ha 5 gant ur rest",
             "jbdb-div-rest-6-7-8-9": "taolioù rannañ dre 6, 7, 8 ha 9 gant ur rest",
-            "jbdb-div-rest-all": "taolioù rannañ gant ur rest"
+            "jbdb-div-rest-all": "taolioù rannañ gant ur rest",
+            "jbdb-matercm1-0101":"Taolioù liesaat -1",
+            "jbdb-matercm1-0102":"Taolioù liesaat -2",
+            "jbdb-matercm1-0103":"Taolioù liesaat -3",
+            "jbdb-matercm1-0104":"Taolioù liesaat -4"
         },
         "printButton": "Moullañ"
     }

@@ -55,6 +55,10 @@ function App() {
                 path="nbre/ecrireParams"
                 element={<EcrireNombreParams />}
               />
+              <Route
+                path="nbre/denombre1Params"
+                element={<Denombre1ParamsContainer />}
+              />
             </Route>
 
             {/* TEACHER */}
