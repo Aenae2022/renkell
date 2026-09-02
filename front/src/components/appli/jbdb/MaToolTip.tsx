@@ -25,23 +25,26 @@ export function MaToolTip({ couleur, data }: GeneralBoutonProps) {
   const exampleQuestion = t("jbdb.home.questions." + data.exId, {
     defaultValue: data.exampleQuestion,
   });
-  const user = useOutletContext<UserSessionConnectType>();
+  // const user = useOutletContext<UserSessionConnectType>();
 
   const handleClick = (exId: string) => {
-    if (user) {
-      switch (user.roleActivated.roleName) {
-        case "TEACHER":
-          navigate(`/teacher/jbdb/${exId}`);
-          break;
-        case "STUDENT":
-          navigate(`/student/jbdb/${exId}`);
-          break;
-        default:
-          navigate(`/jbdb/${exId}`);
-      }
-    } else {
-      navigate(`/jbdb/${exId}`);
-    }
+    const link = `${window.location.origin}/jbdb/${exId}`
+    window.open(link, "_blank");
+    //navigate();
+    // if (user) {
+    //   switch (user.roleActivated.roleName) {
+    //     case "TEACHER":
+    //       navigate(`/teacher/jbdb/${exId}`);
+    //       break;
+    //     case "STUDENT":
+    //       navigate(`/student/jbdb/${exId}`);
+    //       break;
+    //     default:
+    //       navigate(`/jbdb/${exId}`);
+    //   }
+    // } else {
+    //   navigate(`/jbdb/${exId}`);
+    // }
   };
 
   const boutonContainerStyle = `relative group h-6 m-2 text-center text-black pl-1 pr-1  cursor-pointer inline-block bg-${couleur}-light mw-6 border-2 border-gray-300 rounded-md`;

@@ -6,7 +6,16 @@ import { format } from 'date-fns';
 import { fr } from 'date-fns/locale/fr';
 export class Utilitaires {
   
-  
+  static cleanFileName(value: string): string  {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9_-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+};
+
   static shuffleArray<T>(tableau: Array<T>) {
   for (let i = tableau.length - 1; i > 0; i--) {
         const j = Matematik.entierAleatoire(0, i+1);

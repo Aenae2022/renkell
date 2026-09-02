@@ -43,12 +43,12 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   textNom: {
-    fontSize: 16, // text-lg
+    fontSize: 12, // text-lg
     fontWeight: "bold",
     marginBottom: 4, // mb-1 (≈ 4px)
   },
   textDate: {
-    fontSize: 14, // text-sm
+    fontSize: 12, // text-sm
     color: "#4f39f6", // gray-500
     textDecoration: "underline",
     marginBottom: 4, // mb-1 (≈ 4px)

@@ -7,6 +7,7 @@ import MaJbdbResultPrint from "../../../document/library/MaJbdbResultPrint";
 import { pdf } from "@react-pdf/renderer";
 import type { UserSessionConnectType } from "@shared/schema/user.schema";
 import { getAssetUrl } from "@utils/assetResolver";
+import { Utilitaires } from "@utils/Utilitaires";
 type GeneralResultsProps = {
   items: {
     question: string;
@@ -112,6 +113,11 @@ export default function MaJbdbResult({
   }
 
   const generatePdf = async (name: string) => {
+    const now = new Date();
+    const d = now.getDate().toString;
+    const m =now.getMonth().toString;
+    const y = now.getFullYear().toString;
+    const cleanName = Utilitaires.cleanFileName(name)
     const blob = await pdf(
       <MaJbdbResultPrint
         name={name}
@@ -132,7 +138,7 @@ export default function MaJbdbResult({
     // Crée un lien temporaire et déclenche le téléchargement
     const link = document.createElement("a");
     link.href = url;
-    link.download = "document.pdf";
+    link.download = `${y}${m}${d}-${cleanName}`;
     link.click();
 
     // Nettoie l'URL après utilisation
