@@ -114,9 +114,9 @@ export default function MaJbdbResult({
 
   const generatePdf = async (name: string) => {
     const now = new Date();
-    const d = now.getDate().toString;
-    const m =now.getMonth().toString;
-    const y = now.getFullYear().toString;
+    const d = now.getDate().toString().padStart(2, "0");
+    const m = (now.getMonth() + 1).toString().padStart(2, "0");
+    const y = now.getFullYear().toString();
     const cleanName = Utilitaires.cleanFileName(name)
     const blob = await pdf(
       <MaJbdbResultPrint
@@ -137,7 +137,6 @@ export default function MaJbdbResult({
     const url = URL.createObjectURL(blob);
     // Crée un lien temporaire et déclenche le téléchargement
     const link = document.createElement("a");
-    link.href = url;
     link.download = `${y}${m}${d}-${cleanName}`;
     link.click();
 

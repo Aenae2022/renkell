@@ -1,6 +1,4 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import type { UserSessionConnectType } from "@shared/schema/user.schema";
 type GeneralBoutonProps = {
   couleur: string;
   data: {
@@ -17,7 +15,6 @@ type GeneralBoutonProps = {
   };
 };
 export function MaToolTip({ couleur, data }: GeneralBoutonProps) {
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const shortTitle = t("jbdb.home.buttons." + data.exId, {
     defaultValue: data.shortTitle,
