@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-
+  engineType = "client"
 }
 
 datasource db {
@@ -14,11 +14,176 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//Définition unique des langues
+enum Language {
+  FR
+  BR
+}
+//définition des composants app pour article
+enum ArticleComponentKey {
+  APP_JBDB
+  APP_DICTATION
+}
+
+
+
+// ==============================================================================================
+// =========================== DONNEES GENERALES ================================================
+// ==============================================================================================
+
+model Grade {
+  gradeId   Int    @id @default(autoincrement())
+  gradeName String @db.VarChar(50)
+  
+  // Relation n-n via la table pivot
+  articleGrades ArticleGrade[]
+  
+  users User[]
+}
+
+model Domaine {
+  id       String @id // ex: "langue"
+  titleKey String // Clé i18n: "domaine.francais"
+  color    String // Pour ton css (ex: "francais")
+
+  // SES ENFANTS
+  sousDomaines SousDomaine[]
+  articles     Article[]
+}
+
+model SousDomaine {
+  id       String  @id // ex: "lexique"
+  titleKey String  // Clé i18n: "main.sousdomaine.lexique"
+  color    String? // Sa propre couleur
+
+  // LE LIEN PARENT
+  domaineId String
+  domaine   Domaine @relation(fields: [domaineId], references: [id])
+
+  // SES ENFANTS
+  articles Article[]
+}
+
+// ==============================================================================================
+// =========================== PARTIE PUBLIQUE ==================================================
+// ==============================================================================================
+
+model Article {
+  id             Int      @id @default(autoincrement())
+  titleKey       String
+  descriptionKey String
+  logoSrc        String
+  logoAlt        String   @default("logo")
+  languages      Language[]
+  createdAt      DateTime @default(now())
+  componentKey   ArticleComponentKey?
+
+  // Relations
+  links        Articlelink[]
+  articleGrades ArticleGrade[] // Relation inverse nécessaire pour la table pivot
+
+  domaineId     String?
+  domaine       Domaine?      @relation(fields: [domaineId], references: [id])
+  
+  sousDomaineId String?
+  sousDomaine   SousDomaine?  @relation(fields: [sousDomaineId], references: [id])
+
+  @@map("article")
+}
+
+// Table de jonction pour la relation Many-to-Many entre Article et Grade
+model ArticleGrade {
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId Int
+
+  grade   Grade @relation(fields: [gradeId], references: [gradeId], onDelete: Cascade)
+  gradeId Int
+
+  @@id([articleId, gradeId])
+}
+
+model Articlelink {
+  id Int @id @default(autoincrement())
+
+  articleId Int
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  index Int        // 1,2,3 pour <1>, <2>
+  label String     // Charivari
+  url String
+}
+
+
+
+// ==============================================================================================
+// =========================== PARTIE PRIVEE ====================================================
+// ==============================================================================================
+
+// ############################ GESTION DES UTILISATEURS ################################################
+model User {
+   userId             Int     @id @default(autoincrement())
+   userFamilyName String  @db.VarChar(50)
+   userFirstName String  @db.VarChar(50)
+   userPseudo String? @db.VarChar(50)   @unique
+   userPsswd String? @db.VarChar(255) 
+   userMail String? @db.VarChar(255) @unique
+   userIcon String @db.VarChar(50) @default("user_student.png")
+
+   gradeId        Int?    // clé étrangère optionnelle donc NULL si pas d'association avec un niveau scolaire
+   grade          Grade? @relation(fields: [gradeId], references: [gradeId], onDelete: SetNull)
+
+   schoolId Int? // clé étrangère optionnelle donc NULL si pas d'association avec une école
+   school   School? @relation(fields: [schoolId], references: [schoolId], onDelete: SetNull)
+
+  userLinks LinkUser[] 
+  userGroups GroupUser[]
+  userRoles RoleUser[]
+  userLinkPermissions LienPermission[]
+  bookEvents BookEvent[]
+
+  @@unique([userFirstName, userFamilyName, schoolId])
+}
+
+model Role {
+  roleId Int @id @default(autoincrement())
+  roleName String @db.VarChar(50)
+
+  roleUsers RoleUser[]
+}
+
+model RoleUser{
+  user   User  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId Int
+
+  roles        Role       @relation(fields: [roleId], references: [roleId], onDelete: Cascade)
+  roleId      Int
+
+  @@id([userId, roleId]) // clé composite
+}
+
+model GroupUser {
+  user   User  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId Int
+
+  group        Group       @relation(fields: [groupId], references: [groupId], onDelete: Cascade)
+  groupId      Int
+
+  principal Boolean @default(false)
+
+  @@id([userId, groupId]) // clé composite
+}
+
+// ############################ DONNEES ECOLE ###################################################
 model School {
   schoolId   Int    @id @default(autoincrement())
   schoolName String @db.VarChar(500)
   schoolRef  String @unique
+  schoolCp  Int
+  schoolCity String
   classrooms  Classroom[] // Relation 1-n avec Classroom
+  users User[] //relation 1-n avec user
+
+  @@unique([schoolName, schoolCp, schoolCity])
 }
 
 model Classroom {
@@ -37,8 +202,21 @@ model Classroom {
   group   Group?     @relation(fields: [groupId], references: [groupId], onDelete: SetNull)
 }
 
+model Group {
+  groupId Int     @id @default(autoincrement())
+  groupName String @db.VarChar(255)
+  groupLanguage String @db.VarChar(50)
+  groupPrincipal Boolean
+
+  classroom Classroom?  // relation 1-1 inverse
+  groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
+  groupUsers GroupUser[]
+  libraryGroup BookGroup[]
+  groupPeriods Periodlibrary[]
+}
 
 
+// ############################ RACCOURCI INTERNENT PAGE D'ACCUEIL ############################
 model Link {
   linkId             Int     @id @default(autoincrement())
   linkName           String  @db.VarChar(500)
@@ -59,7 +237,7 @@ model Link {
 
   groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
   userLinks LinkUser[] // Relation avec la table de liaison GroupLink
-
+  linkUserPermission LienPermission[] // Relation avec la table de liaison LienPermission
 }
 
 model GroupLink {
@@ -72,46 +250,6 @@ model GroupLink {
   @@id([groupId, linkId]) // clé composite
 }
 
-model Group {
-  groupId Int     @id @default(autoincrement())
-  groupName String @db.VarChar(255)
-  groupLanguage String @db.VarChar(50)
-  groupPrincipal Boolean
-
-  classroom Classroom?  // relation 1-1 inverse
-  groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
-  groupUsers GroupUser[]
-}
-
-model User {
-   userId             Int     @id @default(autoincrement())
-   userFamilyName String  @db.VarChar(50)
-   userFirstName String  @db.VarChar(50)
-   userType String  @db.VarChar(50) @default("invit")
-   userPseudo String? @db.VarChar(50)   @unique
-   userPsswd String? @db.VarChar(255) 
-   userMail String? @db.VarChar(255) @unique
-   userIcon String @db.VarChar(50) @default("user_student.png")
-
-   gradeId        Int?    // clé étrangère optionnelle donc NULL si pas d'association avec un niveau scolaire
-   grade          Grade? @relation(fields: [gradeId], references: [gradeId], onDelete: SetNull)
-
-  userLinks LinkUser[] 
-  userGroups GroupUser[]
-}
-
-model GroupUser {
-  user   User  @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  userId Int
-
-  group        Group       @relation(fields: [groupId], references: [groupId], onDelete: Cascade)
-  groupId      Int
-
-  principal Boolean @default(false)
-
-  @@id([userId, groupId]) // clé composite
-}
-
 model LinkUser {
   user   User  @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId Int
@@ -122,9 +260,74 @@ model LinkUser {
   @@id([userId, linkId]) // clé composite
 }
 
-model Grade {
-  gradeId Int @id @default(autoincrement())
-  gradeName String @db.VarChar(50)
-  users  User[] // Relation 1-n avec Classroom
+model LienPermission {
+  plId Int @id @default(autoincrement())
 
+  links Link @relation(fields: [linkId], references: [linkId], onDelete: Cascade)
+  linkId Int
+
+  users User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId Int
 }
+
+// ############################ LIBRARY ########################################################
+
+model Book {
+  bookId Int @id @default(autoincrement())
+  bookTitle String @db.VarChar(255)
+  bookAuthor String? @db.VarChar(100)
+  bookPublisher String? @db.VarChar(100)
+  bookIsbn String? @db.VarChar(25) 
+
+  libraryGroup BookGroup[] 
+}
+
+model BookEvent{
+  bookEventId Int @id @default(autoincrement())
+  bookEventType Int
+  bookEventDate DateTime
+  userId Int
+  bookGroupId Int
+
+  // Relations
+  groupBook  BookGroup  @relation(fields: [bookGroupId], references: [bookGroupId])
+  user User @relation(fields: [userId], references: [userId])
+  eventLibraryType Eventlibrarytype @relation(fields: [bookEventType], references: [eventLibraryTypeId])
+}
+
+model Periodlibrary {
+  periodId Int @id @default(autoincrement())
+  groupId Int?
+  periodName String @db.VarChar(50)
+  dateStart DateTime
+  dateEnd DateTime
+
+  group Group? @relation(fields: [groupId], references: [groupId], onDelete: SetNull)
+}
+
+model BookGroup {
+  bookGroupId Int @id @default(autoincrement())
+  bookId Int
+  groupId Int
+  location String
+  onWork Boolean
+  dateAdd DateTime
+  dateRemove DateTime?
+
+  // Relations
+  book  Book  @relation(fields: [bookId], references: [bookId])
+  group Group @relation(fields: [groupId], references: [groupId])
+  bookEvents BookEvent[]
+}
+
+model Eventlibrarytype {
+  eventLibraryTypeId Int @id @default(autoincrement())
+  eventLibraryTypeName String @db.VarChar(50)
+
+  bookEvents BookEvent[]
+}
+
+
+
+
+

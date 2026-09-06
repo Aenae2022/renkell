@@ -1,88 +1,100 @@
-import { useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { type UserDatasConnectType } from "@shared/schema/user.schema";
-import { type ClassroomShortType } from "@shared/schema/classroom.schema";
-import { jwtDecode } from "jwt-decode";
+// front/src/context/AuthProvider.tsx
+import { useEffect, useState } from "react";
+import api from "../api/axios";
 import { AuthContext } from "./AuthContext";
+import { type UserSessionConnectType } from "@shared/schema/user.schema";
+import type { PasswordType } from "@shared/schema/fields/password.schema";
 
-interface JwtPayload {
-  exp: number; // Date d'expiration UNIX (en secondes)
-  id: string;
-}
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<UserSessionConnectType | null>(null);
+  const [loading, setLoading] = useState(true);
 
-function isTokenValid(token: string): boolean {
-  try {
-    const decoded = jwtDecode<JwtPayload>(token);
-    const currentTime = Date.now() / 1000; // en secondes
-    return decoded.exp > currentTime;
-  } catch (error) {
-    console.error("Erreur lors de la décodage du token :", error);
-    return false; // Token invalide ou mal formé
-  }
-}
-
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [tokenConn, setTokenConn] = useState<string | null>(
-    localStorage.getItem("tokenConn")
-  );
-  const [userConn, setUserConn] = useState<UserDatasConnectType | null>(
-    localStorage.getItem("userConn")
-      ? JSON.parse(localStorage.getItem("userConn")!)
-      : null
-  );
-  const [classroomConn, setClassroomConn] = useState<ClassroomShortType | null>(
-    localStorage.getItem("classroomConn")
-      ? JSON.parse(localStorage.getItem("classroomConn")!)
-      : null
-  );
-
-  const navigate = useNavigate();
-
-  const login = (
-    newToken: string,
-    userData: UserDatasConnectType,
-    newClassroom: ClassroomShortType
-  ) => {
-    setTokenConn(newToken);
-    setUserConn(userData);
-    setClassroomConn(newClassroom);
-  };
-
-  const logout = useCallback(() => {
-    setTokenConn(null);
-    setUserConn(null);
-    setClassroomConn(null);
-    navigate("/"); // Rediriger vers la page d'accueil'
-  }, [navigate]);
+  // useEffect(() => {
+  //   api
+  //     .get("/api/auth/session")
+  //     .then((res) => {
+  //       if (res.data.success) {
+  //         setUser(res.data.user);
+  //       } else {
+  //         // L'API a répondu, mais pas de session valide
+  //         setUser(null);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       if (err.response?.status === 401) {
+  //         setUser(null); // ❗ seulement si non autorisé
+  //       } else {
+  //         console.warn("Erreur temporaire, on garde l'utilisateur connecté");
+  //         // Ne rien faire ici => garder l'utilisateur tel quel
+  //       }
+  //     })
+  //     .finally(() => setLoading(false));
+  // }, []);
 
   useEffect(() => {
-    if (tokenConn) {
-      if (!isTokenValid(tokenConn)) {
-        logout(); // Token expiré ou invalide
-      } else {
-        localStorage.setItem("tokenConn", tokenConn);
-      }
-    } else {
-      localStorage.removeItem("tokenConn");
-    }
+    //en test pour voir si déconnection en cas d'erreur serveur
+    api
+      .get("/api/auth/session")
+      .then((res) => {
+        setUser(res.data.user); // si ça passe → user existe
+      })
+      .catch((err) => {
+        const status = err.response?.status;
 
-    if (userConn) {
-      localStorage.setItem("userConn", JSON.stringify(userConn));
-    } else {
-      localStorage.removeItem("userConn");
+        if (status === 401) {
+          setUser(null);
+        } else {
+          console.warn("Erreur serveur, on garde la session");
+        }
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const login = async (
+    pseudo: string | null,
+    password: PasswordType | null,
+  ) => {
+    try {
+      const response = await api.post("/api/auth/login", {
+        userPseudo: pseudo,
+        userPsswd: password,
+      });
+      if (response.data.reponse === true) {
+        // Re-check de la session juste après le login
+        const sessionRes = await api.get("/api/auth/session");
+        if (sessionRes.data.success) {
+          setUser(sessionRes.data.user);
+          return { reponse: true, result: sessionRes.data.user };
+        }
+      }
+
+      return { reponse: false, result: undefined };
+    } catch (err) {
+      console.error("Erreur login :", err);
+      return { reponse: false, result: undefined };
     }
-    if (classroomConn) {
-      localStorage.setItem("classroomConn", JSON.stringify(classroomConn));
-    } else {
-      localStorage.removeItem("classroomConn");
+  };
+
+  const reloadSessionUser = async () => {
+    setLoading(true);
+    try {
+      const session = await api.get("/api/auth/session");
+      if (session.data.success) {
+        setUser(session.data.user);
+      }
+      return session.data.user;
+    } catch (e) {
+      console.error("Erreur chargement session :", e);
+    } finally {
+      setLoading(false);
     }
-  }, [tokenConn, userConn, classroomConn, logout]);
+  };
 
   return (
     <AuthContext.Provider
-      value={{ tokenConn, userConn, classroomConn, login, logout }}
+      value={{ user, setUser, loading, login, reloadSessionUser }}
     >
       {children}
     </AuthContext.Provider>
   );
-};
+}

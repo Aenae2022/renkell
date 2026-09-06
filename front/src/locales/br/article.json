@@ -1,0 +1,25 @@
+{
+    "pTag": {
+        "blog": "Degemer",
+        "langue": "Yezh",
+        "maths": "Matematik",
+        "art": "Arzoù"
+    },
+    "sTag": {
+        "lexique": "Geriadur",
+        "grammaire": "Yezhadur",
+        "calculmental": "Jed dre benn"
+    },
+    "1": {
+        "title": "Kinnig",
+        "content": "<p>Kelennerez on er c’hlas divyezhek galleg/brezhoneg. Kinnig a ran amañ ma ostilhoù deoc'h : sekañsoù, dielloù, poelladennoù en linenn, h.a. </p><p>Krouet eo bet an teulioù-se diouzh ma ezhommoù er c'hlas.  Savet em eus anezho awenet gant kalz a dafar. Klask a ran menegiñ ma awen met ma anavezit ho labour ha ma'm eus disoñjet menegiñ ac'hanoc'h 😳​ (pe ma n'hoc'h eus ket c'hoant e vez implijet amañ) Deuit e darempred ganin.😀 </p><p> Teulioù emaon o implijout, kompren a reot neuze ne faot ket din ma c'hallfe ma skolidi sell ouzh an holl (evel ar reizhadurioù pe ar priziadennoù 🤪). Neuze ho po ezhomm da gaout ur ger-tremen evit digeriñ anezho. Deuit e darempred ganin gant ur chomlec'h akademiek ha lakaat a rin ac'hanoc'h er sekred. 🤫 </p>"
+    },
+    "jbdb": {
+        "title": "Jed buan dre benn",
+        "content": "<p>ul listenn jedoù d'ober e 3 munutenn. </p><p> Ar poelladennoù-mañ a zo bet savet diwar menozh <1>Charivari</1>.</p>"
+    },
+    "dicJV" :{
+        "title":"Skrivadennoù Jakez Vras",
+        "content":"Skrivadennoù savet diwar al levrioù Jakez Vras."        
+    }
+}

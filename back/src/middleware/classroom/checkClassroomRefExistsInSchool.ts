@@ -7,7 +7,6 @@ export const checkClassroomRefExists = async(
   next: NextFunction
 ) : Promise<void>=>{
     const { classroomRef, school } = req.body;
-  console.log("checkClassroomRefExists", classroomRef, typeof classroomRef);
     // 🔒 Vérifie si classroomRef est bien présent
   if (!classroomRef) {
     res.status(400).json({ message: "L'objet classroomRef est manquant." });

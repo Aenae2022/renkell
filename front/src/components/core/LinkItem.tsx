@@ -1,4 +1,5 @@
 import { type LinkShortType } from "@shared/schema/link.schema";
+import { getAssetUrl } from "@utils/assetResolver";
 
 function LinkItem({
   link,
@@ -35,7 +36,7 @@ function LinkItem({
         <img
           className="w-full h-full object-contain rounded-xl"
           alt="logoSite"
-          src={`/src/assets/pictures/lienSite/${link.linkIcon}`}
+          src={getAssetUrl(`pictures/lienSite/${link.linkIcon}`)}
           onClick={() => handleClick(link.linkRedirection)}
         />
       </div>

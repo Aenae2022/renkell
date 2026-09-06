@@ -18,11 +18,24 @@ import userMenuBr from "./locales/br/userMenu.json";
 import userMenuFr from "./locales/fr/userMenu.json";
 import degemerParamsBr from "./locales/br/degemerParams.json";
 import degemerParamsFr from "./locales/fr/degemerParams.json";
+import dashboardBr from "./locales/br/dashboard.json";
+import dashboardFr from "./locales/fr/dashboard.json";
 import libraryBr from "./locales/br/library.json";
 import libraryFr from "./locales/fr/library.json";
+import paramsStudentsBr from "./locales/br/paramsStudents.json";
+import paramsStudentsFr from "./locales/fr/paramsStudents.json";
+import paramsSchoolBr from "./locales/br/paramsSchool.json";
+import paramsSchoolFr from "./locales/fr/paramsSchool.json";
+import ParamsLibraryBr from "./locales/br/paramsLibrary.json";
+import ParamsLibraryFr from "./locales/fr/paramsLibrary.json";
+import articleBr from "./locales/br/article.json";
+import articleFr from "./locales/fr/article.json";
+import appliesBr from "./locales/br/applies.json";
+import appliesFr from "./locales/fr/applies.json"
 const RESOURCES = {
   br: { 
     translation: {
+      dashboard : dashboardBr,
       header : headerBr,
       degemerSkol: degemerSkolBr,
       main : mainBr,
@@ -32,10 +45,16 @@ const RESOURCES = {
       userMenu : userMenuBr,
       degemerParams : degemerParamsBr,
       library:libraryBr,
+      paramsStudents: paramsStudentsBr,
+      paramsSchool : paramsSchoolBr,
+      paramsLibrary : ParamsLibraryBr,
+      article : articleBr,
+      applies : appliesBr,
     } 
   },
   fr: { 
     translation: {
+      dashboard: dashboardFr,
       header : headerFr,
       degemerSkol: degemerSkolFr,
       main : mainFr,
@@ -45,6 +64,11 @@ const RESOURCES = {
       userMenu : userMenuFr,
       degemerParams : degemerParamsFr,
       library:libraryFr,
+      paramsStudents: paramsStudentsFr,
+      paramsSchool  : paramsSchoolFr,
+      paramsLibrary : ParamsLibraryFr,
+      article : articleFr,
+      applies : appliesFr,
     },
   }
 };

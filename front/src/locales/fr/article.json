@@ -1,0 +1,25 @@
+{
+    "pTag": {
+        "blog": "Accueil",
+        "langue": "Langue",
+        "maths": "Mathématiques",
+        "art": "Arts"
+    },
+    "sTag": {
+        "lexique": "Lexique",
+        "grammaire": "Grammaire",
+        "calculmental": "Calcul mental"
+    },
+    "1": {
+        "title": "Kinnig",
+        "content": "<p>Je suis enseignante en classe bilingue français/breton. Je vous propose ici mes outils : séquences, documents, exercices en ligne, etc. </p><p> Ces documents ont été créés au fil de mes besoins en classe. Je les ai construits en m'inspirant de nombreuses ressources. J'essaie de citer mes inspirations mais si vous reconnaissez votre travail et que j'ai omis de vous citer 😳​ (ou que vous ne souhaitez pas que je l'utilise) n'hésitez pas à me contacter. 😀 </p><p> Ce sont des documents que j'utilise donc vous comprendrez que je ne souhaite pas que mes élèves aient accès à tout (comme les corrigés ou les évaluations 🤪​) vous aurez donc besoin d'un mot de passe pour les ouvrir. Contactez-moi avec une adresse académique et je vous mettrai dans le secret 🤫​. </p>"
+    },
+    "jbdb": {
+        "title": "Calculs contre la montre",
+        "content": "<p>Calculs à réaliser en 3 minutes</p><p>J'ai créé ces exercices en m'inspirant du travail de <1>Charivari</1>.</p>"
+    },
+    "dicJV" :{
+        "title":"Dictées Jakez Vras",
+        "content":"Dictées créées à partir des livres Jakez Vras."   
+    }
+}

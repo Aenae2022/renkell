@@ -8,7 +8,6 @@ export const checkSchoolValid = async (
   next: NextFunction
 ): Promise<void> => {
   const { school } = req.body;
- console.log("checkSchoolValid", school);
   // 🔒 Vérifie si school est bien présent
   if (!school) {
     res.status(400).json({ message: "L'objet school est manquant." });

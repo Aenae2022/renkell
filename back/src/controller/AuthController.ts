@@ -1,11 +1,13 @@
+//back/scr/controller/AuthController.ts
 import { Request, Response } from "express";
 import UserModel from "../model/UserModel";
+import GroupModel from "../model/GroupModel"
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { UserDatasConnectSchema } from "@shared/schema/user.schema";
-import dotenv from "dotenv";
-import {generateToken} from "../../utils/jwt";
-dotenv.config();
+import { UserDatasConnectSchema, UserSessionConnectType, type UserDatasConnectType } from "@shared/schema/user.schema";
+// import dotenv from "dotenv";
+
+import  {toUserSession} from "../../utils/changeType"
+// dotenv.config();
 
 
 export default class AuthController {
@@ -20,7 +22,7 @@ export default class AuthController {
         //on récupère les datas de user si l'utilisateur existe
         const validatedUser = await UserModel.getUserByPseudo(userPseudo);
         if (!validatedUser || validatedUser.reponse === null) {
-           res.status(400).json({ message: validatedUser.message || "header.login.badIdentification" });
+           res.status(400).json({ message: validatedUser.message || "header.login.badIdentification", reponse:null });
            return
         }
 
@@ -35,7 +37,7 @@ export default class AuthController {
         const myUser = parseResult.data; // ✅ bien typé
         
         if(myUser.userPsswd === null || myUser.userPsswd === undefined) {
-            res.status(400).json({ message: "header.login.badIdentification2" });
+            res.status(400).json({ message: "header.login.badIdentification", reponse: null });
             return 
         }
 
@@ -50,20 +52,33 @@ export default class AuthController {
         }
 
         if (!isMatch) {
-            res.status(400).json({ message: "header.login.badIdentification3" });
+            res.status(400).json({ message: "header.login.badIdentification", reponse:null });
             return;
         }           
 
-        // Générer un JWT pour l'utilisateur
-        const token = generateToken(myUser.userId);
-  
-         res.status(200).json({ message: "header.login.goodIdentification4", 
-            reponse: true, 
-            result: {
-                myUser,
-                token,
-            }});
-        return
+        // s'il a au moins un groupe principal
+        if (Array.isArray(myUser.groupsP) && myUser.groupsP.length > 0) {
+        const groupId = myUser.groupsP[0].groupId;
+      }
+        //modificatin des données pour stockage en session
+        const userSession = toUserSession(myUser);
+       
+        req.session.user = userSession;
+
+       
+
+res.status(200).json({
+  message: "header.login.goodIdentification",
+  reponse: true,
+});
+
+      // res.status(200).json({
+      //   message: "header.login.goodIdentification",
+      //   reponse: true,
+      // });
+      
+
+       
       } catch (error) {
         console.error("Erreur dans le contrôleur :", error);
          res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
@@ -71,6 +86,64 @@ export default class AuthController {
       }
     } 
 
+    static async logout(req: Request, res: Response) {
+      try {
+        const userDatas = req.session.user;
+      // Redirection par défaut
+      let redirection = '/degemer/0';
+
+      // Si l'utilisateur est connecté et a une école
+      if (userDatas?.userSchool?.schoolRef) {
+        redirection = `/degemer/${userDatas.userSchool.schoolRef}`;
+      }
+      // s'il a au moins un groupe principal
+      if (userDatas && Array.isArray(userDatas.groupsP) && userDatas.groupsP.length > 0) {
+        const groupId = userDatas.groupsP[0].groupId;
+
+        const refClassroomSearch = await GroupModel.getClassroomRefByGroupId(groupId);
+        if (refClassroomSearch.reponse) {
+          redirection += `/c/${refClassroomSearch.result}`;
+        }
+      }
+
+      req.session.destroy((err) => {
+        if (err) {
+          console.error("Erreur lors de la destruction de session :", err);
+          return res.status(500).json({ success: false, message: "Erreur serveur lors de la déconnexion" });
+        }
+
+        res.clearCookie("connect.sid");
+        res.json({ success: true, result: redirection });
+      });
+
+  } catch (error) {
+    console.error("Erreur dans logout :", error);
+    res.status(500).json({ success: false, message: "Erreur serveur dans logout" });
+  }
+}
+// Role activation
+  static async roleActivate(req: Request, res: Response) {
+  const { role } = req.body;
+  const userDatas = req.session.user;
+  if(userDatas){
+    const newUserDatas = { ...userDatas, roleActivated: role };
+    req.session.user = newUserDatas;
+    res.json({ message: "", reponse : true, result : role });
+  }
+  else {
+    res.json({ message: "", reponse: false, result : null });
+  }
+  }
+
+
+//return : succes, user (si réussi) / success, message (si échec)
+static async getSessionUser(req: Request, res: Response) {
+  if (req.session.user) {
+    res.json({ success: true, user: req.session.user });
+  } else {
+    res.json({ success: false, message: "Non connecté" });
+  }
+}
 }
 
 

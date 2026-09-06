@@ -2,10 +2,20 @@
 import type z from "zod";
 import { Matematik } from "./Matematik";
 import DOMPurify from "dompurify";
-
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale/fr';
 export class Utilitaires {
   
-  
+  static cleanFileName(value: string): string  {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9_-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+};
+
   static shuffleArray<T>(tableau: Array<T>) {
   for (let i = tableau.length - 1; i > 0; i--) {
         const j = Matematik.entierAleatoire(0, i+1);
@@ -19,6 +29,21 @@ export class Utilitaires {
     return str
         .trim() // Supprime les espaces au début et à la fin
         .replace(/\s+/g, " ") // Remplace les multiples espaces par un seul
+    }
+
+    //compare deux nombres
+    //params : deux nombres
+    //return : (nbMax : number, nbMin : number)
+    static compareTwoNumbers(nb1: number, nb2: number) : {nbMax : number, nbMin : number} {
+        if(nb1 > nb2){
+            return {nbMax : nb1, nbMin : nb2};
+        }
+        else if(nb1 === nb2){
+            return {nbMax : nb1+10, nbMin : nb2};
+        }
+        else{
+            return {nbMax : nb2, nbMin : nb1};
+        }
     }
 
     //vérifie une date saisie par un utilisateur dans un input pour sécurité
@@ -43,7 +68,7 @@ export class Utilitaires {
         const isInRange = d >= min && d <= max;
         return {
           valid: isSameDate && isInRange,
-          date: dateTest
+          date: new Date(dateTest)
         };
       }
 
@@ -64,6 +89,35 @@ export class Utilitaires {
         const secureStr = DOMPurify.sanitize(cleanStr)
         return secureStr
     }
+
+    //mise en forme des noms propres : majuscules en début de mot, espace, tiret, apostrophe
+    static convertNomPropre(name:string) : string  {
+  
+  return name
+    .trim()
+    // 1. Remplace les tirets multiples par un seul tiret
+    .replace(/-+/g, '-')
+    // 2. Supprime les espaces autour des apostrophes
+    .replace(/\s*'\s*/g, "'")
+    // 3. Entoure les tirets d’un seul espace
+    .replace(/\s*-\s*/g, ' - ')
+    // 4. Remplace les multiples espaces par un seul
+    .replace(/\s+/g, ' ')
+    // 5. Met en majuscule chaque mot sauf après une apostrophe
+    .split(' ')
+    .map(word => word
+      .split('-').map(sub => 
+        sub.split("'").map((part, i) =>
+          i === 0 ? Utilitaires.capitalize(part) : part // on ne met en majuscule que le premier morceau avant '
+        ).join("'")
+      ).join('-')
+    )
+    .join(' ');
+}
+
+static capitalize(word: string): string {
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}
       
     //enlève les espaces superflus en tenant compte de la ponctuation
     static validFormatString(text: string){
@@ -118,13 +172,64 @@ export class Utilitaires {
         }
     }
 
+    //savoir si un string est un nombre entier compris entre deux bornes
+    //params : string, min: number, max: number
+    //return : boolean
+    static isIntegerInRange(str: string, min: number, max: number): boolean {
+        const clean = str.replace(/\s/g, "")
+        const num = parseInt(clean, 10);
+        return !isNaN(num) && num >= min && num <= max;
+      }
+
     //savoir si une date est comprise dans une période donnée
     //params : start: string, end: string, today:string
     //return : boolean
-    static isInRange(start: string, end: string, today:Date): boolean {
+    static isInRange(start: Date, end: Date, today:Date): boolean {
         const startDate = new Date(start);
         const endDate = new Date(end);
-        //const test = new Date(today);
         return today >= startDate && today <= endDate;
       }
+
+    //vérifier que le pourcentage pour acquis est bien supérieur à celui pour eca
+    //params : acquis: number, eca: number
+    //return :  {acquis: number, eca: number}
+    static getAcquisEca(acquis: number, eca: number): {acquis: number, eca: number} {
+        if (acquis > eca) {
+            return { acquis, eca };
+        } else {
+            return { acquis: 70, eca: 40 };
+        }
+    }
+
+
+    //connaitre le moment actuel sous divers format : 12/04/26 ou 11:12:36 ou iso
+    //return : obket { date: string, time: string, iso: string }
+    static getCurrentMoment() : { date: string, time: string, iso: string, dateFr: string, dateBr: string} {
+        const now = new Date();
+        const date = now.toLocaleDateString('fr-FR');
+        const time = now.toLocaleTimeString('fr-FR');
+        const iso = now.toISOString();
+        // Français
+        const dateFr = format(now, "d MMMM yyyy HH:mm", { locale: fr });
+        // "16 avril 2026 17:21"
+
+        // Breton
+        const months = ["Genver","C’hwevrer","Meurzh","Ebrel","Mae","Mezheven","Gouere","Eost","Gwengolo","Here","Du","Kerzu"];
+        const d = now.getDate();
+        const m = months[now.getMonth()];
+        const y = now.getFullYear();
+        const h = now.getHours();
+        const min = String(now.getMinutes()).padStart(2, "0");
+        let prefix = "d'an";
+        const unanenn = d%10;
+        if(unanenn === 4 || unanenn === 5 || unanenn === 6 || unanenn === 7){ 
+            prefix = "d'ar";
+        }
+        const dateBr = `${prefix} ${d} a viz ${m} ${y} ${h > 12 ? (h - 12) : h}e${min} ${h > 12 ? 'gm' : ''}`;
+        // "d'an 16 a viz Ebrel 2026 5:21 gm"
+        
+        return { date, time, iso , dateFr, dateBr};
+    }
+
+   
 }

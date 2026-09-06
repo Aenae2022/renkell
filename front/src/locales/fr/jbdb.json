@@ -6,14 +6,17 @@
         "domaines":
         {
             "add":"Additionner et soustraire",
-            "multi":"Multiplier et diviser"
+            "multi":"Multiplier et diviser",
+            "mater":"Maths en ..."
         },
         "categories":
         {
             "tableAdd":"Tables d'addition",
             "others":"Autres",
             "tableMulti":"Tables de multiplication",
-            "tablediv":"Tables de division"
+            "tablediv":"Tables de division",
+            "matercm1":"Maths en CM1",
+            "matercm2":"Maths en CM2"
         },
         "subCategories":{
             "memory":"mémoriser",
@@ -21,7 +24,8 @@
             "master":"maitriser",
             "addition":"addition",
             "subtraction":"soustraction",
-            "decompositionNumber":"décomposition d'un nombre"
+            "decompositionNumber":"décomposition d'un nombre",
+            "matercm1sequence1":"séquence 1 : tables de multiplication"
         },
         "buttons":{
             "jbdb-add-all" :"toutes",
@@ -103,7 +107,12 @@
             "jbdb-div-all":"Tables de division",
             "jbdb-div-rest-2-3-4-5": "Tables de division par 2, 3, 4 et 5 avec reste",
             "jbdb-div-rest-6-7-8-9": "Tables de division par 6, 7, 8 et 9 avec reste",
-            "jbdb-div-rest-all": "Tables de division par 6, 7, 8 et 9 avec reste"
-        }                 
+            "jbdb-div-rest-all": "Tables de division par 6, 7, 8 et 9 avec reste",
+            "jbdb-matercm1-0101":"Table de multiplication -1",
+            "jbdb-matercm1-0102":"Table de multiplication -2",
+            "jbdb-matercm1-0103":"Table de multiplication -3",
+            "jbdb-matercm1-0104":"Table de multiplication -4"
+        },
+        "printButton": "Imprimer"                 
     }    
   }
