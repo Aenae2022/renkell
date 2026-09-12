@@ -19,7 +19,8 @@
         "goLink" : "Aller à l'exercice",
         "downloadQr" : "Télécharger le QR Code",
         "copyQr" : "Copier le QR Code",
-        "printResult" : "Imprimer"
+        "printResult" : "Enregistrer",
+        "goApplication" : "Aller à l'application"
     },"denombre1" : {
         "globalTitle" : "Recomposer les nombres",
         "title" : "Les nombres jusqu'à ",

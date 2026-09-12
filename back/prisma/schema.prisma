@@ -23,6 +23,8 @@ enum Language {
 enum ArticleComponentKey {
   APP_JBDB
   APP_DICTATION
+  APP_ECRIRE_NOMBRE
+  APP_DENOMBRE1
 }
 
 
@@ -291,7 +293,7 @@ model BookEvent{
 
   // Relations
   groupBook  BookGroup  @relation(fields: [bookGroupId], references: [bookGroupId])
-  user User @relation(fields: [userId], references: [userId])
+  user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
   eventLibraryType Eventlibrarytype @relation(fields: [bookEventType], references: [eventLibraryTypeId])
 }
 
