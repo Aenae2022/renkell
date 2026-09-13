@@ -21,16 +21,10 @@ export default function DegemerParamsLinks() {
 
   //ici les données de fonctionnement du classeur
   //définir les onglets
+  
   //1-l'onglet user
   const principalTagsList = useMemo(() => {
-    const list = [
-      new PrincipalTag(
-        user.userId,
-        "userParamsLinks.pTag.teacher",
-        "user",
-        "calculmental"
-      ), //id, title, concerned, color
-    ];
+    const list = []
     //2-récupérer les onglets pour les groupes gérés par l'enseignant
     if (user.userGroups.length > 0) {
       user.userGroups.forEach((group) => {
@@ -39,6 +33,15 @@ export default function DegemerParamsLinks() {
           new PrincipalTag(group.groupId, group.groupName, "group", groupColor)
         );
       });
+    list.push(
+      new PrincipalTag(
+        user.userId,
+        "userParamsLinks.pTag.teacher",
+        "user",
+        "calculmental"
+      ), //id, title, concerned, color
+    );
+    
     }
     return list;
   }, [user.userId, user.userGroups]);

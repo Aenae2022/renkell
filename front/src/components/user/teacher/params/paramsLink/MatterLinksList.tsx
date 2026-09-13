@@ -1,3 +1,4 @@
+import { getAssetUrl } from "@utils/assetResolver";
 import type { LinkDataType } from "@shared/schema/link.schema";
 import { useTranslation } from "react-i18next";
 
@@ -117,7 +118,7 @@ function MatterLinksList({ title, linksList, matter, handleChange }: Props) {
                       )}
                     </span>
                     <img
-                      src={`/pictures/lienSite/${link.icon}`}
+                      src={getAssetUrl(`pictures/lienSite/${link.icon}`)}
                       alt="logo"
                       className="max-w-8 max-h-7 inline cursor-pointer ml-1"
                       onClick={() =>
