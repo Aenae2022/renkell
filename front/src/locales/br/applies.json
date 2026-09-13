@@ -19,7 +19,8 @@
         "goLink" : "Mont d'ar boelladenn",
         "downloadQr" : "Pellgargañ ar c'hod QR",
         "copyQr" : "Kopiañ ar c'hod QR",
-        "printResult" : "Moullañ"
+        "printResult" : "Enrollañ",
+        "goApplication" : "Mont d'an aplikadenn"
     },
     "denombre1" : {
         "globalTitle" : "Adkenaozañ an niveroù",

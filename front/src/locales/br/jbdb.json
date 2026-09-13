@@ -25,7 +25,9 @@
             "addition":"sammañ",
             "subtraction":"dilemel",
             "decompositionNumber":"disrannadenn un niver",
-            "matercm1sequence1":"sekañs 1 : taolioù liesaat"
+            "matercm1sequence1":"sekañs 1 : taolioù liesaat",
+            "matercm1sequence2":"sekañs 2 : sammañ pe dilemel 9, 19, 29, 39 / 10, 20, 30, 40...",
+            "matercm2sequence2":"sekañs 2 : emgefrekaat doareoù jediñ"
         },
         "buttons":{
             "jbdb-add-all" :"an holl",
@@ -114,7 +116,7 @@
             "jbdb-matercm1-0103":"Taolioù liesaat -3",
             "jbdb-matercm1-0104":"Taolioù liesaat -4"
         },
-        "printButton": "Moullañ"
+        "printButton": "Enrollañ"
     }
         
   }

@@ -1,10 +1,15 @@
+import Button from "@components/UI/Button";
 import MaJbdbHome from "@pages/appli/maths/jbdb/MaJbdbHome";
 import type { ArticleType } from "@shared/schema/article.schema";
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 type ArticleContentProps = {
   article: ArticleType;
 };
 function ArticleContent({ article }: ArticleContentProps) {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  
   // 🔗 Génération des liens dynamiques
   const linkComponents = Object.fromEntries(
     article.links.map((link) => [
@@ -19,7 +24,7 @@ function ArticleContent({ article }: ArticleContentProps) {
     ]),
   );
 
-  // 🧠 Split des paragraphes
+  //TO DO Split des paragraphes
   const paragraphs = article.descriptionKey ? article.descriptionKey : "";
 
   const getComponentArticle = () => {
@@ -28,6 +33,10 @@ function ArticleContent({ article }: ArticleContentProps) {
       switch (article.componentKey) {
         case "APP_JBDB":
           return <MaJbdbHome category="nope" />;
+        case "APP_ECRIRE_NOMBRE":
+          return <Button onClick={() => navigate("nbre/ecrireParams")}>
+          {t("applies.generique.goApplication")}
+        </Button>;
         default:
           return null;
       }

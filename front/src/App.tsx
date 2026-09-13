@@ -20,7 +20,6 @@ import PublicRoutes from "./router/routes/PublicRoutes";
 // import AdminRoutes from "./router/routes/AdminRoutes";
 import Denombre1 from "@pages/appli/maths/nombre/Denombre1";
 import EcrireNombre from "@pages/appli/maths/nombre/EcrireNombre";
-import EcrireNombreParams from "@pages/appli/maths/nombre/EcrireNombreParams";
 import EcrireNombreParamsContainer from "@pages/appli/maths/nombre/EcrireNombreParamsContainer";
 import Denombre1ParamsContainer from "@pages/appli/maths/nombre/Denombre1ParamsContainer";
 
@@ -53,7 +52,7 @@ function App() {
               <Route path="nbre/ex/ecrire" element={<EcrireNombre />} />
               <Route
                 path="nbre/ecrireParams"
-                element={<EcrireNombreParams />}
+                element={<EcrireNombreParamsContainer />}
               />
               <Route
                 path="nbre/denombre1Params"

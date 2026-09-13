@@ -2,6 +2,7 @@ import type { EntierPositifType } from "@shared/schema/fields/entierPositif.sche
 import { Matematik } from "@utils/Matematik";
 import { Utilitaires } from "@utils/Utilitaires";
 import i18n from "i18next";
+import {JbdbUtils} from "@utils/jbdbUtils";
 export const jbdbExosList = [
   {
     champs: "Sammañ ha dilemel",
@@ -1759,7 +1760,7 @@ export const jbdbExosList = [
                 //S1
                 exId: "jbdb-matercm1-0101",
                 description: "séance 1",
-                shortTitle: "S1",
+                shortTitle: "S1-2-3-4",
                 exampleQuestion: "5 x 2 = ",
                 logo: "exercice/calcul/multiplier.png",
                 duration: 180,
@@ -1770,29 +1771,36 @@ export const jbdbExosList = [
                   question: string;
                   resultats: { texte: string; valeurRep: number }[];
                 } {
-                  const nombre1 = 2;
-                  const nombre2 = Matematik.entierAleatoire(1, 9);
-                  const reponse = nombre1 * nombre2;
+                  //tables de multiplication avec(2/3) ou sans trou (1/3)
+                  const nb1max = 9;
+                  const nb1min = 2;
+                  const nb2max = 9;
+                  const nb2min = 2;
                   const variableQuestion = Matematik.entierAleatoire(1, 3);
-                  let question = "";
-                  const resultats = [{ texte: "", valeurRep: 0 }];
+
+                  
                   if (variableQuestion < 3) {
-                    question = nombre1 + " x ? = " + reponse;
-                    resultats[0].valeurRep = nombre2;
-                  } else {
-                    question = nombre1 + " x " + nombre2 + " = ?";
-                    resultats[0].valeurRep = reponse;
-                  }
+                    const {question, resultats} = JbdbUtils.tableMulti(nb1max, nb1min, nb2max, nb2min);
+                    return { question, resultats };
+                  } 
+                  
+                  const {question, resultats} = JbdbUtils.tableMultiTrou(nb1max, nb1min, nb2max, nb2min);
                   return { question, resultats };
                 },
               },
+            ]
+          },
+          {
+            //séquence 2
+            subCategory: "matercm1sequence2",
+            exercises: [
               {
-                //S2
-                exId: "jbdb-matercm1-0102",
-                description: "séance 2",
-                shortTitle: "S2",
-                exampleQuestion: "5 x 2 = ",
-                logo: "exercice/calcul/multiplier.png",
+                //S1-S2
+                exId: "jbdb-matercm1-0201",
+                description: "séance 1",
+                shortTitle: "S1-2",
+                exampleQuestion: "71 - 39 = ? ",
+                logo: "exercice/calcul/additionnersoustraire.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1801,29 +1809,27 @@ export const jbdbExosList = [
                   question: string;
                   resultats: { texte: string; valeurRep: number }[];
                 } {
-                  const nombre1 = 2;
-                  const nombre2 = Matematik.entierAleatoire(1, 9);
-                  const reponse = nombre1 * nombre2;
-                  const variableQuestion = Matematik.entierAleatoire(1, 3);
-                  let question = "";
-                  const resultats = [{ texte: "", valeurRep: 0 }];
-                  if (variableQuestion < 3) {
-                    question = nombre1 + " x ? = " + reponse;
-                    resultats[0].valeurRep = nombre2;
-                  } else {
-                    question = nombre1 + " x " + nombre2 + " = ?";
-                    resultats[0].valeurRep = reponse;
+                    const typeQuestion = Matematik.entierAleatoire(1, 2); //1 addition, 2 soustraction
+                    const nbmin = 10;
+                    const nbmax = 99;
+                    const resultmax = 99;
+                    const nbmindiz =0
+                    const nbmaxdiz = 3
+                    if(typeQuestion === 1){
+                        const {question, resultats} = JbdbUtils.add9v1(nbmax, nbmin, resultmax, nbmaxdiz, nbmindiz);
+                        return { question, resultats };
+                    }
+                    const {question, resultats} = JbdbUtils.sous9v1(nbmax, nbmin, nbmaxdiz, nbmindiz);
+                    return { question, resultats };
                   }
-                  return { question, resultats };
-                },
               },
               {
-                //S3
-                exId: "jbdb-matercm1-0103",
-                description: "séance 3",
-                shortTitle: "S3",
-                exampleQuestion: "5 x 2 = ",
-                logo: "exercice/calcul/multiplier.png",
+                //S3-S4
+                exId: "jbdb-matercm1-0202",
+                description: "séances 3 4",
+                shortTitle: "S3-S4",
+                exampleQuestion: "71 - 30 = ? ",
+                logo: "exercice/calcul/additionnersoustraire.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1832,51 +1838,18 @@ export const jbdbExosList = [
                   question: string;
                   resultats: { texte: string; valeurRep: number }[];
                 } {
-                  const nombre1 = 2;
-                  const nombre2 = Matematik.entierAleatoire(1, 9);
-                  const reponse = nombre1 * nombre2;
-                  const variableQuestion = Matematik.entierAleatoire(1, 3);
-                  let question = "";
-                  const resultats = [{ texte: "", valeurRep: 0 }];
-                  if (variableQuestion < 3) {
-                    question = nombre1 + " x ? = " + reponse;
-                    resultats[0].valeurRep = nombre2;
-                  } else {
-                    question = nombre1 + " x " + nombre2 + " = ?";
-                    resultats[0].valeurRep = reponse;
-                  }
-                  return { question, resultats };
-                },
-              },
-              {
-                //S4
-                exId: "jbdb-matercm1-0104",
-                description: "séance 4",
-                shortTitle: "S4",
-                exampleQuestion: "5 x 2 = ",
-                logo: "exercice/calcul/multiplier.png",
-                duration: 180,
-                exerciseNumber: 30,
-                objectif: 100, //objectif visé (ration temps/nb réponses attendu)
-                eca: 40, //score en dessous du quel on indique le résultat en rouge
-                calculAGenerer(): {
-                  question: string;
-                  resultats: { texte: string; valeurRep: number }[];
-                } {
-                  const nombre1 = 2;
-                  const nombre2 = Matematik.entierAleatoire(1, 9);
-                  const reponse = nombre1 * nombre2;
-                  const variableQuestion = Matematik.entierAleatoire(1, 3);
-                  let question = "";
-                  const resultats = [{ texte: "", valeurRep: 0 }];
-                  if (variableQuestion < 3) {
-                    question = nombre1 + " x ? = " + reponse;
-                    resultats[0].valeurRep = nombre2;
-                  } else {
-                    question = nombre1 + " x " + nombre2 + " = ?";
-                    resultats[0].valeurRep = reponse;
-                  }
-                  return { question, resultats };
+                 const typeQuestion = Matematik.entierAleatoire(1, 2); //1 addition, 2 soustraction
+                    const nbmin = 110;
+                    const nbmax = 1500;
+                    const resultmax = 3000;
+                    const nbmindiz =1
+                    const nbmaxdiz = 9
+                    if(typeQuestion === 1){
+                        const {question, resultats} = JbdbUtils.add10v1(nbmax, nbmin, resultmax, nbmaxdiz, nbmindiz);
+                        return { question, resultats };
+                    }
+                    const {question, resultats} = JbdbUtils.sous10v1(nbmax, nbmin, nbmaxdiz, nbmindiz);
+                    return { question, resultats };
                 },
               },
             ]
@@ -1894,7 +1867,7 @@ export const jbdbExosList = [
                 //S1
                 exId: "jbdb-matercm1-0101",
                 description: "séance 1",
-                shortTitle: "S1",
+                shortTitle: "S1-2-3-4",
                 exampleQuestion: "5 x 2 = ",
                 logo: "exercice/calcul/multiplier.png",
                 duration: 180,
@@ -1905,29 +1878,37 @@ export const jbdbExosList = [
                   question: string;
                   resultats: { texte: string; valeurRep: number }[];
                 } {
-                  const nombre1 = 2;
-                  const nombre2 = Matematik.entierAleatoire(1, 9);
-                  const reponse = nombre1 * nombre2;
+                  //tables de multiplication avec(2/3) ou sans trou (1/3)
+                  const nb1max = 9;
+                  const nb1min = 2;
+                  const nb2max = 9;
+                  const nb2min = 2;
                   const variableQuestion = Matematik.entierAleatoire(1, 3);
-                  let question = "";
-                  const resultats = [{ texte: "", valeurRep: 0 }];
+
+                  
                   if (variableQuestion < 3) {
-                    question = nombre1 + " x ? = " + reponse;
-                    resultats[0].valeurRep = nombre2;
-                  } else {
-                    question = nombre1 + " x " + nombre2 + " = ?";
-                    resultats[0].valeurRep = reponse;
-                  }
+                    const {question, resultats} = JbdbUtils.tableMulti(nb1max, nb1min, nb2max, nb2min);
+                    return { question, resultats };
+                  } 
+                  
+                  const {question, resultats} = JbdbUtils.tableMultiTrou(nb1max, nb1min, nb2max, nb2min);
                   return { question, resultats };
                 },
               },
+              
+            ]
+          },
+          {
+            //séquence 2
+            subCategory: "matercm2sequence2",
+            exercises: [
               {
-                //S1
-                exId: "jbdb-matercm1-0102",
-                description: "séance 2",
-                shortTitle: "S2",
-                exampleQuestion: "5 x 2 = ",
-                logo: "exercice/calcul/multiplier.png",
+                //S1-2-3-4
+                exId: "jbdb-matercm2-0201",
+                description: "séance 1",
+                shortTitle: "S1-2-3-4",
+                exampleQuestion: "560 + ? = 600",
+                logo: "icons/calcul-2.png",
                 duration: 180,
                 exerciseNumber: 30,
                 objectif: 100, //objectif visé (ration temps/nb réponses attendu)
@@ -1936,53 +1917,79 @@ export const jbdbExosList = [
                   question: string;
                   resultats: { texte: string; valeurRep: number }[];
                 } {
-                  const nombre1 = 2;
-                  const nombre2 = Matematik.entierAleatoire(1, 9);
-                  const reponse = nombre1 * nombre2;
-                  const variableQuestion = Matematik.entierAleatoire(1, 3);
-                  let question = "";
-                  const resultats = [{ texte: "", valeurRep: 0 }];
-                  if (variableQuestion < 3) {
-                    question = nombre1 + " x ? = " + reponse;
-                    resultats[0].valeurRep = nombre2;
-                  } else {
-                    question = nombre1 + " x " + nombre2 + " = ?";
-                    resultats[0].valeurRep = reponse;
+                  //1. add/sous
+                  //2. multi/div
+                  const typeQuestion = Matematik.entierAleatoire(1, 2);
+                  if(typeQuestion === 1){
+                    //les add/sous 
+                    //1 cplt à 100 40 + ? = 100
+                    //2 cplt à 1000 500 + ? = 1000
+                    //3 cplt à la centaine supérieure 560 + ? = 600
+                    //4 ajout ou soustraire un nombre de dizaine nb<1000
+                    //5 ajout ou soustraire un nombre de centaines nb<1000
+                    const variableQuestion = Matematik.entierAleatoire(1, 7);
+                    if (variableQuestion === 1) {
+                      //nbmax: number, nbmin: number, valexpnb: number, valexp: number
+                      const {question, resultats} = JbdbUtils.complement(99, 10, 10, 100);
+                      return { question, resultats };
+                    } 
+                    if (variableQuestion === 2) {
+                      //nbmax: number, nbmin: number, valexpnb: number, valexp: number
+                      const {question, resultats} = JbdbUtils.complement(999, 100, 100, 1000);
+                      return { question, resultats };
+                    } 
+                    if (variableQuestion === 3) {
+                      //nbmax: number, nbmin: number, valexpnb: number, valexp: number
+                      const {question, resultats} = JbdbUtils.complement(999, 100, 10, 100);
+                      return { question, resultats };
+                    }
+                    if (variableQuestion === 4) {
+                      //nbmax: number, nbmin: number, resultMax: number, nbmaxdiz: number, nbminDiz: number, valexp:number = 10
+                      const {question, resultats} = JbdbUtils.add10v1(600, 40, 1000, 9, 2,10);
+                      return { question, resultats };
+                    }
+                    if (variableQuestion === 5) {
+                      //nbmax: number, nbmin: number, resultMax: number, nbmaxdiz: number, nbminDiz: number, valexp:number = 100
+                      const {question, resultats} = JbdbUtils.add10v1(600, 140, 1000, 6, 2,100);
+                      return { question, resultats };
+                    }
+                    if (variableQuestion === 6) {
+                      //nbmax: number, nbmin: number,  nbmaxdiz: number, nbminDiz: number, valexp:number = 10
+                      const {question, resultats} = JbdbUtils.sous10v1(999, 30, 9, 2,10);
+                      return { question, resultats };
+                    }
+                    if (variableQuestion === 7) {
+                      //nbmax: number, nbmin: number, nbmaxdiz: number, nbminDiz: number, valexp:number = 100
+                      const {question, resultats} = JbdbUtils.sous10v1(999, 80, 6, 2,100);
+                      return { question, resultats };
+                    }
                   }
-                  return { question, resultats };
+                  if(typeQuestion === 2){
+                    //les multi/div
+                    //1. multi par 10
+                    //2. multi par 100
+                    //3. div par 10 resultat entier
+                    const variableQuestion = Matematik.entierAleatoire(1, 7);
+                    if (variableQuestion === 1 || variableQuestion === 2 || variableQuestion === 3) {
+                      //nb1max: number, nb1min: number, multimax:number, multimin:number, valexp:number
+                      const {question, resultats} = JbdbUtils.multi10(99, 11, 1, 1,10 );
+                      return { question, resultats };
+                    }
+                    if (variableQuestion === 4 || variableQuestion === 5 || variableQuestion === 6) {
+                      //nb1max: number, nb1min: number, multimax:number, multimin:number, valexp:number
+                      const {question, resultats} = JbdbUtils.multi10(99, 8, 1, 1,100 );
+                      return { question, resultats };
+                    }
+                    if (variableQuestion === 7) {
+                      //nb1max: number, nb1min: number, divmax:number, divmin:number, valexp:number
+                      const {question, resultats} = JbdbUtils.div10Entier(950, 50, 1, 1,10 );
+                      return { question, resultats };
+                    }
+                  }
+                  return { question : "", resultats : [{texte: "", valeurRep: 0}] };
                 },
               },
-              {
-                //S1
-                exId: "jbdb-matercm1-0104",
-                description: "séance 4",
-                shortTitle: "S4",
-                exampleQuestion: "5 x 2 = ",
-                logo: "exercice/calcul/multiplier.png",
-                duration: 180,
-                exerciseNumber: 30,
-                objectif: 100, //objectif visé (ration temps/nb réponses attendu)
-                eca: 40, //score en dessous du quel on indique le résultat en rouge
-                calculAGenerer(): {
-                  question: string;
-                  resultats: { texte: string; valeurRep: number }[];
-                } {
-                  const nombre1 = 2;
-                  const nombre2 = Matematik.entierAleatoire(1, 9);
-                  const reponse = nombre1 * nombre2;
-                  const variableQuestion = Matematik.entierAleatoire(1, 3);
-                  let question = "";
-                  const resultats = [{ texte: "", valeurRep: 0 }];
-                  if (variableQuestion < 3) {
-                    question = nombre1 + " x ? = " + reponse;
-                    resultats[0].valeurRep = nombre2;
-                  } else {
-                    question = nombre1 + " x " + nombre2 + " = ?";
-                    resultats[0].valeurRep = reponse;
-                  }
-                  return { question, resultats };
-                },
-              },
+              
             ]
           }
         ]

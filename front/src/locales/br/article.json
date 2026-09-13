@@ -21,5 +21,8 @@
     "dicJV" :{
         "title":"Skrivadennoù Jakez Vras",
         "content":"Skrivadennoù savet diwar al levrioù Jakez Vras."        
+    },
+    "ecrireNombre" : {
+        "content":"Skrivañ an niveroù gant sifroù pe lizherennoù. Ar boelladenn a c'hell mont betek 999 999 999."   
     }
 }

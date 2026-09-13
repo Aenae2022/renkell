@@ -21,5 +21,8 @@
     "dicJV" :{
         "title":"Dictées Jakez Vras",
         "content":"Dictées créées à partir des livres Jakez Vras."   
+    },
+    "ecrireNombre" : {
+        "content":"Ecrire en nombre ou en chiffres les nombres. L'exercice couvre les nombres jusqu'à 999 999 999."   
     }
 }
