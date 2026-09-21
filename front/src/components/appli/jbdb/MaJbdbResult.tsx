@@ -138,7 +138,7 @@ export default function MaJbdbResult({
     // Crée un lien temporaire et déclenche le téléchargement
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${y}${m}${d}-${cleanName}`;
+    link.download = `${cleanName}-${y}${m}${d}`;
     link.click();
 
     // Nettoie l'URL après utilisation

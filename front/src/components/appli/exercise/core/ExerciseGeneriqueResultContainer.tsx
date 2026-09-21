@@ -11,6 +11,7 @@ import { pdf } from "@react-pdf/renderer";
 import { useNameDialog } from "@hook/useNameDialog";
 import { useAuthStrict } from "@hook/useAuthStrict";
 import { getAssetUrl } from "@utils/assetResolver";
+import { Utilitaires } from "@utils/Utilitaires";
 
 type Props = {
   exercise: ExerciseGenerique;
@@ -97,6 +98,11 @@ function ExerciseGeneriqueResultContainer({ exercise, state }: Props) {
 
   //fonction pour le bouton imprimer
   const generatePdf = async (name: string) => {
+    const now = new Date();
+    const d = now.getDate().toString().padStart(2, "0");
+    const m = (now.getMonth() + 1).toString().padStart(2, "0");
+    const y = now.getFullYear().toString();
+    const cleanName = Utilitaires.cleanFileName(name)
     const blob = await pdf(
       <ExerciseGeneriqueResultPrint
         name={name}
@@ -115,7 +121,7 @@ function ExerciseGeneriqueResultContainer({ exercise, state }: Props) {
     // Crée un lien temporaire et déclenche le téléchargement
     const link = document.createElement("a");
     link.href = url;
-    link.download = "document.pdf";
+    link.download = `${cleanName}-${y}${m}${d}`;
     link.click();
 
     // Nettoie l'URL après utilisation
