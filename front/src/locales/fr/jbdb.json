@@ -27,7 +27,9 @@
             "decompositionNumber":"décomposition d'un nombre",
             "matercm1sequence1":"séquence 1 : tables de multiplication",
             "matercm1sequence2":"séquence 2 : additioner et soustraire 9, 19, 29, 39 / 10, 20, 30, 40...",
-            "matercm2sequence2":"séquence 2 : automatiser des procédures de calcul mental"
+            "matercm1sequence3":"séquence 3 : soustraire par un nombre à un chiffre",
+            "matercm2sequence2":"séquence 2 : automatiser des procédures de calcul mental",
+            "matercm2sequence3":"sekañs 3 : ajouter ou soutraire 18, 19, 28, 29, 38, 39, ..."
         },
         "buttons":{
             "jbdb-add-all" :"toutes",
@@ -110,10 +112,12 @@
             "jbdb-div-rest-2-3-4-5": "Tables de division par 2, 3, 4 et 5 avec reste",
             "jbdb-div-rest-6-7-8-9": "Tables de division par 6, 7, 8 et 9 avec reste",
             "jbdb-div-rest-all": "Tables de division par 6, 7, 8 et 9 avec reste",
-            "jbdb-matercm1-0101":"Table de multiplication -1",
-            "jbdb-matercm1-0102":"Table de multiplication -2",
-            "jbdb-matercm1-0103":"Table de multiplication -3",
-            "jbdb-matercm1-0104":"Table de multiplication -4"
+            "jbdb-matercm1-01":"Tables de multiplication",
+            "jbdb-matercm1-0201":"Ajouter ou soustraire 9, 19, 29, 39 ",
+            "jbdb-matercm1-0202":"Ajouter ou soustraire 10, 20, 30, 40 ...",
+            "jbdb-matercm1-0301":"Soustraire par un nombre à un chiffre",
+            "jbdb-matercm2-0201":"Automatiser des procédures de calcul mental",
+            "jbdb-matercm2-0301":"Ajouter ou soustraire 18, 19, 28, 29, 38, 39, ... "
         },
         "printButton": "Enregistrer"                 
     }    

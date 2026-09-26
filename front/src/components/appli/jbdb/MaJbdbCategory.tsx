@@ -3,18 +3,7 @@ type GeneralcategoryProps = {
   titleCategory: string;
   datas: {
     subCategory: string;
-    exercises: {
-      exId: string;
-      description: string;
-      shortTitle: string;
-      exampleQuestion: string;
-      logo: string;
-      duration: number;
-      exerciseNumber: number;
-      objectif: number;
-      eca: number;
-      calculAGenerer: () => void;
-    }[];
+    exercises: string[];
   }[];
   couleur: string;
 };

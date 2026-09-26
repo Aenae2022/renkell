@@ -7,6 +7,7 @@ export function MaJbdbHeader({
   myExercise: {
     exId: string; //+
     description: string; //+
+    translationId: string; //+
     shortTitle: string; //+
     logo: string; //+
     exampleQuestion: string; //+
@@ -18,7 +19,7 @@ export function MaJbdbHeader({
   };
 }) {
   const { t } = useTranslation();
-  const description = t("jbdb.exercise.description." + myExercise.exId, {
+  const description = t("jbdb.exercise.description." + myExercise.translationId, {
     defaultValue: myExercise.description,
   });
   return (

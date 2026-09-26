@@ -5,7 +5,7 @@ import MaJbdbHeader from "@components/appli/jbdb/MaJbdbHeader";
 import MaJbdbdArdoise from "@components/appli/jbdb/MaJbdbArdoise";
 import MaJbdbdModele from "@components/appli/jbdb/MaJbdbModele";
 import MaJbdbResult from "@components/appli/jbdb/MaJbdbResult";
-import { jbdbExosList } from "@components/appli/jbdb/jbdbExosList";
+import {findExerciseById} from "@components/appli/jbdb/exercises/exercisesRegistry";
 export function JbdbExercise() {
   const { exId } = useParams();
   const { t } = useTranslation();
@@ -13,6 +13,7 @@ export function JbdbExercise() {
   const defaultExercise = useMemo(() => {
     return {
       exId: "",
+      translationId: "",
       description: "Exercice non trouvé",
       shortTitle: "",
       logo: "",
@@ -53,21 +54,6 @@ export function JbdbExercise() {
   const [startWork, setStartWork] = useState(new Date());
   const [endWork, setEndWork] = useState(new Date());
 
-  const findExerciseById = (exId: string) => {
-    for (const champ of jbdbExosList) {
-      for (const category of champ.categories) {
-        for (const subCategory of category.subCategories) {
-          const foundExercise = subCategory.exercises.find(
-            (ex) => ex.exId === exId,
-          );
-          if (foundExercise) {
-            return foundExercise;
-          }
-        }
-      }
-    }
-    return null; // Retourne null si l'exercice n'est pas trouvé
-  };
   function handleStart() {
     setStade("go");
     setStartWork(new Date());

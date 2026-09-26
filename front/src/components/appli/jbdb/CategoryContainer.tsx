@@ -6,28 +6,12 @@ type CategoryContainerProps = {
     category: string;
     subCategories: {
       subCategory: string;
-      exercises: {
-        exId: string;
-        description: string;
-        shortTitle: string;
-        exampleQuestion: string;
-        logo: string;
-        duration: number;
-        exerciseNumber: number;
-        objectif: number;
-        eca: number;
-        calculAGenerer(): {
-          question: string;
-          resultats: {
-            texte: string;
-            valeurRep: number;
-          }[];
-        };
-      }[];
+      exercises: string[];
     }[];
   }[];
   couleur: string;
 };
+
 function CategoryContainer({
   categories,
   jbdbExosList,

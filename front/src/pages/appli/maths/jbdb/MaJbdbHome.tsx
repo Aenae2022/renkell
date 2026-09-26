@@ -23,14 +23,14 @@ const [categoryToShow, setCategoryToShow] = useState(category);
   const categoriesAdd = [
     ...new Set(jbdbExosListAdd.map((exo) => exo.category)),
   ];
-  //obtenir les exercices du champ Liesaat ha rannañ
-  const jbdbExosListMulti = jbdbExosList.filter(
-    (exo) => exo.champs === "Liesaat ha rannañ",
-  )[0].categories;
-  const categoriesMulti = [
-    ...new Set(jbdbExosListMulti.map((exo) => exo.category)),
-  ];
-  //obtenir les exercices du champ Liesaat ha rannañ
+  // //obtenir les exercices du champ Liesaat ha rannañ
+  // const jbdbExosListMulti = jbdbExosList.filter(
+  //   (exo) => exo.champs === "Liesaat ha rannañ",
+  // )[0].categories;
+  // const categoriesMulti = [
+  //   ...new Set(jbdbExosListMulti.map((exo) => exo.category)),
+  // ];
+  //obtenir les exercices du champ mat er 
   const jbdbExosListMater = jbdbExosList.filter(
     (exo) => exo.champs === "Mat er",
   )[0].categories;
@@ -48,15 +48,15 @@ const [categoryToShow, setCategoryToShow] = useState(category);
       />
     );
   }
-  if (categoryToShow === "multi") {
-    myCategoryContainer = (
-      <CategoryContainer
-        categories={categoriesMulti}
-        jbdbExosList={jbdbExosListMulti}
-        couleur="calcul"
-      />
-    );
-  }
+  // if (categoryToShow === "multi") {
+  //   myCategoryContainer = (
+  //     <CategoryContainer
+  //       categories={categoriesMulti}
+  //       jbdbExosList={jbdbExosListMulti}
+  //       couleur="calcul"
+  //     />
+  //   );
+  // }
   if (categoryToShow === "mater") {
     myCategoryContainer = (
       <CategoryContainer

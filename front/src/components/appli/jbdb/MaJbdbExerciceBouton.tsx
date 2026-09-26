@@ -1,19 +1,9 @@
+import { findExerciseById } from "./exercises/exercisesRegistry";
 import MaToolTip from "./MaToolTip";
 
 type GeneralBoutonProps = {
   couleur: string;
-  datas: {
-    exId: string;
-    description: string;
-    shortTitle: string;
-    exampleQuestion: string;
-    logo: string;
-    duration: number;
-    exerciseNumber: number;
-    objectif: number;
-    eca: number;
-    calculAGenerer: () => void;
-  }[];
+  datas: string[];
 };
 
 export function MaJbdbExerciceBouton({ couleur, datas }: GeneralBoutonProps) {
@@ -21,8 +11,13 @@ export function MaJbdbExerciceBouton({ couleur, datas }: GeneralBoutonProps) {
 
   return (
     <div>
-      {datas.map((data) => {
-        return <MaToolTip key={data.exId} couleur={couleur} data={data} />;
+      {datas.map((exId) => {
+        const exercise = findExerciseById(exId);
+
+        if (!exercise) {
+          return null;
+        }
+        return <MaToolTip key={exId} couleur={couleur} data={exercise} />;
       })}
     </div>
   );
