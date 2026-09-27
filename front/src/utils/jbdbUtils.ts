@@ -1,27 +1,28 @@
 import { Matematik } from "./Matematik";
+import { Utilitaires } from "./Utilitaires";
 
-export class JbdbUtils  {
+export class JbdbUtils {
 
     //additionner deux termes
-    static add(nb1max: number, nb1min: number, nb2max: number, nb2min: number) 
-    : {question: string; resultats: { texte: string; valeurRep: number }[]} {
+    static add(nb1max: number, nb1min: number, nb2max: number, nb2min: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nb1 = Matematik.entierAleatoire(nb1min, nb1max);
         const nb2 = Matematik.entierAleatoire(nb2min, nb2max);
         const reponse = nb1 + nb2;
         const mixTerme = this.melange(nb1, nb2);
         const question = mixTerme.nbre1 + " + " + mixTerme.nbre2 + " = ?";
-        const resultats = [{ texte: "", valeurRep: reponse }];            
+        const resultats = [{ texte: "", valeurRep: reponse }];
         return { question, resultats };
     }
     //additionner  9, 19, 29, 39 ...
-    static add9v1(nbmax: number, nbmin: number, resultMax: number, nbmaxdiz: number, nbminDiz: number) 
-    : {question: string; resultats: { texte: string; valeurRep: number }[]} {
+    static add9v1(nbmax: number, nbmin: number, resultMax: number, nbmaxdiz: number, nbminDiz: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         let nombre1 = Matematik.entierAleatoire(nbmin, nbmax);
-        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz)*10 + 9;
+        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz) * 10 + 9;
         let question = "";
         let valeurrep = 0;
-        if(nombre1+nombre2 > resultMax) {
-            nombre1 = nombre1 - (((nombre1 + nombre2) - resultMax)+10);
+        if (nombre1 + nombre2 > resultMax) {
+            nombre1 = nombre1 - (((nombre1 + nombre2) - resultMax) + 10);
         }
         question = nombre1 + " + " + nombre2 + " = ?";
         valeurrep = nombre1 + nombre2;
@@ -30,15 +31,15 @@ export class JbdbUtils  {
     }
 
     //additionner  18, 19, 28, 29, 39 ...
-    static add98v1(nbmax: number, nbmin: number, resultMax: number, nbmaxdiz: number, nbminDiz: number) 
-    : {question: string; resultats: { texte: string; valeurRep: number }[]} {
+    static add98v1(nbmax: number, nbmin: number, resultMax: number, nbmaxdiz: number, nbminDiz: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         let nombre1 = Matematik.entierAleatoire(nbmin, nbmax);
-        const nombre2De = Matematik.entierAleatoire(1,2);
-        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz)*10 + (nombre2De === 1 ? 8 : 9);
+        const nombre2De = Matematik.entierAleatoire(1, 2);
+        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz) * 10 + (nombre2De === 1 ? 8 : 9);
         let question = "";
         let valeurrep = 0;
-        if(nombre1+nombre2 > resultMax) {
-            nombre1 = nombre1 - (((nombre1 + nombre2) - resultMax)+10);
+        if (nombre1 + nombre2 > resultMax) {
+            nombre1 = nombre1 - (((nombre1 + nombre2) - resultMax) + 10);
         }
         question = nombre1 + " + " + nombre2 + " = ?";
         valeurrep = nombre1 + nombre2;
@@ -46,76 +47,18 @@ export class JbdbUtils  {
         return { question, resultats };
     }
 
-    //soutraire deux nombres
-    static sous(nb1max: number, nb1min: number, nb2max: number, nb2min: number) 
-    : {question: string; resultats: { texte: string; valeurRep: number }[]} {
-        let nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
-        let nombre2 = Matematik.entierAleatoire(nb2min, nb2max);
-        let question = "";
-        let valeurrep = 0;
-        
-        if(nombre1 < nombre2) {
-           question = `${nombre2} - ${nombre1} = ?`;
-           valeurrep = nombre2 - nombre1;
-        }
-        else {
-            question = `${nombre1} - ${nombre2} = ?`;
-            valeurrep = nombre1 - nombre2;
-        }
-        
-        const resultats = [{ texte: "", valeurRep: valeurrep }];
-        return { question, resultats };
-    }
-
-    //soutraire 9, 19, 29, 39 ....
-    static sous9v1(nbmax: number, nbmin: number, nbmaxdiz: number, nbminDiz: number) 
-    : {question: string; resultats: { texte: string; valeurRep: number }[]} {
-        let nombre1 = Matematik.entierAleatoire(nbmin, nbmax);
-        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz)*10 + 9;
-        let question = "";
-        let valeurrep = 0;
-        
-        if(nombre1 < nombre2) {
-            const temp = nombre2-nombre1;
-            nombre1 = (nombre2 + Math.floor(temp/2));
-        }
-        question = nombre1 + " - " + nombre2 + " = ?";
-        valeurrep = nombre1 - nombre2;
-        const resultats = [{ texte: "", valeurRep: valeurrep }];
-        return { question, resultats };
-    }
-
-    //soutraire 18,19, 28, 29, 38, 39 ....
-    static sous98v1(nbmax: number, nbmin: number, nbmaxdiz: number, nbminDiz: number) 
-    : {question: string; resultats: { texte: string; valeurRep: number }[]} {
-        let nombre1 = Matematik.entierAleatoire(nbmin, nbmax);
-        const nombre2De = Matematik.entierAleatoire(1,2);
-        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz)*10 + (nombre2De === 1 ? 8 : 9);
-        let question = "";
-        let valeurrep = 0;
-        
-        if(nombre1 < nombre2) {
-            const temp = nombre2-nombre1;
-            nombre1 = (nombre2 + Math.floor(temp/2));
-        }
-        question = nombre1 + " - " + nombre2 + " = ?";
-        valeurrep = nombre1 - nombre2;
-        const resultats = [{ texte: "", valeurRep: valeurrep }];
-        return { question, resultats };
-    }
-
     //additionner  un multiple de 10
     //params 
     //return {question: string; resultats: { texte: string; valeurRep: number }[];
-    static add10v1(nbmax: number, nbmin: number, resultMax: number, 
-        nbmaxdiz: number, nbminDiz: number, valexp:number = 10) 
-        : {question: string; resultats: { texte: string; valeurRep: number }[]} {
+    static add10v1(nbmax: number, nbmin: number, resultMax: number,
+        nbmaxdiz: number, nbminDiz: number, valexp: number = 10)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         let nombre1 = Matematik.entierAleatoire(nbmin, nbmax);
-        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz)*valexp;
+        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz) * valexp;
         let question = "";
         let valeurrep = 0;
-        if(nombre1+nombre2 > resultMax) {
-            nombre1 = nombre1 - (((nombre1 + nombre2) - resultMax)+valexp);
+        if (nombre1 + nombre2 > resultMax) {
+            nombre1 = nombre1 - (((nombre1 + nombre2) - resultMax) + valexp);
         }
         const mixTerme = this.melange(nombre1, nombre2);
         question = mixTerme.nbre1 + " + " + mixTerme.nbre2 + " = ?";
@@ -124,19 +67,135 @@ export class JbdbUtils  {
         return { question, resultats };
     }
 
+    //table d'additions à trou
+    //on cherche le nombre 1
+    static tableAddTrou(nb1max: number, nb1min: number, nb2max: number, nb2min: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
+        const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
+        const nombre2 = Matematik.entierAleatoire(nb2min, nb2max);
+        const mixTerme = Matematik.entierAleatoire(1, 2)
+        const reponse = nombre1 + nombre2
+        const question = mixTerme === 1 ? `${nombre2} + ? = ${reponse}` : `? + ${nombre2} = ${reponse}`;
+        const resultats = [{ texte: "", valeurRep: nombre1 }];
+        return { question, resultats };
+    }
+
+    //decomposition additive avec ou sans regroupement nombre < 10000
+    static decompose10000max(borneMax: number, borneMin: number, lg: string)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
+        const nombreAtrouver = Matematik.entierAleatoire(borneMin, borneMax)
+        const decomposition = Matematik.genereDecomposition10000max(nombreAtrouver)
+        const exps = [1, 10, 100, 1000]
+        const lgBr = ["u", "d", "k", "m"]
+        const lgFr = ["u", "d", "c", "m"]
+        const lgUse = lg === "Fr" ? lgFr : lgBr
+        const tableauQuestion = decomposition
+            .filter((item) => item.nb !== 0)
+            .map((item) => {
+                const index = exps.indexOf(item.rang);
+                return `${item.nb} ${lgUse[index]}`;
+            });
+        const shuffleDecomposition = Utilitaires.shuffleArray(tableauQuestion)
+        const question = shuffleDecomposition.join(' + ') + ' = ? '
+        return {question : question,
+            resultats : [{texte:"", valeurRep:nombreAtrouver}]
+        }
+
+    }
+
+    //decomposition additive sans regroupement nombre > 1000
+    static decompose100min(borneMax: number, borneMin: number, lg: string)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
+        const nombreAtrouver = Matematik.entierAleatoire(borneMin, borneMax)
+        const decomposition = Matematik.genereDecomposition100min(nombreAtrouver)
+        const exps = [1, 10, 100, 1_000, 10_000, 100_000, 1_000_000, 10_000_000, 100_000_000, 1_000_000_000, 10_000_000_000, 100_000_000_000]
+        const lgBr = ["u", "d", "k", "mil", "d mil", "k mil", "milion","d milion", "k milion", "miliard", "d miliard", "k miliard"]
+        const lgFr = ["u", "d", "c", "mille", "d mille", "c mille", "million","d million", "c million", "milliard", "d milliard", "c milliard"]
+        const lgUse = lg === "Fr" ? lgFr : lgBr
+        const tableauQuestion = decomposition
+            .filter((item) => item.nb !== 0)
+            .map((item) => {
+                const index = exps.indexOf(item.rang);
+                return `${item.nb} ${lgUse[index]}`;
+            });
+        const question = tableauQuestion.join(' + ') + ' = ? '
+        return {question : question,
+            resultats : [{texte:"", valeurRep:nombreAtrouver}]
+        }
+
+    }
+
+    //soutraire deux nombres
+    static sous(nb1max: number, nb1min: number, nb2max: number, nb2min: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
+        let nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
+        let nombre2 = Matematik.entierAleatoire(nb2min, nb2max);
+        let question = "";
+        let valeurrep = 0;
+
+        if (nombre1 < nombre2) {
+            question = `${nombre2} - ${nombre1} = ?`;
+            valeurrep = nombre2 - nombre1;
+        }
+        else {
+            question = `${nombre1} - ${nombre2} = ?`;
+            valeurrep = nombre1 - nombre2;
+        }
+
+        const resultats = [{ texte: "", valeurRep: valeurrep }];
+        return { question, resultats };
+    }
+
+    //soutraire 9, 19, 29, 39 ....
+    static sous9v1(nbmax: number, nbmin: number, nbmaxdiz: number, nbminDiz: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
+        let nombre1 = Matematik.entierAleatoire(nbmin, nbmax);
+        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz) * 10 + 9;
+        let question = "";
+        let valeurrep = 0;
+
+        if (nombre1 < nombre2) {
+            const temp = nombre2 - nombre1;
+            nombre1 = (nombre2 + Math.floor(temp / 2));
+        }
+        question = nombre1 + " - " + nombre2 + " = ?";
+        valeurrep = nombre1 - nombre2;
+        const resultats = [{ texte: "", valeurRep: valeurrep }];
+        return { question, resultats };
+    }
+
+    //soutraire 18,19, 28, 29, 38, 39 ....
+    static sous98v1(nbmax: number, nbmin: number, nbmaxdiz: number, nbminDiz: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
+        let nombre1 = Matematik.entierAleatoire(nbmin, nbmax);
+        const nombre2De = Matematik.entierAleatoire(1, 2);
+        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz) * 10 + (nombre2De === 1 ? 8 : 9);
+        let question = "";
+        let valeurrep = 0;
+
+        if (nombre1 < nombre2) {
+            const temp = nombre2 - nombre1;
+            nombre1 = (nombre2 + Math.floor(temp / 2));
+        }
+        question = nombre1 + " - " + nombre2 + " = ?";
+        valeurrep = nombre1 - nombre2;
+        const resultats = [{ texte: "", valeurRep: valeurrep }];
+        return { question, resultats };
+    }
+
     //soutraire 9, 19, 29, 39 ....
     //params 
     //return {question: string; resultats: { texte: string; valeurRep: number }[];
-    static sous10v1(nbmax: number, nbmin: number, nbmaxdiz: number, nbminDiz: number, valexp:number = 10) 
-    : {question: string; resultats: { texte: string; valeurRep: number }[]} {
+    static sous10v1(nbmax: number, nbmin: number, nbmaxdiz: number, nbminDiz: number, valexp: number = 10)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         let nombre1 = Matematik.entierAleatoire(nbmin, nbmax);
-        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz)*valexp;
+        const nombre2 = Matematik.entierAleatoire(nbminDiz, nbmaxdiz) * valexp;
         let question = "";
         let valeurrep = 0;
-        
-        if(nombre1 < nombre2) {
-            const temp = nombre2-nombre1;
-            nombre1 = (nombre2 + Math.floor(temp/2));
+
+        if (nombre1 < nombre2) {
+            const temp = nombre2 - nombre1;
+            nombre1 = (nombre2 + Math.floor(temp / 2));
         }
         question = nombre1 + " - " + nombre2 + " = ?";
         valeurrep = nombre1 - nombre2;
@@ -145,74 +204,72 @@ export class JbdbUtils  {
     }
 
     //compléments à la centaine
-    static complement(nbmax: number, nbmin: number, valexpnb: number, valexp: number) 
-    : {question: string; resultats: { texte: string; valeurRep: number }[]} 
-    {
+    static complement(nbmax: number, nbmin: number, valexpnb: number, valexp: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1temp = Matematik.entierAleatoire(nbmin, nbmax);
-        const nombre1 = Math.floor(nombre1temp/(valexpnb))*valexpnb;
-        const nbcomp = (Math.floor(nombre1/valexp)+1)*valexp;
+        const nombre1 = Math.floor(nombre1temp / (valexpnb)) * valexpnb;
+        const nbcomp = (Math.floor(nombre1 / valexp) + 1) * valexp;
         const reponse = nbcomp - nombre1;
         const question = nombre1 + " + ? = " + nbcomp;
-        const resultats = [{ texte: "", valeurRep: reponse }];            
+        const resultats = [{ texte: "", valeurRep: reponse }];
         return { question, resultats };
     }
 
     //mélanger les termes d'un calcul
-    static melange(nb1: number, nb2: number) : 
-    {nbre1: number; nbre2: number} {
+    static melange(nb1: number, nb2: number): { nbre1: number; nbre2: number } {
         const melange = Matematik.entierAleatoire(0, 1);
-        if(melange === 0) {
-            return {nbre1: nb1, nbre2: nb2};
+        if (melange === 0) {
+            return { nbre1: nb1, nbre2: nb2 };
         }
-        return {nbre1: nb2, nbre2: nb1};
+        return { nbre1: nb2, nbre2: nb1 };
     }
 
     //table de multiplication
-    static tableMulti(nb1max: number, nb1min: number, nb2max: number, nb2min: number) 
-    : {question: string; resultats: { texte: string; valeurRep: number }[]} {
+    static tableMulti(nb1max: number, nb1min: number, nb2max: number, nb2min: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
         const nombre2 = Matematik.entierAleatoire(nb2min, nb2max);
-       const reponse = nombre1 * nombre2;
-       const mixTerme = this.melange(nombre1, nombre2);
+        const reponse = nombre1 * nombre2;
+        const mixTerme = this.melange(nombre1, nombre2);
         const question = mixTerme.nbre1 + " x " + mixTerme.nbre2 + " = ?";
-        const resultats = [{ texte: "", valeurRep: reponse }];            
+        const resultats = [{ texte: "", valeurRep: reponse }];
         return { question, resultats };
     }
 
     //table de multiplication à trou
     //on cherche le nombre 1
-    static tableMultiTrou(nb1max: number, nb1min: number, nb2max: number, nb2min: number) : {question: string; resultats: { texte: string; valeurRep: number }[]} {
+    static tableMultiTrou(nb1max: number, nb1min: number, nb2max: number, nb2min: number): { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
         const nombre2 = Matematik.entierAleatoire(nb2min, nb2max);
         const reponse = nombre1 * nombre2;
         const question = nombre1 + " x ? = " + reponse;
-        const resultats = [{ texte: "", valeurRep: nombre2 }];            
+        const resultats = [{ texte: "", valeurRep: nombre2 }];
         return { question, resultats };
     }
 
     //multiplier par un multiple de 10
-    static multi10(nb1max: number, nb1min: number, multimax:number, multimin:number, valexp:number)
-     : {question: string; resultats: { texte: string; valeurRep: number }[]} {
+    static multi10(nb1max: number, nb1min: number, multimax: number, multimin: number, valexp: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
-        const nombre2 = Matematik.entierAleatoire(multimin, multimax)*valexp;
+        const nombre2 = Matematik.entierAleatoire(multimin, multimax) * valexp;
         const reponse = nombre1 * nombre2;
         const mixTerme = this.melange(nombre1, nombre2);
         const question = mixTerme.nbre1 + " x " + mixTerme.nbre2 + " = ?";
-        const resultats = [{ texte: "", valeurRep: reponse }];            
+        const resultats = [{ texte: "", valeurRep: reponse }];
         return { question, resultats };
     }
 
     //diviser par un multiple de 10 résultat entier
-    static div10Entier(nb1max: number, nb1min: number, divmax:number, divmin:number, valexp:number)
-     : {question: string; resultats: { texte: string; valeurRep: number }[]} {
+    static div10Entier(nb1max: number, nb1min: number, divmax: number, divmin: number, valexp: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1temp = Matematik.entierAleatoire(nb1min, nb1max);
-        const nombre1 = Math.floor(nombre1temp/(valexp))*valexp;
-        const nombre2 = Matematik.entierAleatoire(divmin, divmax)*valexp;
+        const nombre1 = Math.floor(nombre1temp / (valexp)) * valexp;
+        const nombre2 = Matematik.entierAleatoire(divmin, divmax) * valexp;
         const reponse = nombre1 / nombre2;
         const question = nombre1 + " ÷ " + nombre2 + " = ?";
-        const resultats = [{ texte: "", valeurRep: reponse }];            
+        const resultats = [{ texte: "", valeurRep: reponse }];
         return { question, resultats };
     }
 
-    
+
 }

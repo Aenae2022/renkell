@@ -40,7 +40,8 @@
             "jbdb-dec-mcdu" :"jusqu'à 9 999",
             "jbdb-multi-all" :"toutes",
             "jbdb-multi-toull-all":"toutes",
-            "jbdb-div-all" :"toutes"
+            "jbdb-div-all" :"toutes",
+            "jbdb-add-kantad": "c + c"
         },
         "questions": {
             "jbdb-dec-cdu-unite" :"7 centaines + 2 dizaines + 5 unités = ",

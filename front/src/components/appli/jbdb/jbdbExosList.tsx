@@ -1,3 +1,6 @@
+import { tableAdditionExerciseIds } from "./exercises/definitions/add/others/additionExercises";
+import { decompositionNumberExerciseIds } from "./exercises/definitions/add/others/decompositionNumber";
+import { tableAddMasterExerciseIds } from "./exercises/definitions/add/tableAdd/tableAddMasterExercises";
 import { tableAddMemoryExerciseIds } from "./exercises/definitions/add/tableAdd/tableAddMemoryExercises";
 import { tableAddPracticeExerciseIds } from "./exercises/definitions/add/tableAdd/tableAddPracticeExercises";
 import { materCM1S1ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S1";
@@ -26,8 +29,34 @@ export const jbdbExosList = [
             subCategory: "practice",
             exercises: tableAddPracticeExerciseIds,
           },
+          {
+            //mestroniañ
+            subCategory: "master",
+            exercises: tableAddMasterExerciseIds,
+          }
         ],
       },
+      {
+        //traoù all
+        category: "others",
+        subCategories: [
+          {
+            //sammañ
+            subCategory: "addition",
+            exercises: tableAdditionExerciseIds
+          },
+          {
+            //disrannadenn
+            subCategory: "decompositionNumber",
+            exercises: decompositionNumberExerciseIds
+          },
+          {
+            //dilemel
+            subCategory: "subtraction",
+            exercises:[]
+          }
+        ]
+      }
       
     ],
   },

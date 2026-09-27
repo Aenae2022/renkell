@@ -40,7 +40,8 @@
             "jbdb-dec-mcdu" :"betek 9 999" ,
             "jbdb-multi-all" :"an holl",
             "jbdb-multi-toull-all":"an holl",
-            "jbdb-div-all":"an holl"
+            "jbdb-div-all":"an holl",
+            "jbdb-add-kantad": "k + k"
         },
         "questions": {
             "jbdb-dec-cdu-unite" :"7 kantad + 2 zedag + 5 unanenn = ",
