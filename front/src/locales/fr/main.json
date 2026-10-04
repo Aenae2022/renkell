@@ -13,9 +13,10 @@
         "question": "Quel est ton prénom ?",
         "error": "Tu dois écrire au moins 2 lettres 🙂"
     },
-    "mathematiques": "Mathématiques",
     "langue": "Langue",
     "dictee": "Dictée",
+    "mathematiques": "Mathématiques",
+    "nombre": "Nombre",
     "calculmental": "Calcul mental",
     "titlePageApplies": "Applications",
     "lesson" : "Leçon"

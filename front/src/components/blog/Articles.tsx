@@ -99,17 +99,12 @@ function Articles({
     setMessage(""); // Réinitialiser le message avant de le remplir
     setIsLoading(true); // Indiquer que le chargement est en cours
     //on regarde le degré de filtrage : si on a une tag secondaire, on affiche les articles qui ont cette tag secondaire, sinon on affiche les articles qui ont la tag principale
-    if (principalTagActivated === "blog0") {
+    if (principalTagActivated === "blog") {
       fetchArticlesList();
     } else if (secondaryTagActivated !== "") {
-      //on charge les articles du sous domaine
       fetchArticlesSousDomaineList(secondaryTagActivated);
     } else {
-      //on récupère l'identifiant du domaine
-      const refDomaine = principalTagActivated.match(/^([a-zA-Z]+)([0-9]+)$/);
-      if (refDomaine) {
-        fetchArticlesDomaineList(refDomaine[1]);
-      }
+      fetchArticlesDomaineList(principalTagActivated);
     }
   }, [principalTagActivated, secondaryTagActivated]);
 

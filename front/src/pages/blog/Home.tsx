@@ -1,98 +1,76 @@
-import ClasseurVierge from "@components/user/core/ClasseurVierge";
-import Loader from "@components/core/Loader";
-import {
-  defineActiveTags,
-  PrincipalTag,
-  SecondaryTag,
-} from "@utils/createClasseur";
-import { useEffect, useMemo, useState } from "react";
 import Articles from "@components/blog/Articles";
+import Classeur from "@components/core/classeur/Classeur";
+import type { PrincipalTag, SecondaryTag } from "@components/core/classeur/types";
+import Loader from "@components/core/Loader";
+
+const principalTags: PrincipalTag[] = [
+    {
+        id: "blog",
+        label: "article.pTag.blog",
+        color: "orthographe",
+    },
+    {
+        id: "langue",
+        label: "article.pTag.langue",
+        color: "francais",
+    },
+    {
+        id: "mathematiques",
+        label: "article.pTag.maths",
+        color: "mathematiques",
+    },
+    {
+        id: "art",
+        label: "article.pTag.art",
+        color: "grammaire",
+    },
+];
+
+const secondaryTags: SecondaryTag[] = [
+    {
+        id: "calculmental",
+        label: "main.calculmental",
+        parentId: "mathematiques",
+        color: "calculmental",
+    },
+    {
+        id: "nombre",
+        label: "main.nombre",
+        parentId: "mathematiques",
+        color: "nombre",
+    },
+    {
+        id: "lexique",
+        label: "article.sTag.lexique",
+        parentId: "langue",
+        color: "lexique",
+    },
+];
+
+
 
 export default function Home() {
-  // #########################################################################################
-  // le classeur
-  // #########################################################################################
+    return (
+        <Classeur principalTags={principalTags} secondaryTags={secondaryTags}>
+            {(principal, secondary) => {
+                if (principal === "mathematiques" && secondary === "calculmental") {
+                    <Articles
+                        principalTagActivated={principal}
+                        secondaryTagActivated={secondary}
+                    />
+                }
 
-  // ================================== GESTION DES ONGLETS ==================================
+                if (principal === "mathematiques" && secondary === "nombre") {
+                    return <Loader />;
+                }
 
-  const [principalTagActivated, setPrincipalTagActivated] =
-    useState<string>("");
-  const [secondaryTagActivated, setSecondaryTagActivated] =
-    useState<string>("");
-
-  // ================================== DONNEES DE FONCTIONNEMENT DU CLASSEUR ==================================
-
-  // --- définir les onglets principaux
-  const principalTagsList = useMemo(() => {
-    const list = [
-      new PrincipalTag(0, "article.pTag.blog", "blog", "orthographe"),
-      new PrincipalTag(1, "article.pTag.langue", "langue", "francais"),
-      new PrincipalTag(
-        2,
-        "article.pTag.maths",
-        "mathematiques",
-        "mathematiques",
-      ),
-      new PrincipalTag(3, "article.pTag.art", "art", "grammaire"),
-
-      //id, title, concerned, color
-    ];
-    return list;
-  }, []);
-
-  // --- définir les onglets secondaires
-  const secondaryTagsList: SecondaryTag[] = useMemo(() => {
-    const list: SecondaryTag[] = [
-      new SecondaryTag("lexique", "article.sTag.lexique", "lexique", "langue1"),
-      new SecondaryTag("dictee", "main.dictee", "dictee", "langue1"),
-      new SecondaryTag(
-        "calculmental",
-        "main.calculmental",
-        "calculmental",
-        "mathematiques2",
-      ),
-    ];
-    return list;
-  }, []);
-
-  // --- gestion des onglets actifs
-  useEffect(() => {
-    const { startPrincipalTag } = defineActiveTags(
-      principalTagsList,
-      secondaryTagsList,
+                return (
+                    <Articles
+                        principalTagActivated={principal}
+                        secondaryTagActivated={secondary}
+                    />
+                );
+            }}
+        </Classeur>
     );
-    setPrincipalTagActivated(startPrincipalTag);
-    setSecondaryTagActivated("");
-  }, [principalTagsList, secondaryTagsList]);
-
-  const [message, setMessage] = useState<string>("");
-  // const [action, setAction] = useState<string>("blog");
-  let myComponentContent = <Loader />;
-  useEffect(() => {
-    setMessage("");
-    setSecondaryTagActivated("");
-  }, [principalTagActivated]);
-
-  myComponentContent = (
-    <Articles
-      principalTagActivated={principalTagActivated}
-      secondaryTagActivated={secondaryTagActivated}
-    />
-  );
-
-  // #########################################################################################
-  // #########################################################################################
-
-  return (
-    <ClasseurVierge
-      principalTagsList={principalTagsList}
-      secondaryTagsList={secondaryTagsList}
-      activatedPrincipal={principalTagActivated}
-      activatedSecondary={secondaryTagActivated}
-      setPrincipalTagActivated={setPrincipalTagActivated}
-      setSecondaryTagActivated={setSecondaryTagActivated}
-    >
-      {message !== "" ? <p>{message}</p> : myComponentContent}
-    </ClasseurVierge>
-  );
 }

@@ -58,6 +58,8 @@ function App() {
                 path="nbre/denombre1Params"
                 element={<Denombre1ParamsContainer />}
               />
+              <Route path="jbdb" element={<MaJbdbHomeContainer />} />
+              
             </Route>
 
             {/* TEACHER */}
