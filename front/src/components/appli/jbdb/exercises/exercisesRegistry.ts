@@ -6,9 +6,11 @@ import { tableAddPracticeExercises } from "./definitions/add/tableAdd/tableAddPr
 import { materCM1S1Exercises } from "./definitions/matEr/cm1/materCM1-S1";
 import { materCM1S2Exercises } from "./definitions/matEr/cm1/materCM1-S2";
 import { materCM1S3Exercises } from "./definitions/matEr/cm1/materCM1-S3";
+import { materCM1S4Exercises } from "./definitions/matEr/cm1/materCM1-S4";
 import { materCM2S1Exercises } from "./definitions/matEr/cm2/materCM2-S1";
 import { materCM2S2Exercises } from "./definitions/matEr/cm2/materCM2-S2";
 import { materCM2S3Exercises } from "./definitions/matEr/cm2/materCM2-S3";
+import { materCM2S4Exercises } from "./definitions/matEr/cm2/materCM2-S4";
 import type { JbdbExercise } from "./exercises.types";
 
 const addExercises : JbdbExercise[] = [
@@ -22,11 +24,13 @@ const materCM1Exercises : JbdbExercise[] = [
     ...materCM1S1Exercises,
     ...materCM1S2Exercises,
     ...materCM1S3Exercises,
+    ...materCM1S4Exercises,
 ]
 const materCM2Exercises : JbdbExercise[] = [
     ...materCM2S1Exercises,
     ...materCM2S2Exercises,
-    ...materCM2S3Exercises
+    ...materCM2S3Exercises,
+    ...materCM2S4Exercises
 ]
 
 const allExercises: JbdbExercise[] = [

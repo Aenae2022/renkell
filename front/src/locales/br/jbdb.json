@@ -28,8 +28,10 @@
             "matercm1sequence1":"sekañs 1 : taolioù liesaat",
             "matercm1sequence2":"sekañs 2 : sammañ pe dilemel 9, 19, 29, 39 / 10, 20, 30, 40...",
             "matercm1sequence3":"sekañs 3 : dilemel gant un niver un sifr ennañ",
+            "matercm1sequence4":"sekañs 4 : klokaat ar c'hantadoù",
             "matercm2sequence2":"sekañs 2 : emgefrekaat doareoù jediñ",
-            "matercm2sequence3":"sekañs 3 : Sammañ pe dilemel 18, 19, 28, 29, 38, 39, ..."
+            "matercm2sequence3":"sekañs 3 : Sammañ pe dilemel 18, 19, 28, 29, 38, 39, ...",
+            "matercm2sequence4":"sekañs 4 : Taolioù liesaat x5 x10"
         },
         "buttons":{
             "jbdb-add-all" :"an holl",

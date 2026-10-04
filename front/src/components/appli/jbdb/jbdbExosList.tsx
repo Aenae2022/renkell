@@ -6,9 +6,11 @@ import { tableAddPracticeExerciseIds } from "./exercises/definitions/add/tableAd
 import { materCM1S1ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S1";
 import { materCM1S2ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S2";
 import { materCM1S3ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S3";
+import { materCM1S4ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S4";
 import { materCM2S1ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S1";
 import { materCM2S2ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S2";
 import { materCM2S3ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S3";
+import { materCM2S4ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S4";
 
 
 export const jbdbExosList = [
@@ -80,6 +82,11 @@ export const jbdbExosList = [
             //séquence 3
             subCategory: "matercm1sequence3",
             exercises: materCM1S3ExerciseIds,
+          },
+          {
+            //séquence 4
+            subCategory: "matercm1sequence4",
+            exercises: materCM1S4ExerciseIds,
           }
         ]
       },
@@ -100,6 +107,11 @@ export const jbdbExosList = [
             //séquence 3
             subCategory: "matercm2sequence3",
             exercises: materCM2S3ExerciseIds,
+          },
+          {
+            //séquence 4
+            subCategory: "matercm2sequence4",
+            exercises: materCM2S4ExerciseIds,
           }
         ]
       },

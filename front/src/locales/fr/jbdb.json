@@ -28,8 +28,10 @@
             "matercm1sequence1":"séquence 1 : tables de multiplication",
             "matercm1sequence2":"séquence 2 : additioner et soustraire 9, 19, 29, 39 / 10, 20, 30, 40...",
             "matercm1sequence3":"séquence 3 : soustraire par un nombre à un chiffre",
+            "matercm1sequence4":"séquence 4 : compléter à la centaine",
             "matercm2sequence2":"séquence 2 : automatiser des procédures de calcul mental",
-            "matercm2sequence3":"sekañs 3 : ajouter ou soutraire 18, 19, 28, 29, 38, 39, ..."
+            "matercm2sequence3":"séquence 3 : ajouter ou soustraire 18, 19, 28, 29, 38, 39, ...",
+            "matercm2sequence4":"séquence 4 : tables de multiplication x5 x10"
         },
         "buttons":{
             "jbdb-add-all" :"toutes",

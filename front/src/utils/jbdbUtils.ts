@@ -203,17 +203,29 @@ export class JbdbUtils {
         return { question, resultats };
     }
 
-    //compléments à la centaine
-    static complement(nbmax: number, nbmin: number, valexpnb: number, valexp: number)
+    //compléments
+    static complement(nbmax: number, nbmin: number, pasNombre: number,   rangComplement: number)
         : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1temp = Matematik.entierAleatoire(nbmin, nbmax);
-        const nombre1 = Math.floor(nombre1temp / (valexpnb)) * valexpnb;
-        const nbcomp = (Math.floor(nombre1 / valexp) + 1) * valexp;
+        const nombre1 = Math.floor(nombre1temp / (pasNombre)) * pasNombre;
+        const nbcomp = (Math.floor(nombre1 / rangComplement) + 1) * rangComplement;
         const reponse = nbcomp - nombre1;
         const question = nombre1 + " + ? = " + nbcomp;
         const resultats = [{ texte: "", valeurRep: reponse }];
         return { question, resultats };
     }
+
+    static complementInvert(nbmax: number, nbmin: number, pasNombre: number,   rangComplement: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
+        const nombre1temp = Matematik.entierAleatoire(nbmin, nbmax);
+        const nombre1 = Math.floor(nombre1temp / (pasNombre)) * pasNombre;
+        const nbcomp = (Math.floor(nombre1 / rangComplement) + 1) * rangComplement;
+        const reponse = nbcomp - nombre1;
+        const question = `${nbcomp} - ${nombre1} = ?`;
+        const resultats = [{ texte: "", valeurRep: reponse }];
+        return { question, resultats };
+    }
+
 
     //mélanger les termes d'un calcul
     static melange(nb1: number, nb2: number): { nbre1: number; nbre2: number } {
