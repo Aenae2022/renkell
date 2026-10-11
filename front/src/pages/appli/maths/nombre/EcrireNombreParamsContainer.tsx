@@ -2,6 +2,7 @@ import EcrireNombreParams from "./EcrireNombreParams";
 import Logo from "@pictures/icons/nombre-2.png";
 import PageClasseur from "@components/core/pageClasseur";
 import { useTranslation } from "react-i18next";
+import AppContainer from "@components/core/AppContainer";
 
 function EcrireNombreParamsContainer() {
   const {t} = useTranslation()
@@ -16,10 +17,11 @@ function EcrireNombreParamsContainer() {
       <EcrireNombreParams />
     </>
   );
-    return <PageClasseur >
-        {myComponentContent}
-    </PageClasseur>
-
+    return <AppContainer>
+        <PageClasseur >
+            {myComponentContent}
+        </PageClasseur>
+    </AppContainer>
 
 }
 

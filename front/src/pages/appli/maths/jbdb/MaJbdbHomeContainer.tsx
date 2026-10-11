@@ -2,6 +2,7 @@ import PageClasseur from "@components/core/pageClasseur";
 import MaJbdbHome from "./MaJbdbHome";
 import jbdbLogo from "@pictures/exercice/chronometre.webp";
 import { useTranslation } from "react-i18next";
+import AppContainer from "@components/core/AppContainer";
 
 export default function MaJbdbhommeContainer () {
     const {t} = useTranslation()
@@ -16,8 +17,9 @@ export default function MaJbdbhommeContainer () {
       <MaJbdbHome category="add" />
     </>
   );
-    return <PageClasseur >
-        {myComponentContent}
-    </PageClasseur>
-
+    return <AppContainer>
+        <PageClasseur >
+            {myComponentContent}
+        </PageClasseur>
+    </AppContainer>
 }
