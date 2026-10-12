@@ -13,7 +13,6 @@ router.post("/login",
     checkInputUserPseudoValid,checkInputUserPsswdValid,
     //async (req, res) => await AuthController.validateConnection(req, res));
     async (req, res) => {
-    console.log("🔥 LOGIN ROUTE ATTEINTE");
     await AuthController.validateConnection(req, res);
   })
     

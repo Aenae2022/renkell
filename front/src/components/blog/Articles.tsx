@@ -21,7 +21,6 @@ function Articles({
     const fetchArticlesList = async () => {
       try {
         const reponseArticles = await api.get("/api/articles/articlesList");
-
         if (reponseArticles.data && reponseArticles.data.reponse) {
           setArticlesList(reponseArticles.data.result); // Remplir la liste avec les articles récupérés
         } else {
@@ -37,6 +36,7 @@ function Articles({
         }
       } finally {
         setIsLoading(false); // Indiquer que le chargement est terminé
+        
       }
     };
 
@@ -45,7 +45,6 @@ function Articles({
         const reponse = await api.post("/api/articles/articlesDomaineList", {
           domaine: refDomaine,
         });
-
         if (reponse.data && reponse.data.reponse) {
           setArticlesList(reponse.data.result); // Remplir la liste avec les articles récupérés
         } else {
@@ -74,7 +73,6 @@ function Articles({
             sousDomaine: refSousDomaine,
           },
         );
-
         if (reponse.data && reponse.data.reponse) {
           setArticlesList(reponse.data.result); // Remplir la liste avec les articles récupérés
         } else {

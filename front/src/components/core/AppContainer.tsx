@@ -12,9 +12,18 @@ export default function AppContainer({ children }: AppContainerProps) {
     const returnTo = location.state?.returnTo;
     return (
         <div className="w-full relative">
-            <img src={Croix} alt="close" className="absolute right-0 mt-2 mr-2 h-8" onClick={() => navigate(returnTo ?? "/")} />
-
-
+            <img src={Croix} alt="close" className="absolute right-0 mt-2 mr-2 h-8"
+                onClick={() => {
+                    if (returnTo) {
+                        navigate(returnTo, {
+                            state: { restoreClasseur: true },
+                        });
+                    } else {
+                        navigate("/");
+                    }
+                }
+                }
+            />
             {children}
         </div>
 

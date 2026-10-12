@@ -2,6 +2,7 @@ import Articles from "@components/blog/Articles";
 import Classeur from "@components/core/classeur/Classeur";
 import type { PrincipalTag, SecondaryTag } from "@components/core/classeur/types";
 import Loader from "@components/core/Loader";
+import { useLocation } from "react-router-dom";
 
 const principalTags: PrincipalTag[] = [
     {
@@ -50,14 +51,18 @@ const secondaryTags: SecondaryTag[] = [
 
 
 export default function Home() {
+    const location = useLocation();
+    const restoreSession = location.state?.restoreClasseur === true;
     return (
-        <Classeur principalTags={principalTags} secondaryTags={secondaryTags}>
+        <Classeur principalTags={principalTags} secondaryTags={secondaryTags} restoreSession={restoreSession}>
             {(principal, secondary) => {
                 if (principal === "mathematiques" && secondary === "calculmental") {
-                    <Articles
-                        principalTagActivated={principal}
-                        secondaryTagActivated={secondary}
-                    />
+                    return (
+                        <Articles
+                            principalTagActivated={principal}
+                            secondaryTagActivated={secondary}
+                        />
+                    )
                 }
 
                 if (principal === "mathematiques" && secondary === "nombre") {

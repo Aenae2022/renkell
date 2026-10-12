@@ -12,19 +12,25 @@ type ClasseurProps = {
         principalTag: string,
         secondaryTag: string,
     ) => ReactNode;
+    restoreSession?: boolean;
 };
 
-export default function Classeur({ principalTags, secondaryTags, children }: ClasseurProps) {
+export default function Classeur({ principalTags, secondaryTags, children, restoreSession = false }: ClasseurProps) {
     const [principalTag, setPrincipalTag] = useState(principalTags[0]?.id ?? "");
     const [secondaryTag, setSecondaryTag] = useState("");
 
     useEffect(() => {
+        if (!restoreSession) {
+            sessionStorage.removeItem("principalTag");
+            sessionStorage.removeItem("secondaryTag");
+            return;
+        }
         const storedPrincipalTag = sessionStorage.getItem("principalTag");
         if (storedPrincipalTag !== null) {
             setPrincipalTag(storedPrincipalTag);
         }
         const storedSecondaryTag = sessionStorage.getItem('secondaryTag')
-         if (storedSecondaryTag !== null) {
+        if (storedSecondaryTag !== null) {
             setSecondaryTag(storedSecondaryTag);
         }
     }, []);
@@ -32,13 +38,13 @@ export default function Classeur({ principalTags, secondaryTags, children }: Cla
     const handleClickPrincipal = (tagid: string) => {
         setPrincipalTag(tagid)
         setSecondaryTag("")
-        sessionStorage.setItem("principalTag",tagid)
+        sessionStorage.setItem("principalTag", tagid)
         sessionStorage.removeItem("secondaryTag");
     }
 
     const handleClickSecondary = (tagId: string) => {
         setSecondaryTag(tagId);
-        sessionStorage.setItem("secondaryTag",tagId)
+        sessionStorage.setItem("secondaryTag", tagId)
     };
 
     return (
