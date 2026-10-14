@@ -34,6 +34,10 @@ function ExerciseGeneriqueParams({
       type: "SET_REFLECONVALID",
       value: parsedSaisie.success,
     });
+    dispatchGenerique({
+      type: "SET_LINKGENERATED",
+      value: "",
+    });
   };
 
   const handleChangeNbExercice = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,6 +47,7 @@ function ExerciseGeneriqueParams({
     const cleanSaisie = Utilitaires.validInputString(value);
     const isValid = Utilitaires.isIntegerInRange(cleanSaisie, 1, 10);
     dispatchGenerique({ type: "SET_NBEXERCICEVALID", value: isValid });
+    dispatchGenerique({ type: "SET_LINKGENERATED", value: "", });
   };
 
   const handleChangeNbReponse = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +56,7 @@ function ExerciseGeneriqueParams({
     const cleanSaisie = Utilitaires.validInputString(value);
     const isValid = Utilitaires.isIntegerInRange(cleanSaisie, 1, 2);
     dispatchGenerique({ type: "SET_NBREPONSEVALID", value: isValid });
+    dispatchGenerique({ type: "SET_LINKGENERATED", value: "", });
   };
 
   const handleChangeAcquis = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +67,8 @@ function ExerciseGeneriqueParams({
       Utilitaires.isIntegerInRange(cleanSaisie, 1, 100) &&
       parseInt(cleanSaisie) > parseInt(paramsGenerique.eca.saisie);
     dispatchGenerique({ type: "SET_ACQUISVALID", value: isValid });
-  };
+     dispatchGenerique({ type: "SET_LINKGENERATED", value: "",});
+ };
 
   const handleChangeEca = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -72,8 +79,8 @@ function ExerciseGeneriqueParams({
       Utilitaires.isIntegerInRange(cleanSaisie, 1, 100) &&
       parseInt(cleanSaisie) < parseInt(paramsGenerique.acquis.saisie);
     dispatchGenerique({ type: "SET_ECAVALID", value: isValid });
+    dispatchGenerique({ type: "SET_LINKGENERATED", value: "", });
   };
-
   return (
     <div>
       <form>
@@ -84,11 +91,10 @@ function ExerciseGeneriqueParams({
           <div className={divStyle}>
             <label htmlFor="refLecon">{t("applies.generique.refLecon")}</label>
             <input
-              className={`w-[100px] ${
-                paramsGenerique.refLecon.isValid
+              className={`w-[100px] ${paramsGenerique.refLecon.isValid
                   ? inputStyle
                   : inputStyleUnvalid
-              }`}
+                }`}
               type="text"
               id="refLecon"
               name="refLecon"
@@ -101,11 +107,10 @@ function ExerciseGeneriqueParams({
               {t("applies.generique.nbExercice")}
             </label>
             <input
-              className={`w-[50px] ${
-                paramsGenerique.nbExercice.isValid
+              className={`w-[50px] ${paramsGenerique.nbExercice.isValid
                   ? inputStyle
                   : inputStyleUnvalid
-              }`}
+                }`}
               type="number"
               id="nbExercice"
               name="nbExercice"
@@ -118,11 +123,10 @@ function ExerciseGeneriqueParams({
               {t("applies.generique.nbReponse")}
             </label>
             <input
-              className={`w-[50px] ${
-                paramsGenerique.nbReponse.isValid
+              className={`w-[50px] ${paramsGenerique.nbReponse.isValid
                   ? inputStyle
                   : inputStyleUnvalid
-              }`}
+                }`}
               type="number"
               id="nbReponse"
               name="nbReponse"
@@ -137,11 +141,10 @@ function ExerciseGeneriqueParams({
             <div>
               <label htmlFor="acquis">- {t("applies.generique.acquis")}</label>
               <input
-                className={`w-[50px] ${
-                  paramsGenerique.acquis.isValid
+                className={`w-[50px] ${paramsGenerique.acquis.isValid
                     ? inputStyle
                     : inputStyleUnvalid
-                }`}
+                  }`}
                 type="number"
                 id="acquis"
                 name="acquis"
@@ -154,9 +157,8 @@ function ExerciseGeneriqueParams({
             <div>
               <label htmlFor="eca">- {t("applies.generique.eca")}</label>
               <input
-                className={`w-[50px] ${
-                  paramsGenerique.eca.isValid ? inputStyle : inputStyleUnvalid
-                }`}
+                className={`w-[50px] ${paramsGenerique.eca.isValid ? inputStyle : inputStyleUnvalid
+                  }`}
                 type="number"
                 id="eca"
                 name="eca"

@@ -99,6 +99,7 @@ function EcrireNombreParams() {
       <EcrireNombreParamsExercises
         paramsExercise={paramsExercise}
         dispatchExercise={dispatchExercise}
+        dispatchGenerique={dispatchGenerique}
       />
     </>
   );

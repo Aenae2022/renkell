@@ -1,3 +1,4 @@
+import type { ExerciseGeneriqueParamsAction } from "@srcFront/features/exercises/core/exerciseGenerique.type";
 import type {
   EcrireNombreExerciseParams,
   EcrireNombreParamsAction,
@@ -8,11 +9,13 @@ import { useTranslation } from "react-i18next";
 type Props = {
   paramsExercise: EcrireNombreExerciseParams;
   dispatchExercise: React.Dispatch<EcrireNombreParamsAction>;
+  dispatchGenerique: React.Dispatch<ExerciseGeneriqueParamsAction>;
 };
 
 function EcrireNombreParamsExercises({
   paramsExercise,
   dispatchExercise,
+  dispatchGenerique,
 }: Props) {
   const { t } = useTranslation();
   const fieldsetStyle =
@@ -42,6 +45,8 @@ function EcrireNombreParamsExercises({
       ) && parseInt(paramsExercise.nbMax.saisie) > parseInt(cleanSaisie);
     dispatchExercise({ type: "SET_NBMINVALID", value: isValid });
     dispatchExercise({ type: "SET_NBMAXVALID", value: isValidNbMax });
+    dispatchGenerique({ type: "SET_LINKGENERATED", value: "", });
+
   };
 
   const handleChangeNbMax = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,6 +65,7 @@ function EcrireNombreParamsExercises({
       ) && parseInt(paramsExercise.nbMin.saisie) < parseInt(cleanSaisie);
     dispatchExercise({ type: "SET_NBMAXVALID", value: isValid });
     dispatchExercise({ type: "SET_NBMINVALID", value: isValidNbMin });
+    dispatchGenerique({ type: "SET_LINKGENERATED", value: "", });
   };
 
   return (
@@ -72,9 +78,8 @@ function EcrireNombreParamsExercises({
           <div className={divStyle}>
             <label htmlFor="nbMin">{t("applies.ecrireNombre.nbMin")}</label>
             <input
-              className={`${
-                paramsExercise.nbMin.isValid ? inputStyle : inputStyleUnvalid
-              }`}
+              className={`${paramsExercise.nbMin.isValid ? inputStyle : inputStyleUnvalid
+                }`}
               type="text"
               id="nbMin"
               name="nbMin"
@@ -85,9 +90,8 @@ function EcrireNombreParamsExercises({
               {t("applies.ecrireNombre.nbMax")}
             </label>
             <input
-              className={`${
-                paramsExercise.nbMax.isValid ? inputStyle : inputStyleUnvalid
-              }`}
+              className={`${paramsExercise.nbMax.isValid ? inputStyle : inputStyleUnvalid
+                }`}
               type="text"
               id="nbMax"
               name="nbMax"

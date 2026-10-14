@@ -6,17 +6,6 @@ export const exerciseGeneriqueParamsReducer = (defaultState : ExerciseGeneriqueP
   action: ExerciseGeneriqueParamsAction
 ): ExerciseGeneriqueParamsState => {
   switch (action.type) {
-    // case "SET_REFLECON":   {
-    //   const { value } = action;
-      
-    //   return {
-    //     ...state,
-    //     refLecon: {
-    //       ...state.refLecon,
-    //       valeur: value
-    //     }
-    //   };
-    // }
     case "SET_REFLECONSAISIE":   {
       const { value } = action;
       
@@ -37,16 +26,7 @@ export const exerciseGeneriqueParamsReducer = (defaultState : ExerciseGeneriqueP
           isValid: value}
       };
     }
-    // case "SET_NBEXERCICE":   {
-    //   const { value } = action;
-    //   return {
-    //     ...state,
-    //     nbExercice: {
-    //       ...state.nbExercice,
-    //       valeur: value
-    //     }
-    //   };
-    // }
+   
     case "SET_NBEXERCICESAISIE":   {
       const { value } = action;
       return {
@@ -67,15 +47,6 @@ export const exerciseGeneriqueParamsReducer = (defaultState : ExerciseGeneriqueP
         }
       };
     }
-    // case "SET_NBREPONSE":   {
-    //   const { value } = action;
-    //   return {
-    //     ...state,
-    //     nbReponse: {
-    //       ...state.nbReponse,
-    //       valeur: value},
-    //   };
-    // }
     case "SET_NBREPONSESAISIE":   {
       const { value } = action;
       return {
@@ -96,16 +67,6 @@ export const exerciseGeneriqueParamsReducer = (defaultState : ExerciseGeneriqueP
         }
       };
     }
-    // case "SET_ACQUIS":   {
-    //   const { value } = action;
-    //   return {
-    //     ...state,
-    //     acquis: {
-    //       ...state.acquis,
-    //       valeur: value
-    //     }
-    //   };
-    // }
     case "SET_ACQUISSAISIE":   {
       const { value } = action;
       return {
@@ -126,16 +87,6 @@ export const exerciseGeneriqueParamsReducer = (defaultState : ExerciseGeneriqueP
         }
       };
     }
-    // case "SET_ECA":   {
-    //   const { value } = action;
-    //   return {
-    //     ...state,
-    //     eca: {
-    //       ...state.eca,
-    //       valeur: value
-    //     }
-    //   };
-    // }
     case "SET_ECASAISIE":   {
       const { value } = action;
       return {
