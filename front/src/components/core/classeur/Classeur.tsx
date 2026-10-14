@@ -49,11 +49,13 @@ export default function Classeur({ principalTags, secondaryTags, children, resto
 
     return (
         <div className="w-full">
-            <PrincipalTags
-                tags={principalTags}
-                activeTag={principalTag}
-                handleClickPrincipal={handleClickPrincipal}
-            />
+            <div className="pl-20">
+                <PrincipalTags
+                    tags={principalTags}
+                    activeTag={principalTag}
+                    handleClickPrincipal={handleClickPrincipal}
+                />
+            </div>
 
             <div className="flex">
                 <main className="min-h-[300px] w-full pl-20 pr-3 py-5"

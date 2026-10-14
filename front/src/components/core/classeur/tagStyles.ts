@@ -1,12 +1,4 @@
 export const tagStyles = {
-  orthographe: {
-    normal:
-      "bg-orthographe-light hover:bg-orthographe",
-    selected:
-      "bg-orthographe border-orthographe-dark",
-    extension:
-      "bg-orthographe border-orthographe-dark",
-  },
 
   francais: {
     normal:
@@ -17,13 +9,13 @@ export const tagStyles = {
       "bg-francais border-francais-dark",
   },
 
-  mathematiques: {
+  lexique: {
     normal:
-      "bg-mathematiques-light hover:bg-mathematiques",
+      "bg-lexique-light hover:bg-lexique",
     selected:
-      "bg-mathematiques border-mathematiques-dark",
+      "bg-lexique border-lexique-dark",
     extension:
-      "bg-mathematiques border-mathematiques-dark",
+      "bg-lexique border-lexique-dark",
   },
 
   grammaire: {
@@ -35,13 +27,22 @@ export const tagStyles = {
       "bg-grammaire border-grammaire-dark",
   },
 
-  calculmental: {
+  orthographe: {
     normal:
-      "bg-calculmental-light hover:bg-calculmental",
+      "bg-orthographe-light hover:bg-orthographe",
     selected:
-      "bg-calculmental border-calculmental-dark",
+      "bg-orthographe border-orthographe-dark",
     extension:
-      "bg-calculmental border-calculmental-dark",
+      "bg-orthographe border-orthographe-dark",
+  },
+
+  mathematiques: {
+    normal:
+      "bg-mathematiques-light hover:bg-mathematiques",
+    selected:
+      "bg-mathematiques border-mathematiques-dark",
+    extension:
+      "bg-mathematiques border-mathematiques-dark",
   },
 
   nombre: {
@@ -53,12 +54,41 @@ export const tagStyles = {
       "bg-nombre border-nombre-dark",
   },
 
-  lexique: {
+  calculmental: {
     normal:
-      "bg-lexique-light hover:bg-lexique",
+      "bg-calculmental-light hover:bg-calculmental",
     selected:
-      "bg-lexique border-lexique-dark",
+      "bg-calculmental border-calculmental-dark",
     extension:
-      "bg-lexique border-lexique-dark",
+      "bg-calculmental border-calculmental-dark",
   },
+
+  geometrie: {
+    normal:
+      "bg-geometrie-light hover:bg-geometrie",
+    selected:
+      "bg-geometrie border-geometrie-dark",
+    extension:
+      "bg-geometrie border-geometrie-dark",
+  },
+
+  mesure: {
+    normal:
+      "bg-mesure-light hover:bg-mesure",
+    selected:
+      "bg-mesure border-mesure-dark",
+    extension:
+      "bg-mesure border-mesure-dark",
+  },
+
+  resolution: {
+    normal:
+      "bg-resolution-light hover:bg-resolution",
+    selected:
+      "bg-resolution border-resolution-dark",
+    extension:
+      "bg-resolution border-resolution-dark",
+  },
+
+
 } as const;
