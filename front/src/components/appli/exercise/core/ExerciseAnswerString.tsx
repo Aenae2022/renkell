@@ -7,12 +7,14 @@ import type { ExerciseGeneriqueItem } from "@srcFront/features/exercises/core/ex
 type ExerciseAnswerStringProps = {
   item: ExerciseGeneriqueItem<unknown>;
   correctionToShow: React.ReactNode;
+  exoUnique?: boolean;
   handleVerify: (answer: string) => void;
   handleNextItem: (index: number) => void;
 };
 function ExerciseAnswerString({
   item,
   correctionToShow,
+  exoUnique = false,
   handleVerify,
   handleNextItem,
 }: ExerciseAnswerStringProps) {
@@ -66,6 +68,7 @@ function ExerciseAnswerString({
             ref={inputRef}
             className="text-center text-2xl w-[95%] text-sky-700  border-black border-2 rounded-md mr-3 "
             type="text"
+            spellCheck="false"
             value={myAnswer}
             onChange={(e) => setMyAnswer(e.target.value)}
             disabled={item.itemStatus === "correction"}
@@ -84,13 +87,15 @@ function ExerciseAnswerString({
         ) : null}
         <div className="mt-8 flex justify-center">
           <div className="w-[32px] mr-2 invisible"></div>
-          <button type="submit" className={buttonStyle} ref={buttonRef}>
-            {item.itemStatus === "question"
-              ? t("main.verify", { lng: item.typeLangue })
-              : item.itemStatus === "essai2"
-                ? t("main.verify2", { lng: item.typeLangue })
-                : t("main.next", { lng: item.typeLangue })}
-          </button>
+          {exoUnique && item.itemStatus === "correction" ? null : (
+            <button type="submit" className={buttonStyle} ref={buttonRef}>
+              {item.itemStatus === "question"
+                ? t("main.verify", { lng: item.typeLangue })
+                : item.itemStatus === "essai2"
+                  ? t("main.verify2", { lng: item.typeLangue })
+                  : t("main.next", { lng: item.typeLangue })}
+            </button>
+          )}
         </div>
       </form>
     </>

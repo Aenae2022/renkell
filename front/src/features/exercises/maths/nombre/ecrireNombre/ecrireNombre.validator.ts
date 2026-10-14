@@ -16,7 +16,7 @@ export const ecrireNombreValidator = (
 ) : ValidatorResult => {
     const secureStr = DOMPurify.sanitize(value)
 
-    const clearResponse = Utilitaires.validInputString(secureStr)
+    const clearResponse = Utilitaires.validInputString(secureStr).toLowerCase()
     let result = {isCorrect : false, conseil:""}
     
     if(item.typeQuestion === 1){

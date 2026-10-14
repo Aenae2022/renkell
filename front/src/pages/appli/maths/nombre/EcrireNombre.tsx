@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 function EcrireNombre() {
   const { exercise, state, dispatch } = useEcrireNombre(ecrireNombreMeta);
   const { t } = useTranslation();
+  const exoUnique = exercise.params.config.nbExercice === 1 ? true : false;
   const title =
     t(exercise.meta.title) +
     " " +
@@ -34,7 +35,7 @@ function EcrireNombre() {
         isCorrect={item.isCorrect}
       >
         <EcrireQuestion item={item} />
-        <EcrireAnswer item={item} dispatch={dispatch} />
+        <EcrireAnswer exoUnique={exoUnique} item={item} dispatch={dispatch} />
       </ExerciseItemContainer>
     );
   } else if (state.status === "finished") {
@@ -72,9 +73,11 @@ function EcrireQuestion({
 }
 
 function EcrireAnswer({
+  exoUnique = false,
   item,
   dispatch,
 }: {
+  exoUnique?: boolean;
   item: ExerciseGeneriqueItem<EcrireNombreItemData>;
   dispatch: React.Dispatch<ExerciseGeneriqueAction>;
 }) {
@@ -92,6 +95,7 @@ function EcrireAnswer({
       });
     }
   };
+
   const handleNextItem = (index: number) => {
     dispatch({
       type: "NEXT_ITEM",
@@ -102,6 +106,7 @@ function EcrireAnswer({
     <ExerciseAnswerString
       item={item}
       correctionToShow={correctionToShow}
+      exoUnique={exoUnique}
       handleVerify={handleVerify}
       handleNextItem={handleNextItem}
     />
