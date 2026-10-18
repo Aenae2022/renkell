@@ -22,6 +22,7 @@ import Denombre1 from "@pages/appli/maths/nombre/Denombre1";
 import EcrireNombre from "@pages/appli/maths/nombre/EcrireNombre";
 import EcrireNombreParamsContainer from "@pages/appli/maths/nombre/EcrireNombreParamsContainer";
 import Denombre1ParamsContainer from "@pages/appli/maths/nombre/Denombre1ParamsContainer";
+import ExercisesAccesPage from "@pages/school/ExercisesAccesPage";
 
 function App() {
   return (
@@ -32,11 +33,8 @@ function App() {
           {/* ❌ ROUTES HORS SUPERLAYOUT */}
           {/* ===================== */}
 
-          <Route
-            path="/degemer/:skol/:type?/:idft?"
-            element={<DegemerSkolWithKey />}
-          />
-
+          <Route path="/degemer/:skol/:type?/:idft?" element={<DegemerSkolWithKey />} />
+          <Route path="/acces-exercises/:token" element={<ExercisesAccesPage />} />
           <Route path="/user" element={<RoleBasedRedirect />} />
 
           {/* ===================== */}
@@ -50,14 +48,8 @@ function App() {
               <Route path="jbdb/:exId" element={<JbdbExercise />} />
               <Route path="nbre/ex/den1" element={<Denombre1 />} />
               <Route path="nbre/ex/ecrire" element={<EcrireNombre />} />
-              <Route
-                path="nbre/ecrireParams"
-                element={<EcrireNombreParamsContainer />}
-              />
-              <Route
-                path="nbre/denombre1Params"
-                element={<Denombre1ParamsContainer />}
-              />
+              <Route path="nbre/ecrireParams" element={<EcrireNombreParamsContainer />} />
+              <Route path="nbre/denombre1Params" element={<Denombre1ParamsContainer />} />
             </Route>
 
             {/* TEACHER */}
@@ -72,14 +64,8 @@ function App() {
               <Route path="jbdb/:exId" element={<JbdbExercise />} />
               <Route path="nbre/ex/ecrire" element={<EcrireNombre />} />
               <Route path="nbre/ex/den1" element={<Denombre1 />} />
-              <Route
-                path="nbre/ecrireParams"
-                element={<EcrireNombreParamsContainer />}
-              />
-              <Route
-                path="nbre/denombre1Params"
-                element={<Denombre1ParamsContainer />}
-              />
+              <Route path="nbre/ecrireParams" element={<EcrireNombreParamsContainer />} />
+              <Route path="nbre/denombre1Params" element={<Denombre1ParamsContainer />} />
             </Route>
 
             {/* ADMIN */}

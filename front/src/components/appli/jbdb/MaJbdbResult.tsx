@@ -41,12 +41,14 @@ export default function MaJbdbResult({
 }: GeneralResultsProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  let monScore = items.reduce(
-    (count, item) => (item.validation ? count + 1 : count),
-    0,
-  );
+  const nombreReussites = items.filter(
+    (item) => item.validation,
+  ).length;
+  const monScore =
+    items.length === 0
+      ? 0
+      : Math.round((nombreReussites / items.length) * 100);
   //on transforme pour avoir un résultat sur 100
-  monScore = Math.round((monScore / items.length) * 100);
   const { askName, dialog } = useNameDialog();
   const user = useOutletContext<UserSessionConnectType>();
 
@@ -63,7 +65,7 @@ export default function MaJbdbResult({
   };
   let resultsScoreStyle =
     resultsScoreColorVariants[
-      "neutral" as keyof typeof resultsScoreColorVariants
+    "neutral" as keyof typeof resultsScoreColorVariants
     ];
   const buttonStyle =
     "w-48 mt-8 pt-1 pb-2 cursor-pointer text-center rounded-full border-2 border-gray-400";
@@ -71,19 +73,19 @@ export default function MaJbdbResult({
     sourceLogo = sourceLogo + "laurierVert.png";
     resultsScoreStyle =
       resultsScoreColorVariants[
-        "vert" as keyof typeof resultsScoreColorVariants
+      "vert" as keyof typeof resultsScoreColorVariants
       ];
   } else if (monScore >= modele.eca) {
     sourceLogo = sourceLogo + "laurierOrange.png";
     resultsScoreStyle =
       resultsScoreColorVariants[
-        "orange" as keyof typeof resultsScoreColorVariants
+      "orange" as keyof typeof resultsScoreColorVariants
       ];
   } else {
     sourceLogo = sourceLogo + "laurierRouge.png";
     resultsScoreStyle =
       resultsScoreColorVariants[
-        "rouge" as keyof typeof resultsScoreColorVariants
+      "rouge" as keyof typeof resultsScoreColorVariants
       ];
   }
 
