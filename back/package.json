@@ -8,7 +8,8 @@
     "build:front": "npm --prefix ../front install && npm --prefix ../front run build",
     "build": "tsc -p tsconfig.hostinger.json && tsc-alias -p tsconfig.hostinger.json && npm run build:front && node build-production.js",
     "start": "node dist/server.js",
-    "test": "tsx script/test.ts"
+    "test": "tsx --env-file=.env script/test.ts",
+    "test:middleware": "tsx --env-file=.env script/testmiddleware.ts"
   },
   "keywords": [],
   "author": "",

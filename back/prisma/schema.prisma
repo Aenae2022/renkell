@@ -142,6 +142,7 @@ model User {
   userRoles RoleUser[]
   userLinkPermissions LienPermission[]
   bookEvents BookEvent[]
+  exerciseAccesses ExerciseAccess[]
 
   @@unique([userFirstName, userFamilyName, schoolId])
 }
@@ -211,14 +212,16 @@ model Group {
   groupPrincipal Boolean
 
   classroom Classroom?  // relation 1-1 inverse
+  exerciseAccesses ExerciseAccess[]
   groupLinks GroupLink[] // Relation avec la table de liaison GroupLink
   groupUsers GroupUser[]
   libraryGroup BookGroup[]
   groupPeriods Periodlibrary[]
+
 }
 
 
-// ############################ RACCOURCI INTERNENT PAGE D'ACCUEIL ############################
+// ############################ RACCOURCI INTERNET PAGE D'ACCUEIL ############################
 model Link {
   linkId             Int     @id @default(autoincrement())
   linkName           String  @db.VarChar(500)
@@ -327,6 +330,34 @@ model Eventlibrarytype {
   eventLibraryTypeName String @db.VarChar(50)
 
   bookEvents BookEvent[]
+}
+
+// ############################ EXERCISES ######################################################################
+model ExerciseAccess {
+  tokenHash String @id @db.VarChar(64)
+  tokenEncrypted String @db.Text
+
+  groupId   Int    
+  group     Group  @relation(fields: [groupId], references: [groupId], onDelete: Cascade)
+
+  userId  Int 
+  user     User  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  exerciselinks Exerciselinks[]
+
+   // Contrainte d'unicité sur la combinaison groupId + userId
+  @@unique([groupId, userId])
+}
+
+model Exerciselinks {
+  linkId             Int     @id @default(autoincrement())
+  linkExId           String  @db.VarChar(50)
+  linkParams         Json?
+  linkRedirection    String  @db.VarChar(50)
+  linkActif          Boolean @default(false)
+
+  tokenHash          String @db.VarChar(64)
+  exerciseAccess     ExerciseAccess @relation(fields: [tokenHash], references: [tokenHash], onDelete : Cascade)
 }
 
 

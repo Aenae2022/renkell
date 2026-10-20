@@ -3,6 +3,7 @@ import { StringShortRefSchema } from "./fields/stringShortRef.schema";
 import {StringNamePictureSchema} from "./fields/stringNamePicture.schema" 
 import { EntierPositifSchema } from "./fields/entierPositif.schema";
 import { StringNameTitleSchema } from "./fields/stringNameTitle.schema";
+import { StringNameSchema } from "./fields/stringName.schema";
 
 export const LinkShortSchema = z.object({
   linkId: EntierPositifSchema,
@@ -33,9 +34,17 @@ export const LinkDataSchema = z.object(
   totalUsersWithAccess: z.number(),
 })
 
+export const ExerciseLinkDatasSchema = z.object(
+{
+  linkExId: StringNameSchema,
+  linkRedirection: StringNameTitleSchema,
+  linkParams: z.object({}).passthrough().nullable(),
+})
+
 export const LinksDataSchema = z.array(LinkDataSchema);
 
 
 export type LinkShortType = z.infer<typeof LinkShortSchema>;
 export type LinkDataType = z.infer<typeof LinkDataSchema>;
+export type ExerciseLinkDatasType = z.infer<typeof ExerciseLinkDatasSchema>
 

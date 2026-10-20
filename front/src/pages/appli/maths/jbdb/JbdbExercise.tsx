@@ -1,14 +1,20 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import MaJbdbHeader from "@components/appli/jbdb/MaJbdbHeader";
 import MaJbdbdArdoise from "@components/appli/jbdb/MaJbdbArdoise";
 import MaJbdbdModele from "@components/appli/jbdb/MaJbdbModele";
 import MaJbdbResult from "@components/appli/jbdb/MaJbdbResult";
-import {findExerciseById} from "@components/appli/jbdb/exercises/exercisesRegistry";
+import { findExerciseById } from "@components/appli/jbdb/exercises/exercisesRegistry";
+import validateToken from "@utils/validateToken";
 export function JbdbExercise() {
   const { exId } = useParams();
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  console.log("token from searchParams:", token);
+  const tokenValid = token !== null && validateToken(token, 8);
+  console.log("tokenValid:", tokenValid);
 
   const defaultExercise = useMemo(() => {
     return {

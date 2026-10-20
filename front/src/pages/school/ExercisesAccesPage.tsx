@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { tokenSchema } from "@shared/schema/fields/token.schema";
+import validateToken from "@utils/validateToken";
 
 export default function ExerciseAccessPage() {
     const { token } = useParams<{ token: string }>();
-    const valid = validateToken(token);
+    const valid = validateToken(token, 12);
 
     if(!valid) {
         return (
@@ -22,16 +22,3 @@ export default function ExerciseAccessPage() {
     );
 }
 
-function validateToken(token: string | undefined): boolean {
-    // on vérifie que le token existe
-    if (!token) {
-        return false;
-    }
-    
-    //on vérifie le nombre de caractères du token (12 caractères) le nombre de caractères pouvant variés en fonction des cas
-    if (token.length !== 12 || !tokenSchema.safeParse(token).success) {
-        return false;
-    }
-    
-    return true;
-}
