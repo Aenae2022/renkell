@@ -95,7 +95,7 @@ static async getArticlesByDomaine(domaine: string) {
                     color: true,
                   },
                 },
-
+                componentKey:true,
                 domaineId: true,
                 sousDomaineId: true,
             },

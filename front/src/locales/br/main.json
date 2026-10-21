@@ -13,12 +13,11 @@
         "question": "Petra eo da anv ?",
         "error": "Dav eo dit skrivañ 2 lizherenn d'an nebeutañ 🙂"
     },
-    "mathematiques": "Matematik",
     "langue": "Yezh",
     "dictee": "Skrivadenn",
-    "calculmental": "Jed dre benn",
+    "mathematiques": "Matematik",
+    "nombre": "Niveriñ",
+    "calculmental": "Jediñ dre benn",
     "titlePageApplies": "Aplikadennoù",
     "lesson" : "Kentel"
-
-    
 }

@@ -6,7 +6,9 @@ function Button({ className = "", children, ...props }: ButtonProps) {
   return (
     <button
       className={`
-        mt-8 pt-1 pb-2 px-4 cursor-pointer text-center rounded-full border-2 border-gray-400 hover:bg-gray-200
+        pt-1 pb-2 px-4 cursor-pointer text-center rounded-full 
+        bg-gray-300
+        border-2 border-gray-400 hover:bg-gray-400
         ${className}
       `}
       {...props}

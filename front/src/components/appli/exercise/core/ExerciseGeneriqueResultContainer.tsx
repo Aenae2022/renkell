@@ -27,13 +27,11 @@ function ExerciseGeneriqueResultContainer({ exercise, state }: Props) {
   const user = auth.status === "authenticated" ? auth.user : undefined;
   const { askName, dialog } = useNameDialog();
 
-  const scoreMax = exercise.params.config.nbExercice * 2;
-
-  const monScore =
-    scoreMax === 0
-      ? 0
-      : Math.round((state.score / scoreMax) * 100);
-
+  const monScore = Math.round(
+    (state.score /
+      (exercise.params.config.nbExercice * exercise.params.config.nbReponse)) *
+    100,
+  );
   const monResultat: "parfait" | "acquis" | "eca" | "non acquis" =
     monScore === 100
       ? "parfait"
@@ -159,8 +157,9 @@ function ExerciseGeneriqueResultContainer({ exercise, state }: Props) {
           {t("main.restart")}
         </Button>
         <Button onClick={() => navigate("../../..", { relative: "path" })}>
-          {t("main.exit")}
+            {t("main.exit")}
         </Button>
+        
         <Button onClick={handlePrint}>
           {t("applies.generique.printResult")}
         </Button>

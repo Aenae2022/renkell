@@ -48,8 +48,16 @@ function App() {
               <Route path="jbdb/:exId" element={<JbdbExercise />} />
               <Route path="nbre/ex/den1" element={<Denombre1 />} />
               <Route path="nbre/ex/ecrire" element={<EcrireNombre />} />
-              <Route path="nbre/ecrireParams" element={<EcrireNombreParamsContainer />} />
-              <Route path="nbre/denombre1Params" element={<Denombre1ParamsContainer />} />
+              <Route
+                path="nbre/ecrireParams"
+                element={<EcrireNombreParamsContainer />}
+              />
+              <Route
+                path="nbre/denombre1Params"
+                element={<Denombre1ParamsContainer />}
+              />
+              <Route path="jbdb" element={<MaJbdbHomeContainer />} />
+              
             </Route>
 
             {/* TEACHER */}
