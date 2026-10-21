@@ -46,9 +46,6 @@ async function checklinkdata() {
 
 async function main() {
     const res = await checklinkdata();
-    console.log("Statut HTTP :", res.statusCode);
-    console.log('message', res.body)
-    console.log("La suite est autorisée :", nextCalled);
 }
 
 main();

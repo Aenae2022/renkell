@@ -16,6 +16,7 @@ import studentsRoutes from "./routes/studentsRoutes";
 import paramsSchoolRoutes from "./routes/paramsStudentsRoutes";
 import paramsStudentsRoutes from "./routes/paramsStudentsRoutes";
 import articlesRoutes from "./routes/articlesRoutes";
+import exerciseAccesRoutes from "./routes/exerciseAccesRoutes"
 import path from "path";
 dotenv.config();
 
@@ -57,10 +58,10 @@ app.use(session({
   }
 }));
 
-app.use((req, res, next) => {
-  console.log("REQUEST", req.method, req.originalUrl);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log("REQUEST", req.method, req.originalUrl);
+//   next();
+// });
 
 // Utilisation des routes
 
@@ -74,7 +75,7 @@ app.use("/api/library", libraryRoutes);// Route page de l'application librairie
 app.use("/api/students", studentsRoutes);// Route page de gestion des élèves par enseignant
 app.use('/api/paramsStudents', paramsStudentsRoutes) //Route de page de gestion des élèves par admin
 app.use('/api/articles', articlesRoutes) //Route de page de gestion des élèves par admin
-
+app.use('/api/exerciseAcces', exerciseAccesRoutes) //Route de page de gestion des élèves par admin
 
 const frontendPath = path.join(__dirname, "../../front");
 app.use(express.static(frontendPath));

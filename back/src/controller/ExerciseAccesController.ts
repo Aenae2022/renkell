@@ -33,6 +33,77 @@ export class ExerciseAccesController {
 
     }
 
+    static async updateGroupAndAssociationExId(req: Request, res: Response) {
+        const { userId, linkDatas, additions, deletions } = req.body;
+        //on appelle la transaction
+        try {
+            await ExerciseAccesModel.updateGroupAndAssociationExId(userId, linkDatas, additions, deletions);
+            res.status(200).json({ message: "mise à jour réalisée", reponse: true, result: "" });
+            return;
+        }
+        catch (error) {
+            console.error("Erreur dans le ExerciseAccesContrôleur :", error);
+            res.status(500).json({ message: "Erreur serveur", reponse: false, result: "" });
+            return
+        }
+
+
+    }
+
+    static async getListGroupAndAssociationExId(req: Request, res: Response) {
+        const { exId, userId } = req.body;
+        try {
+            
+            const listGroups: {
+                userGroups: {
+                    group: {
+                        exerciseAccesses: {
+                            exerciselinks: {
+                                linkExId: string;
+                            }[];
+                        }[];
+                        groupId: number;
+                        groupName: string;
+                    };
+                }[];
+            } | null = await ExerciseAccesModel.getListGroupAndAssociationExId(exId, userId)
+
+            //mise en forme des résultats.
+            if (listGroups === null) {
+                res.status(200).json({ message: "gliste groupe récupérée", reponse: true, result: [] });
+                return;
+            }
+            const listGroupsFormatted = listGroups.userGroups.map((group) => {
+                return ({
+                    groupId: group.group.groupId,
+                    groupName: group.group.groupName,
+                    isAssociated: group.group.exerciseAccesses.some((elt)=>(elt.exerciselinks.length > 0 ))? true : false,
+                })
+            })
+            res.status(200).json({ message: "gliste groupe récupérée", reponse: true, result: listGroupsFormatted });
+            return;
+        }
+        catch (error) {
+            console.error("Erreur dans le ExerciseAccesContrôleur - getListGroupAndAssociationExId :", error);
+            res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
+            return
+        }
+    }
+
+    static async getNbGroupAssociatedUserIdExId(req: Request, res: Response) {
+        const { exId, userId } = req.body;
+        try {
+            const nbGroup = await ExerciseAccesModel.getNbGroupAssociatedByUserIdExId(exId, userId)
+            res.status(200).json({ message: "groupe associé compté", reponse: true, result: nbGroup });
+            return;
+        }
+        catch (error) {
+            console.error("Erreur dans le ExerciseAccesContrôleur :", error);
+            res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
+            return
+        }
+    }
+
 
 }
 
