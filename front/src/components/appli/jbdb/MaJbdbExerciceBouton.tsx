@@ -1,5 +1,7 @@
+import { useAuthStrict } from "@hook/useAuthStrict";
 import { findExerciseById } from "./exercises/exercisesRegistry";
 import MaToolTip from "./MaToolTip";
+import { MaJbdbAssociateButtons } from "./MaJbdbdAssociateButtons";
 
 type GeneralBoutonProps = {
   couleur: string;
@@ -7,17 +9,21 @@ type GeneralBoutonProps = {
 };
 
 export function MaJbdbExerciceBouton({ couleur, datas }: GeneralBoutonProps) {
-  //const style
+  const auth = useAuthStrict();
+  const user = auth.status === "authenticated" ? auth.user : undefined;
 
   return (
-    <div>
+    <div className="flex">
       {datas.map((exId) => {
         const exercise = findExerciseById(exId);
 
         if (!exercise) {
           return null;
         }
-        return <MaToolTip key={exId} couleur={couleur} data={exercise} />;
+        return <div className="mr-2" key={exId}>
+          <MaToolTip  couleur={couleur} data={exercise} />
+          {user !== undefined ? <MaJbdbAssociateButtons exId={exercise.exId} exTranslationKey={exercise.translationId} user={user}/> : null}
+        </div>;
       })}
     </div>
   );

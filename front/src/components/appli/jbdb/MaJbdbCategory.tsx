@@ -17,6 +17,7 @@ export function MaJbdbCategory({
 }: GeneralcategoryProps) {
   const subCategories = [...new Set(datas.map((exo) => exo.subCategory))];
   const { t } = useTranslation();
+
   return (
     <fieldset
       className={`pt-1 ml-2 pl-4 border-2 border-${couleur}-dark bg-white/60`}
@@ -39,6 +40,7 @@ export function MaJbdbCategory({
                 couleur={couleur}
                 datas={subCategoryDatas}
               />
+              
             </li>
           );
         })}
