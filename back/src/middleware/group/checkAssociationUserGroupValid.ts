@@ -2,14 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import GroupModel from "@srcBack/model/GroupModel";
 import { EntierPositifSchema } from "@shared/schema/fields/entierPositif.schema";
 
-export const checkAssociationUserGroupValid = async(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) : Promise<void>=>{
+export const checkAssociationUserGroupValid = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
 
   const { groupId } = req.body;
-  const {userId} = req.body;
+  const { userId } = req.body;
   if (!groupId) {
     res.status(400).json({ message: "L'objet groupId est manquant." });
     return;
@@ -19,7 +19,7 @@ export const checkAssociationUserGroupValid = async(
     return;
   }
   // ✅ Validation avec Zod
-  const resultGroup =EntierPositifSchema.safeParse(groupId);
+  const resultGroup = EntierPositifSchema.safeParse(groupId);
   const resultUser = EntierPositifSchema.safeParse(userId);
   if (!resultGroup.success) {
     res.status(400).json({
@@ -41,14 +41,22 @@ export const checkAssociationUserGroupValid = async(
   const validatedGroupId = resultGroup.data;
   const validatedUserId = resultUser.data;
 
-
-  const groupUserExists = await GroupModel.doesAssociationUserGroupExist(validatedUserId, validatedGroupId);
+  try {
+    const groupUserExists = await GroupModel.doesAssociationUserGroupExist(validatedUserId, validatedGroupId);
     if (!groupUserExists) {
       res.status(404).json({ message: "Association utilisateur-groupe introuvable" });
       return
     }
-  
-    next();
-  }
 
-  export default checkAssociationUserGroupValid;
+    next();
+  } catch (error) {
+    console.error("checkAssociationUserGroupValid")
+    console.error(error);
+    res.status(500).json({
+      message: "Erreur interne du serveur."
+    });
+    return;
+  }
+}
+
+export default checkAssociationUserGroupValid;

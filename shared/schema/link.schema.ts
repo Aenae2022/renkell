@@ -13,6 +13,16 @@ export const LinkShortSchema = z.object({
   linkTitleFr: z.string(),
 });
 
+export const LinkExerciseShortSchema = z.object({
+  linkId: StringNameSchema,
+  linkRedirection: z.string().url(),
+  linkIcon: StringNamePictureSchema,
+  linkTitleBr: StringNameTitleSchema,
+  linkTitleFr: StringNameTitleSchema,
+  domaine: StringShortRefSchema,
+  sousDomaine:StringShortRefSchema
+});
+
 
 
 export const LinkDataSchema = z.object(
@@ -45,6 +55,7 @@ export const LinksDataSchema = z.array(LinkDataSchema);
 
 
 export type LinkShortType = z.infer<typeof LinkShortSchema>;
+export type LinkExerciseShortType = z.infer<typeof LinkExerciseShortSchema>;
 export type LinkDataType = z.infer<typeof LinkDataSchema>;
 export type ExerciseLinkDatasType = z.infer<typeof ExerciseLinkDatasSchema>
 

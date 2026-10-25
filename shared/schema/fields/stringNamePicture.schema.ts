@@ -8,3 +8,5 @@ export const StringNamePictureSchema = z
       path: ['image']
      }
   );
+
+  export type StringNamePictureType = z.infer<typeof StringNamePictureSchema>

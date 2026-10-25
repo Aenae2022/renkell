@@ -16,7 +16,7 @@ import studentsRoutes from "./routes/studentsRoutes";
 import paramsSchoolRoutes from "./routes/paramsStudentsRoutes";
 import paramsStudentsRoutes from "./routes/paramsStudentsRoutes";
 import articlesRoutes from "./routes/articlesRoutes";
-import exerciseAccesRoutes from "./routes/exerciseAccesRoutes"
+import exerciseAccesRoutes from "./routes/ExerciseAccesRoutes"
 import path from "path";
 dotenv.config();
 

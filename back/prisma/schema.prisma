@@ -176,6 +176,16 @@ model GroupUser {
   @@id([userId, groupId]) // clé composite
 }
 
+model ClassroomGroup {
+  classroom   Classroom  @relation(fields: [classroomId], references: [classroomId], onDelete: Cascade)
+  classroomId Int
+
+  group        Group       @relation(fields: [groupId], references: [groupId], onDelete: Cascade)
+  groupId      Int
+
+  @@id([classroomId, groupId]) // clé composite
+}
+
 // ############################ DONNEES ECOLE ###################################################
 model School {
   schoolId   Int    @id @default(autoincrement())
@@ -203,6 +213,7 @@ model Classroom {
   @@unique([classroomRef, schoolId])
   groupId Int?      @unique  // clé étrangère optionnelle vers Group
   group   Group?     @relation(fields: [groupId], references: [groupId], onDelete: SetNull)
+  classroomGroups ClassroomGroup[]
 }
 
 model Group {
@@ -217,7 +228,7 @@ model Group {
   groupUsers GroupUser[]
   libraryGroup BookGroup[]
   groupPeriods Periodlibrary[]
-
+  groupClassrooms ClassroomGroup[]
 }
 
 
@@ -355,6 +366,7 @@ model Exerciselinks {
   linkParams         Json?
   linkRedirection    String  @db.VarChar(50)
   linkActif          Boolean @default(false)
+  linkType           String?  @db.VarChar(50)
 
   tokenHash          String @db.VarChar(64)
   exerciseAccess     ExerciseAccess @relation(fields: [tokenHash], references: [tokenHash], onDelete : Cascade)

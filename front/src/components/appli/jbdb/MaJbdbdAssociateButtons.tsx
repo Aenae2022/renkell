@@ -51,7 +51,7 @@ export function MaJbdbAssociateButtons({ exId, exTranslationKey, user }: General
         const additionsList = additions(groupsListForExercise, workList)
         //trier pour garder seulement les suppressions
         const deletionsList = deletions(groupsListForExercise, workList)
-        const linkDatas: ExerciseLinkDatasType = { linkExId: exId, linkParams: null, linkRedirection: `/jbdb/${exId}` }
+        const linkDatas: ExerciseLinkDatasType = { linkExId: exId, linkParams: null, linkRedirection: `jbdb` }
         //TODO enregistrer les données en basetry {
         try {
             await api.post("/api/exerciseAcces/updateGroupAndAssociationExId", {

@@ -2,7 +2,7 @@ import { EntierPositifType } from '@shared/schema/fields/entierPositif.schema';
 import { prisma } from '../lib/prisma/client';
 import { decryptExerciseToken, encryptExerciseToken, generateExerciseToken, hashExerciseToken } from '../../utils/exerciseAcces';
 import { Prisma } from '@prisma/client';
-import { ExerciseLinkDatasType } from '@shared/schema/link.schema';
+import { ExerciseLinkDatasSchema, ExerciseLinkDatasType } from '@shared/schema/link.schema';
 import { StringNameType } from '@shared/schema/fields/stringName.schema';
 import { GroupsListForExerciseType } from '@shared/schema/group.schema';
 
@@ -80,6 +80,49 @@ class ExerciseAccesModel {
             return null;
         } catch (error) {
             console.error('Erreur lors de la récupération de l\'accès à l\'exercice :', error);
+            throw error;
+        }
+    }
+
+    static async getGroupExerciseLinksList(groupId: EntierPositifType)
+        : Promise<{ token: string, exerciseLinksList: ExerciseLinkDatasType[] } | null> {
+        try {
+            const exerciseLinksList = await prisma.exerciseAccess.findFirst({
+                select: {
+                    tokenEncrypted: true,
+                    exerciselinks: {
+                        select: {
+                            linkExId: true,
+                            linkParams: true,
+                            linkRedirection: true,
+                        }
+                    }
+                },
+                where: {
+                    groupId: groupId,
+                },
+            })
+            let linksListFormatted : ExerciseLinkDatasType[] = []
+            if (exerciseLinksList) {
+                for (const element of exerciseLinksList.exerciselinks) { 
+                
+                    const parsedLink = ExerciseLinkDatasSchema.safeParse(element)
+                    if(parsedLink.success){
+                        linksListFormatted.push( parsedLink.data)
+                    }
+                    else {
+                        console.error('Erreur lors de la récupération du lien exercise :', element.linkExId);
+                        console.error("zod message : ", parsedLink.error.issues)
+                    }
+                }
+                return {
+                    token: decryptExerciseToken(exerciseLinksList.tokenEncrypted),
+                    exerciseLinksList: linksListFormatted
+                };
+            }
+            return null;
+        } catch (error) {
+            console.error('Erreur lors de la récupération des liens exercices :', error);
             throw error;
         }
     }

@@ -33,7 +33,7 @@ function App() {
           {/* ❌ ROUTES HORS SUPERLAYOUT */}
           {/* ===================== */}
 
-          <Route path="/degemer/:skol/:type?/:idft?" element={<DegemerSkolWithKey />} />
+          <Route path="/degemer/:skol/:type?/:idft?/:group?" element={<DegemerSkolWithKey />} />
           <Route path="/acces-exercises/:token" element={<ExercisesAccesPage />} />
           <Route path="/user" element={<RoleBasedRedirect />} />
 

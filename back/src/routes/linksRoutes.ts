@@ -29,4 +29,6 @@ router.post("/linkAssociation",
     checkLinkAssociationPostValid,
     async (req, res) => await LinksController.linkAssociation(req, res));
 
+
+
 export default router;
