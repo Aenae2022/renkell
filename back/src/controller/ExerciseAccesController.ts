@@ -1,5 +1,8 @@
 
+import { GroupMiniType } from "@shared/schema/group.schema";
+import { UserMiniType } from "@shared/schema/user.schema";
 import ExerciseAccesModel from "@srcBack/model/ExerciseAccesModel";
+import GroupModel from "@srcBack/model/GroupModel";
 import { Request, Response } from "express";
 
 
@@ -50,10 +53,34 @@ export class ExerciseAccesController {
 
     }
 
+    static async getGroupAndStudentsByExerciseLinkAndToken(req: Request, res: Response) {
+        const { exerciseLink, tokenClair } = req.body;
+        try {
+
+            const group = await ExerciseAccesModel.getGroupDataByExerciseToken(exerciseLink, tokenClair)
+
+            //mise en forme des résultats.
+            if (group === null) {
+                console.error("pas de group correspondant au token et à l'exercice dans ExerciseAccesController getGroupAndStudentsByExerciseLinkAndToken ")
+                res.status(400).json({ message: "linkInvalid", reponse: null, result: null });
+                return;
+            }
+            const studentsList = await GroupModel.getStudentsListByGroupId(group.groupId)
+            res.status(200).json({ message: studentsList.message, reponse: studentsList.reponse !== null, result: { group: group, studentsList: studentsList.result } });
+            return;
+
+        }
+        catch (error) {
+            console.error("Erreur dans le ExerciseAccesContrôleur - getGroupAndStudentsByExerciseLinkAndToken :", error);
+            res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
+            return
+        }
+    }
+
     static async getListGroupAndAssociationExId(req: Request, res: Response) {
         const { exId, userId } = req.body;
         try {
-            
+
             const listGroups: {
                 userGroups: {
                     group: {
@@ -70,17 +97,17 @@ export class ExerciseAccesController {
 
             //mise en forme des résultats.
             if (listGroups === null) {
-                res.status(200).json({ message: "gliste groupe récupérée", reponse: true, result: [] });
+                res.status(200).json({ message: "liste groupe récupérée", reponse: true, result: [] });
                 return;
             }
             const listGroupsFormatted = listGroups.userGroups.map((group) => {
                 return ({
                     groupId: group.group.groupId,
                     groupName: group.group.groupName,
-                    isAssociated: group.group.exerciseAccesses.some((elt)=>(elt.exerciselinks.length > 0 ))? true : false,
+                    isAssociated: group.group.exerciseAccesses.some((elt) => (elt.exerciselinks.length > 0)) ? true : false,
                 })
             })
-            res.status(200).json({ message: "gliste groupe récupérée", reponse: true, result: listGroupsFormatted });
+            res.status(200).json({ message: "liste groupe récupérée", reponse: true, result: listGroupsFormatted });
             return;
         }
         catch (error) {

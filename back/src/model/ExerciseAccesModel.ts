@@ -4,7 +4,8 @@ import { decryptExerciseToken, encryptExerciseToken, generateExerciseToken, hash
 import { Prisma } from '@prisma/client';
 import { ExerciseLinkDatasSchema, ExerciseLinkDatasType } from '@shared/schema/link.schema';
 import { StringNameType } from '@shared/schema/fields/stringName.schema';
-import { GroupsListForExerciseType } from '@shared/schema/group.schema';
+import { GroupMiniType, GroupsListForExerciseType } from '@shared/schema/group.schema';
+import { tokenClairType } from '@shared/schema/fields/token.schema';
 
 class ExerciseAccesModel {
 
@@ -91,24 +92,28 @@ class ExerciseAccesModel {
                 select: {
                     tokenEncrypted: true,
                     exerciselinks: {
+                        where: {
+                            linkActif: true
+                        },
                         select: {
                             linkExId: true,
                             linkParams: true,
-                            linkRedirection: true,
+                            linkRedirection: true
                         }
                     }
                 },
                 where: {
-                    groupId: groupId,
-                },
+                    groupId: groupId
+                }
+
             })
-            let linksListFormatted : ExerciseLinkDatasType[] = []
+            let linksListFormatted: ExerciseLinkDatasType[] = []
             if (exerciseLinksList) {
-                for (const element of exerciseLinksList.exerciselinks) { 
-                
+                for (const element of exerciseLinksList.exerciselinks) {
+
                     const parsedLink = ExerciseLinkDatasSchema.safeParse(element)
-                    if(parsedLink.success){
-                        linksListFormatted.push( parsedLink.data)
+                    if (parsedLink.success) {
+                        linksListFormatted.push(parsedLink.data)
                     }
                     else {
                         console.error('Erreur lors de la récupération du lien exercise :', element.linkExId);
@@ -123,6 +128,49 @@ class ExerciseAccesModel {
             return null;
         } catch (error) {
             console.error('Erreur lors de la récupération des liens exercices :', error);
+            throw error;
+        }
+    }
+
+    static async getGroupDataByExerciseToken(linkDatas: ExerciseLinkDatasType, tokenClair: tokenClairType)
+        : Promise<GroupMiniType | null> {
+        const tokenHash = hashExerciseToken(tokenClair);
+        try {
+            const groupInBd = await prisma.exerciselinks.findFirst({
+                select: {
+                    exerciseAccess: {
+                        select: {
+                            group: {
+                                select: {
+                                    groupId: true,
+                                    groupName: true
+                                }
+                            }
+                        }
+                    }
+                },
+                where: {
+                    linkExId: linkDatas.linkExId,
+                    linkParams: linkDatas.linkParams === null
+                        ? { equals: Prisma.DbNull }
+                        : { equals: linkDatas.linkParams },
+                    linkRedirection: linkDatas.linkRedirection,
+                    linkActif:true,
+                    tokenHash: tokenHash
+
+                },
+            })
+            if (groupInBd === null) {
+                return null
+            }
+            const group: GroupMiniType = {
+                groupId: groupInBd.exerciseAccess.group.groupId,
+                groupName: groupInBd.exerciseAccess.group.groupName
+            }
+            return group
+        }
+        catch (error) {
+            console.error("Erreur dans getGroupDataByExerciseToken :", error)
             throw error;
         }
     }

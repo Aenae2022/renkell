@@ -2,7 +2,7 @@ import { ClassroomRefSchema, ClassroomRefType } from '@shared/schema/classroom.s
 import { prisma } from '../lib/prisma/client';
 import { EntierPositifType } from '@shared/schema/fields/entierPositif.schema';
 import { GroupLinksType, GroupMiniSchema } from '@shared/schema/group.schema';
-import { UserMiniListSchema } from '@shared/schema/user.schema';
+import { UserMiniListSchema, UserMiniType } from '@shared/schema/user.schema';
 import { ExerciseLinkDatasType } from '@shared/schema/link.schema';
 import { group } from 'console';
 
@@ -154,7 +154,8 @@ export default class GroupModel {
     }
   }
 
-  static async getStudentsListByGroupId(groupId: number) {
+  static async getStudentsListByGroupId(groupId: number)
+  : Promise <{message : string, reponse : boolean|null, result : UserMiniType[]}> {
 
     try {
       const usersDatas = await prisma.user.findMany({

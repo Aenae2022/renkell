@@ -8,7 +8,7 @@ export type JbdbGeneratedQuestion = {
   resultats: JbdbExerciseResult[];
 };
 
-export type JbdbExercise = {
+export type JbdbExerciseType = {
   exId: string;
   translationId: string;
   description: string;

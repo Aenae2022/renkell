@@ -19,5 +19,13 @@
     "nombre": "Niveriñ",
     "calculmental": "Jediñ dre benn",
     "titlePageApplies": "Aplikadennoù",
-    "lesson" : "Kentel"
+    "lesson" : "Kentel",
+    "error":{
+        "linkInvalid": "Gaou eo al liamm",
+        "noStudents": "N'eus skoliad ebet amañ."
+    },
+    "shortLogin":{
+        "chooseName":"Dibab da anv",
+        "password":"Kod-tremen"
+    }
 }

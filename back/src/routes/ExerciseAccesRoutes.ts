@@ -5,9 +5,11 @@ import { checkUserIdPostIsUserIdConnected, checkUserIdValid } from "../middlewar
 import { checkAssociationUserGroupValid } from "../middleware/group/checkAssociationUserGroupValid";
 import { checkLinkDatasValid } from "../middleware/link/checkLinkDatasValid";
 import ExerciseAccessController from "../controller/ExerciseAccesController";
-import { checkLinkExIdValid } from "@srcBack/middleware/link/checkLinkExIdValid";
+import { checkLinkExIdValid } from "@srcBack/middleware/exercise/checkLinkExIdValid";
 import { checkListGroupsValid } from "@srcBack/middleware/exercise/checkListGroupsValid";
 import { checkUserGroupsValid } from "@srcBack/middleware/exercise/checkUserGroupsValid";
+import { checkFormatTokenValid } from "@srcBack/middleware/exercise/checkFormatTokenValid";
+import { checkExerciseLinkDataValid } from "@srcBack/middleware/exercise/checkExerciseLinkValid";
 const router = express.Router();
 
 router.post("/associateLinkGroup",
@@ -33,6 +35,11 @@ router.post("/updateGroupAndAssociationExId",
     checkUserGroupsValid(),
     async (req, res) => await ExerciseAccessController.updateGroupAndAssociationExId(req, res))
 
+router.post("/tokenValidationAndGroup",
+    checkExerciseLinkDataValid(),checkFormatTokenValid(),
+    async (req, res) => await ExerciseAccessController.getGroupAndStudentsByExerciseLinkAndToken(req, res)); 
+
+    
 export default router;
 
 

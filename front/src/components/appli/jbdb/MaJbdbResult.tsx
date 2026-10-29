@@ -1,11 +1,11 @@
 import MaJbdbCorrection from "./MaJbdbCorrection";
 import MaJbdbdRond from "./MaJbdbRond";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useNameDialog } from "@hook/useNameDialog";
 import MaJbdbResultPrint from "../../../document/library/MaJbdbResultPrint";
 import { pdf } from "@react-pdf/renderer";
-import type { UserSessionConnectType } from "@shared/schema/user.schema";
+import type { UserMiniType } from "@shared/schema/user.schema";
 import { getAssetUrl } from "@utils/assetResolver";
 import { Utilitaires } from "@utils/Utilitaires";
 type GeneralResultsProps = {
@@ -30,12 +30,14 @@ type GeneralResultsProps = {
     calculAGenerer: () => void; //+
   };
   itemSelected: number;
+  user:UserMiniType|null
   setRestart: () => void;
 };
 export default function MaJbdbResult({
   items,
   timeWork,
   modele,
+  user,
   itemSelected,
   setRestart,
 }: GeneralResultsProps) {
@@ -50,7 +52,7 @@ export default function MaJbdbResult({
       : Math.round((nombreReussites / items.length) * 100);
   //on transforme pour avoir un résultat sur 100
   const { askName, dialog } = useNameDialog();
-  const user = useOutletContext<UserSessionConnectType>();
+ 
 
   //définir le logo en fonction du résultat et des attentes
   let sourceLogo = "exercice/";
@@ -147,8 +149,8 @@ export default function MaJbdbResult({
     URL.revokeObjectURL(url);
   };
   async function handlePrint() {
-    if (user) {
-      generatePdf(`${user.userFirstName} ${user.userFamilyName}`);
+    if (user !==null) {
+      generatePdf(`${user.userName}`);
     } else {
       const name = await askName();
       if (!name) return; // utilisateur a annulé
