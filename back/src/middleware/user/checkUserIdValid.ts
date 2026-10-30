@@ -33,13 +33,15 @@ export const checkUserIdPostValid = () => {
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { userId } = req.body;
     if (!userId) {
-      res.status(401).json({ message: "Non authentifié. middleware checkUserIdPostValid" });
+      console.error("Non authentifié. middleware checkUserIdPostValid")
+      res.status(401).json({ message: "Non authentifié." });
       return;
     }
 
     const userValid = await UserModel.doesUserIdExist(userId);
     if (!userValid) {
-      res.status(400).json({ message: "Utilisateur introuvable. middleware checkUserIdPostValid" });
+      console.error("Utilisateur introuvable. middleware checkUserIdPostValid")
+      res.status(400).json({ message: "Utilisateur introuvable." });
       return;
     }
     next(); // continuer si tout est OK
@@ -76,12 +78,14 @@ export const checkUserIdPostStudentValid = () => {
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { userId } = req.body;
     if (!userId) {
+      console.error("Non authentifié. checkUserIdPostStudentValid")
       res.status(401).json({ message: "Non authentifié." });
       return;
     }
 
     const userValid = await UserModel.doesUserIdStudentExist(userId);
     if (!userValid) {
+      console.error("Utilisateur introuvable. checkUserIdPostStudentValid")
       res.status(400).json({ message: "Utilisateur introuvable." });
       return;
     }

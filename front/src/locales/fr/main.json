@@ -26,6 +26,10 @@
     },
     "shortLogin":{
         "chooseName":"Sélectionne ton nom",
-        "password":"Code secret"
+        "password":"Code secret",
+        "noStudent":"Connexion impossible",
+        "noKevreet":"Erreur dans le code secret",
+        "kevreet":"Bienvenue",
+        "noAnv":"Sélectionne ton nom"
     }
 }

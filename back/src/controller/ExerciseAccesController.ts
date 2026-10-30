@@ -131,6 +131,20 @@ export class ExerciseAccesController {
         }
     }
 
+    static async isLoginValid(req: Request, res: Response) {
+        const { userId, userPsswd } = req.body;
+        try {
+            const isLoginValid = await ExerciseAccesModel.isLoginValid(userId, userPsswd)
+            res.status(200).json({ message: "élève connecté", reponse: isLoginValid });
+            return;
+        }
+        catch (error) {
+            console.error("Erreur dans le ExerciseAccesContrôleur :", error);
+            res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });
+            return
+        }
+    }
+
 
 }
 

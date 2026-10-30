@@ -1,8 +1,8 @@
-import type { JbdbExercise } from "../../../exercises.types";
+import type { JbdbExerciseType } from "../../../exercises.types";
 import { JbdbUtils } from "@utils/jbdbUtils";
 
 
-export const tableAddPracticeExercises: JbdbExercise[] =
+export const tableAddPracticeExercises: JbdbExerciseType[] =
   [
     {
       exId: "jbdb-add-2-3-4-5",

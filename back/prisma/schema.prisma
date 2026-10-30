@@ -133,9 +133,12 @@ model User {
 
    gradeId        Int?    // clé étrangère optionnelle donc NULL si pas d'association avec un niveau scolaire
    grade          Grade? @relation(fields: [gradeId], references: [gradeId], onDelete: SetNull)
+   
 
    schoolId Int? // clé étrangère optionnelle donc NULL si pas d'association avec une école
    school   School? @relation(fields: [schoolId], references: [schoolId], onDelete: SetNull)
+
+  userSimpleLogin UserSimpleLogin?
 
   userLinks LinkUser[] 
   userGroups GroupUser[]
@@ -185,6 +188,8 @@ model ClassroomGroup {
 
   @@id([classroomId, groupId]) // clé composite
 }
+
+
 
 // ############################ DONNEES ECOLE ###################################################
 model School {
@@ -370,6 +375,14 @@ model Exerciselinks {
 
   tokenHash          String @db.VarChar(64)
   exerciseAccess     ExerciseAccess @relation(fields: [tokenHash], references: [tokenHash], onDelete : Cascade)
+}
+
+model UserSimpleLogin {
+  userId             Int    @id
+  passwordSimpleHash String
+
+  user User @relation(fields: [userId],references: [userId],onDelete: Cascade)
+  
 }
 
 

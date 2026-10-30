@@ -6,6 +6,8 @@ import { ExerciseLinkDatasSchema, ExerciseLinkDatasType } from '@shared/schema/l
 import { StringNameType } from '@shared/schema/fields/stringName.schema';
 import { GroupMiniType, GroupsListForExerciseType } from '@shared/schema/group.schema';
 import { tokenClairType } from '@shared/schema/fields/token.schema';
+import { PasswordShortType } from '@shared/schema/fields/password.schema';
+import bcrypt from "bcrypt";
 
 class ExerciseAccesModel {
 
@@ -25,6 +27,26 @@ class ExerciseAccesModel {
             });
 
             return { token: newOriginalToken, tokenHash: newHashedToken };
+        }
+        catch (error) {
+            throw error;
+        }
+
+    }
+
+    static async createLoginShortAccess(userId: EntierPositifType, userPsswd: PasswordShortType)
+        : Promise<boolean> {
+        
+        try {
+            const newHashedPsswd = await bcrypt.hash(userPsswd,10);
+            const isCreate = await prisma.userSimpleLogin.create({
+                data: {
+                    userId: userId,
+                    passwordSimpleHash: newHashedPsswd,
+                },
+            });
+
+            return !!isCreate;
         }
         catch (error) {
             throw error;
@@ -155,7 +177,7 @@ class ExerciseAccesModel {
                         ? { equals: Prisma.DbNull }
                         : { equals: linkDatas.linkParams },
                     linkRedirection: linkDatas.linkRedirection,
-                    linkActif:true,
+                    linkActif: true,
                     tokenHash: tokenHash
 
                 },
@@ -227,6 +249,27 @@ class ExerciseAccesModel {
         }
     }
 
+static async isGroupAssociatedWithLinkExercise(linkDatas: ExerciseLinkDatasType, groupId: EntierPositifType)
+        : Promise<boolean> {
+
+        const isInBd = await prisma.exerciselinks.findFirst({
+            select: {
+                linkExId: true,
+            },
+            where: {
+                linkExId: linkDatas.linkExId,
+                linkParams: linkDatas.linkParams === null
+                    ? { equals: Prisma.DbNull }
+                    : { equals: linkDatas.linkParams },
+                linkRedirection: linkDatas.linkRedirection,
+                exerciseAccess:{
+                    groupId:groupId
+                } 
+            },
+        })
+        return isInBd ? true : false
+    }
+
     static async isLinkInBdd(linkDatas: ExerciseLinkDatasType, tokenHash: string)
         : Promise<boolean> {
 
@@ -245,6 +288,30 @@ class ExerciseAccesModel {
             },
         })
         return isInBd ? true : false
+    }
+
+    static async isLoginValid(userId: EntierPositifType, userPsswd: PasswordShortType)
+        : Promise<boolean> {
+        
+        try {
+            const studentInBd = await prisma.userSimpleLogin.findUnique({
+                select: {
+                    userId: true,
+                    passwordSimpleHash: true,
+                },
+                where: {
+                    userId: userId
+                },
+            })
+            if(studentInBd){
+                return await bcrypt.compare(userPsswd, studentInBd.passwordSimpleHash)
+            }
+            return false
+            
+        } catch (error) {
+            console.error("Erreur dans getListGroupAndAssociationExId :", error)
+            throw error;
+        }
     }
 
 

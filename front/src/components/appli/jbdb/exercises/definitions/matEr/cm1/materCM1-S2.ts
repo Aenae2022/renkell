@@ -1,8 +1,8 @@
 import { Matematik } from "@utils/Matematik";
-import type { JbdbExercise } from "../../../exercises.types";
+import type { JbdbExerciseType } from "../../../exercises.types";
 import { JbdbUtils } from "@utils/jbdbUtils";
 
-const createMaterCM1S2Exercise1 = (nb: number): JbdbExercise => {
+const createMaterCM1S2Exercise1 = (nb: number): JbdbExerciseType => {
   return {
       exId: `jbdb-matercm1-020${nb}`,
       translationId: `jbdb-matercm1-0201`,
@@ -34,7 +34,7 @@ const createMaterCM1S2Exercise1 = (nb: number): JbdbExercise => {
     }
 };
 
-const createMaterCM1S2Exercise2 = (nb: number): JbdbExercise => {
+const createMaterCM1S2Exercise2 = (nb: number): JbdbExerciseType => {
   return {
       exId: `jbdb-matercm1-020${nb}`,
       translationId: `jbdb-matercm1-0202`,
@@ -66,7 +66,7 @@ const createMaterCM1S2Exercise2 = (nb: number): JbdbExercise => {
   };
 }
 
-export const materCM1S2Exercises: JbdbExercise[] = [
+export const materCM1S2Exercises: JbdbExerciseType[] = [
   createMaterCM1S2Exercise1(1),
   createMaterCM1S2Exercise1(2),
   createMaterCM1S2Exercise2(3),

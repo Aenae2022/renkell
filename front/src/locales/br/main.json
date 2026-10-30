@@ -26,6 +26,10 @@
     },
     "shortLogin":{
         "chooseName":"Dibab da anv",
-        "password":"Kod-tremen"
+        "password":"Kod-tremen",
+        "noStudent":"N'eo ket posubl kevreañ",
+        "noKevreet":"Gaou eo ar c'hod-tremen",
+        "kevreet":"Degemer mat",
+        "noAnv":"Dibab da anv"
     }
 }

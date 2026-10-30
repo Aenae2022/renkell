@@ -1,7 +1,7 @@
-import type { JbdbExercise } from "../../../exercises.types";
+import type { JbdbExerciseType } from "../../../exercises.types";
 import { JbdbUtils } from "@utils/jbdbUtils";
 
-const createTableAddExercise = (nb: number): JbdbExercise => {
+const createTableAddExercise = (nb: number): JbdbExerciseType => {
   return {
     exId: `jbdb-add-toull-${nb}`,
     description: `Taolioù sammañ ${nb} gant toulloù `,
@@ -39,7 +39,7 @@ const exoTout = {
 
 const tableAddNumbers = [2, 3, 4, 5, 6, 7, 8, 9];
 
-export const tableAddMasterExercises: JbdbExercise[] =
+export const tableAddMasterExercises: JbdbExerciseType[] =
  [ ...tableAddNumbers.map(createTableAddExercise),
   exoTout]
 

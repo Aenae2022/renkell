@@ -1,7 +1,7 @@
 import { Matematik } from "@utils/Matematik";
-import type { JbdbExercise } from "../../../exercises.types";
+import type { JbdbExerciseType } from "../../../exercises.types"
 
-export const tableAdditionExercises: JbdbExercise[] = [
+export const tableAdditionExercises: JbdbExerciseType[] = [
     {
         //add-degad
         exId: "jbdb-add-degad",

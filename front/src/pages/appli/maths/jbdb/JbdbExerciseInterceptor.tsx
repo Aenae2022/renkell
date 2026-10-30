@@ -9,10 +9,10 @@ import { tokenValidationAndGroup } from "@srcFront/api/jbdb.api";
 import Loader from "@components/core/Loader";
 import { ErrorMessageSite } from "@components/UI/ErrorMessageSite";
 import { type UserMiniType } from "@shared/schema/user.schema";
-import { LoginSimple } from "@components/core/LoginSimple";
 import { type GroupMiniType } from "@shared/schema/group.schema";
 import JbdbExercise from "./JbdbExercise";
 import type { JbdbExerciseType } from "@components/appli/jbdb/exercises/exercises.types";
+import { LoginShort } from "@components/appli/jbdb/JbdbExerciseLoginShort";
 export function JbdbExerciseInterceptor() {
     const { exId } = useParams();
     const [searchParams] = useSearchParams();
@@ -106,8 +106,9 @@ export function JbdbExerciseInterceptor() {
         case "loader":
             return <Loader />
         case "connexion":
-            return (myGroup !== null && myStudents !== null) 
-            ?  <LoginSimple group={myGroup} students={myStudents} handleSetMyUser={setMyUser} handleSetMyComponent={setMyComponent} /> 
+            return (myGroup !== null && myStudents !== null && myExercise !== null) 
+            ?  <LoginShort group={myGroup} students={myStudents} groupId={myGroup.groupId} exId={myExercise.exId}
+            handleSetMyUser={setMyUser} handleSetMyComponent={setMyComponent} /> 
             : <ErrorMessageSite message={'main.linkInvalid'} />
         case "exercise":
             return <JbdbExercise user={myUser} exercise={myExercise} />
