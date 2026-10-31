@@ -81,13 +81,16 @@ export class DegemerController {
 
     try {
       //liens internet du group
+      console.log("1 - groupId reçu :", groupId);
       const linksList = await GroupModel.getGroupWithLinks(groupId);
+      console.log("2 - liens internet récupérés");
       if (linksList === null) {
         res.status(404).json({ message: "pas de group", reponse: null, result: null });
         return
       }
       //liens vers les exercices + token pour création du lien
       const exerciseLinks = await ExerciseAccesModel.getGroupExerciseLinksList(groupId)
+      console.log("3 - liens exercices récupérés");
       let token = null
       let exerciseLinksDatas: ExerciseLinkDatasType[] = []
       if (exerciseLinks !== null) {
