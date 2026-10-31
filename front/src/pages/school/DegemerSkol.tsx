@@ -33,7 +33,7 @@ export function DegemerSkol() {
     ? Utilitaires.validateStringWithZodSchema(group, StringNameGroupSchema)
     : null;
 
-
+    console.log("group", group)
   let myComponent = <p>Coucou</p> //TODO charger le bon composant à l'aide du hook ainsi que les valeurs pour le header
   const datas = useDegemer({ skol: skolCleaned, type: typeCleaned, idft: idftCleaned, group: groupCleaned })
   if (datas !== null) {

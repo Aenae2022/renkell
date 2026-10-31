@@ -6,13 +6,15 @@ import MaJbdbdModele from "@components/appli/jbdb/MaJbdbModele";
 import MaJbdbResult from "@components/appli/jbdb/MaJbdbResult";
 import { type UserMiniType } from "@shared/schema/user.schema";
 import type { JbdbExerciseType } from "@components/appli/jbdb/exercises/exercises.types";
+import type { GroupMiniType } from "@shared/schema/group.schema";
 
 type JbdbExerciseProps = {
   user : UserMiniType | null
   exercise : JbdbExerciseType |null
+  group: GroupMiniType | null
 }
 
-export function JbdbExercise({user, exercise} : JbdbExerciseProps) {
+export function JbdbExercise({user, exercise, group} : JbdbExerciseProps) {
   const { t } = useTranslation();
   
   const [myUser, setUser] = useState<UserMiniType|null>(null)
@@ -190,6 +192,8 @@ export function JbdbExercise({user, exercise} : JbdbExerciseProps) {
           modele={modele}
           user={myUser}
           itemSelected={itemSelected}
+          group={group}
+          exercise={exercise}
           setRestart={setRestart}
         />
       );

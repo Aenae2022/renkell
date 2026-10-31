@@ -111,7 +111,7 @@ export function JbdbExerciseInterceptor() {
             handleSetMyUser={setMyUser} handleSetMyComponent={setMyComponent} /> 
             : <ErrorMessageSite message={'main.linkInvalid'} />
         case "exercise":
-            return <JbdbExercise user={myUser} exercise={myExercise} />
+            return <JbdbExercise user={myUser} exercise={myExercise} group={myGroup} />
         case "error":
             return <ErrorMessageSite message={myMessage} />
         default:

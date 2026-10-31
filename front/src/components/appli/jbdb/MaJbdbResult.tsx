@@ -8,6 +8,12 @@ import { pdf } from "@react-pdf/renderer";
 import type { UserMiniType } from "@shared/schema/user.schema";
 import { getAssetUrl } from "@utils/assetResolver";
 import { Utilitaires } from "@utils/Utilitaires";
+import { useEffect } from "react";
+import type { GroupMiniType } from "@shared/schema/group.schema";
+import type { JbdbExerciseType } from "./exercises/exercises.types";
+import type { JbdbExerciseAttemptType } from "@shared/schema/exercise.schema";
+import { saveAttempt } from "@srcFront/api/jbdb.api";
+
 type GeneralResultsProps = {
   items: {
     question: string;
@@ -30,7 +36,9 @@ type GeneralResultsProps = {
     calculAGenerer: () => void; //+
   };
   itemSelected: number;
-  user:UserMiniType|null
+  group: GroupMiniType | null;
+  user: UserMiniType | null;
+  exercise: JbdbExerciseType | null;
   setRestart: () => void;
 };
 export default function MaJbdbResult({
@@ -39,7 +47,9 @@ export default function MaJbdbResult({
   modele,
   user,
   itemSelected,
-  setRestart,
+  group,
+  exercise,
+  setRestart
 }: GeneralResultsProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -52,7 +62,8 @@ export default function MaJbdbResult({
       : Math.round((nombreReussites / items.length) * 100);
   //on transforme pour avoir un résultat sur 100
   const { askName, dialog } = useNameDialog();
- 
+
+
 
   //définir le logo en fonction du résultat et des attentes
   let sourceLogo = "exercice/";
@@ -71,18 +82,21 @@ export default function MaJbdbResult({
     ];
   const buttonStyle =
     "w-48 mt-8 pt-1 pb-2 cursor-pointer text-center rounded-full border-2 border-gray-400";
+  let result = "NA"
   if (monScore >= modele.objectif) {
     sourceLogo = sourceLogo + "laurierVert.png";
     resultsScoreStyle =
       resultsScoreColorVariants[
       "vert" as keyof typeof resultsScoreColorVariants
       ];
+    result = "A"
   } else if (monScore >= modele.eca) {
     sourceLogo = sourceLogo + "laurierOrange.png";
     resultsScoreStyle =
       resultsScoreColorVariants[
       "orange" as keyof typeof resultsScoreColorVariants
       ];
+    result = "PA"
   } else {
     sourceLogo = sourceLogo + "laurierRouge.png";
     resultsScoreStyle =
@@ -90,6 +104,40 @@ export default function MaJbdbResult({
       "rouge" as keyof typeof resultsScoreColorVariants
       ];
   }
+
+  //si on a un user on enregistre l'exercice
+  useEffect(() => {
+
+    const saveAttemptGo = async () => {
+      if (user === null || group === null || exercise === null) {
+        return
+      }
+      const exerciseAttemptDatas : JbdbExerciseAttemptType = {
+        userId: user.userId,
+        groupId: group.groupId,
+        groupName: group.groupName,
+        exId: exercise.exId,
+        completedAt: new Date(),
+        durationSeconds: timeWork,
+        score: monScore,
+        seuilAcquis: exercise.objectif,
+        seuilEca: exercise.eca,
+        result: result,
+        traceData: { items }
+      }
+      const saveAction = await saveAttempt(exerciseAttemptDatas)
+      
+      if(!saveAction){
+        console.log('erreur')
+      }
+      //appel api pour enregistrer l'exercice
+      //si erreur on affiche un toast d'alerte
+      //sinon rien de particulier (ne pas afficher le toast de réussite est volontaire pour masquer l'enregistrement)
+
+    }
+
+    saveAttemptGo()
+  }, [])
 
   //------------------------------------------------------------------------------------------------
 
@@ -149,7 +197,7 @@ export default function MaJbdbResult({
     URL.revokeObjectURL(url);
   };
   async function handlePrint() {
-    if (user !==null) {
+    if (user !== null) {
       generatePdf(`${user.userName}`);
     } else {
       const name = await askName();

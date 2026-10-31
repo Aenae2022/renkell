@@ -146,6 +146,7 @@ model User {
   userLinkPermissions LienPermission[]
   bookEvents BookEvent[]
   exerciseAccesses ExerciseAccess[]
+  exerciseAttempts ExerciseAttempt[]
 
   @@unique([userFirstName, userFamilyName, schoolId])
 }
@@ -234,6 +235,7 @@ model Group {
   libraryGroup BookGroup[]
   groupPeriods Periodlibrary[]
   groupClassrooms ClassroomGroup[]
+  exerciseAttempts ExerciseAttempt[]
 }
 
 
@@ -375,6 +377,30 @@ model Exerciselinks {
 
   tokenHash          String @db.VarChar(64)
   exerciseAccess     ExerciseAccess @relation(fields: [tokenHash], references: [tokenHash], onDelete : Cascade)
+}
+
+model ExerciseAttempt {
+  attemptId        Int      @id @default(autoincrement())
+  userId           Int
+  groupId          Int?
+  groupName        String?  @db.VarChar(255)
+  exId             String   @db.VarChar(100)
+  completedAt      DateTime @default(now())
+  durationSeconds  Int?
+  score            Int
+  seuilAcquis      Int
+  seuilEca         Int
+  result           String   @db.VarChar(10)
+  traceData        Json
+  exerciseParams   Json?
+
+  user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  group Group? @relation(fields: [groupId], references: [groupId], onDelete: SetNull)
+
+  @@index([userId, completedAt])
+  @@index([groupId, completedAt])
+  @@index([exId, completedAt])
 }
 
 model UserSimpleLogin {

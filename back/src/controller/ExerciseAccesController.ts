@@ -1,6 +1,4 @@
 
-import { GroupMiniType } from "@shared/schema/group.schema";
-import { UserMiniType } from "@shared/schema/user.schema";
 import ExerciseAccesModel from "@srcBack/model/ExerciseAccesModel";
 import GroupModel from "@srcBack/model/GroupModel";
 import { Request, Response } from "express";

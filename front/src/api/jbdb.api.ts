@@ -2,8 +2,9 @@ import type { UserMiniType } from "@shared/schema/user.schema";
 import api from "./axios";
 import { AxiosError } from "axios";
 import type { GroupMiniType } from "@shared/schema/group.schema";
-import {type EntierPositifType } from "@shared/schema/fields/entierPositif.schema";
+import { type EntierPositifType } from "@shared/schema/fields/entierPositif.schema";
 import type { PasswordShortType } from "@shared/schema/fields/password.schema";
+import { JbdbExerciseAttemptSchema, type JbdbExerciseAttemptType } from "@shared/schema/exercise.schema"
 
 export const tokenValidationAndGroup = async (exId: string, token: string)
     : Promise<{ group: GroupMiniType, studentsList: UserMiniType[] } | { message: string }> => {
@@ -20,7 +21,7 @@ export const tokenValidationAndGroup = async (exId: string, token: string)
             },
         );
         if (myAssociation.data.reponse === null) {
-            return {message : myAssociation.data.message}
+            return { message: myAssociation.data.message }
         }
 
         return myAssociation.data.result
@@ -35,14 +36,14 @@ export const tokenValidationAndGroup = async (exId: string, token: string)
     }
 }
 
-export const loginShort = async (userId: EntierPositifType, psswd: PasswordShortType, groupId:EntierPositifType, exId: string)
+export const loginShort = async (userId: EntierPositifType, psswd: PasswordShortType, groupId: EntierPositifType, exId: string)
     : Promise<boolean | { message: string }> => {
     try {
         const isLoginValid = await api.post(
             "/api/exerciseAcces/isLoginValid",
             {
                 userId: userId,
-                userPsswd:psswd,
+                userPsswd: psswd,
                 groupId: groupId,
                 exerciseLink: {
                     linkExId: exId,
@@ -52,10 +53,43 @@ export const loginShort = async (userId: EntierPositifType, psswd: PasswordShort
             },
         );
         if (isLoginValid.data.reponse === null) {
-            return {message : isLoginValid.data.message}
+            return { message: isLoginValid.data.message }
         }
 
         return isLoginValid.data.reponse
+    }
+    catch (error: unknown) {
+        // Utilisation de `unknown` pour éviter `any`
+        if (error instanceof AxiosError && error.response) {
+            return ({ message: error.response.data.message }); // Message d'erreur du backend
+        } else {
+            return ({ message: "Erreur serveur !" });
+        }
+    }
+}
+
+export const saveAttempt = async (exerciseAttemptDatas: JbdbExerciseAttemptType)
+    : Promise<boolean | { message: string }> => {
+    try {
+        const parseExerciseAttemptDatas = JbdbExerciseAttemptSchema.safeParse(exerciseAttemptDatas)
+        if (parseExerciseAttemptDatas.success) {
+            const saveAttempt = await api.post(
+                "/api/exerciseAttempt/saveAttempt",
+                {
+                    exerciseAttemptDatas: parseExerciseAttemptDatas.data,
+                },
+            );
+            if (saveAttempt.data.reponse === null) {
+                return { message: "errorSaveExercise" }
+            }
+
+            return saveAttempt.data.reponse
+        }
+        else {
+            console.error(parseExerciseAttemptDatas.error.issues);
+            return { message: "errorSaveExercise" };
+        }
+
     }
     catch (error: unknown) {
         // Utilisation de `unknown` pour éviter `any`

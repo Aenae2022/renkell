@@ -16,7 +16,8 @@ import studentsRoutes from "./routes/studentsRoutes";
 import paramsSchoolRoutes from "./routes/paramsStudentsRoutes";
 import paramsStudentsRoutes from "./routes/paramsStudentsRoutes";
 import articlesRoutes from "./routes/articlesRoutes";
-import exerciseAccesRoutes from "./routes/ExerciseAccesRoutes"
+import exerciseAccesRoutes from "./routes/ExerciseAccesRoutes";
+import exerciseAttemptRoutes from "./routes/ExerciseAttemptRoutes";
 import path from "path";
 dotenv.config();
 
@@ -75,7 +76,8 @@ app.use("/api/library", libraryRoutes);// Route page de l'application librairie
 app.use("/api/students", studentsRoutes);// Route page de gestion des élèves par enseignant
 app.use('/api/paramsStudents', paramsStudentsRoutes) //Route de page de gestion des élèves par admin
 app.use('/api/articles', articlesRoutes) //Route de page de gestion des élèves par admin
-app.use('/api/exerciseAcces', exerciseAccesRoutes) //Route de page de gestion des élèves par admin
+app.use('/api/exerciseAcces', exerciseAccesRoutes) //Route de page de gestion accès aux exercices
+app.use('/api/exerciseAttempt', exerciseAttemptRoutes) //Route de page de gestiondes exercices réalisés
 
 const frontendPath = path.join(__dirname, "../../front");
 app.use(express.static(frontendPath));

@@ -25,6 +25,7 @@ export const useDegemer = ({ skol, type, idft, group }: PropsGeneral) => {
         viewType = "teacher"
     }
     else if (idft !== null && type === "c" && group !== null) {
+        console.log('view group', group)
         viewType = "group"
     }
     else if (idft !== null && type === "c") {
@@ -39,6 +40,7 @@ export const useDegemer = ({ skol, type, idft, group }: PropsGeneral) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log("viewType",viewType)
             switch (viewType) {
                 case "school":
                     if (skol === null) {
@@ -84,12 +86,13 @@ export const useDegemer = ({ skol, type, idft, group }: PropsGeneral) => {
                     }
                     break;
                 case "group":
+                    console.log('dataSwitch', group, idft, skol)
                     if (group === null || idft === null || skol === null) {
                         break;
                     }
                     const nGroup = parseInt(group)
                     const resTmpG = await getGroupLinksList(skol, idft, nGroup);
-                    
+                    console.log("requete groupe", resTmpG)
                     if ("message" in resTmpG) {
                         const res: ResultatError = { vue: "error", message: resTmpG.message }
                         setResultat(res)
@@ -109,6 +112,7 @@ export const useDegemer = ({ skol, type, idft, group }: PropsGeneral) => {
                     break;
             }
         }
+        console.log('useEffect')
         fetchData()
     }, [skol, type, idft, group])
 

@@ -10,7 +10,7 @@ const createMaterCM2S1Exercise = (nb: number): JbdbExerciseType => {
       shortTitle: `S${nb}`,
       exampleQuestion: "5 x ? = 10",
       logo: "exercice/calcul/multiplier.png",
-      duration: 180,
+      duration: 3,
       exerciseNumber: 30,
       objectif: 100, //objectif visé (ration temps/nb réponses attendu)
       eca: 40, //score en dessous du quel on indique le résultat en rouge

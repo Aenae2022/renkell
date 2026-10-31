@@ -248,11 +248,33 @@ export class JbdbUtils {
         return { question, resultats };
     }
 
+    //table de multiplication
+    static tableMultiArray(nb1max: number, nb1min: number, nbs2 : number[])
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
+        const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
+        const indice2 = Matematik.entierAleatoire(0, nbs2.length-1)
+        const nombre2 = nbs2[indice2];
+        const reponse = nombre1 * nombre2;
+        const mixTerme = this.melange(nombre1, nombre2);
+        const question = mixTerme.nbre1 + " x " + mixTerme.nbre2 + " = ?";
+        const resultats = [{ texte: "", valeurRep: reponse }];
+        return { question, resultats };
+    }
+
     //table de multiplication à trou
     //on cherche le nombre 1
     static tableMultiTrou(nb1max: number, nb1min: number, nb2max: number, nb2min: number): { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
         const nombre2 = Matematik.entierAleatoire(nb2min, nb2max);
+        const reponse = nombre1 * nombre2;
+        const question = nombre1 + " x ? = " + reponse;
+        const resultats = [{ texte: "", valeurRep: nombre2 }];
+        return { question, resultats };
+    }
+    static tableMultiTrouArray(nb1max: number, nb1min: number, nbs2: number[]): { question: string; resultats: { texte: string; valeurRep: number }[] } {
+        const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
+        const indice2 = Matematik.entierAleatoire(0, nbs2.length-1);
+        const nombre2 = nbs2[indice2]
         const reponse = nombre1 * nombre2;
         const question = nombre1 + " x ? = " + reponse;
         const resultats = [{ texte: "", valeurRep: nombre2 }];
@@ -264,6 +286,21 @@ export class JbdbUtils {
         : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
         const nombre2 = Matematik.entierAleatoire(multimin, multimax) * valexp;
+        const reponse = nombre1 * nombre2;
+        const mixTerme = this.melange(nombre1, nombre2);
+        const question = mixTerme.nbre1 + " x " + mixTerme.nbre2 + " = ?";
+        const resultats = [{ texte: "", valeurRep: reponse }];
+        return { question, resultats };
+    }
+
+    //multiplier par un multiple de 10
+    static multi210(nb1max: number, nb1min: number, nb2max: number, nb2min: number, valexpMax: number)
+        : { question: string; resultats: { texte: string; valeurRep: number }[] } {
+            const valExp1 =  Matematik.entierAleatoire(1,valexpMax);
+            const nombre1 = Matematik.entierAleatoire(nb1min, nb1max) * Math.pow(10,valExp1);
+            const expMax2 = 4-valExp1
+            const valExp2 =  Matematik.entierAleatoire(1,expMax2);
+        const nombre2 = Matematik.entierAleatoire(nb2min, nb2max) * Math.pow(10,valExp2);
         const reponse = nombre1 * nombre2;
         const mixTerme = this.melange(nombre1, nombre2);
         const question = mixTerme.nbre1 + " x " + mixTerme.nbre2 + " = ?";

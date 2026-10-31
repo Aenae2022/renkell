@@ -115,7 +115,7 @@ export const getGroupLinksList = async (skolCleaned: string, idft: string, group
         groupWithLinks = searchGroupWithLinks.data.result.linksList 
         groupExerciseLink = searchGroupWithLinks.data.result.exerciseLinksList
         const token =  searchGroupWithLinks.data.result.token
-
+        console.log('linkexercise',searchGroupWithLinks.data.result.exerciseLinksList)
         return ({ schoolDatas: schoolDatas, 
             classroom: classroom, 
             groupWithLinks:groupWithLinks, 

@@ -4,7 +4,7 @@ import { JbdbUtils } from "@utils/jbdbUtils";
 
 const createMaterCM2S2Exercise = (nb: number): JbdbExerciseType => {
   return {
-      exId: `jbdb-matercm2-010${nb}`,
+      exId: `jbdb-matercm2-020${nb}`,
       translationId: `jbdb-matercm2-0201`,
       description: "taolioù liesaat",
       shortTitle: `S${nb}`,
