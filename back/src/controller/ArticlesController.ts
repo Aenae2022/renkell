@@ -57,9 +57,9 @@ export class ArticlesController {
     res: Response) 
     {
       const { domaine } = req.body;
-      
       try {
         const articlesList = await ArticlesModel.getArticlesByDomaine(domaine);
+        
         if (articlesList.reponse === null) {
            res.status(200).json({ message: articlesList.message, reponse: false, result: [] });
            return
@@ -91,7 +91,7 @@ export class ArticlesController {
             componentKey: article.componentKey,
           };
         })
-  
+
          res.status(200).json({ message: articlesList.message, reponse: articlesList.reponse, result: formattedArticles});
         return
       } catch (error) {

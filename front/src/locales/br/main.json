@@ -13,12 +13,23 @@
         "question": "Petra eo da anv ?",
         "error": "Dav eo dit skrivañ 2 lizherenn d'an nebeutañ 🙂"
     },
-    "mathematiques": "Matematik",
     "langue": "Yezh",
     "dictee": "Skrivadenn",
-    "calculmental": "Jed dre benn",
+    "mathematiques": "Matematik",
+    "nombre": "Niveriñ",
+    "calculmental": "Jediñ dre benn",
     "titlePageApplies": "Aplikadennoù",
-    "lesson" : "Kentel"
-
-    
+    "lesson" : "Kentel",
+    "error":{
+        "linkInvalid": "Gaou eo al liamm",
+        "noStudents": "N'eus skoliad ebet amañ."
+    },
+    "shortLogin":{
+        "chooseName":"Dibab da anv",
+        "password":"Kod-tremen",
+        "noStudent":"N'eo ket posubl kevreañ",
+        "noKevreet":"Gaou eo ar c'hod-tremen",
+        "kevreet":"Degemer mat",
+        "noAnv":"Dibab da anv"
+    }
 }

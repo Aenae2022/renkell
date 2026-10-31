@@ -9,27 +9,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserSessionConnectType | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   api
-  //     .get("/api/auth/session")
-  //     .then((res) => {
-  //       if (res.data.success) {
-  //         setUser(res.data.user);
-  //       } else {
-  //         // L'API a répondu, mais pas de session valide
-  //         setUser(null);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       if (err.response?.status === 401) {
-  //         setUser(null); // ❗ seulement si non autorisé
-  //       } else {
-  //         console.warn("Erreur temporaire, on garde l'utilisateur connecté");
-  //         // Ne rien faire ici => garder l'utilisateur tel quel
-  //       }
-  //     })
-  //     .finally(() => setLoading(false));
-  // }, []);
+ 
 
   useEffect(() => {
     //en test pour voir si déconnection en cas d'erreur serveur

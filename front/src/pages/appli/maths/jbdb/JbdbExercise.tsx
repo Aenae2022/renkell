@@ -1,15 +1,23 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import MaJbdbHeader from "@components/appli/jbdb/MaJbdbHeader";
 import MaJbdbdArdoise from "@components/appli/jbdb/MaJbdbArdoise";
 import MaJbdbdModele from "@components/appli/jbdb/MaJbdbModele";
 import MaJbdbResult from "@components/appli/jbdb/MaJbdbResult";
-import {findExerciseById} from "@components/appli/jbdb/exercises/exercisesRegistry";
-export function JbdbExercise() {
-  const { exId } = useParams();
-  const { t } = useTranslation();
+import { type UserMiniType } from "@shared/schema/user.schema";
+import type { JbdbExerciseType } from "@components/appli/jbdb/exercises/exercises.types";
+import type { GroupMiniType } from "@shared/schema/group.schema";
 
+type JbdbExerciseProps = {
+  user : UserMiniType | null
+  exercise : JbdbExerciseType |null
+  group: GroupMiniType | null
+}
+
+export function JbdbExercise({user, exercise, group} : JbdbExerciseProps) {
+  const { t } = useTranslation();
+  
+  const [myUser, setUser] = useState<UserMiniType|null>(null)
   const defaultExercise = useMemo(() => {
     return {
       exId: "",
@@ -47,7 +55,6 @@ export function JbdbExercise() {
   const [stade, setStade] = useState("nope"); //go/finish/result
   let myStade = <></>;
 
-  // const timeoutRef = useRef<number | null>(null); // Stocke l'ID du timeout
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   let timeWork = 0;
@@ -135,17 +142,16 @@ export function JbdbExercise() {
     return tableauDeCalcul;
   }
   useEffect(() => {
-    if (exId) {
-      const foundExercise = findExerciseById(exId);
-      if (foundExercise) {
-        setModele(foundExercise);
-        setItems(creerCalculs(foundExercise));
+    
+    if (exercise !== null) {
+        setUser(user)
+        setModele(exercise);
+        setItems(creerCalculs(exercise));
         setStade("start");
-      }
     } else {
       setModele(defaultExercise);
     }
-  }, [defaultExercise, exId]);
+  }, [defaultExercise, exercise]);
 
   //const de style
   const exerciseContainer =
@@ -184,7 +190,10 @@ export function JbdbExercise() {
           items={items}
           timeWork={timeWork}
           modele={modele}
+          user={myUser}
           itemSelected={itemSelected}
+          group={group}
+          exercise={exercise}
           setRestart={setRestart}
         />
       );

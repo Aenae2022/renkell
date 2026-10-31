@@ -9,6 +9,7 @@ import type { UserWithLinksType } from "@shared/schema/user.schema";
 import ConnexionButton from "../core/ConnectionButton";
 import { useState } from "react";
 import Login from "../core/Login";
+import type { GroupLinksType } from "@shared/schema/group.schema";
 
 const lngs = {
   br: { nativeName: "BR" },
@@ -19,10 +20,12 @@ function HeaderDegemer({
   school,
   classroom,
   user,
+  group
 }: {
   school: SchoolType | null;
   classroom: ClassroomWithLinksType | null;
   user: UserWithLinksType | null;
+  group: GroupLinksType | null
 }) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -32,11 +35,17 @@ function HeaderDegemer({
     school && school.schoolId !== 0
       ? t("header.skol.title") + " " + school.schoolName
       : "";
-  const subTitle = classroom
-    ? t("header.skol.classroom") + " " + classroom.group.groupName
-    : user
-      ? `${user.userFirstName} ${user.userFamilyName}`
-      : "";
+  let subTitle : string = ''
+  if(classroom){
+    subTitle = t("header.skol.classroom") + " " + classroom.group.groupName
+  }
+  if(group){
+    subTitle = group.groupName
+  }
+  if(user){
+    subTitle = `${user.userFirstName} ${user.userFamilyName}`
+  }
+    
 
   return (
     <div className="flex mb-3 pb-3 pl-4 justify-between items-center bg-conjugaison/25">

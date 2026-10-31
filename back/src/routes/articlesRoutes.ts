@@ -5,9 +5,12 @@ import checkSousDomaineExists from "@srcBack/middleware/core/checkSousDomaineExi
 
 const router = express.Router();
 
-router.post("/articlesDomaineList",
-    checkDomaineExists,
-    async (req, res) => await ArticlesController.getArticlesByDomaineList(req, res));
+router.post(
+  "/articlesDomaineList",
+  checkDomaineExists,
+  async (req, res) =>
+    await ArticlesController.getArticlesByDomaineList(req, res)
+);
 
 router.post("/articlesSousDomaineList",
     checkSousDomaineExists,

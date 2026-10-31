@@ -15,20 +15,20 @@ export const GroupLinksSchema = z.object({
 
 export const GroupInfoSchema = z.object({
   groupId: EntierPositifSchema,
-  groupName : StringNameGroupSchema, 
-  principal : z.boolean(),
+  groupName: StringNameGroupSchema,
+  principal: z.boolean(),
 })
 
 export const GroupPrincipalInfoSchema = z.object({
   groupId: EntierPositifSchema,
-  groupName : StringNameGroupSchema, 
-  principal : z.literal(true),
+  groupName: StringNameGroupSchema,
+  principal: z.literal(true),
 })
 
 export const GroupSecondaireInfoSchema = z.object({
   groupId: EntierPositifSchema,
-  groupName : StringNameGroupSchema, 
-  principal : z.literal(false),
+  groupName: StringNameGroupSchema,
+  principal: z.literal(false),
 })
 
 export const GroupMiniSchema = z.object({
@@ -36,9 +36,22 @@ export const GroupMiniSchema = z.object({
   groupName: StringNameGroupSchema,
 });
 
+export const GroupForExerciseSchema = z.object(
+  {
+    groupId: EntierPositifSchema,
+    groupName: StringNameGroupSchema,
+    isAssociated: z.boolean(),
+  })
+
+export const GroupsListForExerciseSchema = z.array(
+  GroupForExerciseSchema
+)
+
 export type GroupLinksType = z.infer<typeof GroupLinksSchema>;
 export type GroupInfoType = z.infer<typeof GroupInfoSchema>
 export type GroupNameType = z.infer<typeof StringNameGroupSchema>
 export type GroupMiniType = z.infer<typeof GroupMiniSchema>
 export type GroupPrincipalInfoType = z.infer<typeof GroupPrincipalInfoSchema>
+export type GroupForExerciseType = z.infer<typeof GroupForExerciseSchema>
+export type GroupsListForExerciseType = z.infer<typeof GroupsListForExerciseSchema>
 

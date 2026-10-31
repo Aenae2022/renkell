@@ -1,11 +1,11 @@
 import { Matematik } from "@utils/Matematik";
-import type { JbdbExercise } from "../../../exercises.types";
+import type { JbdbExerciseType } from "../../../exercises.types";
 import { Utilitaires } from "@utils/Utilitaires";
 import type { EntierPositifType } from "@shared/schema/fields/entierPositif.schema";
 import i18n from "@srcFront/i18n";
 import { JbdbUtils } from "@utils/jbdbUtils";
 
-export const decompositionNumberExercises: JbdbExercise[] = [
+export const decompositionNumberExercises: JbdbExerciseType[] = [
     {
         //dec-cdu
         exId: "jbdb-dec-cdu",

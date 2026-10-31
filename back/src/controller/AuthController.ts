@@ -72,13 +72,6 @@ res.status(200).json({
   reponse: true,
 });
 
-      // res.status(200).json({
-      //   message: "header.login.goodIdentification",
-      //   reponse: true,
-      // });
-      
-
-       
       } catch (error) {
         console.error("Erreur dans le contrôleur :", error);
          res.status(500).json({ message: "Erreur serveur", reponse: null, result: [] });

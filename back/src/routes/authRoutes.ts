@@ -2,8 +2,7 @@ import express from "express";
 import checkInputUserPseudoValid from "../middleware/user/checkInputUserPseudoValid";
 import checkInputUserPsswdValid from "../middleware/user/checkInputUserPsswdValid";
 import AuthController from "../controller/AuthController";
-import { isAuthenticated } from "@srcBack/middleware/authMiddleware";
-import { checkPostRoleValid } from "@srcBack/middleware/user/checkPostRoleValid";
+
 const router = express.Router();
 
 
@@ -13,7 +12,6 @@ router.post("/login",
     checkInputUserPseudoValid,checkInputUserPsswdValid,
     //async (req, res) => await AuthController.validateConnection(req, res));
     async (req, res) => {
-    console.log("🔥 LOGIN ROUTE ATTEINTE");
     await AuthController.validateConnection(req, res);
   })
     

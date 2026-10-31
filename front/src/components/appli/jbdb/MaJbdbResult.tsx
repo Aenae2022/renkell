@@ -1,13 +1,19 @@
 import MaJbdbCorrection from "./MaJbdbCorrection";
 import MaJbdbdRond from "./MaJbdbRond";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useNameDialog } from "@hook/useNameDialog";
 import MaJbdbResultPrint from "../../../document/library/MaJbdbResultPrint";
 import { pdf } from "@react-pdf/renderer";
-import type { UserSessionConnectType } from "@shared/schema/user.schema";
+import type { UserMiniType } from "@shared/schema/user.schema";
 import { getAssetUrl } from "@utils/assetResolver";
 import { Utilitaires } from "@utils/Utilitaires";
+import { useEffect } from "react";
+import type { GroupMiniType } from "@shared/schema/group.schema";
+import type { JbdbExerciseType } from "./exercises/exercises.types";
+import type { JbdbExerciseAttemptType } from "@shared/schema/exercise.schema";
+import { saveAttempt } from "@srcFront/api/jbdb.api";
+
 type GeneralResultsProps = {
   items: {
     question: string;
@@ -30,25 +36,34 @@ type GeneralResultsProps = {
     calculAGenerer: () => void; //+
   };
   itemSelected: number;
+  group: GroupMiniType | null;
+  user: UserMiniType | null;
+  exercise: JbdbExerciseType | null;
   setRestart: () => void;
 };
 export default function MaJbdbResult({
   items,
   timeWork,
   modele,
+  user,
   itemSelected,
-  setRestart,
+  group,
+  exercise,
+  setRestart
 }: GeneralResultsProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  let monScore = items.reduce(
-    (count, item) => (item.validation ? count + 1 : count),
-    0,
-  );
+  const nombreReussites = items.filter(
+    (item) => item.validation,
+  ).length;
+  const monScore =
+    items.length === 0
+      ? 0
+      : Math.round((nombreReussites / items.length) * 100);
   //on transforme pour avoir un résultat sur 100
-  monScore = Math.round((monScore / items.length) * 100);
   const { askName, dialog } = useNameDialog();
-  const user = useOutletContext<UserSessionConnectType>();
+
+
 
   //définir le logo en fonction du résultat et des attentes
   let sourceLogo = "exercice/";
@@ -63,29 +78,66 @@ export default function MaJbdbResult({
   };
   let resultsScoreStyle =
     resultsScoreColorVariants[
-      "neutral" as keyof typeof resultsScoreColorVariants
+    "neutral" as keyof typeof resultsScoreColorVariants
     ];
   const buttonStyle =
     "w-48 mt-8 pt-1 pb-2 cursor-pointer text-center rounded-full border-2 border-gray-400";
+  let result = "NA"
   if (monScore >= modele.objectif) {
     sourceLogo = sourceLogo + "laurierVert.png";
     resultsScoreStyle =
       resultsScoreColorVariants[
-        "vert" as keyof typeof resultsScoreColorVariants
+      "vert" as keyof typeof resultsScoreColorVariants
       ];
+    result = "A"
   } else if (monScore >= modele.eca) {
     sourceLogo = sourceLogo + "laurierOrange.png";
     resultsScoreStyle =
       resultsScoreColorVariants[
-        "orange" as keyof typeof resultsScoreColorVariants
+      "orange" as keyof typeof resultsScoreColorVariants
       ];
+    result = "PA"
   } else {
     sourceLogo = sourceLogo + "laurierRouge.png";
     resultsScoreStyle =
       resultsScoreColorVariants[
-        "rouge" as keyof typeof resultsScoreColorVariants
+      "rouge" as keyof typeof resultsScoreColorVariants
       ];
   }
+
+  //si on a un user on enregistre l'exercice
+  useEffect(() => {
+
+    const saveAttemptGo = async () => {
+      if (user === null || group === null || exercise === null) {
+        return
+      }
+      const exerciseAttemptDatas : JbdbExerciseAttemptType = {
+        userId: user.userId,
+        groupId: group.groupId,
+        groupName: group.groupName,
+        exId: exercise.exId,
+        completedAt: new Date(),
+        durationSeconds: timeWork,
+        score: monScore,
+        seuilAcquis: exercise.objectif,
+        seuilEca: exercise.eca,
+        result: result,
+        traceData: { items }
+      }
+      const saveAction = await saveAttempt(exerciseAttemptDatas)
+      
+      if(!saveAction){
+        console.log('erreur')
+      }
+      //appel api pour enregistrer l'exercice
+      //si erreur on affiche un toast d'alerte
+      //sinon rien de particulier (ne pas afficher le toast de réussite est volontaire pour masquer l'enregistrement)
+
+    }
+
+    saveAttemptGo()
+  }, [])
 
   //------------------------------------------------------------------------------------------------
 
@@ -145,8 +197,8 @@ export default function MaJbdbResult({
     URL.revokeObjectURL(url);
   };
   async function handlePrint() {
-    if (user) {
-      generatePdf(`${user.userFirstName} ${user.userFamilyName}`);
+    if (user !== null) {
+      generatePdf(`${user.userName}`);
     } else {
       const name = await askName();
       if (!name) return; // utilisateur a annulé

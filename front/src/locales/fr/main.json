@@ -13,10 +13,23 @@
         "question": "Quel est ton prénom ?",
         "error": "Tu dois écrire au moins 2 lettres 🙂"
     },
-    "mathematiques": "Mathématiques",
     "langue": "Langue",
     "dictee": "Dictée",
+    "mathematiques": "Mathématiques",
+    "nombre": "Nombre",
     "calculmental": "Calcul mental",
     "titlePageApplies": "Applications",
-    "lesson" : "Leçon"
+    "lesson" : "Leçon",
+    "error":{
+        "linkInvalid": "Erreur dans le lien",
+        "noStudents": "Il n'y a pas d'élève ici."
+    },
+    "shortLogin":{
+        "chooseName":"Sélectionne ton nom",
+        "password":"Code secret",
+        "noStudent":"Connexion impossible",
+        "noKevreet":"Erreur dans le code secret",
+        "kevreet":"Bienvenue",
+        "noAnv":"Sélectionne ton nom"
+    }
 }
