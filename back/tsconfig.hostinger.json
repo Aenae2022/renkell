@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "types": ["node"],
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["../shared/*"],
+      "@srcBack/*": ["./src/*"]
+    },
+
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "resolveJsonModule": true,
+
+    "outDir": "./dist",
+
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+
+  "include": [
+    "src/**/*",
+    "prisma/seed/**/*",
+    "server.ts",
+    "../shared/**/*",
+    "./utils/**/*"
+  ],
+
+  "exclude": ["node_modules"]
+}

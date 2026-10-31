@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "zod": "^3.25.23"
+    "@react-pdf/renderer": "^4.3.0",
+    "xss": "^1.0.15",
+    "zod": "^3.25.63"
   }
 }

@@ -1,0 +1,10 @@
+{
+    "title": "Mercato des élèves",
+    "listGroup": "Groupe",
+    "listSchoolFree": "Listes des élèves disponibles de l'école",
+    "students": "élèves",
+    "listKlas": "Classe de",
+    "errorRemoveStudentReading": "{{ name }} lit actuellement un livre du groupe. Il est impossible de le retirer de ce groupe.",
+    "errorRemoveStudentWaiting": "{{ name }} a réservé un livre du groupe. Il est impossible de le retirer de ce groupe."
+
+} 

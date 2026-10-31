@@ -1,19 +1,35 @@
-import { createContext } from "react";
-import { type UserDatasConnectType } from "@shared/schema/user.schema";
-import { type ClassroomShortType } from "@shared/schema/classroom.schema";
+// front/src/context/AuthContext.tsx
+import type { UserSessionConnectType } from "@shared/schema/user.schema";
+import { createContext, useContext } from "react";
 
-export interface AuthContextType {
-  tokenConn: string | null;
-  userConn: UserDatasConnectType | null; //
-  classroomConn: ClassroomShortType | null; //
+export type AuthContextType = {
+  user: UserSessionConnectType | null;
+  setUser: (user: UserSessionConnectType | null) => void;
+  loading: boolean;
   login: (
-    tokenConn: string,
-    userConn: UserDatasConnectType,
-    classroomConn: ClassroomShortType
-  ) => void;
-  logout: () => void;
-}
+    pseudo: string,
+    password: string
+  ) => Promise<{
+    reponse: boolean;
+    result: UserSessionConnectType | undefined;
+  }>;
+  reloadSessionUser: () => Promise<void>;
+};
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
+export const AuthContext = createContext<AuthContextType>({
+  user: null,
+  setUser: () => {},
+  loading: true,
+  login: async () => {
+    return { reponse: false, result: undefined };
+  },
+  reloadSessionUser: async () => {},
+});
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+}

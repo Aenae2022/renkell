@@ -1,0 +1,96 @@
+import { EntierPositifSchema } from "@shared/schema/fields/entierPositif.schema";
+import {UserSessionConnectSchema } from "@shared/schema/user.schema";
+import UserModel from "@srcBack/model/UserModel";
+import { Request, Response, NextFunction } from "express";
+
+export function checkUserIdValid() {
+  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const user = req.user;
+
+    if (!user) {
+      res.status(401).json({ message: "Non authentifié." });
+      return;
+    }
+
+    const parsedUser = UserSessionConnectSchema.safeParse(user);
+    if (!parsedUser.success) {
+      res.status(400).json({ message: "Utilisateur invalide." });
+      return;
+    }
+
+    req.user = parsedUser.data;
+
+    const userValid = await UserModel.doesUserIdExist(user.userId);
+    if (!userValid) {
+      res.status(400).json({ message: "Utilisateur introuvable." });
+      return;
+    }
+    next(); // continuer si tout est OK
+  };
+}
+
+export const checkUserIdPostValid = () => {
+  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { userId } = req.body;
+    if (!userId) {
+      console.error("Non authentifié. middleware checkUserIdPostValid")
+      res.status(401).json({ message: "Non authentifié." });
+      return;
+    }
+
+    const userValid = await UserModel.doesUserIdExist(userId);
+    if (!userValid) {
+      console.error("Utilisateur introuvable. middleware checkUserIdPostValid")
+      res.status(400).json({ message: "Utilisateur introuvable." });
+      return;
+    }
+    next(); // continuer si tout est OK
+  };
+}
+
+export const checkUserIdPostIsUserIdConnected = () => {
+  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { userId } = req.body;
+    const user = req.user;
+
+    if (!userId) {
+      res.status(401).json({ message: "Non authentifié. middleware checkUserIdPostValid" });
+      return;
+    }
+
+    //validation avec zod
+    const validatedUserId = EntierPositifSchema.safeParse(userId);
+    if (!validatedUserId.success) {
+      res.status(400).json({ message: "userId invalide. middleware checkUserIdPostIsUserIdConnected" });
+      return;
+    }
+
+    if (validatedUserId.data !== user?.userId) {
+      res.status(403).json({ message: "Non authentifié. middleware checkUserIdPostValid" });
+      return;
+    }
+
+    next(); // continuer si tout est OK
+  };
+}
+
+export const checkUserIdPostStudentValid = () => {
+  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { userId } = req.body;
+    if (!userId) {
+      console.error("Non authentifié. checkUserIdPostStudentValid")
+      res.status(401).json({ message: "Non authentifié." });
+      return;
+    }
+
+    const userValid = await UserModel.doesUserIdStudentExist(userId);
+    if (!userValid) {
+      console.error("Utilisateur introuvable. checkUserIdPostStudentValid")
+      res.status(400).json({ message: "Utilisateur introuvable." });
+      return;
+    }
+    next(); // continuer si tout est OK
+  };
+}
+
+

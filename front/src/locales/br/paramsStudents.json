@@ -1,0 +1,9 @@
+{
+    "title": "Merkato ar skolidi",
+    "listGroup": "Strollad",
+    "listSchoolFree": "Roll ar skolidi vak a zo e skol",
+    "students": "skoliad",
+    "listKlas": "Klas ar re",
+    "errorRemoveStudentReading": "O lenn ul levr digant ar strollad emañ {{ name }}. Ne c'heller ket dilemel anezhañ.",
+    "errorRemoveStudentWaiting": "O c'hortoz ul levr digant ar strollad emañ {{ name }}. Ne c'heller ket dilemel anezhañ."
+}
