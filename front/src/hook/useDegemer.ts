@@ -90,8 +90,8 @@ export const useDegemer = ({ skol, type, idft, group }: PropsGeneral) => {
                     if (group === null || idft === null || skol === null) {
                         break;
                     }
-                    const nGroup = parseInt(group)
-                    const resTmpG = await getGroupLinksList(skol, idft, nGroup);
+                    const groupId = parseInt(group)
+                    const resTmpG = await getGroupLinksList(skol, idft, groupId);
                     console.log("requete groupe", resTmpG)
                     if ("message" in resTmpG) {
                         const res: ResultatError = { vue: "error", message: resTmpG.message }
