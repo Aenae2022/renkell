@@ -106,7 +106,7 @@ export const getGroupLinksList = async (skolCleaned: string, idft: string, group
         
         //les infos groups + lien internet + token + liens exos
         const searchGroupWithLinks = await api.post(
-            "api/degemer/groupLinksList",
+            "/api/degemer/groupLinksList",
             {
                 groupId:groupId,
                 classroomId: classroom.classroomId,
