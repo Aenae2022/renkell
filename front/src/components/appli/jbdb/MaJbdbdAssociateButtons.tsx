@@ -29,7 +29,6 @@ export function MaJbdbAssociateButtons({ exId, exTranslationKey, user }: General
                 userId: user.userId
             });
             if (reponse.data.result !== null) {
-                console.log("liste récupérée", reponse.data.result)
                 setGroupsListForExercise(reponse.data.result)
                 setIsAssociationOpen(true)
             }
