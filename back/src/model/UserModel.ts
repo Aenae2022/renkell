@@ -1,8 +1,25 @@
-import { StringNameGroupSchema } from '@shared/schema/fields/stringNameGroup.schema';
 import { prisma } from '../lib/prisma/client';
-import { UserDatasConnectSchema } from "@shared/schema/user.schema";
+import { UserDatasConnectSchema, UserMiniListSchema } from "@shared/schema/user.schema";
+import { type GroupInfoType } from '@shared/schema/group.schema';
+import { type UserGroupBdType } from '@shared/schema/user.schema';
+import { type LinkShortType } from '@shared/schema/link.schema';
+import z from 'zod';
+import { EntierPositifType } from '@shared/schema/fields/entierPositif.schema';
+import { UserRoleType } from '@shared/schema/role.schema';
+import { StringNameType } from '@shared/schema/fields/stringName.schema';
+import { GradeType } from '@shared/schema/grade.schema';
+
 
 class UserModel {
+
+static async doesRoleExist(role: UserRoleType): Promise<boolean> {
+    const action = await prisma.role.findUnique({
+      where: { roleId: role.roleId,
+       roleName: role.roleName },
+      select: { roleId: true },
+    });
+    return !!action;
+  }
 
   static async doesUserPseudoExist(userPseudo: string): Promise<boolean> {
     const user = await prisma.user.findUnique({
@@ -12,12 +29,93 @@ class UserModel {
     return !!user;
   }
 
+  static async doesUserIdExist(userId: number): Promise<boolean> {
+    const user = await prisma.user.findUnique({
+      where: { userId: userId },
+      select: { userId: true },
+    });
+    return !!user;
+  }
+
+  static async doesUserIdStudentExist(userId: number): Promise<boolean> {
+    const user = await prisma.user.findUnique({
+      where: { userId: userId, userRoles: { some: { roleId: 1 } } },
+      select: { userId: true },
+    });
+    return !!user;
+  }
+
+  static async doesUserIdExistInGroupId(userId:number, groupId:number): Promise<boolean> {
+    const user = await prisma.user.findFirst({
+      where: {
+        userId: userId,
+        userGroups: {
+          some: {
+            groupId: groupId,
+          },
+        },
+      },
+      select: { userId: true },
+    });
+    return !!user;
+  }
+
+
+static async getOthersTeacherList(userId: number, schoolId: number) {
+
+  try {
+    const usersDatas  = await prisma.user.findMany({
+      where: { userId: { not: userId }, userRoles: { some: { roleId: 2 } }, schoolId: schoolId},
+      select: {
+        userId: true,
+        userFamilyName: true,
+        userFirstName: true,
+      },  
+      orderBy: [
+        {userFamilyName: "asc"},
+        {userFirstName: "asc"},
+      ]
+    });
+
+    if (!usersDatas) {
+      return {
+        message: "Il n'y a pas d'autre utilisateur",
+        reponse: null,
+        result: [],
+      };
+    }
+
+    //Reconstruire le tableau des groupes :
+    const usersList = usersDatas.map((g : {userId: number, userFamilyName: string, userFirstName: string}) => ({
+      userId : g.userId,
+      userName : g.userFirstName + " " + g.userFamilyName,     
+    }));
+
+
+    //on valide les données avec Zod
+    const parsed = UserMiniListSchema.safeParse(usersList);
+
+    if (!parsed.success) {
+      console.error("Validation Zod échouée :", parsed.error.errors);
+      throw new Error("Données invalides");
+    }
+
+    return {
+      message: "Liste des utilisateurs récupérée avec succès",
+      reponse: true,
+      result: parsed.data,
+    };
+
+  } catch (error) {
+    console.error("Erreur Prisma :", error);
+    throw error;
+  }
+}
 
   static async getUserByPseudo(userPseudo: string) {
   try {
-    console.log("Récupération des données de l'utilisateur :", userPseudo);
-    console.log(JSON.stringify(userPseudo))
-    const userDatas = await prisma.user.findUnique({
+
+    const userDatas  = await prisma.user.findUnique({
       where: { userPseudo : userPseudo},
       select: {
         userId: true,
@@ -25,12 +123,18 @@ class UserModel {
         userFirstName: true,
         userPsswd: true,
         userPseudo: true,
-        userType: true,
         userIcon: true,
         grade: {
           select: {
             gradeId: true,
             gradeName: true,
+          },
+        },   
+        school: {
+          select: {
+            schoolId: true,
+            schoolName: true,
+            schoolRef: true,
           },
         },
         userGroups: {
@@ -44,10 +148,27 @@ class UserModel {
             }
           },
           orderBy: {
-            groupId: "asc",
+            principal: "desc",
           }
-        }
-      }
+        },
+        userRoles: {
+          select: {
+            roles: {
+              select: {
+                roleId: true,
+                roleName: true,
+              }
+            }
+          },
+          orderBy: {
+            roles: {
+              roleId: "asc",
+            }
+          }
+        },
+
+      },
+      
     });
 
     if (!userDatas) {
@@ -58,17 +179,23 @@ class UserModel {
       };
     }
 
-    // Séparer groupes principal et secondaire
-    const groupesPrincipaux = userDatas.userGroups.filter(g => g.principal).map(g => ({
-        groupId: g.group.groupId,
-        groupName: g.group.groupName,
-        principal: g.principal
-      }));
-    const groupesSecondaires = userDatas.userGroups.filter(g => !g.principal).map(g => ({
-        groupId: g.group.groupId,
-        groupName: g.group.groupName,
-        principal: g.principal
-      }));
+    //Reconstruire le tableau des groupes :
+    const groupes = userDatas.userGroups.map((g : UserGroupBdType) => ({
+      groupId : g.group.groupId,
+      groupName : g.group.groupName,
+      principal : g.principal
+    }));
+    // Séparer groupes principal et secondaire 
+    const groupesPrincipaux = groupes.filter((g : GroupInfoType) => g.principal)
+    const groupesSecondaires = groupes.filter((g : GroupInfoType) => !g.principal)
+
+    //construire le tableau des roles
+    const roles = userDatas.userRoles.map((r : any) => ({
+        roleId : r.roles.roleId,
+        roleName : r.roles.roleName,
+      }))
+    //définir le role actuel (role de plus bas niveau par défaut)
+    const roleAct = roles[0];
 
     // On reconstruit l'objet final
     const result = {
@@ -77,14 +204,12 @@ class UserModel {
       userFirstName:  userDatas.userFirstName,
       userPsswd:      userDatas.userPsswd,
       userPseudo:     userDatas.userPseudo,
-      userType:       userDatas.userType,
+      userRoles:      roles,
+      roleActivated : roleAct,
       userIcon:       userDatas.userIcon,
       grade:          userDatas.grade,              // correspond à GradeSchema
-      userGroups: userDatas.userGroups.map(g => ({
-        groupId: g.group.groupId,
-        groupName: g.group.groupName,
-        principal: g.principal
-      })),
+      userSchool : userDatas.school,
+      userGroups: groupes,
       groupsP : groupesPrincipaux,
       groupsS: groupesSecondaires,
     };
@@ -118,6 +243,24 @@ class UserModel {
         select: {
             userFamilyName: true,
             userFirstName : true,
+            userGroups :{
+              where :{
+                principal : true,
+              },
+              select : {
+                group : {
+                  select : {
+                    groupId : true,
+                    groupName : true,
+                    classroom : {
+                      select : {
+                        classroomRef : true
+                      }
+                    }
+                  }
+                }
+              }
+            },
             userLinks: {
               select: {
                 link: { // ✅ on accède aux données du lien à travers `link`
@@ -144,23 +287,389 @@ class UserModel {
         result: [],
       };
     }
-    if(userWithLinks.userLinks.length === 0) {
+
+    const myUserWithLinks = {
+      userFamilyName: userWithLinks.userFamilyName,
+      userFirstName: userWithLinks.userFirstName,
+      userClassroomRef : userWithLinks.userGroups[0].group.classroom?.classroomRef,
+      userLinks: userWithLinks.userLinks
+    }
+    if(myUserWithLinks.userLinks.length === 0) {
          return {
         message: "noLink",
         reponse: false,
-        result: userWithLinks,
+        result: myUserWithLinks,
       };
     }
     return {
       message: "Liste des liens récupérée avec succès",
       reponse: true,
-      result: userWithLinks,
+      result: myUserWithLinks,
     };
   } catch (error) {
     console.error("Erreur Prisma :", error);
     throw error;
   }
 }
+
+static async getUserLinksListByUserId(userId: number) {
+    try {
+      const userLinks = await prisma.user.findUnique({
+        where: {
+            userId: userId,
+        },
+        select: {
+          userLinks: {
+            select: {
+              link: { // ✅ on accède aux données du lien à travers `link`
+                select: {
+                  linkId: true,
+                  linkRedirection: true,
+                  linkIcon: true,
+                  linkTitleBr: true,
+                  linkTitleFr: true,
+                },
+              },
+            },
+            orderBy: {
+              linkId: "asc",
+            },
+          }
+        },
+      });
+
+      if (!userLinks) {
+        return {
+          message: "utilisateur introuvable",
+          reponse: null,
+          result: [],
+        };
+      }
+
+      if(userLinks.userLinks.length === 0) {
+        return {
+          message: "noLink",
+          reponse: false,
+          result: [],
+        };
+      }
+
+      const userLinksList = userLinks.userLinks.map((l : { link: LinkShortType }) => ({
+        linkId: l.link.linkId,
+        linkRedirection: l.link.linkRedirection,
+        linkIcon: l.link.linkIcon,
+        linkTitleBr: l.link.linkTitleBr,
+        linkTitleFr: l.link.linkTitleFr,
+      })); 
+
+
+    return {
+      message: "Liste des liens récupérée avec succès",
+      reponse: true,
+      result: userLinksList,
+    };
+  } catch (error) {
+    console.error("Erreur Prisma :", error);
+    throw error;
+  }
 }
+
+static async getStudentsListBySchool(schoolId: number) {
+  try {
+    const usersDatas  = await prisma.user.findMany({
+      where: { userRoles: { some: { roleId: 1 } }, schoolId: schoolId},
+      select: {
+        userId: true,
+        userFamilyName: true,
+        userFirstName: true,
+        grade: {
+          select: {
+            gradeId: true,
+            gradeName: true,
+          },
+        },
+        schoolId: true,
+        userGroups: {
+          select: {
+            principal: true,
+            group: {
+              select: {
+                groupId: true,
+                groupName: true,
+              }
+            }
+          },
+          orderBy: {
+            principal: "desc",
+          }
+        },
+      },
+      orderBy: [
+        {userFamilyName: "asc"},
+        {userFirstName: "asc"},
+      ],
+    });
+    if (!usersDatas) {
+      return {
+        message: "erreur dans la requête",
+        reponse: null,
+        result: [],
+      };
+    }
+    if(usersDatas.length === 0) {
+      return {
+        message: "Aucun élève trouvé",
+        reponse: false,
+        result: [],
+      };
+    }
+    return {
+      message: "Liste des élèves récupérée avec succès",
+      reponse: true,
+      result: usersDatas,
+    }
+  } catch (error) {
+    console.error("Erreur Prisma :", error);  
+    throw error;
+  }
+}
+
+static async getUserIdentity(userId: EntierPositifType) {
+  try {
+    const userDatas  = await prisma.user.findUnique({
+      where: { userId : userId},
+      select: {
+        userId: true,
+        userFamilyName: true,
+        userFirstName: true,
+        userPsswd: true,
+        userPseudo: true,
+        userIcon: true,
+        userMail: true,
+        grade: {
+          select: {
+            gradeId: true,
+            gradeName: true,
+          },
+        },
+        userGroups: {
+          select: {
+            principal: true,
+            group: {
+              select: {
+                groupId: true,
+                groupName: true,
+              }
+            }
+          },
+          orderBy: {
+            principal: "desc",
+          }
+        },
+        userRoles: {
+          select: {
+            roles: {
+              select: {
+                roleId: true,
+                roleName: true,
+              }
+            }
+          },
+          orderBy: {
+            roles: {
+              roleId: "asc",
+            }
+          }
+        },
+
+      },
+      
+    });
+    if (!userDatas) {
+      return ({
+        message: "user introuvable",
+        reponse: false,
+        result: null,
+      })
+    }
+
+    return ({
+      message: "user récupéré avec succès",
+      reponse: true,
+      result: userDatas,
+    })
+
+  }
+  catch (error) {
+    console.error("Erreur dans UserModel, getUserIdentity :", error);
+    throw error;
+  }
+}
+static async getUserMailById(userId: number) {
+  try {
+    const userDatas  = await prisma.user.findUnique({
+      where: { userId : userId},
+      select: { 
+        userMail: true,
+      },      
+    });
+
+    if (!userDatas) {
+      return {
+        message: "mail introuvable",
+        reponse: null,
+        result: "",
+      };
+    }
+
+    
+    //on valide les données avec Zod
+    const mailSchema = z.string().email();
+    const parsed = mailSchema.safeParse(userDatas.userMail);
+
+    if (!parsed.success) {
+      console.error("Validation Zod échouée :", parsed.error.errors);
+      throw new Error("Mail utilisateur invalide");
+    }
+
+    return {
+      message: "Mail récupéré avec succès",
+      reponse: true,
+      result: parsed.data,
+    };
+
+  } catch (error) {
+    console.error("Erreur Prisma :", error);
+    throw error;
+  }
+}
+
+static async  addStudentToGroup(groupId: EntierPositifType, userId: EntierPositifType, principal : boolean) {
+    try{
+      const action = await prisma.groupUser.create({
+        data: {
+          userId: userId,
+          groupId: groupId,
+          principal : principal,
+        },
+      });
+      if (!action) {
+        return ({message: "UserModel, addStudentToGroup, erreur", reponse : null, result: null})
+      }
+      return ({message: "réussite" ,reponse : true, result: action.userId});
+    }
+    catch (error) {
+      console.error("Erreur dans UserModel, addStudentToGroup, :", error);
+      throw error;
+    }    
+}
+
+static async removeStudentFromGroup(groupId: EntierPositifType, userId: EntierPositifType){
+  try {
+    const actionRemove = await prisma.groupUser.deleteMany({
+      where: {
+          userId: userId,
+          groupId: groupId
+        },
+    })
+    if(!actionRemove) {
+        return({message: "UserModel, removeStudentFromGroup, aucune association élève - groupe supprimée", reponse : null})
+      }
+      return({message: "association élève-group supprimée", reponse : true})
+    }
+    catch (error){
+      console.error("Erreur dans UserModel, removeStudentFromGroup :", error);
+      throw error;
+    }
+  }
+
+static async updateFamilyName(userId: EntierPositifType, userFamilyName: StringNameType) : Promise<EntierPositifType>{
+  try {
+    const updateFamilyName = await prisma.user.update({
+      data: {
+        userFamilyName: userFamilyName,
+      },
+      where: {
+          userId: userId
+        },
+      select: {
+        userId: true,
+      }
+    
+    })
+    if(!updateFamilyName) {
+        return(0)
+      }
+      return(updateFamilyName.userId)
+    }
+  catch (error){
+      console.error("Erreur dans UserModel, updateFamilyName :", error);
+      throw error;
+    }
+  }
+
+static async updateFirstName(userId: EntierPositifType, userFirstName: StringNameType) : Promise<EntierPositifType>{
+  try {
+    const updateFirstName = await prisma.user.update({
+      data: {
+        userFirstName: userFirstName,
+      },
+      where: {
+          userId: userId
+        },
+      select: {
+        userId: true,
+      }
+    
+    })
+    if(!updateFirstName) {
+        return(0)
+      }
+      return(updateFirstName.userId)
+    }
+  catch (error){
+      console.error("Erreur dans UserModel, updateFirstName :", error);
+      throw error;
+    }
+  }
+
+static async updateGrade(userId: EntierPositifType, gradeId: EntierPositifType) : Promise<{userId: EntierPositifType, grade: GradeType}>{
+  try {
+    const updateGrade = await prisma.user.update({
+      data: {
+        gradeId: gradeId,
+      },
+      where: {
+          userId: userId
+        },
+      select: {
+        userId: true,
+        grade: {
+          select: {
+            gradeId: true,
+            gradeName: true,
+          }
+        }
+      }
+    
+    })
+    if(!updateGrade || updateGrade.grade==null) {
+        return({userId: 0, grade: {gradeId: 0, gradeName: ""}})
+      }
+    const grade = updateGrade.grade;
+      return({
+        userId: updateGrade.userId,
+        grade,
+      })
+    }
+  catch (error){
+      console.error("Erreur dans UserModel, updateGrade :", error);
+      throw error;
+    }
+  }
+}
+
+
+
 
 export default UserModel;
