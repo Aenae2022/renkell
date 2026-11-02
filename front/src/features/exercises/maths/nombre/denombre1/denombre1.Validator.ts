@@ -14,9 +14,7 @@ export const denombre1Validator = (
     value : string,
     item : ExerciseGeneriqueItem<Denombre1ItemData>
 ) : ValidatorResult => {
-    const secureStr = DOMPurify.sanitize(value)
-
-    const clearResponse = Utilitaires.validInputString(secureStr)
+    const clearResponse = Utilitaires.validInputString(value)
     let result = {isCorrect : false, conseil:""}
     
     result = isCorrectResponse(clearResponse, item.correction.model)

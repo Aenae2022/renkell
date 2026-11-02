@@ -89,7 +89,7 @@ static async getUserIdentity(
     const parsed = UserDatasIdentitySchema.safeParse(result);
     
     if (!parsed.success) {
-        console.error("Validation Zod échouée :", parsed.error.errors);
+        console.error("Validation Zod échouée :", parsed.error.issues);
       res.status(200).json({ message: "Données utilisateur invalides", reponse: false, result: "Données utilisateur invalides" });
       return
     }

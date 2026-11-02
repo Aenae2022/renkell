@@ -160,12 +160,12 @@ export default class LinkModel {
     const parsed = LinksDataSchema.safeParse(myDatas);
     
     if (!parsed.success) {
-        console.error("Validation Zod échouée :", parsed.error.errors);
-        parsed.error.errors.forEach((e) => {
+        console.error("Validation Zod échouée :", parsed.error.issues);
+        parsed.error.issues.forEach((e) => {
           const value = e.path.reduce(
             (acc: unknown, key) =>
               acc !== null && typeof acc === "object"
-                ? (acc as Record<string | number, unknown>)[key]
+                ? ((acc as Record<PropertyKey, unknown>)[key] as unknown)
                 : undefined,
             myDatas as unknown
           );
@@ -261,7 +261,7 @@ export default class LinkModel {
     const parsed = LinksDataSchema.safeParse(myDatas);
     
     if (!parsed.success) {
-        console.error("Validation Zod échouée :", parsed.error.errors);
+        console.error("Validation Zod échouée :", parsed.error.issues);
         throw new Error("Données utilisateur invalides");
     }
     

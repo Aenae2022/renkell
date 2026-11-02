@@ -14,9 +14,7 @@ export const ecrireNombreValidator = (
     value : string,
     item : ExerciseGeneriqueItem<EcrireNombreItemData>
 ) : ValidatorResult => {
-    const secureStr = DOMPurify.sanitize(value)
-
-    const clearResponse = Utilitaires.validInputString(secureStr).toLowerCase()
+    const clearResponse = Utilitaires.validInputString(value).toLowerCase()
     let result = {isCorrect : false, conseil:""}
     
     if(item.typeQuestion === 1){
