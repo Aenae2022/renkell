@@ -184,7 +184,7 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
 
       const parsedPeriodDatas = PeriodSchema.safeParse(periodDatas);
       if (!parsedPeriodDatas.success) {
-        const messages = parsedPeriodDatas.error.errors.map(
+        const messages = parsedPeriodDatas.error.issues.map(
           (err) => err.message,
         );
         messages.forEach((msg) =>
@@ -276,7 +276,7 @@ function ParamsLibrary({ group }: ParamsLibraryProps) {
 
     const parsedNewPeriod = PeriodSchema.safeParse(newPeriod);
     if (!parsedNewPeriod.success) {
-      const messages = parsedNewPeriod.error.errors.map((err) => err.message);
+      const messages = parsedNewPeriod.error.issues.map((err) => err.message);
       messages.forEach((msg) =>
         notify("errorInputDate", t("library.paramsBox." + msg)),
       );

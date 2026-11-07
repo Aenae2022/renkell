@@ -1,7 +1,6 @@
 //classe pour ranger les méthodes utiles
 import type z from "zod";
 import { Matematik } from "./Matematik";
-import DOMPurify from "dompurify";
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale/fr';
 export class Utilitaires {
@@ -91,8 +90,7 @@ export class Utilitaires {
             .replace(/\s*'\s*/g, '\'')
             .replace(/\s*-\s*/g, '-')
             .trim()
-        const secureStr = DOMPurify.sanitize(cleanStr)
-        return secureStr
+        return cleanStr
     }
 
     //mise en forme des noms propres : majuscules en début de mot, espace, tiret, apostrophe

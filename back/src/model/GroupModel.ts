@@ -58,7 +58,7 @@ export default class GroupModel {
       const parsed = ClassroomRefSchema.safeParse(group?.classroom?.classroomRef);
 
       if (!parsed.success) {
-        console.error("Validation Zod échouée :", parsed.error.errors);
+        console.error("Validation Zod échouée :", parsed.error.issues);
         throw new Error("Données utilisateur invalides");
       }
 
@@ -190,7 +190,7 @@ export default class GroupModel {
       const parsed = UserMiniListSchema.safeParse(usersList);
 
       if (!parsed.success) {
-        console.error("Validation Zod échouée :", parsed.error.errors);
+        console.error("Validation Zod échouée :", parsed.error.issues);
         throw new Error("Données invalides");
       }
 

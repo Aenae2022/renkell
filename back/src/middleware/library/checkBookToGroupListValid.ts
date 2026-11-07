@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import LibraryModel from "@srcBack/model/LibraryModel";
 import { BookSchema, BookToGroupListSchema } from "@shared/schema/library.schema";
+import z from "zod";
 
-export const checkBookToGroupListValid = async(
-    req: Request,
-    res: Response,
-    next: NextFunction
+export const checkBookToGroupListValid = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
 
   const { book } = req.body;
@@ -14,14 +15,14 @@ export const checkBookToGroupListValid = async(
     return;
   }
 
-  
+
   // ✅ Validation avec Zod
   const result = BookToGroupListSchema.safeParse(book);
 
   if (!result.success) {
     res.status(400).json({
       message: "middleware checkBookToGroupListValid : Validation du book échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }
@@ -30,7 +31,7 @@ export const checkBookToGroupListValid = async(
   const validatedBook = result.data;
   req.body.book = validatedBook;
 
-    next();
-  }
+  next();
+}
 
-  export default checkBookToGroupListValid;
+export default checkBookToGroupListValid;

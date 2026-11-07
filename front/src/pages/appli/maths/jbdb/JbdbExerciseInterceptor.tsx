@@ -48,7 +48,6 @@ export function JbdbExerciseInterceptor() {
                                     return
                                 }
                                 setMyGroup(groupData.group)
-                                console.log("studentsList", groupData.studentsList)
                                 setMyStudents(groupData.studentsList)
                                 setMyComponent("connexion")
                                 setMyExercise(foundExercise)

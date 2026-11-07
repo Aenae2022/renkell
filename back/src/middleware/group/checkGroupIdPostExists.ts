@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import GroupModel from "@srcBack/model/GroupModel";
 import { EntierPositifSchema } from "@shared/schema/fields/entierPositif.schema";
+import z from "zod";
 
 export const checkGroupIdPostExists = async(
     req: Request,
@@ -18,7 +19,7 @@ export const checkGroupIdPostExists = async(
   if (!result.success) {
     res.status(400).json({
       message: "Validation du group échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }

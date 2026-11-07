@@ -20,7 +20,6 @@ type GeneralProps = {
 export function ListAssociated({ translationKey, groupsList, handleClose }: GeneralProps) {
     const { t } = useTranslation()
     const [workList, setWorkList] = useState(groupsList);
-    console.log('groupsList reçu dans listAssociated', groupsList)
     const handleSetWorkList = (groupId : number, isAssociated : boolean) => {
      setWorkList((previousList) =>
         previousList.map((group) =>{

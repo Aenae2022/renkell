@@ -96,7 +96,7 @@ static async getOthersTeacherList(userId: number, schoolId: number) {
     const parsed = UserMiniListSchema.safeParse(usersList);
 
     if (!parsed.success) {
-      console.error("Validation Zod échouée :", parsed.error.errors);
+      console.error("Validation Zod échouée :", parsed.error.issues);
       throw new Error("Données invalides");
     }
 
@@ -218,7 +218,7 @@ static async getOthersTeacherList(userId: number, schoolId: number) {
     const parsed = UserDatasConnectSchema.safeParse(result);
 
     if (!parsed.success) {
-      console.error("Validation Zod échouée :", parsed.error.errors);
+      console.error("Validation Zod échouée :", parsed.error.issues);
       throw new Error("Données utilisateur invalides");
     }
 
@@ -524,11 +524,11 @@ static async getUserMailById(userId: number) {
 
     
     //on valide les données avec Zod
-    const mailSchema = z.string().email();
+    const mailSchema = z.email();
     const parsed = mailSchema.safeParse(userDatas.userMail);
 
     if (!parsed.success) {
-      console.error("Validation Zod échouée :", parsed.error.errors);
+      console.error("Validation Zod échouée :", parsed.error.issues);
       throw new Error("Mail utilisateur invalide");
     }
 

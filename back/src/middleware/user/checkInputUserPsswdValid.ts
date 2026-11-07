@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { UserPseudoSchema } from "@shared/schema/user.schema";
 import { PasswordSchema, PasswordShortSchema } from "@shared/schema/fields/password.schema";
+import z from "zod";
 
 export const checkInputUserPsswdValid = async (
   req: Request,
@@ -19,7 +20,7 @@ export const checkInputUserPsswdValid = async (
   if (!result.success) {
     res.status(400).json({
       message: "le format du mot de passe est invalide",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }
@@ -48,10 +49,10 @@ export const checkInputUserPsswdShortValid = async (
   const result = PasswordShortSchema.safeParse(userPsswd);
 
   if (!result.success) {
-    console.error("le format du mot de passe est invalide checkInputUserPsswdShortValid", result.error.flatten().fieldErrors)
+    console.error("le format du mot de passe est invalide checkInputUserPsswdShortValid", z.flattenError(result.error).fieldErrors,)
     res.status(400).json({
       message: "le format du mot de passe est invalide",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }
