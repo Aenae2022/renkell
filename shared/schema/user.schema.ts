@@ -67,7 +67,7 @@ export const UserDatasIdentitySchema = z.object({
   userId: z.number().int(),
   userFamilyName: StringNameSchema,
   userFirstName: StringNameSchema,
-  userMail: z.string().email().nullable(),
+  userMail: z.email().nullable(),
   userPsswd: BcryptHashSchema.nullable(),
   userPseudo: StringShortRefSchema.nullable(),
   userRoles : z.array(UserRoleSchema),

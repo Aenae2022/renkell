@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import LibraryModel from "@srcBack/model/LibraryModel";
 import { BookToGroupListSchema } from "@shared/schema/library.schema";
+import z from "zod";
 
-export const checkBookToGroupListExists = async(
-    req: Request,
-    res: Response,
-    next: NextFunction
+export const checkBookToGroupListExists = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
 
   const { book } = req.body;
@@ -20,7 +21,7 @@ export const checkBookToGroupListExists = async(
   if (!result.success) {
     res.status(400).json({
       message: "Middleware checkBookToGroupListExists : Validation du book échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }
@@ -30,12 +31,12 @@ export const checkBookToGroupListExists = async(
   req.body.book = validatedBook;
 
   const bookIdExists = await LibraryModel.doesBookIdExist(validatedBook.bookId);
-    if (!bookIdExists) {
-      res.status(404).json({ message: "Middleware checkBookToGroupListExists : livre introuvable" });
-      return
-    }
-  
-    next();
+  if (!bookIdExists) {
+    res.status(404).json({ message: "Middleware checkBookToGroupListExists : livre introuvable" });
+    return
   }
 
-  export default checkBookToGroupListExists;
+  next();
+}
+
+export default checkBookToGroupListExists;

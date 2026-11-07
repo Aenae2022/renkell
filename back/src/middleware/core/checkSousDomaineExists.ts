@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StringNameGroupSchema } from "@shared/schema/fields/stringNameGroup.schema";
 import SousDomaineModel from "@srcBack/model/SousDomaineModel";
+import z from "zod";
 
 export const checkSousDomaineExists = async(
     req: Request,
@@ -19,7 +20,7 @@ export const checkSousDomaineExists = async(
   if (!result.success) {
     res.status(400).json({
       message: "Validation ZOD du sous-domaine échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }

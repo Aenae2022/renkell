@@ -524,7 +524,7 @@ static async getUserMailById(userId: number) {
 
     
     //on valide les données avec Zod
-    const mailSchema = z.string().email();
+    const mailSchema = z.email();
     const parsed = mailSchema.safeParse(userDatas.userMail);
 
     if (!parsed.success) {

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import LibraryModel from "@srcBack/model/LibraryModel";
 import { EntierPositifSchema } from "@shared/schema/fields/entierPositif.schema";
+import z from "zod";
 
 export const checkBookIdExists = async(
     req: Request,
@@ -20,7 +21,7 @@ export const checkBookIdExists = async(
   if (!result.success) {
     res.status(400).json({
       message: "middleware checkBookIdExists : Validation zod du bookId échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }

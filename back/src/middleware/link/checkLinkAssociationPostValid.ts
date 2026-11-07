@@ -25,10 +25,10 @@ export const checkLinkAssociationPostValid = async(
     res.status(400).json({
       message: "Validation des paramètres échouée",
       errors: {
-            refId: zRefId.error?.flatten().fieldErrors,
-            linkId: zLinkId.error?.flatten().fieldErrors,
-            type: zType.error?.flatten().fieldErrors,
-            operation: zOperation.error?.flatten().fieldErrors,
+            refId: zRefId.error ? z.flattenError(zRefId.error).fieldErrors : undefined,
+            linkId: zLinkId.error?z.flattenError(zLinkId.error).fieldErrors : undefined,
+            type: zType.error?z.flattenError(zType.error).fieldErrors : undefined,
+            operation: zOperation.error?z.flattenError(zOperation.error).fieldErrors : undefined,
         },
     });
     return;

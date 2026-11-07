@@ -1,5 +1,4 @@
 import { Utilitaires } from "@utils/Utilitaires";
-import DOMPurify from "dompurify";
 import type { ExerciseGeneriqueItem } from "@srcFront/features/exercises/core/exerciseGenerique.type";
 import type { EcrireNombreItemData } from "./ecrireNombre.type";
 // import type { EcrireNombreExerciseData } from "./ecrireNombre.type";

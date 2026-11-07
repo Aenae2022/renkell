@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import GroupModel from "@srcBack/model/GroupModel";
 import { EntierPositifSchema } from "@shared/schema/fields/entierPositif.schema";
+import z from "zod";
 
 export const checkAssociationUserGroupValid = async (
   req: Request,
@@ -24,7 +25,7 @@ export const checkAssociationUserGroupValid = async (
   if (!resultGroup.success) {
     res.status(400).json({
       message: "Validation du group échouée",
-      errors: resultGroup.error.flatten().fieldErrors,
+      errors: z.flattenError(resultGroup.error).fieldErrors,
     });
     return;
   }
@@ -32,7 +33,7 @@ export const checkAssociationUserGroupValid = async (
   if (!resultUser.success) {
     res.status(400).json({
       message: "Validation de l'utilisateur échouée",
-      errors: resultUser.error.flatten().fieldErrors,
+      errors: z.flattenError(resultUser.error).fieldErrors,
     });
     return;
   }

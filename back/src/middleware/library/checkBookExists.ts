@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import LibraryModel from "@srcBack/model/LibraryModel";
 import { BookSchema } from "@shared/schema/library.schema";
+import z from "zod";
 
 export const checkBookExists = async(
     req: Request,
@@ -20,7 +21,7 @@ export const checkBookExists = async(
   if (!result.success) {
     res.status(400).json({
       message: "Validation du book échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }

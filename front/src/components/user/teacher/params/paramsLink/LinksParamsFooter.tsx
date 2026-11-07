@@ -52,7 +52,7 @@ function LinksParamsFooter({ usersList }: { usersList: UserMiniType[] }) {
       setMessageSend(t("userParamsLinks.ask.noLink"));
       return;
     }
-    const urlSchema = z.string().url();
+    const urlSchema = z.url();
     const zUrl = Utilitaires.validateStringWithZodSchema(userUrl, urlSchema);
 
     if (zUrl === null) {

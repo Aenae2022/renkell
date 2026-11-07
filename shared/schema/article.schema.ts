@@ -8,15 +8,15 @@ export const ArticleSchema = z.object({
   color: StringNameSchema,
   titleKey: z.string(),
   descriptionKey: z.string(),
-  logoSrc: z.string().url(),
+  logoSrc: z.url(),
   logoAlt: z.string(),
   languages: z.array(z.string()),
-  createdAt: z.string().datetime(),
+  createdAt: z.iso.datetime(),
   links: z.array(
     z.object({
       index: z.number(),
       label: z.string(),
-      url: z.string().url(),
+      url: z.url(),
     })
   ),
   domaineId: StringNameSchema,

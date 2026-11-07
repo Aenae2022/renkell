@@ -1,13 +1,14 @@
 import { BooleanSchema } from "@shared/schema/fields/boolean.schema";
 import { NextFunction, Request, Response } from "express";
+import z from "zod";
 
-export const checkPrincipalGroup = async(
-    req: Request,
+export const checkPrincipalGroup = async (
+  req: Request,
   res: Response,
   next: NextFunction
-) : Promise<void>=>{
-    const { principal } = req.body;
-    if (principal === undefined || principal === null) {
+): Promise<void> => {
+  const { principal } = req.body;
+  if (principal === undefined || principal === null) {
     res.status(400).json({ message: "checkPrincipalGroup, donnée manquante" });
     return;
   }
@@ -18,12 +19,12 @@ export const checkPrincipalGroup = async(
   if (!result.success) {
     res.status(400).json({
       message: "checkPrincipalGroup Validation échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }
 
-    next();
-  }
+  next();
+}
 
-  export default checkPrincipalGroup;
+export default checkPrincipalGroup;

@@ -1,18 +1,19 @@
 import { LocationsSchema, PeriodSchema } from "@shared/schema/library.schema";
 import LibraryModel from "@srcBack/model/LibraryModel";
 import { NextFunction, Request, Response } from "express";
+import z from "zod";
 
 
-export const checkPeriodLocationsValid = async(
-    req: Request,
-    res: Response,
-    next: NextFunction
+export const checkPeriodLocationsValid = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
 
   const { period, locations } = req.body;
   if (period === undefined || period === null) {
     res.status(400).json({ message: "middleware checkPeriodLocationsValid : période manquante", });
-    
+
     return;
   }
   if (locations === undefined || locations === null) {
@@ -25,7 +26,7 @@ export const checkPeriodLocationsValid = async(
   if (!parsePeriod.success) {
     res.status(400).json({
       message: "Middleware checkPeriodLocationsValid : Validation de la période échouée",
-      errors: parsePeriod.error.flatten().fieldErrors,
+      errors: z.flattenError(parsePeriod.error).fieldErrors,
     });
     return;
   }
@@ -36,19 +37,19 @@ export const checkPeriodLocationsValid = async(
       message: "Middleware checkPeriodLocationsValid : Pas de période correspondante en bd",
     });
     return;
-}
+  }
 
   const parseLocations = LocationsSchema.safeParse(locations);
   if (!parseLocations.success) {
     res.status(400).json({
       message: "Middleware checkPeriodLocationsValid : Validation des locations échouée",
-      errors: parseLocations.error.flatten().fieldErrors,
+      errors: z.flattenError(parseLocations.error).fieldErrors,
     });
     return;
   }
 
-  
-    next();
-  }
 
-  export default checkPeriodLocationsValid;
+  next();
+}
+
+export default checkPeriodLocationsValid;

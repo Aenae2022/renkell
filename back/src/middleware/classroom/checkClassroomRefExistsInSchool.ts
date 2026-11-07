@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import ClassroomModel from "../../model/ClassroomModel";
 import { ClassroomRefSchema } from "@shared/schema/classroom.schema";
+import { z } from "zod";
 export const checkClassroomRefExists = async(
     req: Request,
   res: Response,
@@ -19,7 +20,7 @@ export const checkClassroomRefExists = async(
   if (!result.success) {
     res.status(400).json({
       message: "Validation de la salle de classe échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }

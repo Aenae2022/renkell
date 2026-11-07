@@ -15,7 +15,7 @@ export const LinkShortSchema = z.object({
 
 export const LinkExerciseShortSchema = z.object({
   linkId: StringNameSchema,
-  linkRedirection: z.string().url(),
+  linkRedirection: z.url(),
   linkIcon: StringNamePictureSchema,
   linkTitleBr: StringNameTitleSchema,
   linkTitleFr: StringNameTitleSchema,
@@ -31,7 +31,7 @@ export const LinkDataSchema = z.object(
     linkName: StringShortRefSchema,
     titleFr: StringNameTitleSchema.nullable(),
     titleBr: StringNameTitleSchema.nullable(),
-    redirection: z.string().url(),
+    redirection: z.url(),
     icon: StringNamePictureSchema,
     fullnameFr: z.string().nullable(),
     fullnameBr: StringNameTitleSchema.nullable(),
