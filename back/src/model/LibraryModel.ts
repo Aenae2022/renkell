@@ -275,16 +275,6 @@ export default class LibraryModel {
 
       listBookProposition.forEach((book) => {
         //validation zod
-        const parsedTitle = StringNameTitleSchema.safeParse(book.bookTitle);
-
-        if (!parsedTitle.success) {
-          console.log("Titre rejeté :", JSON.stringify(book.bookTitle));
-          console.log(
-            "Regex directe :",
-            /^[\p{L}0-9'’\-–°,%:@.!?()\/ ]+$/u.test(book.bookTitle)
-          );
-          console.log("Erreur :", parsedTitle.error.issues);
-        }
         const parsedBook = BookLibraryShortSchema.safeParse(book);
         if (!parsedBook.success) {
           console.error("Erreur de validation Zod LibraryModel GetfilteredProposition :", parsedBook.error);
