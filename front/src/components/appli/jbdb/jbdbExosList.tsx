@@ -8,11 +8,13 @@ import { materCM1S2ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM
 import { materCM1S3ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S3";
 import { materCM1S4ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S4";
 import { materCM1S5ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S5";
+import { materCM1S6ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S6";
 import { materCM2S1ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S1";
 import { materCM2S2ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S2";
 import { materCM2S3ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S3";
 import { materCM2S4ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S4";
 import { materCM2S5ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S5";
+import { materCM2S6ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S6";
 
 
 export const jbdbExosList = [
@@ -94,6 +96,11 @@ export const jbdbExosList = [
             //séquence 5
             subCategory: "matercm1sequence5",
             exercises: materCM1S5ExerciseIds,
+          },
+          {
+            //séquence 6
+            subCategory: "matercm1sequence6",
+            exercises: materCM1S6ExerciseIds,
           }
         ]
       },
@@ -124,6 +131,11 @@ export const jbdbExosList = [
             //séquence 5
             subCategory: "matercm2sequence5",
             exercises: materCM2S5ExerciseIds,
+          },
+          {
+            //séquence 6
+            subCategory: "matercm2sequence6",
+            exercises: materCM2S6ExerciseIds,
           }
         ]
       },

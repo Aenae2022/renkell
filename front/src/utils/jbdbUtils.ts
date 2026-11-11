@@ -97,8 +97,9 @@ export class JbdbUtils {
             });
         const shuffleDecomposition = Utilitaires.shuffleArray(tableauQuestion)
         const question = shuffleDecomposition.join(' + ') + ' = ? '
-        return {question : question,
-            resultats : [{texte:"", valeurRep:nombreAtrouver}]
+        return {
+            question: question,
+            resultats: [{ texte: "", valeurRep: nombreAtrouver }]
         }
 
     }
@@ -109,8 +110,8 @@ export class JbdbUtils {
         const nombreAtrouver = Matematik.entierAleatoire(borneMin, borneMax)
         const decomposition = Matematik.genereDecomposition100min(nombreAtrouver)
         const exps = [1, 10, 100, 1_000, 10_000, 100_000, 1_000_000, 10_000_000, 100_000_000, 1_000_000_000, 10_000_000_000, 100_000_000_000]
-        const lgBr = ["u", "d", "k", "mil", "d mil", "k mil", "milion","d milion", "k milion", "miliard", "d miliard", "k miliard"]
-        const lgFr = ["u", "d", "c", "mille", "d mille", "c mille", "million","d million", "c million", "milliard", "d milliard", "c milliard"]
+        const lgBr = ["u", "d", "k", "mil", "d mil", "k mil", "milion", "d milion", "k milion", "miliard", "d miliard", "k miliard"]
+        const lgFr = ["u", "d", "c", "mille", "d mille", "c mille", "million", "d million", "c million", "milliard", "d milliard", "c milliard"]
         const lgUse = lg === "Fr" ? lgFr : lgBr
         const tableauQuestion = decomposition
             .filter((item) => item.nb !== 0)
@@ -119,8 +120,9 @@ export class JbdbUtils {
                 return `${item.nb} ${lgUse[index]}`;
             });
         const question = tableauQuestion.join(' + ') + ' = ? '
-        return {question : question,
-            resultats : [{texte:"", valeurRep:nombreAtrouver}]
+        return {
+            question: question,
+            resultats: [{ texte: "", valeurRep: nombreAtrouver }]
         }
 
     }
@@ -204,7 +206,7 @@ export class JbdbUtils {
     }
 
     //compléments
-    static complement(nbmax: number, nbmin: number, pasNombre: number,   rangComplement: number)
+    static complement(nbmax: number, nbmin: number, pasNombre: number, rangComplement: number)
         : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1temp = Matematik.entierAleatoire(nbmin, nbmax);
         const nombre1 = Math.floor(nombre1temp / (pasNombre)) * pasNombre;
@@ -215,7 +217,7 @@ export class JbdbUtils {
         return { question, resultats };
     }
 
-    static complementInvert(nbmax: number, nbmin: number, pasNombre: number,   rangComplement: number)
+    static complementInvert(nbmax: number, nbmin: number, pasNombre: number, rangComplement: number)
         : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1temp = Matematik.entierAleatoire(nbmin, nbmax);
         const nombre1 = Math.floor(nombre1temp / (pasNombre)) * pasNombre;
@@ -249,10 +251,10 @@ export class JbdbUtils {
     }
 
     //table de multiplication
-    static tableMultiArray(nb1max: number, nb1min: number, nbs2 : number[])
+    static tableMultiArray(nb1max: number, nb1min: number, nbs2: number[])
         : { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
-        const indice2 = Matematik.entierAleatoire(0, nbs2.length-1)
+        const indice2 = Matematik.entierAleatoire(0, nbs2.length - 1)
         const nombre2 = nbs2[indice2];
         const reponse = nombre1 * nombre2;
         const mixTerme = this.melange(nombre1, nombre2);
@@ -273,7 +275,7 @@ export class JbdbUtils {
     }
     static tableMultiTrouArray(nb1max: number, nb1min: number, nbs2: number[]): { question: string; resultats: { texte: string; valeurRep: number }[] } {
         const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
-        const indice2 = Matematik.entierAleatoire(0, nbs2.length-1);
+        const indice2 = Matematik.entierAleatoire(0, nbs2.length - 1);
         const nombre2 = nbs2[indice2]
         const reponse = nombre1 * nombre2;
         const question = nombre1 + " x ? = " + reponse;
@@ -296,16 +298,77 @@ export class JbdbUtils {
     //multiplier par un multiple de 10
     static multi210(nb1max: number, nb1min: number, nb2max: number, nb2min: number, valexpMax: number)
         : { question: string; resultats: { texte: string; valeurRep: number }[] } {
-            const valExp1 =  Matematik.entierAleatoire(1,valexpMax);
-            const nombre1 = Matematik.entierAleatoire(nb1min, nb1max) * Math.pow(10,valExp1);
-            const expMax2 = 4-valExp1
-            const valExp2 =  Matematik.entierAleatoire(1,expMax2);
-        const nombre2 = Matematik.entierAleatoire(nb2min, nb2max) * Math.pow(10,valExp2);
+        const valExp1 = Matematik.entierAleatoire(1, valexpMax);
+        const nombre1 = Matematik.entierAleatoire(nb1min, nb1max) * Math.pow(10, valExp1);
+        const expMax2 = 4 - valExp1
+        const valExp2 = Matematik.entierAleatoire(1, expMax2);
+        const nombre2 = Matematik.entierAleatoire(nb2min, nb2max) * Math.pow(10, valExp2);
         const reponse = nombre1 * nombre2;
         const mixTerme = this.melange(nombre1, nombre2);
         const question = mixTerme.nbre1 + " x " + mixTerme.nbre2 + " = ?";
         const resultats = [{ texte: "", valeurRep: reponse }];
         return { question, resultats };
+    }
+
+    //multiplier deux entiers à 2 chiffres
+    static multiduxdu(
+        nb1max: number,
+        nb1min: number,
+        nb2max: number,
+        nb2min: number
+    ): {
+        question: string;
+        resultats: { texte: string; valeurRep: number }[];
+        solutionsAlternatives?: number[][];
+    } {
+
+        const nombre1 = Matematik.entierAleatoire(nb1min, nb1max);
+        const nombre2 = Matematik.entierAleatoire(nb2min, nb2max);
+
+        const dizaine1 = Math.floor(nombre1 / 10) * 10;
+        const unite1 = nombre1 % 10;
+        const dizaine2 = Math.floor(nombre2 / 10) * 10;
+        const unite2 = nombre2 % 10;
+
+        const reponse = nombre1 * nombre2;
+
+        const solutions = [
+            [nombre1, dizaine2, nombre1, unite2,
+                nombre1 * dizaine2, nombre1 * unite2, reponse],
+
+            [dizaine2, nombre1, unite2, nombre1,
+                nombre1 * dizaine2, nombre1 * unite2, reponse],
+
+            [nombre2, dizaine1, nombre2, unite1,
+                nombre2 * dizaine1, nombre2 * unite1, reponse],
+
+            [dizaine1, nombre2, unite1, nombre2,
+                nombre2 * dizaine1, nombre2 * unite1, reponse],
+        ];
+
+        const mixTerme = this.melange(nombre1, nombre2);
+        const question = mixTerme.nbre1 + " x " + mixTerme.nbre2 + " = ?";
+
+        const textes = [
+            "( ",
+            " x ",
+            " ) + ( ",
+            " x ",
+            " = ",
+            " + ",
+            " = ",
+        ];
+
+        const resultats = solutions[0].map((valeurRep, index) => ({
+            texte: textes[index],
+            valeurRep,
+        }));
+
+        return {
+            question,
+            resultats,
+            solutionsAlternatives: solutions.slice(1),
+        };
     }
 
     //diviser par un multiple de 10 résultat entier

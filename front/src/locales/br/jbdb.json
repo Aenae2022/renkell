@@ -28,10 +28,12 @@
             "matercm1sequence3": "sekañs 3 : dilemel gant un niver un sifr ennañ",
             "matercm1sequence4": "sekañs 4 : klokaat ar c'hantadoù",
             "matercm1sequence5": "sekañs 5 : taolioù liesaat 2 3 4 5 10",
+            "matercm1sequence6": "sekañs 6 : taolioù liesaat 2 3 4 5 6 10",
             "matercm2sequence2": "sekañs 2 : emgefrekaat doareoù jediñ",
             "matercm2sequence3": "sekañs 3 : Sammañ pe dilemel 18, 19, 28, 29, 38, 39, ...",
             "matercm2sequence4": "sekañs 4 : Taolioù liesaat x5 x10",
-            "matercm2sequence5": "sekañs 5 : Liesaat daou lieskement 10"
+            "matercm2sequence5": "sekañs 5 : Liesaat daou lieskement 10",
+            "matercm2sequence6": "sekañs 6 : Liesaat daou niver etre 12 ha 49"
         },
         "buttons": {
             "jbdb-add-all": "an holl",
@@ -120,9 +122,11 @@
             "jbdb-matercm1-0202": "Sammañ pe dilemel 10, 20, 30, 40 ...",
             "jbdb-matercm1-0301": "dilemel gant un niver un sifr ennañ",
             "jbdb-matercm1-0501": "Taolioù liesaat 2 3 4 5 10",
+            "jbdb-matercm1-0601": "Taolioù liesaat 2 3 4 5 6 10",
             "jbdb-matercm2-0201": "Emgefrekaat doareoù jediñ",
             "jbdb-matercm2-0301": "Sammañ pe dilemel 18, 19, 28, 29, 38, 39, ... ",
-            "jbdb-matercm2-0501":"Liesaat daou lieskement 10"
+            "jbdb-matercm2-0501": "Liesaat daou lieskement 10",
+            "jbdb-matercm2-0601": "Liesaat daou niver etre 12 ha 49"
         },
         "printButton": "Enrollañ"
     }

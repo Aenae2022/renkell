@@ -8,6 +8,7 @@ export type JbdbExerciseResult = {
 export type JbdbGeneratedQuestion = {
   question: string;
   resultats: JbdbExerciseResult[];
+  solutionsAlternatives?: number[][];
 };
 
 export type JbdbExerciseType = {
@@ -44,6 +45,7 @@ export type JbdbExerciseAttemptDataType = {
 export type JbdbItemType = {
       question: string;
       resultats: { texte: string; valeurRep: number }[];
+      solutionsAlternatives?: number[][];
       reponses: (string | number)[][];
       indexCalcul: number;
       validation: boolean;

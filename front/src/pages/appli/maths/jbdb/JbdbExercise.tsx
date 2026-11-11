@@ -5,7 +5,7 @@ import MaJbdbdArdoise from "@components/appli/jbdb/MaJbdbArdoise";
 import MaJbdbdModele from "@components/appli/jbdb/MaJbdbModele";
 import MaJbdbResult from "@components/appli/jbdb/MaJbdbResult";
 import { type UserMiniType } from "@shared/schema/user.schema";
-import type { JbdbExerciseType } from "@components/appli/jbdb/exercises/exercises.types";
+import type { JbdbExerciseType, JbdbItemType } from "@components/appli/jbdb/exercises/exercises.types";
 import type { GroupMiniType } from "@shared/schema/group.schema";
 
 type JbdbExerciseProps = {
@@ -42,13 +42,7 @@ export function JbdbExercise({user, exercise, group} : JbdbExerciseProps) {
   }, []);
   const [modele, setModele] = useState(defaultExercise);
   const [items, setItems] = useState<
-    {
-      question: string;
-      resultats: { texte: string; valeurRep: number }[];
-      reponses: (string | number)[][];
-      indexCalcul: number;
-      validation: boolean;
-    }[]
+    JbdbItemType[]
   >([]);
 
   const [itemSelected, setItemSelected] = useState(0);
@@ -110,10 +104,12 @@ export function JbdbExercise({user, exercise, group} : JbdbExerciseProps) {
         texte: string;
         valeurRep: number;
       }[];
+      solutionsAlternatives?: number[][];
     };
   }): {
     question: string;
     resultats: { texte: string; valeurRep: number }[];
+    solutionsAlternatives?: number[][];
     reponses: (string | number)[][];
     indexCalcul: number;
     validation: boolean;
@@ -125,10 +121,12 @@ export function JbdbExercise({user, exercise, group} : JbdbExerciseProps) {
       const infos = modele.calculAGenerer();
       const question = infos.question;
       const resultats = infos.resultats;
+      const solutionsAlternatives = infos.solutionsAlternatives;
 
       const newCalcul = {
         question: question,
         resultats: resultats,
+        solutionsAlternatives: solutionsAlternatives,
         reponses: [[]],
         indexCalcul: i,
         validation: false,
