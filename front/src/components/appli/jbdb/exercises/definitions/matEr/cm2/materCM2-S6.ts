@@ -6,7 +6,7 @@ const createMaterCM2S6Exercise = (): JbdbExerciseType => {
       exId: `jbdb-matercm2-0601`,
       translationId: `jbdb-matercm2-0601`,
       description: "Liesaat daou niver",
-      shortTitle: `S1}`,
+      shortTitle: `S1`,
       exampleQuestion: "32 x 21 = (32x20) + (32x1) = 640 + 32 = 672",
       logo: "exercice/calcul/multiplier.png",
       duration: 180,
@@ -30,7 +30,7 @@ const createMaterCM2S6Exercise = (): JbdbExerciseType => {
     }
 };
 
-export const materCM2S6Exercises: JbdbExerciseType[] = Array.from({ length: 4 }, (_,  ) => createMaterCM2S6Exercise());
+export const materCM2S6Exercises: JbdbExerciseType[] = Array.from({ length: 1 }, (_,  ) => createMaterCM2S6Exercise());
 
  
 
