@@ -1,5 +1,5 @@
 import { type EntierPositifType } from "@shared/schema/fields/entierPositif.schema";
-
+import type { ObjectifCompetenceId } from "@shared/src/referentiels/calculMental";
 export type JbdbExerciseResult = {
   texte: string;
   valeurRep: number;
@@ -9,6 +9,7 @@ export type JbdbGeneratedQuestion = {
   question: string;
   resultats: JbdbExerciseResult[];
   solutionsAlternatives?: number[][];
+  objectifs?: ObjectifCompetenceId[];
 };
 
 export type JbdbExerciseType = {

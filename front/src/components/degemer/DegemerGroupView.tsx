@@ -9,6 +9,7 @@ export function DegemerGroupView({ datas }: { datas: ResultatGroup }) {
     const handleClickLink = (redirection: string) => {
         window.open(redirection, "_blank", "noreferrer");
     };
+    console.log("dataExercises", datas.groupExerciseLinks);
 
     return <div className="flex flex-wrap justify-around ">
         {datas.groupWithLinks.groupLinks.map((link) => {

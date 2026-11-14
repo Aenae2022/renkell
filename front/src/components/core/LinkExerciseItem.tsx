@@ -1,4 +1,5 @@
 import { type LinkExerciseShortType } from "@shared/schema/link.schema";
+import { useTranslation } from "react-i18next";
 
 function LinkExerciseItem({
   link,
@@ -10,6 +11,7 @@ function LinkExerciseItem({
   handleClick: (redirection: string) => void;
 }) {
   let titleLinkButton = "";
+  const {t} = useTranslation();
   switch (actualLng) {
     case "fr":
       titleLinkButton =
@@ -30,17 +32,18 @@ function LinkExerciseItem({
             align-text-bottom text-m text-black
             border-r-4 border-b-4 border-gray-700 rounded-[10px] 
             `}
+          onClick={() => handleClick(link.linkRedirection)}
     >
       <div className="flex-1 flex items-center justify-center overflow-hidden">
         <img
-          className="w-full h-full object-contain rounded-xl"
+          className="w-full min-w-[80px] h-full min-h-[76px] object-contain rounded-xl"
           alt="logoSite"
           src={link.linkIcon}
           onClick={() => handleClick(link.linkRedirection)}
         />
       </div>
       <p className="text-center px-1 text-sm whitespace-pre-wrap">
-        {titleLinkButton}
+        {t(`jbdb.exercise.description.${link.linkId}`)}
       </p>
     </div>
   );

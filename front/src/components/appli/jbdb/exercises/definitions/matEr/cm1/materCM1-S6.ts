@@ -35,7 +35,7 @@ const createMaterCM1S6Exercise = (): JbdbExerciseType => {
     }
 };
 
-export const materCM1S6Exercises: JbdbExerciseType[] = Array.from({ length: 4 }, (_, ) => createMaterCM1S6Exercise());
+export const materCM1S6Exercises: JbdbExerciseType[] = Array.from({ length: 1 }, (_, ) => createMaterCM1S6Exercise());
 
  
 

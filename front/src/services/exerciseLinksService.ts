@@ -18,8 +18,8 @@ export function prepareExerciseLinks(exerciseLinks: ExerciseLinkDatasType[], tok
                             linkId: myExercise.exId,
                             linkRedirection: `${window.location.origin}/jbdb/${myExercise.exId}?token=${token}`,
                             linkIcon: LogoJbdb,
-                            linkTitleBr: `Jed buan dre benn : ${myExercise.description}`,
-                            linkTitleFr: `Calcul contre la montre : ${myExercise.shortTitle}`,
+                            linkTitleBr: `${myExercise.description}`,
+                            linkTitleFr: `${myExercise.description}`,
                             domaine: 'mathematiques',
                             sousDomaine: 'calculmental'
                         }

@@ -1,13 +1,14 @@
 import { Matematik } from "@utils/Matematik";
 import type { JbdbExerciseType } from "../../../exercises.types";
 import { JbdbUtils } from "@utils/jbdbUtils";
+import type { ObjectifCompetenceId } from "@shared/src/referentiels/calculMental/types";
 
-const createMaterCM1S1Exercise = (nb: number): JbdbExerciseType => {
+const createMaterCM1S1Exercise = (): JbdbExerciseType => {
   return {
-      exId: `jbdb-matercm1-010${nb}`,
+      exId: `jbdb-matercm1-0101`,
       translationId: `jbdb-matercm1-0101`,
       description: "taolioù liesaat",
-      shortTitle: `S${nb}`,
+      shortTitle: `S1`,
       exampleQuestion: "5 x ? = 10",
       logo: "exercice/calcul/multiplier.png",
       duration: 180,
@@ -18,6 +19,8 @@ const createMaterCM1S1Exercise = (nb: number): JbdbExerciseType => {
       : {
         question: string;
         resultats: { texte: string; valeurRep: number }[];
+        solutionsAlternatives?: number[][];
+        objectifs?: ObjectifCompetenceId[];
       } {
           //tables de multiplication avec(2/3) ou sans trou (1/3)
           const nb1max = 9;
@@ -28,16 +31,16 @@ const createMaterCM1S1Exercise = (nb: number): JbdbExerciseType => {
       
           if (variableQuestion < 3) {
             const {question, resultats} = JbdbUtils.tableMulti(nb1max, nb1min, nb2max, nb2min);
-            return { question, resultats };
+            return { question, resultats, objectifs: ["memoriser-tables-multiplication"], };
           } 
                         
           const {question, resultats} = JbdbUtils.tableMultiTrou(nb1max, nb1min, nb2max, nb2min);
-          return { question, resultats };
+          return { question, resultats, objectifs:  ["memoriser-tables-multiplication"], };
       },
     }
 };
 
-export const materCM1S1Exercises: JbdbExerciseType[] = Array.from({ length: 4 }, (_, i) => createMaterCM1S1Exercise(i + 1));
+export const materCM1S1Exercises: JbdbExerciseType[] = Array.from({ length: 1 }, (_, ) => createMaterCM1S1Exercise());
 
  
 

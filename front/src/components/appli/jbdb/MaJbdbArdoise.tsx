@@ -49,18 +49,6 @@ export function MaJbdbdArdoise({
     for (let i = 0; i < myAnswers.length; i++) {
       if (myAnswers[i] !== "") {
         validformatAnswers.push(parseInt(myAnswers[i]));
-        // validformatAnswers.push(answerVerif);
-
-        // if (i === 0 || validationResult == true) {
-        //   if (answerVerif === items[itemSelected].resultats[i].valeurRep) {
-        //     validationResult = true;
-        //   } else {
-        //     validationResult = false;
-        //   }
-        // }
-        // if (answerVerif === items[itemSelected].resultats[i].valeurRep) {
-        //   nextItems[itemSelected].validation = true;
-        // }
       }
     }
 
@@ -95,17 +83,6 @@ export function MaJbdbdArdoise({
     } else {
       handleFinish();
     }
-    // if (validformatAnswers.length !== 0) {
-    //   nextItems[itemSelected].reponses.push(validformatAnswers);
-    //   nextItems[itemSelected].validation = validationResult;
-    // }
-    // 
-    // const nextIndex = itemToShow(itemSelected, items);
-    // if (nextIndex[1]) {
-    //   setItemSelected(nextIndex[0]);
-    // } else {
-    //   handleFinish(); // Si tous les éléments sont validés, on appelle la fonction de fin de réalisation
-    // }
   }
 
   function itemToShow(
