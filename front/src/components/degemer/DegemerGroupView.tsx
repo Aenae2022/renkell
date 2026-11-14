@@ -27,7 +27,6 @@ export function DegemerGroupView({ datas }: { datas: ResultatGroup }) {
                 <LinkExerciseItem
                     key={link.linkId}
                     link={link}
-                    actualLng={actualLng}
                     handleClick={handleClickLink}
                 />
             );

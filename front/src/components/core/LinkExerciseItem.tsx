@@ -3,28 +3,13 @@ import { useTranslation } from "react-i18next";
 
 function LinkExerciseItem({
   link,
-  actualLng,
   handleClick,
 }: {
   link: LinkExerciseShortType;
-  actualLng: string | undefined;
   handleClick: (redirection: string) => void;
 }) {
-  let titleLinkButton = "";
   const {t} = useTranslation();
-  switch (actualLng) {
-    case "fr":
-      titleLinkButton =
-        link.linkTitleFr !== "" ? link.linkTitleFr : link.linkTitleBr;
-      break;
-    case "br":
-      titleLinkButton =
-        link.linkTitleBr !== "" ? link.linkTitleBr : link.linkTitleFr;
-      break;
-    default:
-      titleLinkButton = link.linkTitleFr;
-      break;
-  }
+  
   return (
     <div
       className={`flex flex-col justify-end items-center
