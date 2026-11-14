@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { UserPseudoSchema } from "@shared/schema/user.schema";
+import z from "zod";
 
-export const checkInputUserPseudoValid = async(
-    req: Request,
+export const checkInputUserPseudoValid = async (
+  req: Request,
   res: Response,
   next: NextFunction
-) : Promise<void>=>{
-    const { userPseudo } = req.body;
-    if (!userPseudo) {
+): Promise<void> => {
+  const { userPseudo } = req.body;
+  if (!userPseudo) {
     res.status(400).json({ message: "L'objet pseudo est manquant." });
     return;
   }
@@ -18,7 +19,7 @@ export const checkInputUserPseudoValid = async(
   if (!result.success) {
     res.status(400).json({
       message: "le format du pseudo est invalide",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }
@@ -27,8 +28,8 @@ export const checkInputUserPseudoValid = async(
   const validatedUserPseudo = result.data;
   req.body.userPseudo = validatedUserPseudo;
 
-  
-    next();
-  }
 
-  export default checkInputUserPseudoValid;
+  next();
+}
+
+export default checkInputUserPseudoValid;

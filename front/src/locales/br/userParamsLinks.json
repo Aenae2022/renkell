@@ -26,6 +26,13 @@
         "send" : "Kasit !",
         "noLink" : "Ret eo deoc'h kinnig al liamm a-raok kas ar goulenn.",
         "success":"Kaset eo ar goulenn !",
-        "error":"N'omp ket deuet a-benn da gas ar goulenn. Klaskit en-dro !"
-    }
+        "error":"N'omp ket deuet a-benn da gas ar goulenn. Klaskit en-dro !",
+        "concernedAll": "Liamm evit an holl.",
+        "concernedTeacher": "Liamm evit ar skolaerien.",
+        "concernedStudent": "Liamm evit ar skolidi.",
+        "linkMany": "Liamm lodet",
+        "linkOne":"Liamm personel",
+        "linkAll":"Liamm publik",
+        "invalidLink": "N'eo ket reizh al liamm kiniiget. Gwiriit an URL ha klaskit en-dro."
+}
 }

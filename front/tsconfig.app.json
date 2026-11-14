@@ -7,9 +7,17 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    "baseUrl": ".", // ← nécessaire pour que "paths" fonctionne
+    
     "paths": {
-      "@shared/*": ["../shared/*"]
+      "@shared/*": ["../shared/*"],
+      "@components/*": ["./src/components/*"],
+      "@hook/*": ["./src/hook/*"],
+      "@librairies/*": ["./src/librairies/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@pictures/*":["./src/assets/pictures/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@srcFront/*":["./src/*"],
+      "@features/*": ["./src/features/*"],
     },
 
     /* Bundler mode */
@@ -28,5 +36,14 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/features/exercises/maths/nombre/denombre1/exdenombre1.reducer.ts",
+    "src/features/exercises/maths/nombre/denombre1/denombre1.engine copy.ts",
+    "src/pages/school/DegemerSkol workflow.tsx",
+    "src/components/appli/exercise/nombre/ArdoiseCubes copy.tsx",
+    "src/components/user/admin/**/*",
+    "src/pages/user/admin/**/*",
+    "src/features/degemer/**/*",
+    ]
 }

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import SchoolModel from "../../model/SchoolModel";
 import { SchoolSchema } from "@shared/schema/school.schema";
+import z from "zod";
 
 export const checkSchoolValid = async (
   req: Request,
@@ -8,7 +9,6 @@ export const checkSchoolValid = async (
   next: NextFunction
 ): Promise<void> => {
   const { school } = req.body;
- console.log("checkSchoolValid", school);
   // 🔒 Vérifie si school est bien présent
   if (!school) {
     res.status(400).json({ message: "L'objet school est manquant." });
@@ -21,7 +21,7 @@ export const checkSchoolValid = async (
   if (!result.success) {
     res.status(400).json({
       message: "Validation de l'école échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }

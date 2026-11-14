@@ -1,14 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import UserModel from "../../model/UserModel";
 import { UserPseudoSchema } from "@shared/schema/user.schema";
+import z from "zod";
 
-export const checkUserPseudoExists = async(
-    req: Request,
+export const checkUserPseudoExists = async (
+  req: Request,
   res: Response,
   next: NextFunction
-) : Promise<void>=>{
-    const { userPseudo } = req.body;
-    if (!userPseudo) {
+): Promise<void> => {
+  const { userPseudo } = req.body;
+  if (!userPseudo) {
     res.status(400).json({ message: "L'objet pseudo est manquant." });
     return;
   }
@@ -19,7 +20,7 @@ export const checkUserPseudoExists = async(
   if (!result.success) {
     res.status(400).json({
       message: "Validation de l'utilisateur échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }
@@ -28,14 +29,14 @@ export const checkUserPseudoExists = async(
   const validatedUserPseudo = result.data;
   req.body.userPseudo = validatedUserPseudo;
 
-  
-    const userPseudoExists = await UserModel.doesUserPseudoExist(validatedUserPseudo);
-    if (!userPseudoExists) {
-      res.status(404).json({ message: "utilisateur introuvable" });
-      return
-    }
-  
-    next();
+
+  const userPseudoExists = await UserModel.doesUserPseudoExist(validatedUserPseudo);
+  if (!userPseudoExists) {
+    res.status(404).json({ message: "utilisateur introuvable" });
+    return
   }
 
-  export default checkUserPseudoExists;
+  next();
+}
+
+export default checkUserPseudoExists;

@@ -1,28 +1,42 @@
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../hooks/useAuth"; // chemin selon ton projet
+import api from "../../api/axios";
+import { useEffect, useState } from "react";
+import { type UserSessionConnectType } from "@shared/schema/user.schema";
 import { useNavigate } from "react-router-dom";
-
-const ConnexionButton = () => {
-  const { userConn, logout } = useAuth();
-  const navigate = useNavigate();
-
+const ConnexionButton = ({
+  showLogin,
+}: {
+  showLogin: (value: boolean) => void;
+}) => {
   const { t } = useTranslation();
+  const [userConn, setUserConn] = useState<UserSessionConnectType | null>(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    api
+      .get("/api/auth/session")
+      .then((res: { data: { user: UserSessionConnectType | null } }) =>
+        setUserConn(res.data.user)
+      );
+  }, []);
+
+  const handleLogout = async () => {
+    const reponse = await api.post("/api/auth/logout");
+    setUserConn(null);
+    navigate(reponse.data.result); // Redirige vers la page degemer correspondante à l'utilisateur
+  };
   return (
     <>
       {userConn ? (
         <button
           className="min-w-[104px] min-h-6 text-xl rounded-md border-2 border-zinc-500 m-2.5 bg-orthographe px-1.5"
-          onClick={logout}
+          onClick={handleLogout}
         >
           {t("header.buttonDisconnect")}
         </button>
       ) : (
         <button
           className="min-w-[104px] min-h-6 text-xl rounded-md border-2 border-zinc-500 m-2.5 bg-orthographe-light hover:bg-orthographe px-1.5"
-          onClick={() => {
-            navigate("/login"); // Redirection vers connexion
-            console.log("Connexion en cours...");
-          }}
+          onClick={() => showLogin(true)}
         >
           {t("header.buttonConnect")}
         </button>

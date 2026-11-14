@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import ClassroomModel from "../../model/ClassroomModel";
 import { ClassroomRefSchema } from "@shared/schema/classroom.schema";
+import { z } from "zod";
 export const checkClassroomRefExists = async(
     req: Request,
   res: Response,
   next: NextFunction
 ) : Promise<void>=>{
     const { classroomRef, school } = req.body;
-  console.log("checkClassroomRefExists", classroomRef, typeof classroomRef);
     // 🔒 Vérifie si classroomRef est bien présent
   if (!classroomRef) {
     res.status(400).json({ message: "L'objet classroomRef est manquant." });
@@ -20,7 +20,7 @@ export const checkClassroomRefExists = async(
   if (!result.success) {
     res.status(400).json({
       message: "Validation de la salle de classe échouée",
-      errors: result.error.flatten().fieldErrors,
+      errors: z.flattenError(result.error).fieldErrors,
     });
     return;
   }

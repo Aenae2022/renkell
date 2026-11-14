@@ -1,0 +1,43 @@
+import logoEcole from "@pictures/icons/ecole.png";
+import logoLibrary from "@pictures/icons/lecture.png";
+import MenuUser from "../../core/MenuUser";
+import type { UserSessionConnectType } from "@shared/schema/user.schema";
+
+const icons = import.meta.glob<{ default: string }>("@pictures/iconsUser/*", {
+  eager: true,
+});
+
+export function MenuAdmin({
+  user,
+  changeRole,
+}: {
+  user: UserSessionConnectType;
+  changeRole: (user: UserSessionConnectType) => void;
+}) {
+  const iconUserSrc =
+    icons[`/src/assets/pictures/iconsUser/${user.userIcon}`]?.default;
+
+  const adminFunctions = [
+    {
+      action: "/admin/school",
+      icon: logoEcole,
+      title: "school",
+    },
+    {
+      action: "/admin/library",
+      icon: logoLibrary,
+      title: "library",
+    },
+  ];
+
+  return (
+    <MenuUser
+      iconUserSrc={iconUserSrc}
+      myUserFunctions={adminFunctions}
+      user={user}
+      changeRole={changeRole}
+    />
+  );
+}
+
+export default MenuAdmin;
