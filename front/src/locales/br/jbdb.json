@@ -23,17 +23,23 @@
             "addition": "sammañ",
             "subtraction": "dilemel",
             "decompositionNumber": "disrannadenn un niver",
+
             "matercm1sequence1": "sekañs 1 : taolioù liesaat",
             "matercm1sequence2": "sekañs 2 : sammañ pe dilemel 9, 19, 29, 39 / 10, 20, 30, 40...",
             "matercm1sequence3": "sekañs 3 : dilemel gant un niver un sifr ennañ",
             "matercm1sequence4": "sekañs 4 : klokaat ar c'hantadoù",
             "matercm1sequence5": "sekañs 5 : taolioù liesaat 2 3 4 5 10",
             "matercm1sequence6": "sekañs 6 : taolioù liesaat 2 3 4 5 6 10",
+            "matercm1sequence7": "sekañs 7 : taolioù liesaat 2 3 4 5 6 7 10",
+
             "matercm2sequence2": "sekañs 2 : emgefrekaat doareoù jediñ",
             "matercm2sequence3": "sekañs 3 : Sammañ pe dilemel 18, 19, 28, 29, 38, 39, ...",
             "matercm2sequence4": "sekañs 4 : Taolioù liesaat x5 x10",
             "matercm2sequence5": "sekañs 5 : Liesaat daou lieskement 10",
-            "matercm2sequence6": "sekañs 6 : Liesaat daou niver etre 12 ha 49"
+            "matercm2sequence6": "sekañs 6 : Liesaat daou niver etre 12 ha 49",
+            "matercm2sequence7": "sekañs 7 : taolioù liesaat 2 4 8"
+
+
         },
         "buttons": {
             "jbdb-add-all": "an holl",
@@ -89,6 +95,8 @@
             "jbdb-dec-cdu-unite-2": "Disrannadenn an niveroù betek 999",
             "jbdb-dec-mcdu": "Disrannadenn an niveroù betek 9 999",
             "jbdb-sous-taol": "Dilemel",
+
+
             "jbdb-multi-2": "Taol liesaat 2",
             "jbdb-multi-3": "Taol liesaat 3",
             "jbdb-multi-4": "Taol liesaat 4",
@@ -117,16 +125,23 @@
             "jbdb-div-rest-2-3-4-5": "taolioù rannañ dre 2, 3, 4 ha 5 gant ur rest",
             "jbdb-div-rest-6-7-8-9": "taolioù rannañ dre 6, 7, 8 ha 9 gant ur rest",
             "jbdb-div-rest-all": "taolioù rannañ gant ur rest",
+
+
             "jbdb-matercm1-01": "Taolioù liesaat",
             "jbdb-matercm1-0201": "Sammañ pe dilemel 9, 19, 29, 39 ",
             "jbdb-matercm1-0202": "Sammañ pe dilemel 10, 20, 30, 40 ...",
             "jbdb-matercm1-0301": "dilemel gant un niver un sifr ennañ",
             "jbdb-matercm1-0501": "Taolioù liesaat 2 3 4 5 10",
             "jbdb-matercm1-0601": "Taolioù liesaat 2 3 4 5 6 10",
+            "jbdb-matercm1-0701": "Taolioù liesaat 2 3 4 5 6 7 10",
+
+
+
             "jbdb-matercm2-0201": "Emgefrekaat doareoù jediñ",
             "jbdb-matercm2-0301": "Sammañ pe dilemel 18, 19, 28, 29, 38, 39, ... ",
             "jbdb-matercm2-0501": "Liesaat daou lieskement 10",
-            "jbdb-matercm2-0601": "Liesaat daou niver etre 12 ha 49"
+            "jbdb-matercm2-0601": "Liesaat daou niver etre 12 ha 49",
+            "jbdb-matercm2-0701": "Taolioù liesaat 2 4 8"
         },
         "printButton": "Enrollañ"
     }

@@ -9,6 +9,7 @@ import { materCM1S3ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM
 import { materCM1S4ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S4";
 import { materCM1S5ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S5";
 import { materCM1S6ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S6";
+import { materCM1S7ExerciseIds } from "./exercises/definitions/matEr/cm1/materCM1-S7";
 import { materCM2S1ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S1";
 import { materCM2S2ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S2";
 import { materCM2S3ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S3";
@@ -101,6 +102,11 @@ export const jbdbExosList = [
             //séquence 6
             subCategory: "matercm1sequence6",
             exercises: materCM1S6ExerciseIds,
+          },
+          {
+            //séquence 7
+            subCategory: "matercm1sequence7",
+            exercises: materCM1S7ExerciseIds,
           }
         ]
       },
@@ -135,6 +141,11 @@ export const jbdbExosList = [
           {
             //séquence 6
             subCategory: "matercm2sequence6",
+            exercises: materCM2S6ExerciseIds,
+          },
+          {
+            //séquence 7
+            subCategory: "matercm2sequence7",
             exercises: materCM2S6ExerciseIds,
           }
         ]
