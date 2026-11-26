@@ -16,6 +16,7 @@ import { materCM2S3ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM
 import { materCM2S4ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S4";
 import { materCM2S5ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S5";
 import { materCM2S6ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S6";
+import { materCM2S7ExerciseIds } from "./exercises/definitions/matEr/cm2/materCM2-S7";
 
 
 export const jbdbExosList = [
@@ -146,7 +147,7 @@ export const jbdbExosList = [
           {
             //séquence 7
             subCategory: "matercm2sequence7",
-            exercises: materCM2S6ExerciseIds,
+            exercises: materCM2S7ExerciseIds,
           }
         ]
       },
