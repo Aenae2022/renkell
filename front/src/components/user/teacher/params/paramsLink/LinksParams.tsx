@@ -34,7 +34,7 @@ export default function LinksParams({ typeRef, idRef }: GeneralProps) {
     francais: "rounded-md p-2 bg-francais/25",
     multidomaine: "rounded-md p-2 bg-conjugaison/25",
     autre: "rounded-md p-2 bg-orthographe/25",
-    professionel:"rounded-md p-2 bg-lexique/25"
+    professionnel:"rounded-md p-2 bg-lexique/25"
   } as const;
 
   const handleChange = async (linkId: number, isChecked: boolean) => {

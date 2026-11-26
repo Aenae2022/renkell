@@ -14,7 +14,8 @@
         "mathematiques": "Mathématiques",
         "francais": "Langue",
         "multidomaine":"Multidomaine",
-        "autre":"Autres"
+        "autre":"Autres",
+        "professionnel": "professionnel"
     },
     "linksMany": "Liens partagés",
     "linksOne":"Liens personnels",
