@@ -3,10 +3,15 @@
 
 
 import { z } from "zod";
-import { StringNameSchema } from "./fields/stringName.schema";
+import { EntierPositifSchema } from "./fields/entierPositif.schema";
+import { StringNameGroupSchema } from "./fields/stringNameGroup.schema";
 
 export const GradeSchema = z.object({
-  gradeId: z.number(),
-  gradeName: StringNameSchema
+  gradeId: EntierPositifSchema,
+  gradeName: StringNameGroupSchema
 });
+
+export type GradeType = z.infer<typeof GradeSchema>;
+
+
            

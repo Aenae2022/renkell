@@ -1,3 +1,8 @@
 {
-    "reglages": "paramètres"
+    "reglages": "paramètres",
+    "library": "bibliothèque",
+    "school": "école",
+    "applies":"applications",
+    "changeRole":"changer de rôle"
+
 }

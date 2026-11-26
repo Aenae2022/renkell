@@ -5,14 +5,19 @@
         "stats": "Ar stadegoù",
         "params": "An arventennoù"
     },
+    "studentsList":{
+        "noStudent": "N'eus skolidi ebet staget diouzhoc'h"
+    },
     "degemer" : {
-        "title": "Levraoueg ar re"
+        "title": "Levraoueg ar re",
+        "error": "N'eus strollad ebet staget diouzhoc'h"
     },
     "bookBox": {
         "bookReading": "Levr amprestet",
         "bookWaiting": "Levr miret",
         "bookNoReading": "Amprestañ ul levr",
         "bookNoWaiting": "Mirout ul levr",
+        "modifyBook": "Cheñch titouroù al levr",
         "location": {
             "med":"Mediaoueg",
             "roo": "Klas",
@@ -45,6 +50,7 @@
     },
     "libraryBox": {
         "welcomeMyLibrary" : "Levraoueg ar re",
+        "noBookInLibrary" : "N'eus levr ebetc'hoazh el levraoueg",
         "addBookInLibrary" : "Ouzhpennañ ul levr e levraoueg ar c'hlas",
         "title" : "Titl",
         "author" : "Skrivagner",
@@ -62,10 +68,13 @@
         "error1" : "Ret eo deoc\"h skrivañ un titl evit ouzhpennañ ul levr el levraoueg.",
         "error2" : "Levr ouzhpennet ! ",
         "error4" : "Ur skoulm a zo. N\"eo ket posupl enrollañ al levr.",
+        "modifAdmin" : "Levr cheñchet !",
+        "mailAdmin" : "Goulenn kaset !",
         "chooseNewBook" : "Setu levrioù a c\"hellfe kevred gant ho koulenn. Dibabit unan pe krouiit ul levr nevez."
     },
     "ficheBox":{
         "title":"Ouzhpennañ ul levr",
+        "titleModif":"Cheñch titouroù al levr",
         "nbBook" : "niver a skouerenn",
         "inDbYet" : "An titl-mañ a zo dija el levraoueg.",
         "chooseStudent" :"Levr gant",
@@ -89,7 +98,10 @@
         "topReaders" : "Skolidi en deus lennet ar muiañ a levr ",
         "topDistinctReaders" : "Skolidi en deus lennet ar muiañ a levr disheñvel",
         "topNoReaders" : "Skolidi en deus kaset en-dro lervioù hep lenn anezho",
-        "noStats": "N'eus stadeg ebet a glot gant an arventennoù dibabet"
+        "noStats": "N'eus stadeg ebet a glot gant an arventennoù dibabet",
+        "noStudent": "N'eus skolidi ebet er strollad",
+        "noLocationSelected": "Ret eo merkañ un orin levr d'an nebeutañ.",
+        "print": "krouiñ fichennoù dre skoliad"
     },
     "paramsBox":{
         "globalTitle":"Prantadoù defot",
@@ -108,7 +120,8 @@
         "error1Msg":"N'eo ket bet dilamet ar prantad. Klaskit en-dro pe kit e darempred gant ar merour.",
         "error2Title":"Skoulm !",
         "error2Msg":"Anv ar prantad a zo ret !",
-        "errorStart":"N'oe ket reizh penn ar prantad.",
-        "errorEnd":"N'oe ket reizh dibenn ar prantad"
+        "errorStart":"N'eo ket reizh penn ar prantad.",
+        "errorEnd":"N'eo ket reizh dibenn ar prantad.",
+        "errorDates": "N'eo ket reizh an deiziadoù"
     }
 }

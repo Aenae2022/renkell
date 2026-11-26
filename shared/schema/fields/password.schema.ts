@@ -22,4 +22,16 @@ export const BcryptHashSchema = z.string().regex(
   "Ce n'est pas un hash bcrypt valide"
 );
 
+export const PasswordShortSchema = z.string()
+.trim()
+.min(4, { message: "Le mot de passe doit contenir 4 chiffres" })
+.max(4, { message: "Le mot de passe doit contenir 4 chiffres" })
+.regex(/^[0-9]{4}$/,
+    {
+      message:
+        "Caractères non autorisés",
+    }
+  )
+
 export type PasswordType = z.infer<typeof PasswordSchema>;
+export type PasswordShortType = z.infer<typeof PasswordShortSchema>;

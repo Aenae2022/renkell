@@ -1,0 +1,62 @@
+import { tableAdditionExercises } from "./definitions/add/others/additionExercises";
+import { decompositionNumberExercises } from "./definitions/add/others/decompositionNumber";
+import { tableAddMasterExercises } from "./definitions/add/tableAdd/tableAddMasterExercises";
+import { tableAddMemoryExercises } from "./definitions/add/tableAdd/tableAddMemoryExercises";
+import { tableAddPracticeExercises } from "./definitions/add/tableAdd/tableAddPracticeExercises";
+import { materCM1S1Exercises } from "./definitions/matEr/cm1/materCM1-S1";
+import { materCM1S2Exercises } from "./definitions/matEr/cm1/materCM1-S2";
+import { materCM1S3Exercises } from "./definitions/matEr/cm1/materCM1-S3";
+import { materCM1S4Exercises } from "./definitions/matEr/cm1/materCM1-S4";
+import { materCM1S5Exercises } from "./definitions/matEr/cm1/materCM1-S5";
+import  { materCM1S6Exercises } from "./definitions/matEr/cm1/materCM1-S6";
+import { materCM1S7Exercises } from "./definitions/matEr/cm1/materCM1-S7";
+import { materCM2S1Exercises } from "./definitions/matEr/cm2/materCM2-S1";
+import { materCM2S2Exercises } from "./definitions/matEr/cm2/materCM2-S2";
+import { materCM2S3Exercises } from "./definitions/matEr/cm2/materCM2-S3";
+import { materCM2S4Exercises } from "./definitions/matEr/cm2/materCM2-S4";
+import { materCM2S5Exercises } from "./definitions/matEr/cm2/materCM2-S5";
+import { materCM2S6Exercises } from "./definitions/matEr/cm2/materCM2-S6";
+import { materCM2S7Exercises } from "./definitions/matEr/cm2/materCM2-S7";
+import type { JbdbExerciseType } from "./exercises.types";
+
+const addExercises : JbdbExerciseType[] = [
+    ...tableAddMemoryExercises,
+    ...tableAddPracticeExercises,
+    ...tableAddMasterExercises,
+    ...tableAdditionExercises,
+    ...decompositionNumberExercises,
+]
+const materCM1Exercises : JbdbExerciseType[] = [
+    ...materCM1S1Exercises,
+    ...materCM1S2Exercises,
+    ...materCM1S3Exercises,
+    ...materCM1S4Exercises,
+    ...materCM1S5Exercises,
+    ...materCM1S6Exercises,
+    ...materCM1S7Exercises
+]
+const materCM2Exercises : JbdbExerciseType[] = [
+    ...materCM2S1Exercises,
+    ...materCM2S2Exercises,
+    ...materCM2S3Exercises,
+    ...materCM2S4Exercises,
+    ...materCM2S5Exercises,
+    ...materCM2S6Exercises,
+    ...materCM2S7Exercises
+]
+
+const allExercises: JbdbExerciseType[] = [
+    ...addExercises,
+    ...materCM1Exercises,
+    ...materCM2Exercises,
+];
+
+export const exercisesRegistry = new Map<string, JbdbExerciseType>(
+  allExercises.map((exercise) => [exercise.exId, exercise]),
+);
+
+export const findExerciseById = (
+  exId: string,
+): JbdbExerciseType | null => {
+  return exercisesRegistry.get(exId) ?? null;
+};

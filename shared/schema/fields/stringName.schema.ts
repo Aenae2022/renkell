@@ -3,12 +3,16 @@ import { z } from "zod";
 export const StringNameSchema = z
   .string()
   .trim()
-  .min(1, { message: "Le nom ne peut pas être vide" })
-  .max(50, { message: "Le nom est trop long" })
+  .min(2, { message: "Le nom ne peut pas être vide" })
+  .max(60, { message: "Le nom est trop long" })
   .regex(
-    /^[A-Za-zÀ-ÖØ-öø-ÿ'’\- ]+$/,
+    /^[\p{L}A-Za-z0-9'’\-. ]*$/u,
     {
       message:
-        "Le nom ne peut contenir que des lettres, espaces, apostrophes ou tirets.",
+        "Le nom ne peut contenir que des lettres, des chiffres, espaces, apostrophes ou tirets.",
     }
   );
+
+export type StringNameType = z.infer<typeof StringNameSchema>;
+
+

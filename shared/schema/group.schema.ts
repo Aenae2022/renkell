@@ -1,33 +1,57 @@
 import { z } from "zod";
 import { LinkShortSchema } from "./link.schema";
 import { StringNameGroupSchema } from "./fields/stringNameGroup.schema";
+import { EntierPositifSchema } from "./fields/entierPositif.schema";
 
 export const GroupLinkSchema = z.object({
   link: LinkShortSchema,
 });
 
 export const GroupLinksSchema = z.object({
-  groupId: z.string().or(z.number()),
+  groupId: EntierPositifSchema,
   groupName: StringNameGroupSchema,
   groupLinks: z.array(GroupLinkSchema),
 });
 
-export const groupInfoSchema = z.object({
-  groupId: z.number(),
-  groupName : StringNameGroupSchema, 
-  principal : z.boolean(),
+export const GroupInfoSchema = z.object({
+  groupId: EntierPositifSchema,
+  groupName: StringNameGroupSchema,
+  principal: z.boolean(),
 })
 
-export const groupPrincipalInfoSchema = z.object({
-  groupId: z.number(),
-  groupName : StringNameGroupSchema, 
-  principal : z.literal(true),
+export const GroupPrincipalInfoSchema = z.object({
+  groupId: EntierPositifSchema,
+  groupName: StringNameGroupSchema,
+  principal: z.literal(true),
 })
 
-export const groupSecondaireInfoSchema = z.object({
-  groupId: z.number(),
-  groupName : StringNameGroupSchema, 
-  principal : z.literal(false),
+export const GroupSecondaireInfoSchema = z.object({
+  groupId: EntierPositifSchema,
+  groupName: StringNameGroupSchema,
+  principal: z.literal(false),
 })
 
-export type GroupLinksSchema = z.infer<typeof GroupLinksSchema>;
+export const GroupMiniSchema = z.object({
+  groupId: EntierPositifSchema,
+  groupName: StringNameGroupSchema,
+});
+
+export const GroupForExerciseSchema = z.object(
+  {
+    groupId: EntierPositifSchema,
+    groupName: StringNameGroupSchema,
+    isAssociated: z.boolean(),
+  })
+
+export const GroupsListForExerciseSchema = z.array(
+  GroupForExerciseSchema
+)
+
+export type GroupLinksType = z.infer<typeof GroupLinksSchema>;
+export type GroupInfoType = z.infer<typeof GroupInfoSchema>
+export type GroupNameType = z.infer<typeof StringNameGroupSchema>
+export type GroupMiniType = z.infer<typeof GroupMiniSchema>
+export type GroupPrincipalInfoType = z.infer<typeof GroupPrincipalInfoSchema>
+export type GroupForExerciseType = z.infer<typeof GroupForExerciseSchema>
+export type GroupsListForExerciseType = z.infer<typeof GroupsListForExerciseSchema>
+

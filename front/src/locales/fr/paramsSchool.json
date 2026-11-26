@@ -1,0 +1,30 @@
+{
+    "pTag":{
+        "classroom": "Les salles de classe",
+        "user":"Les utilisateurs"
+    },
+    "sTag":{
+        "student":"les élèves",
+        "teacher":"les enseignants",
+        "admin":"les administrateurs"
+    },
+    "paramsStudents":{
+        "title":"Elèves de l'école",
+        "gradeFilter" : "Filtrer par niveau :",
+        "klasFilter" : "Filtrer par classe : ",
+        "name": "nom",
+        "nopeKlas": "sans classe",
+        "nopeGrade":"sans niveau",
+        "grade":"niveau",
+        "klas":"classe",
+        "identity":{
+            "familyName":"Nom de famille",
+            "firstName":"Prénom",
+            "pseudo": "Identifiant",
+            "psswd":"Mot de passe",
+            "mail":"Email",
+            "error1Title":"Erreur de saisie",
+            "errorFamilyName":"Le nom de famille n'est pas valide."
+        }
+    }
+}
