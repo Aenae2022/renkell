@@ -17,6 +17,7 @@ function MatterLinksList({ title, linksList, matter, handleChange }: Props) {
     francais: "pt-1 ml-2 pl-4 border-1 border-francais",
     multidomaine: "pt-1 ml-2 pl-4 border-1 border-conjugaison",
     autre: "pt-1 ml-2 pl-4 border-1 border-orthographe",
+    professionnel: "pt-1 ml-2 pl-4 border-1 border-lexique",
     neutral: "pt-1 ml-2 pl-4",
   } as const;
   const toolTipStyle =
